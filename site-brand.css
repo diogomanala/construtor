@@ -171,23 +171,29 @@ body.cic-legal > .footer { width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  gap: 16px;
   margin: 26px auto 5px;
-  padding: 0;
+  padding: 12px 15px;
   width: 100%;
-  max-width: 370px;
+  max-width: 520px;
+  background: #fff;
+  border: 1px solid #e2e8f3;
+  border-radius: 16px;
 }
 .cic-editorial-visual img {
   display: block;
-  width: 100%;
+  width: 190px;
+  max-width: 44%;
   height: auto;
   border: 1px solid #e2e8f3;
-  border-radius: 15px;
+  border-radius: 11px;
   background: #fff;
+  flex: 0 0 auto;
 }
 .cic-editorial-visual figcaption {
-  text-align: center;
+  flex: 1;
+  text-align: left;
   color: #66758b;
   font-size: 12px;
   line-height: 1.5;
