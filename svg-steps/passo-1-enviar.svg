@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="306" viewBox="0 0 320 306" role="img" aria-label="Envie sua arte">
+<title>Envie sua arte</title>
+<defs>
+ <linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3174f7"/><stop offset="1" stop-color="#1454d5"/></linearGradient>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c6e7ff"/><stop offset="1" stop-color="#77baff"/></linearGradient>
+ <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e7f3ff"/><stop offset="1" stop-color="#c9dffb"/></linearGradient>
+ <filter id="sh"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#153c83" flood-opacity=".12"/></filter>
+ <clipPath id="window"><rect x="32" y="34" width="256" height="210" rx="19"/></clipPath>
+</defs>
+<g filter="url(#sh)"><rect x="32" y="34" width="256" height="210" rx="19" fill="#fff" stroke="#d6e3f4" stroke-width="2"/></g>
+<g clip-path="url(#window)"><path d="M32 53Q32 34 51 34H269Q288 34 288 53V75H32Z" fill="url(#top)"/></g>
+<circle cx="103" cy="55" r="5" fill="#fff" opacity=".94"/><circle cx="121" cy="55" r="5" fill="#fff" opacity=".94"/><circle cx="139" cy="55" r="5" fill="#fff" opacity=".94"/>
+<circle cx="48" cy="53" r="30" fill="#fff"/><circle cx="48" cy="53" r="25" fill="#0f57d9"/><text x="48" y="65" text-anchor="middle" font-size="31" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#fff">1</text>
+<rect x="59" y="94" width="202" height="135" rx="16" fill="#f8fbff" stroke="#80b3f2" stroke-width="2" stroke-dasharray="7 6"/>
+<rect x="90" y="109" width="139" height="70" rx="10" fill="#fff"/><rect x="96" y="115" width="127" height="58" rx="7" fill="url(#sky)"/>
+<path d="M96 163L138 123L169 150L190 133L223 165V173H96Z" fill="#2d73ec"/><path d="M96 173L138 128L187 173Z" fill="#1457d4"/><circle cx="190" cy="129" r="10" fill="#fff"/>
+<rect x="111" y="187" width="98" height="28" rx="14" fill="#145cde"/>
+<path d="M160 209V194M154 200l6-6 6 6M151 207v3h18v-3" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<rect x="38" y="259" width="244" height="39" rx="19.5" fill="url(#chip)" stroke="#cfdef5"/>
+<text x="160" y="284" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#132d56">1. Envie sua arte</text>
+</svg>
