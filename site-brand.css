@@ -1,0 +1,227 @@
+/* Cortar Carrossel design system | 2026-11-02 | navigation and editorial brand */
+:root {
+  --brand: #2856e7;
+  --brand2: #205ff0;
+  --soft: #eaf1ff;
+  --bg: #f4f6fb;
+  --ink: #17263e;
+  --muted: #53647e;
+  --line: #e3e9f3;
+}
+html { text-size-adjust: 100%; }
+body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); }
+body.article-site, body.cic-legal, body.cic-example {
+  background: #f4f6fb;
+  color: var(--ink);
+}
+/* The single, reusable site header. No script or menu framework. */
+body > nav.cic-nav {
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  max-width: 900px;
+  margin: 14px auto 27px;
+  padding: 8px 10px 8px 17px;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid #e0e7f1;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 7px 22px rgba(23,40,64,.055);
+  font-family: Arial,Helvetica,sans-serif;
+  line-height: 1.25;
+  position: relative;
+  z-index: 2;
+}
+body > nav.cic-nav .cic-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #17253d;
+  font: 800 14px/1.2 Arial,Helvetica,sans-serif;
+  letter-spacing: -.025em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+body > nav.cic-nav .cic-brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-sizing: border-box;
+  padding: 5px;
+  width: 27px;
+  height: 27px;
+  border-radius: 9px;
+  background: #2856e7;
+  flex: 0 0 27px;
+}
+body > nav.cic-nav .cic-brand-mark span {
+  flex: 1 1 0;
+  height: 100%;
+  background: #fff;
+  border: 0;
+  border-radius: 2px;
+  display: block;
+}
+body > nav.cic-nav .cic-navlinks {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 2px;
+}
+body > nav.cic-nav .cic-navlinks a {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: transparent;
+  color: #44516a;
+  text-decoration: none;
+  font: 600 13px/1.2 Arial,Helvetica,sans-serif;
+  white-space: nowrap;
+  transition: background-color .15s ease,color .15s ease;
+}
+body > nav.cic-nav .cic-navlinks a:hover { color: #1948c8; background: #f2f6ff; }
+body > nav.cic-nav .cic-navlinks a[aria-current="page"] {
+  background: #eaf1ff;
+  color: #234eaf;
+  font-weight: 800;
+}
+body > nav.cic-nav a:focus-visible {
+  outline: 2px solid #2856e7;
+  outline-offset: 2px;
+}
+body.article-site .hub-hero,
+body.article-site .tool-hero,
+body.article-site .calc-head,
+body.article-site .wrap > .card > .hero,
+body.article-site .article-cta,
+body.article-site .previewStrip {
+  background: linear-gradient(125deg,#112f61 0%,#2055cf 90%);
+  color: #fff;
+}
+body.article-site .hub-hero:after {
+  background: radial-gradient(circle,rgba(82,143,255,.46),transparent 68%);
+}
+body.article-site .eyebrow { letter-spacing: .07em; }
+body.article-site .article-head { background: linear-gradient(180deg,#fff,#f7faff); }
+body.article-site .article-head h1,
+body.article-site .hub-hero h1,
+body.article-site .calc-head h1,
+body.article-site .tool-hero h1,
+body.article-site .wrap .hero h1 {
+  letter-spacing: -.04em;
+}
+body.article-site .guide-card,
+body.article-site .article-main,
+body.article-site .calc-card,
+body.article-site .tool-card,
+body.article-site .wrap > .card,
+body.article-site .info-panel,
+body.article-site .info-card {
+  border-color: #e2e9f4;
+}
+body.article-site .btn-primary,
+body.article-site .btn.primary,
+body.article-site .primary,
+body.article-site .inline-action {
+  background: #2856e7;
+  color: #fff;
+}
+body.article-site .btn-primary:hover,
+body.article-site .btn.primary:hover,
+body.article-site .btn.primary:focus-visible { background: #1e48bf; }
+body.article-site .read-link,
+body.article-site .article-content a,
+body.article-site .piece-foot a,
+body.article-site .slide a,
+body.cic-example a,
+body.cic-legal .info-section a { color: #2856e7; }
+body.article-site .drop { border-color: #a3bcee; background: #f6f9ff; }
+body.article-site .drop.drag { border-color: #2856e7; background: #edf3ff; }
+body.article-site .chip { color: #2856e7; background: #eaf1ff; }
+body.cic-example main { color: #17263e; }
+body.cic-example .eyebrow { color: #3362b9; }
+body.cic-example .intro,
+body.cic-example .caption { color: #53647e; }
+body.cic-example .section { border-color: #dce6f4; }
+body.cic-example .sample { border-color: #e0e7f2; box-shadow: 0 8px 24px rgba(23,40,64,.045); }
+body.cic-example .download { background: #2856e7; color: #fff; border-radius: 10px; }
+body.cic-example .download.secondary { background: #eaf1ff; color: #204cae; border-color: #cbdcf8; }
+body.cic-example .fact { border-left-color: #2856e7; background: #f7faff; color: #445770; }
+body.cic-example footer { color: #65748a; }
+body.cic-legal > h1 {
+  margin: 10px auto 18px !important;
+  max-width: 900px;
+  padding: 0 12px;
+  color: #17263e;
+  font-size: clamp(25px,3.5vw,35px);
+  letter-spacing: -.035em;
+}
+body.cic-legal > .info-section { width: calc(100% - 24px); max-width: 850px; border-color: #e1e8f3; }
+body.cic-legal > .info-section h2 { color: #1a2b47; }
+body.cic-legal > .footer { width: 100%; }
+.cic-editorial-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  margin: 26px auto 5px;
+  padding: 0;
+  width: 100%;
+  max-width: 370px;
+}
+.cic-editorial-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #e2e8f3;
+  border-radius: 15px;
+  background: #fff;
+}
+.cic-editorial-visual figcaption {
+  text-align: center;
+  color: #66758b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+@media (max-width:720px) {
+  body > nav.cic-nav {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    gap: 7px;
+    padding: 10px 10px 7px;
+    margin: 10px auto 23px;
+    border-radius: 20px;
+  }
+  body > nav.cic-nav .cic-brand {
+    justify-content: center;
+    min-height: 31px;
+  }
+  body > nav.cic-nav .cic-navlinks {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 0 3px;
+  }
+  body > nav.cic-nav .cic-navlinks::-webkit-scrollbar { display:none; }
+  body > nav.cic-nav .cic-navlinks a {
+    flex: 0 0 auto;
+    min-height: 33px;
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  body > nav.cic-nav .cic-navlinks a {transition:none;}
+}
