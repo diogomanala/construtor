@@ -1,0 +1,14 @@
+{
+  "name": "diogomanala/cic-adsense-maintenance",
+  "description": "Aplicação única de correções de apresentação, privacidade e navegação do site",
+  "type": "project",
+  "require": {},
+  "scripts": {
+    "post-install-cmd": [
+      "@php apply.php"
+    ]
+  },
+  "config": {
+    "allow-plugins": false
+  }
+}
