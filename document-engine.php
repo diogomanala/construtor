@@ -189,8 +189,9 @@ function odx_page():never {
     $histQ->execute([(int)$c['id'],(int)$id]);
     $revisions=$histQ->fetchAll();
     if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
-    if(od_mat_defaults((int)$id,$c) || od_mat_read((int)$c['id'],(int)$id)!==null){
-      echo '<div class="odx-inline-tool"><span>REFERÊNCIAS VISUAIS</span><h4>Quadro de materiais e equipamentos</h4><p>Ilustrações individuais já sugeridas para este modelo. Remova ou substitua conforme a realidade da clínica.</p><a href="?page=acervo-visual&id='.(int)$id.'">Editar imagens deste documento ↗</a></div>';
+    if(!$historical){
+      $hasMaterialSuggestions=count(od_mat_defaults((int)$id,$c))>0;
+      echo '<div class="odx-inline-tool"><span>REFERÊNCIAS VISUAIS · OPCIONAL</span><h4>Quadro de materiais ilustrados</h4><p>'.($hasMaterialSuggestions?'Este modelo já tem sugestões de imagens.':'Adicione imagens apenas se elas ajudarem a identificar materiais ou equipamentos.').' Revise a pertinência com o RT.</p><a href="?page=acervo-visual&id='.(int)$id.'">'.($hasMaterialSuggestions?'Personalizar':'Escolher').' imagens deste documento ↗</a></div>';
     }
     if((int)$id===11)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Monitorização de esterilização</h4><p>Registre os ciclos e consulte o histórico de sua clínica, sem planilhas separadas.</p><a href="?page=registros-esterilizacao">Abrir registros de ciclos ↗</a></div>';
     if((int)$id===7)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Controle de limpeza dos ambientes</h4><p>Registre cada execução e acompanhe pendências e ocorrências sem arquivos avulsos.</p><a href="?page=registros-limpeza">Abrir registro de limpeza ↗</a></div>';
