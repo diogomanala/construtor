@@ -1,0 +1,76 @@
+/* Odonto em Dia | biblioteca de ilustrações editoriais 3D v1
+ * Pack aprovado, 06/11/2026. Elementos decorativos: não são instruções técnicas.
+ * Atlas transparente AVIF: assets/illustrations/odonto-3d-atlas.avif
+ * Ordem da grade (3 x 2): Manual, PGRSS, Esterilização / Limpeza, EPI, Segurança.
+ */
+.odx-visual-3d{
+    display:block;
+    width:100%;
+    aspect-ratio:1;
+    background-image:url("assets/illustrations/odonto-3d-atlas.avif");
+    background-repeat:no-repeat;
+    background-size:300% 200%;
+    pointer-events:none;
+}
+.odx-visual-3d--manual{background-position:0% 0%}
+.odx-visual-3d--residuos{background-position:50% 0%}
+.odx-visual-3d--esterilizacao{background-position:100% 0%}
+.odx-visual-3d--limpeza{background-position:0% 100%}
+.odx-visual-3d--epi{background-position:50% 100%}
+.odx-visual-3d--seguranca{background-position:100% 100%}
+
+/* Arte exclusivamente na capa. Preserva os dados técnicos e o corpo da minuta. */
+.odx-cover.odx-cover--with-art{
+    min-height:355px;
+    padding-right:clamp(205px,34%,320px);
+}
+.odx-cover--with-art .odx-cover-kicker,
+.odx-cover--with-art h2,
+.odx-cover--with-art > p,
+.odx-cover--with-art .odx-cover-meta{
+    position:relative;z-index:2;
+}
+.odx-cover--with-art h2{max-width:580px;font-size:clamp(29px,4vw,48px)}
+.odx-cover-art{
+    position:absolute;z-index:1;right:8px;bottom:18px;
+    width:min(36%,292px);aspect-ratio:1;
+    filter:drop-shadow(0 16px 20px rgb(0 0 0 / .13));
+    pointer-events:none;user-select:none;
+}
+.odx-cover-art .odx-visual-3d{width:100%;height:auto}
+.odx-cover--with-art .odx-cover-lines{z-index:0}
+
+/* Miniaturas úteis para identificar documentos na biblioteca guiada. */
+.od-ui-recommend-symbol.od-ui-recommend-symbol--3d{
+    display:grid;place-items:center;
+    width:64px;height:64px;flex:none;
+    border-radius:14px;border:1px solid #e5eee7;
+    background:linear-gradient(145deg,#f6faf6,#e8f2ec);
+    padding:3px;overflow:hidden;
+}
+.od-ui-recommend-symbol--3d .odx-visual-3d{
+    width:58px;height:58px;flex:none;
+}
+@media(max-width:1150px){
+    .odx-cover.odx-cover--with-art{min-height:345px;padding-right:clamp(180px,31%,245px)}
+    .odx-cover-art{width:min(34%,235px);right:9px}
+    .odx-cover--with-art h2{font-size:clamp(28px,3.4vw,41px)}
+}
+@media(max-width:700px){
+    .odx-cover.odx-cover--with-art{
+        min-height:450px;padding:218px 25px 30px;
+        justify-content:flex-end;
+    }
+    .odx-cover-art{top:9px;bottom:auto;right:19px;width:min(56%,210px);filter:drop-shadow(0 10px 14px rgb(0 0 0 / .11))}
+    .odx-cover--with-art h2{font-size:clamp(26px,7.2vw,35px);margin:11px 0 9px}
+    .odx-cover--with-art .odx-cover-meta{margin-top:22px}
+}
+@media(max-width:390px){
+    .odx-cover.odx-cover--with-art{min-height:440px;padding:190px 21px 26px}
+    .odx-cover-art{width:178px;right:8px;top:8px}
+    .od-ui-recommend-symbol.od-ui-recommend-symbol--3d{width:50px;height:50px}
+    .od-ui-recommend-symbol--3d .odx-visual-3d{width:45px;height:45px}
+}
+@media print{
+    .odx-cover-art{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
