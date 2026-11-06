@@ -1,0 +1,50 @@
+/* Identidade da clínica: visual privado e prévia das minutas.
+   Os estilos globais do Odonto em Dia permanecem intocados. */
+.od-brand-top{max-width:770px;margin:14px 0 30px}
+.od-brand-top>span,.od-brand-preview-cap{font-size:10px;font-weight:850;letter-spacing:.17em;color:#287661}
+.od-brand-top h2{font-size:clamp(28px,3.8vw,43px);line-height:1.16;letter-spacing:-.055em;color:#173a33;margin:12px 0}
+.od-brand-top p{font-size:14px;line-height:1.8;color:#71867c;margin:0;max-width:680px}
+.od-brand-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(310px,.95fr);gap:24px;align-items:start;max-width:1190px;margin:0 auto 65px}
+.od-brand-card{background:#fff;border:1px solid #dfe9e2;border-radius:19px;padding:clamp(22px,3vw,34px);box-shadow:0 16px 48px #123b2410}
+.od-brand-card h3{font-size:17px;letter-spacing:-.03em;color:#203a33;margin:12px 0 15px}.od-brand-card h3:not(:first-child){margin-top:32px}
+.od-brand-label{display:flex;flex-direction:column;gap:9px;font-size:12px;font-weight:740;color:#34594c;margin:16px 0}
+.od-brand-label input[type=text],.od-brand-label input[type=file]{box-sizing:border-box;width:100%;padding:13px 15px;border:1px solid #d8e5dd;border-radius:10px;background:#fcfefd;color:#1e3a30;font:inherit}
+.od-brand-label input[type=text]:focus,.od-brand-label input[type=file]:focus-visible{outline:2px solid #328a74;outline-offset:2px}
+.od-brand-label input[type=color]{height:50px;width:100%;max-width:120px;background:#fff;padding:5px;border:1px solid #d9e4dc;border-radius:12px;cursor:pointer}
+.od-brand-label small,.od-brand-help{font-size:11px;font-weight:450;color:#7b9286;line-height:1.65;margin:0}
+.od-brand-palettes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.od-brand-choice{cursor:pointer;min-height:88px;display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:13px 12px;border:1px solid #e1eae4;border-radius:13px;background:#fafcfb;position:relative;box-sizing:border-box}
+.od-brand-choice input{position:absolute;right:12px;top:10px;accent-color:#176b58;width:15px;height:15px}
+.od-brand-choice:has(input:checked){background:#f0f8f4;border-color:#26765f;box-shadow:0 0 0 1px #26765f22}
+.od-brand-choice:focus-within{outline:2px solid #26765f;outline-offset:2px}
+.od-brand-choice>span:last-child{font-size:11px;font-weight:700;color:#315449;line-height:1.2}
+.od-brand-color{width:27px;height:27px;border-radius:9px;border:1px solid #0000000b}
+.od-brand-color-custom{background:linear-gradient(135deg,#176b58 0 27%,#204a70 27% 51%,#684166 51% 75%,#8b493a 75%)}
+.od-brand-remove{display:flex;align-items:center;gap:10px;font-size:12px;color:#6b3b35;cursor:pointer;margin:13px 0}.od-brand-remove input{accent-color:#86433b}
+.od-brand-submit{display:block;width:100%;margin-top:25px;border:0;border-radius:11px;background:#173e34;color:#fff;font-size:13px;font-weight:800;padding:16px 20px;cursor:pointer;transition:background .2s}
+.od-brand-submit:hover{background:#225845}.od-brand-submit:focus-visible{outline:3px solid #93d2b3;outline-offset:3px}
+.od-brand-preview{position:sticky;top:18px;padding:23px;border:1px solid #d9e7df;border-radius:19px;background:#edf3ee;min-width:0}
+.od-brand-preview-cap{margin-bottom:18px}
+.od-brand-preview-paper{--od-brand-color:#176b58;background:#fff;border-radius:7px;overflow:hidden;box-shadow:0 19px 40px #113d2c20}
+.od-brand-preview-head{display:flex;align-items:center;gap:12px;padding:24px 26px;min-width:0}.od-brand-preview-head img{max-width:110px;width:auto;height:47px;object-fit:contain;flex:none}
+.od-brand-preview-head>div:last-child{min-width:0}
+.od-brand-preview-head strong{font-size:12px;font-weight:800;color:#203b34;display:block;overflow-wrap:anywhere}
+.od-brand-preview-head small{display:block;font-size:9px;letter-spacing:.11em;color:#93a59b;margin-top:5px}
+.od-brand-preview-monogram{height:43px;width:43px;flex:none;display:grid;place-items:center;border-radius:12px;color:#fff;background:var(--od-brand-color);font-weight:800}
+.od-brand-preview-cover{background:var(--od-brand-color);color:#fff;padding:37px 30px 35px;min-height:255px;display:flex;flex-direction:column;justify-content:flex-end}
+.od-brand-preview-cover>span{font-size:9px;font-weight:850;letter-spacing:.16em;color:#ffffffe0}
+.od-brand-preview-cover h3{color:#fff;max-width:400px;font-size:clamp(24px,3vw,34px);line-height:1.14;letter-spacing:-.045em;margin:12px 0}
+.od-brand-preview-cover p{font-size:11px;color:#ffffffdd;line-height:1.6;margin:0;max-width:270px}
+.od-brand-preview-rule{height:2px;width:40px;background:#fff;margin-top:30px;opacity:.65}
+.od-brand-preview-body{padding:29px 30px 35px}.od-brand-preview-body>span{color:var(--od-brand-color);font-size:9px;letter-spacing:.13em;font-weight:850}
+.od-brand-preview-line{height:8px;background:#eef2ef;border-radius:9px;margin-top:17px;max-width:90%}.od-brand-preview-line.short{width:58%;margin-top:10px}
+.od-brand-preview-body p{color:#809189;font-size:10px;line-height:1.7;margin:22px 0 0}
+.od-brand-note{font-size:11px;line-height:1.65;color:#7b8f84;margin:18px 0 9px}
+.od-brand-back{color:#246853;font-size:12px;font-weight:800;text-decoration:none}
+.odx-paper.odx-branded{--odx-accent:var(--odx-brand-cover)}.odx-paper.odx-branded .odx-cover{background:var(--odx-brand-cover)}.odx-paper.odx-branded .odx-seal{background:var(--odx-brand-cover);color:#fff}
+.odx-paper.odx-branded .odx-cover-kicker,.odx-paper.odx-branded .odx-cover>p,.odx-paper.odx-branded .odx-cover-meta{color:#ffffffe0}
+.odx-paper.odx-branded .odx-brand-logo{width:auto;max-width:130px;max-height:49px;object-fit:contain;display:block;flex:none}
+.odx-paper.odx-branded .odx-paper-top{gap:17px}
+@media(max-width:880px){.od-brand-grid{grid-template-columns:1fr}.od-brand-preview{position:static;max-width:640px}.od-brand-palettes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.od-brand-grid{gap:14px}.od-brand-card{padding:19px}.od-brand-preview{padding:14px}.od-brand-palettes{grid-template-columns:repeat(2,minmax(0,1fr))}.od-brand-preview-cover{min-height:220px;padding:30px 24px}.odx-paper.odx-branded .odx-brand-logo{max-width:85px;max-height:38px}.od-brand-preview-head{padding:18px}}
+@media(prefers-reduced-motion:reduce){.od-brand-submit{transition:none}}
