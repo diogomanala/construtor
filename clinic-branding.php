@@ -95,8 +95,13 @@ function od_brand_save(): never {
         }
     }
     $db=od_brand_schema();
+    odx_schema(); // Garante as tabelas de versões para instalações ainda sem documentos.
     try {
         $db->beginTransaction();
+        // Congela a identidade anterior dos documentos legados antes de uma alteração de marca.
+        $past=$db->prepare('SELECT h.template_id,h.version FROM od_document_history h WHERE h.clinic_id=? AND NOT EXISTS (SELECT 1 FROM od_document_brand_history b WHERE b.clinic_id=h.clinic_id AND b.template_id=h.template_id AND b.version=h.version)');
+        $past->execute([(int)$c['id']]);
+        foreach($past->fetchAll() as $v)od_brand_snapshot($db,$c,(int)$v['template_id'],(int)$v['version']);
         $q=$db->prepare('UPDATE clinics SET name=? WHERE id=? AND user_id=?');
         $q->execute([$name,(int)$c['id'],(int)user()]);
         $q=$db->prepare("INSERT INTO od_clinic_branding(clinic_id,palette,accent,logo_mime,logo_blob,updated_at)
