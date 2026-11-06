@@ -162,7 +162,7 @@ function odx_page():never {
     }
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
-    h('Documento da clínica');
+    h('Documento da clínica',false);
     echo '<div class="odx-topline"><a href="?page=documentos">← Biblioteca</a><span> / </span><span>'.esc($doc['category']).'</span><span> / </span><strong>'.esc($meta['number']).'</strong></div>';
     echo '<div class="odx-page-title"><div><span class="odx-eyebrow">DOCSYSTEM / DOCUMENTAÇÃO DA CLÍNICA</span><h2>'.esc($doc['title']).'</h2><p>Preencha ao lado, acompanhe o documento e salve novas versões. Os materiais são minutas para revisão do RT. <a href="?page=identidade">Personalizar identidade da clínica</a></p></div><span class="odx-version">'.($saved?'Versão '.(int)$saved['version']:'Novo documento').'</span></div>';
     if($historical)echo '<div class="odx-history-banner"><strong>Visualizando versão '.(int)$historical['version'].'.</strong> Arquivo histórico somente para leitura. <a href="?page=editar&id='.(int)$id.'">Voltar à versão atual</a></div>';
@@ -173,6 +173,8 @@ function odx_page():never {
         if($tag==='textarea')echo '<textarea id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" rows="3" placeholder="'.esc($f['hint']).'">'.esc($value).'</textarea>';
         else echo '<input id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" value="'.esc($value).'" placeholder="'.esc($f['hint']).'">';
         echo '</label>';
+        $suggestion=od_guided_field_suggestion($f,$c);
+        if(!$historical && $value==='' && $suggestion!=='')echo '<div class="odx-suggestion-control"><button type="button" data-odx-suggest="'.esc($idAttr).'" data-suggestion="'.esc($suggestion).'">Usar sugestão de texto</button><small>Rascunho administrativo. Confirme com o RT.</small></div>';
     }
     $histQ=odx_schema()->prepare('SELECT version,stage,created_at FROM od_document_history WHERE clinic_id=? AND template_id=? ORDER BY version DESC LIMIT 5');
     $histQ->execute([(int)$c['id'],(int)$id]);
@@ -182,7 +184,7 @@ function odx_page():never {
     if((int)$id===7)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Controle de limpeza dos ambientes</h4><p>Registre cada execução e acompanhe pendências e ocorrências sem arquivos avulsos.</p><a href="?page=registros-limpeza">Abrir registro de limpeza ↗</a></div>';
     if(in_array((int)$id,[21,25,28],true))echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Manutenção de equipamentos</h4><p>Registre serviços, verificações e próximas datas por equipamento, mantendo histórico da clínica.</p><a href="?page=registros-manutencao">Abrir controle de manutenção ↗</a></div>';
     if((int)$id===6)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Entrega e orientação sobre EPI</h4><p>Documente entregas e orientações internas, com histórico e acompanhamento de ocorrências.</p><a href="?page=registros-epi">Abrir controle de EPI ↗</a></div>';
-    echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div><button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
+    echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div>'.od_legal_review_panel((int)$id,$c,$historical!==null).'<button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools"><button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
     $brandMark=$brand['logo_mime']?'<img class="odx-brand-logo" src="'.esc($brandLogoUrl).'" alt="Logo da clínica">':'<div class="odx-seal"><span>'.esc(mb_strtoupper(mb_substr((string)$paperClinic['name'],0,1))).'</span></div>';
     echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).' odx-branded" style="--odx-brand-cover:'.esc($brand['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top">'.$brandMark.'<div><strong>'.esc($paperClinic['name']).'</strong><small>'.esc($paperClinic['city']).($paperClinic['state']?' · '.esc($paperClinic['state']):'').' &nbsp;·&nbsp; '.esc($paperClinic['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
@@ -196,7 +198,7 @@ function odx_page():never {
     echo '</div></section>';
     echo '<div class="odx-source-head"><div><span>MINUTA DE REFERÊNCIA</span><h3>Conteúdo técnico para adaptação</h3></div><p>Revisar procedimentos, equipamentos e referências com o responsável técnico.</p></div>';
     echo '<div class="odx-document-body" id="odx-document-body" aria-label="Conteúdo técnico" contenteditable="false">'.$html.'</div>';
-    echo '<div class="odx-approval"><div><span>CONTROLE E REVISÃO</span><h3>Revisão pelo responsável técnico</h3><p>Este documento não foi aprovado automaticamente. A clínica deve revisar, adaptar, implementar e registrar a aprovação técnica pertinente.</p></div><div class="odx-approval-line"><small>Responsável técnico / CRO</small><span>Assinatura e data após validação</span></div></div>';
+    echo '<div class="odx-approval"><div><span>CONTROLE E REVISÃO</span><h3>Revisão e formalização</h3><p>Esta minuta não recebe aprovação automática. O RT deve revisar o conteúdo; a SDBPF exige também aprovação e assinatura do responsável legal, conforme a RDC 1.002/2025, art. 111. A assinatura exibida aqui é apenas um espaço de referência, não uma assinatura eletrônica.</p></div><div class="odx-approval-line"><small>Responsável técnico / CRO</small><span>Assinatura e data após validação</span></div></div>';
     echo '<div class="odx-paper-foot"><span>ODONTO EM DIA · DOCUMENTAÇÃO INTERNA</span><span>Modelo de referência · sem certificação automática</span></div></div></article>';
     echo '<div class="odx-outline" hidden id="odx-outline"><h3>Seções do documento</h3><ol data-odx-outline></ol></div>';
     echo '<div class="odx-bottom-hint"><strong>Este material é uma minuta de referência.</strong> Não substitui a avaliação da aplicabilidade, a revisão e a aprovação profissional.</div></section></form>';
@@ -223,7 +225,7 @@ function odx_saved():never {
     $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
     $s=odx_schema()->prepare('SELECT template_id,version,stage,updated_at FROM od_documents WHERE clinic_id=? ORDER BY updated_at DESC');
     $s->execute([(int)$c['id']]);$saved=$s->fetchAll();
-    h('Minhas versões');
+    h('Minhas versões',false);
     echo '<div class="odx-lib-header"><div><span>ACERVO PERSONALIZADO</span><h2>Seus documentos em andamento.</h2><p>Retome as minutas e consulte versões anteriores sem precisar localizar arquivos no computador.</p></div><div class="odx-lib-stats"><b>'.count($saved).'</b><span>documentos iniciados</span></div></div>';
     if(!$saved){echo '<div class="odx-library-alert">Você ainda não personalizou nenhum documento. <a href="?page=documentos">Abra a biblioteca e escolha um modelo para começar.</a></div>';foot();exit;}
     echo '<div class="odx-saved-grid">';
