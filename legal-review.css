@@ -53,3 +53,14 @@
 .od-legal-edit-cta{display:inline-flex;align-items:center;justify-content:center;border:1px solid #c7e1d1;background:#eaf6ee;color:#236d52;border-radius:9px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer;margin:4px 8px 4px 0}
 .od-legal-edit-cta:hover{background:#d9eddf}
 @media(max-width:650px){.odx-toolbar .odx-tools{width:100%;justify-content:flex-start}.odx-toolbar .odx-tools button{font-size:10px!important;padding:9px 10px!important}.od-legal-result button{width:100%;margin-bottom:8px}}
+
+/* Resultado do Raio-X: feedback funcional, sem simular certificação. */
+.od-legal-scan-summary{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid #e0eae2}
+.od-legal-scan-summary strong{font-size:12px;color:#1c604a;font-weight:850;line-height:1.5}
+.od-legal-scan-summary span{font-size:10px;color:#799086;line-height:1.6}
+.od-legal-review-list{padding:0!important;margin:13px 0 0!important;list-style:none!important;display:grid;gap:8px}
+.od-legal-review-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f7faf8;border:1px solid #e3ece7;border-radius:9px;padding:11px 12px;color:#3e6254;line-height:1.5}
+.od-legal-review-list li span{flex:1}
+.od-legal-review-list li a{flex:none;color:#21715a;text-decoration:none;font-size:11px;font-weight:800}
+.od-legal-review-list li a:hover{text-decoration:underline}
+@media(max-width:420px){.od-legal-review-list li{align-items:flex-start;flex-direction:column;gap:6px}}
