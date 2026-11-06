@@ -1,0 +1,722 @@
+{
+  "1": {
+    "fields": [
+      {
+        "key": "guia_contexto",
+        "label": "Contexto do estabelecimento",
+        "hint": "Informe quais setores e serviços realmente existem na unidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "guia_pessoas",
+        "label": "Quem participará da organização",
+        "hint": "Indique os responsáveis internos pela implantação e pela revisão técnica.",
+        "type": "textarea"
+      },
+      {
+        "key": "guia_primeiros",
+        "label": "Primeiros documentos a organizar",
+        "hint": "Descreva a sequência inicial de trabalho adotada pela equipe.",
+        "type": "textarea"
+      },
+      {
+        "key": "guia_marcos",
+        "label": "Prazos e pendências iniciais",
+        "hint": "Registre marcos de acompanhamento definidos pela clínica.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Guia de Implantação",
+      "eyebrow": "Roteiro para iniciar a organização",
+      "number": "GUIA / 01",
+      "flow": [
+        "Identificar ponto de partida",
+        "Definir prioridades",
+        "Organizar trabalho",
+        "Conferir pendências"
+      ],
+      "accent": "jade"
+    }
+  },
+  "2": {
+    "fields": [
+      {
+        "key": "mapa_estrutura",
+        "label": "Estrutura e serviços contemplados",
+        "hint": "Registre os setores e serviços que compõem a clínica.",
+        "type": "textarea"
+      },
+      {
+        "key": "mapa_aplicacao",
+        "label": "Categorias aplicáveis à unidade",
+        "hint": "Liste as frentes aplicáveis conforme a avaliação do responsável técnico.",
+        "type": "textarea"
+      },
+      {
+        "key": "mapa_localizacao",
+        "label": "Onde os registros ficam guardados",
+        "hint": "Informe os locais ou sistemas de consulta das evidências.",
+        "type": "textarea"
+      },
+      {
+        "key": "mapa_pendencias",
+        "label": "Pendências e responsáveis",
+        "hint": "Indique próximos passos e responsáveis internos por cada frente.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Mapa Documental da SDBPF",
+      "eyebrow": "Visão geral dos registros e frentes de trabalho",
+      "number": "SDBPF / MAPA",
+      "flow": [
+        "Identificar frentes",
+        "Avaliar aplicabilidade",
+        "Localizar evidências",
+        "Acompanhar pendências"
+      ],
+      "accent": "blue"
+    }
+  },
+  "4": {
+    "fields": [
+      {
+        "key": "ident_pontos",
+        "label": "Etapas com identificação do paciente",
+        "hint": "Descreva onde a unidade confirma informações, sem incluir dados de pacientes.",
+        "type": "textarea"
+      },
+      {
+        "key": "ident_responsavel",
+        "label": "Equipe responsável pela verificação",
+        "hint": "Informe cargos e responsabilidades nos pontos de conferência.",
+        "type": "textarea"
+      },
+      {
+        "key": "ident_divergencias",
+        "label": "Tratamento das inconsistências",
+        "hint": "Registre como dúvidas ou divergências são encaminhadas conforme a rotina validada.",
+        "type": "textarea"
+      },
+      {
+        "key": "ident_evidencias",
+        "label": "Registros de orientação e revisão",
+        "hint": "Informe onde ficam documentos, treinamentos e alterações da rotina.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Identificação e Atendimento Seguro",
+      "eyebrow": "Fluxo documental de identificação",
+      "number": "POP / 01",
+      "flow": [
+        "Definir pontos de checagem",
+        "Atribuir responsabilidades",
+        "Registrar divergências",
+        "Revisar com RT"
+      ],
+      "accent": "jade"
+    }
+  },
+  "5": {
+    "fields": [
+      {
+        "key": "maos_setores",
+        "label": "Locais e atividades abrangidos",
+        "hint": "Informe os setores de trabalho em que a rotina será aplicada.",
+        "type": "textarea"
+      },
+      {
+        "key": "maos_recursos",
+        "label": "Infraestrutura e insumos disponíveis",
+        "hint": "Descreva os recursos existentes, sem presumir a eficácia de um produto.",
+        "type": "textarea"
+      },
+      {
+        "key": "maos_orientacoes",
+        "label": "Treinamento e responsáveis",
+        "hint": "Registre como a equipe recebe orientações aprovadas pelo RT.",
+        "type": "textarea"
+      },
+      {
+        "key": "maos_registros",
+        "label": "Verificações e registros de acompanhamento",
+        "hint": "Informe quem monitora e onde são guardadas as evidências.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Higienização das Mãos e Precauções",
+      "eyebrow": "Rotina de biossegurança da equipe",
+      "number": "POP / 02",
+      "flow": [
+        "Delimitar setores",
+        "Verificar recursos",
+        "Orientar equipe",
+        "Documentar acompanhamento"
+      ],
+      "accent": "blue"
+    }
+  },
+  "8": {
+    "fields": [
+      {
+        "key": "transport_origens",
+        "label": "Ambientes de origem dos dispositivos",
+        "hint": "Liste os pontos de recolhimento da unidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "transport_percurso",
+        "label": "Percurso e identificação do transporte",
+        "hint": "Descreva a circulação interna adotada e as medidas aprovadas pelo RT.",
+        "type": "textarea"
+      },
+      {
+        "key": "transport_equipe",
+        "label": "Equipe e recursos responsáveis",
+        "hint": "Identifique responsáveis, recipientes e condições de trabalho existentes.",
+        "type": "textarea"
+      },
+      {
+        "key": "transport_desvios",
+        "label": "Registro de incidentes ou desvios",
+        "hint": "Informe como ocorrências são relatadas e acompanhadas.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Recolhimento e Transporte de Dispositivos",
+      "eyebrow": "Fluxo interno de material utilizado",
+      "number": "POP / 05",
+      "flow": [
+        "Mapear origens",
+        "Definir percurso",
+        "Atribuir responsáveis",
+        "Registrar ocorrências"
+      ],
+      "accent": "amber"
+    }
+  },
+  "9": {
+    "fields": [
+      {
+        "key": "inspecao_materiais",
+        "label": "Dispositivos e setores contemplados",
+        "hint": "Registre os tipos efetivamente processados na unidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "inspecao_instrucao",
+        "label": "Instruções aprovadas e recursos de referência",
+        "hint": "Aponte procedimentos validados e documentação dos fabricantes, quando aplicável.",
+        "type": "textarea"
+      },
+      {
+        "key": "inspecao_controle",
+        "label": "Conferência e rastreabilidade internas",
+        "hint": "Descreva quem acompanha e quais registros são mantidos.",
+        "type": "textarea"
+      },
+      {
+        "key": "inspecao_desvios",
+        "label": "Encaminhamento de materiais não conformes",
+        "hint": "Registre o fluxo institucional definido para tratar inconsistências.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Limpeza e Inspeção de Dispositivos",
+      "eyebrow": "Etapas documentais do processamento",
+      "number": "POP / 06",
+      "flow": [
+        "Delimitar materiais",
+        "Definir responsáveis",
+        "Registrar inspeções",
+        "Tratar desvios"
+      ],
+      "accent": "blue"
+    }
+  },
+  "10": {
+    "fields": [
+      {
+        "key": "embalagem_materiais",
+        "label": "Produtos e embalagens utilizados",
+        "hint": "Informe os materiais previstos conforme as instruções e avaliação técnica.",
+        "type": "textarea"
+      },
+      {
+        "key": "embalagem_campos",
+        "label": "Informações de identificação adotadas",
+        "hint": "Liste os campos da etiqueta ou identificação definidos pela clínica.",
+        "type": "textarea"
+      },
+      {
+        "key": "embalagem_rastreio",
+        "label": "Registro e localização dos lotes",
+        "hint": "Explique como a unidade conecta material, processamento e registros.",
+        "type": "textarea"
+      },
+      {
+        "key": "embalagem_desvios",
+        "label": "Tratamento de falhas e alterações",
+        "hint": "Registre a rotina institucional para revisão de etiquetas e ocorrências.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Preparo, Embalagem e Identificação",
+      "eyebrow": "Identificação e rastreabilidade do material",
+      "number": "POP / 07",
+      "flow": [
+        "Mapear produtos",
+        "Definir identificação",
+        "Registrar lotes",
+        "Revisar evidências"
+      ],
+      "accent": "jade"
+    }
+  },
+  "12": {
+    "fields": [
+      {
+        "key": "armazen_areas",
+        "label": "Áreas e condições acompanhadas",
+        "hint": "Identifique os ambientes utilizados e as condições avaliadas pelo RT.",
+        "type": "textarea"
+      },
+      {
+        "key": "armazen_ident",
+        "label": "Sistema de identificação dos materiais",
+        "hint": "Registre como os itens são identificados na unidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "armazen_controle",
+        "label": "Controle de entrada, saída e utilização",
+        "hint": "Informe os registros operacionais adotados para rastreabilidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "armazen_ocorr",
+        "label": "Conferência e tratamento de ocorrências",
+        "hint": "Defina responsáveis pela verificação e registro de desvios.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Armazenamento e Rastreabilidade",
+      "eyebrow": "Organização e movimentação de materiais",
+      "number": "POP / 09",
+      "flow": [
+        "Mapear armazenamento",
+        "Definir identificação",
+        "Acompanhar movimentação",
+        "Conferir registros"
+      ],
+      "accent": "blue"
+    }
+  },
+  "13": {
+    "fields": [
+      {
+        "key": "desinf_escopo",
+        "label": "Materiais e processos abrangidos",
+        "hint": "Liste somente situações efetivamente aplicáveis, conforme análise técnica.",
+        "type": "textarea"
+      },
+      {
+        "key": "desinf_referencia",
+        "label": "Produtos e documentos técnicos de referência",
+        "hint": "Registre identificação do produto e localização das instruções oficiais.",
+        "type": "textarea"
+      },
+      {
+        "key": "desinf_registros",
+        "label": "Responsáveis e registros do processo",
+        "hint": "Informe como a clínica documenta a execução e as verificações.",
+        "type": "textarea"
+      },
+      {
+        "key": "desinf_anomalias",
+        "label": "Ações diante de ocorrências",
+        "hint": "Descreva o encaminhamento interno, sem improvisar parâmetros técnicos.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Desinfecção Química de Dispositivos",
+      "eyebrow": "Controle documental de produtos e processos",
+      "number": "POP / 10",
+      "flow": [
+        "Definir aplicabilidade",
+        "Identificar produtos",
+        "Manter evidências",
+        "Revisar desvios"
+      ],
+      "accent": "amber"
+    }
+  },
+  "14": {
+    "fields": [
+      {
+        "key": "residuos_origens",
+        "label": "Pontos de geração de resíduos",
+        "hint": "Identifique áreas e tipos de resíduos reconhecidos no PGRSS da clínica.",
+        "type": "textarea"
+      },
+      {
+        "key": "residuos_coletores",
+        "label": "Acondicionamento e identificação adotados",
+        "hint": "Descreva os recipientes e a identificação validada pelo RT.",
+        "type": "textarea"
+      },
+      {
+        "key": "residuos_coleta",
+        "label": "Responsabilidades e fluxos de coleta",
+        "hint": "Registre prestadores e rotinas aplicáveis à unidade.",
+        "type": "textarea"
+      },
+      {
+        "key": "residuos_ocorrencias",
+        "label": "Comprovantes e registro de incidentes",
+        "hint": "Indique onde ficam evidências de destinação e como descrever ocorrências.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Segregação e Coleta de Resíduos",
+      "eyebrow": "Rotinas do PGRSS no ambiente de trabalho",
+      "number": "POP / 11",
+      "flow": [
+        "Mapear geração",
+        "Definir identificação",
+        "Registrar movimentação",
+        "Revisar ocorrências"
+      ],
+      "accent": "amber"
+    }
+  },
+  "15": {
+    "fields": [
+      {
+        "key": "exposicao_canais",
+        "label": "Referências e canais institucionais",
+        "hint": "Informe os contatos internos e externos indicados pela instituição.",
+        "type": "textarea"
+      },
+      {
+        "key": "exposicao_papeis",
+        "label": "Responsabilidades pela comunicação",
+        "hint": "Registre quem orienta e encaminha situações de exposição.",
+        "type": "textarea"
+      },
+      {
+        "key": "exposicao_registro",
+        "label": "Registros e confidencialidade",
+        "hint": "Defina onde e por quem as ocorrências serão documentadas, sem inserir casos reais aqui.",
+        "type": "textarea"
+      },
+      {
+        "key": "exposicao_revisao",
+        "label": "Acompanhamento do encaminhamento",
+        "hint": "Informe como a instituição acompanha orientações e revisões técnicas.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Exposição a Material Biológico",
+      "eyebrow": "Comunicação e acompanhamento ocupacional",
+      "number": "POP / 12",
+      "flow": [
+        "Identificar responsáveis",
+        "Indicar canais",
+        "Registrar ocorrência",
+        "Acompanhar encaminhamento"
+      ],
+      "accent": "blue"
+    }
+  },
+  "16": {
+    "fields": [
+      {
+        "key": "urgencia_cenarios",
+        "label": "Cenários aplicáveis ao serviço",
+        "hint": "Liste situações compatíveis com os atendimentos realizados na clínica.",
+        "type": "textarea"
+      },
+      {
+        "key": "urgencia_equipe",
+        "label": "Equipe e atribuições internas",
+        "hint": "Descreva responsabilidades de acordo com o plano aprovado pela direção técnica.",
+        "type": "textarea"
+      },
+      {
+        "key": "urgencia_contatos",
+        "label": "Recursos e contatos de referência",
+        "hint": "Informe onde são encontrados os recursos e números de acionamento institucional.",
+        "type": "textarea"
+      },
+      {
+        "key": "urgencia_evidencias",
+        "label": "Treinamentos e revisão do plano",
+        "hint": "Registre onde são documentados treinamentos e verificações periódicas.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Urgências, Emergências e Remoção",
+      "eyebrow": "Preparação institucional e comunicação",
+      "number": "POP / 13",
+      "flow": [
+        "Mapear cenários",
+        "Atribuir funções",
+        "Conferir recursos",
+        "Revisar preparação"
+      ],
+      "accent": "amber"
+    }
+  },
+  "17": {
+    "fields": [
+      {
+        "key": "incidentes_canal",
+        "label": "Canais de comunicação internos",
+        "hint": "Informe como a equipe comunica eventos e situações observadas.",
+        "type": "textarea"
+      },
+      {
+        "key": "incidentes_responsaveis",
+        "label": "Responsáveis por receber e analisar relatos",
+        "hint": "Registre cargos e papéis na avaliação interna.",
+        "type": "textarea"
+      },
+      {
+        "key": "incidentes_providencias",
+        "label": "Como as medidas são acompanhadas",
+        "hint": "Descreva onde são registradas decisões, responsáveis e prazos.",
+        "type": "textarea"
+      },
+      {
+        "key": "incidentes_revisao",
+        "label": "Aprendizado e atualizações de rotina",
+        "hint": "Informe como mudanças e orientações são documentadas.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Vigilância de Incidentes",
+      "eyebrow": "Registro e melhoria das rotinas",
+      "number": "POP / 14",
+      "flow": [
+        "Definir canais",
+        "Registrar relatos",
+        "Acompanhar medidas",
+        "Revisar resultados"
+      ],
+      "accent": "jade"
+    }
+  },
+  "18": {
+    "fields": [
+      {
+        "key": "agua_pontos_pop",
+        "label": "Pontos de uso contemplados",
+        "hint": "Identifique as saídas e equipamentos que utilizam água, conforme o serviço.",
+        "type": "textarea"
+      },
+      {
+        "key": "agua_referencia_pop",
+        "label": "Critérios e métodos adotados",
+        "hint": "Aponte a referência técnica e quem aprovou o método de acompanhamento.",
+        "type": "textarea"
+      },
+      {
+        "key": "agua_resultados_pop",
+        "label": "Registro e localização das análises",
+        "hint": "Informe quem recebe resultados e onde são mantidos os comprovantes.",
+        "type": "textarea"
+      },
+      {
+        "key": "agua_desvios_pop",
+        "label": "Tratamento de ocorrências",
+        "hint": "Descreva como falhas são acompanhadas e encaminhadas à avaliação técnica.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Controle da Água e Pontos de Uso",
+      "eyebrow": "Rastreabilidade das verificações",
+      "number": "POP / 15",
+      "flow": [
+        "Mapear pontos",
+        "Definir monitoramento",
+        "Registrar resultados",
+        "Acompanhar desvios"
+      ],
+      "accent": "blue"
+    }
+  },
+  "19": {
+    "fields": [
+      {
+        "key": "terceiros_servicos",
+        "label": "Serviços contratados pela clínica",
+        "hint": "Liste os prestadores e atividades efetivamente terceirizados.",
+        "type": "textarea"
+      },
+      {
+        "key": "terceiros_requisitos",
+        "label": "Documentos e comprovantes exigíveis",
+        "hint": "Registre as evidências que precisam ser consultadas conforme o serviço e normas aplicáveis.",
+        "type": "textarea"
+      },
+      {
+        "key": "terceiros_gestao",
+        "label": "Responsáveis pelo acompanhamento",
+        "hint": "Indique quem verifica contratos, renovações e solicita evidências.",
+        "type": "textarea"
+      },
+      {
+        "key": "terceiros_pendencias",
+        "label": "Renovações e pendências documentais",
+        "hint": "Descreva o fluxo de verificação de vencimentos e não conformidades.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Gestão de Contratos e Terceiros",
+      "eyebrow": "Documentos de prestadores e serviços",
+      "number": "POP / 16",
+      "flow": [
+        "Mapear contratos",
+        "Conferir documentação",
+        "Definir responsáveis",
+        "Acompanhar vencimentos"
+      ],
+      "accent": "amber"
+    }
+  },
+  "20": {
+    "fields": [
+      {
+        "key": "ciencia_publico",
+        "label": "Funções e equipes abrangidas",
+        "hint": "Indique quais cargos precisam receber os materiais e orientações.",
+        "type": "textarea"
+      },
+      {
+        "key": "ciencia_conteudos",
+        "label": "Documentos e temas de referência",
+        "hint": "Registre versões das minutas, conteúdos e responsabilidades envolvidas.",
+        "type": "textarea"
+      },
+      {
+        "key": "ciencia_evidencias",
+        "label": "Como as orientações são documentadas",
+        "hint": "Indique como são registradas presença, ciência e eventuais comprovantes.",
+        "type": "textarea"
+      },
+      {
+        "key": "ciencia_atualizacao",
+        "label": "Atualizações e revisão periódica",
+        "hint": "Registre como mudanças de procedimento chegam aos profissionais.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Capacitação e Ciência da SDBPF",
+      "eyebrow": "Acompanhamento da orientação da equipe",
+      "number": "POP / 17",
+      "flow": [
+        "Definir público",
+        "Programar conteúdos",
+        "Registrar ciência",
+        "Revisar necessidades"
+      ],
+      "accent": "jade"
+    }
+  },
+  "29": {
+    "fields": [
+      {
+        "key": "formularios_tipos",
+        "label": "Formulários utilizados pela unidade",
+        "hint": "Liste os formulários efetivamente adotados, conforme o serviço.",
+        "type": "textarea"
+      },
+      {
+        "key": "formularios_preench",
+        "label": "Responsáveis pelo preenchimento e conferência",
+        "hint": "Indique funções, sem colocar informações de pacientes.",
+        "type": "textarea"
+      },
+      {
+        "key": "formularios_guarda",
+        "label": "Armazenamento, acesso e confidencialidade",
+        "hint": "Descreva como a clínica protege registros sensíveis e controla o acesso.",
+        "type": "textarea"
+      },
+      {
+        "key": "formularios_revisao",
+        "label": "Critério de revisão e atualização",
+        "hint": "Registre quem revisa os modelos e como novas versões são comunicadas.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Formulários de Apoio",
+      "eyebrow": "Registros internos para organizar a rotina",
+      "number": "FORM / REGISTROS",
+      "flow": [
+        "Escolher formulários",
+        "Definir responsáveis",
+        "Organizar guarda",
+        "Revisar documentos"
+      ],
+      "accent": "blue"
+    }
+  },
+  "30": {
+    "fields": [
+      {
+        "key": "termo_publico",
+        "label": "Equipe e funções que receberão orientação",
+        "hint": "Informe os cargos e setores abrangidos pelo documento.",
+        "type": "textarea"
+      },
+      {
+        "key": "termo_versoes",
+        "label": "Versão dos materiais comunicados",
+        "hint": "Registre quais procedimentos e versões foram apresentados à equipe.",
+        "type": "textarea"
+      },
+      {
+        "key": "termo_comunicacao",
+        "label": "Forma de comunicação e orientação",
+        "hint": "Informe como a equipe teve acesso às informações pertinentes.",
+        "type": "textarea"
+      },
+      {
+        "key": "termo_comprovantes",
+        "label": "Evidências de ciência e guarda",
+        "hint": "Descreva onde serão mantidas assinaturas ou evidências válidas, se aplicáveis.",
+        "type": "textarea"
+      }
+    ],
+    "spec": {
+      "name": "Ciência da Equipe",
+      "eyebrow": "Controle de comunicação e revisões",
+      "number": "FORM / CIÊNCIA",
+      "flow": [
+        "Identificar versão",
+        "Orientar equipe",
+        "Registrar ciência",
+        "Guardar evidências"
+      ],
+      "accent": "jade"
+    }
+  }
+}
