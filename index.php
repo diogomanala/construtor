@@ -34,7 +34,7 @@ function h(string $page,bool $showHeading=true):void {
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=1"><link rel="stylesheet" href="legal-review.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=1"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="visual-library.css?v=1"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -54,6 +54,7 @@ function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avali
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
+require_once __DIR__.'/visual-library.php';
 require_once __DIR__.'/guided-ux.php';
 require_once __DIR__.'/legal-review.php';
 require_once __DIR__.'/document-engine.php';
