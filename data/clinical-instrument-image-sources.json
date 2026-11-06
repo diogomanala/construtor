@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_on": "2026-11-06",
+  "product": "Odonto em Dia",
+  "purpose": "Acervo de imagens individuais de instrumentos, com atribuição e licença por arquivo, para quadros ilustrados.",
+  "content_rules": [
+    "Imagens são referências visuais de objetos e não validam a conduta clínica ou a lista de instrumentos necessária.",
+    "Só exibir nos documentos após curadoria visual, confirmação da licença específica, importação local e revisão técnica da legenda.",
+    "O catálogo atual de 30 minutas sanitárias NÃO contém POP clínico de profilaxia ou exodontia; nunca misturar com o POP de limpeza de ambientes.",
+    "Não utilizar fotografias de sites comerciais ou produtos de fornecedores sem permissão.",
+    "Se recortar ou remover o fundo, registrar a modificação e manter os créditos e obrigações da licença original."
+  ],
+  "candidates": [
+    {
+      "id": "gracey_curettes",
+      "name_pt": "Curetas Gracey",
+      "category": "profilaxia_periodontia",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Curetas-gracey.JPG",
+      "author": "Leandro Martinez",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0/",
+      "original_kind": "JPG",
+      "prepared_asset": null,
+      "status": "fonte_identificada_pendente_preparo",
+      "use_in_existing_template_ids": [],
+      "notes": "Utilizar somente em futuro material clínico específico validado."
+    },
+    {
+      "id": "dental_mirror",
+      "name_pt": "Espelho bucal",
+      "category": "instrumental_exame",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Dental_Mirror_01.jpg",
+      "author": "AfroBrazilian",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "original_kind": "JPG",
+      "prepared_asset": null,
+      "status": "fonte_identificada_pendente_preparo",
+      "use_in_existing_template_ids": [],
+      "notes": "Imagem ilustrativa, não usar para demonstrar técnica de atendimento."
+    },
+    {
+      "id": "extraction_forceps",
+      "name_pt": "Fórceps para exodontia",
+      "category": "exodontia",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Dental_extraction_forceps.jpg",
+      "author": "Revolver00870",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "original_kind": "JPG",
+      "prepared_asset": null,
+      "status": "fonte_identificada_pendente_preparo",
+      "use_in_existing_template_ids": [],
+      "notes": "Foto apresenta conjunto de instrumentos sobre fundo azul, requer curadoria e recorte individual."
+    },
+    {
+      "id": "root_elevators",
+      "name_pt": "Elevadores Warwick James",
+      "category": "exodontia",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Warwick_james_dental_elevators.jpg",
+      "author": "Sadandy",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "original_kind": "JPG",
+      "prepared_asset": null,
+      "status": "fonte_identificada_pendente_preparo",
+      "use_in_existing_template_ids": [],
+      "notes": "Confirmar identificação individual dos instrumentos com o RT."
+    },
+    {
+      "id": "dental_scaler",
+      "name_pt": "Raspador odontológico",
+      "category": "profilaxia_periodontia",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Dental_scaler.JPG",
+      "author": "Haragayato",
+      "license": "CC BY-SA 2.5",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.5/",
+      "original_kind": "JPG",
+      "prepared_asset": null,
+      "status": "fonte_identificada_pendente_preparo",
+      "use_in_existing_template_ids": [],
+      "notes": "Usar como elemento isolado, após conferência do item pelo RT."
+    }
+  ],
+  "workflow": "Confirmar licença do arquivo > baixar original ou resolução suficiente > remover fundo e otimizar para WebP/PNG por item > gravar créditos e alterações > revisão técnica do nome > inserir cards separados com legenda; sem impor conteúdo clínico ao POP regulatório."
+}
