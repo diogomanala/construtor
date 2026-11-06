@@ -1,1 +1,6 @@
+Options -Indexes
+DirectoryIndex index.php
+<FilesMatch "^(\.env|.*\.sqlite|.*\.db|.*\.log)$">
 Require all denied
+</FilesMatch>
+RedirectMatch 404 /rdc/\.git(/|$)
