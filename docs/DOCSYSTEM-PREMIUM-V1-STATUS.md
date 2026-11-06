@@ -71,3 +71,12 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 2. Testar compra Mercado Pago válida, webhook, recuperação, expiração, pedido cancelado e direito de acesso.
 3. Revisão clínica/regulatória por RT habilitado e, quando necessário, jurídica. Sem selo ou certificação automática.
 4. Continuar aprimorando os demais 24 modelos de referência, priorizando os POPs com registro operacional. Não acrescentar arte clínica sem validação de conteúdo ou direitos.
+
+## Checkpoint v1.3 (06/11/2026): regressão local e plano de QA P0
+- Confirmadas pela Hostinger em modo somente leitura: PHP **8.2.35**, extensões **pdo_sqlite, sqlite3, mbstring, dom, curl e zip** habilitadas.
+- `tests/tenant-regression.php`: exercício de registros de manutenção/EPI com PDO simulado, verificando gravação por clínica da sessão, tentativa de forjar `clinic_id`, filtros, rejeição de campos inválidos e ausência de leitura cruzada. Execução CLI local passou nos cenários cobertos.
+- `tests/document-history-regression.php`: versão documental simulada por clínica, snapshots de campos, recuperação da versão anterior e impedimento de consulta cruzada. Execução CLI local passou nos cenários cobertos. Sanitização HTML e persistência SQLite real **não** são testadas nesse harness.
+- Scripts em `tests/` aceitam somente CLI; pasta protegida por `.htaccess`. Nenhum teste usa credenciais reais, dados de pacientes, cobrança ou modifica o banco de produção.
+- `docs/QA-ACESSO-CLINICAS.md`: matriz com **12 casos P0** para teste autenticado, separação entre clínicas, histórico, controles operacionais, permissões e Mercado Pago.
+- Chamadas públicas de verificação por ferramentas externas não alcançaram o domínio; a confirmação funcional real permanece **pendente**.
+- Estado esperado no Notion: **P0 QA em execução**, não "Verificado". Próximo passo: executar casos autenticados A/B e registrar resultados, depois testar o pagamento de forma controlada.
