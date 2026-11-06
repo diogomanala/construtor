@@ -100,3 +100,37 @@ function odx_plan_configs(): array {
         ],
     ];
 }
+
+/**
+ * Complements the plan schemas with the remaining documents. Data are only
+ * presentation questions and organizational flow labels, never clinical orders.
+ * Missing or invalid JSON falls back to the original generic document editor.
+ */
+function odx_document_configs(): array {
+    static $cached = null;
+    if (is_array($cached)) return $cached;
+    $plans = odx_plan_configs();
+    $path = __DIR__.'/data/document-guides.json';
+    $raw = @file_get_contents($path);
+    $items = is_string($raw) ? json_decode($raw, true) : null;
+    $additional = [];
+    if (is_array($items)) {
+        foreach ($items as $id => $row) {
+            $id=(int)$id;
+            if ($id < 1 || $id > 30 || isset($plans[$id]) || !is_array($row)) continue;
+            $fields=$row['fields']??null;
+            $spec=$row['spec']??null;
+            if (!is_array($fields) || count($fields)!==4 || !is_array($spec) || !is_array($spec['flow']??null) || count($spec['flow'])!==4) continue;
+            $keys=[];
+            foreach ($fields as $f) {
+                if (!is_array($f) || !isset($f['key'],$f['label'],$f['hint'],$f['type']) || !is_string($f['key']) || !preg_match('/^[a-z][a-z0-9_]{2,40}$/',$f['key']) || !in_array($f['type'],['text','textarea'],true)) continue 2;
+                $keys[]=$f['key'];
+            }
+            if (count(array_unique($keys))!==4) continue;
+            if (!in_array($spec['accent']??'', ['jade','blue','amber'],true)) continue;
+            if (!isset($spec['name'],$spec['eyebrow'],$spec['number'])) continue;
+            $additional[$id]=$row;
+        }
+    }
+    return $cached = array_replace($plans,$additional);
+}
