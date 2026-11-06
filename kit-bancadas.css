@@ -62,3 +62,27 @@
  .od-kit-photo{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 @media(prefers-reduced-motion:reduce){.od-kit-choice{transition:none}}
+
+/* Integração discreta com a biblioteca existente */
+.od-kit-library-callout{display:flex;gap:15px;align-items:center;background:#fff;border:1px solid #d9e9e0;border-radius:15px;margin-top:22px;padding:19px 21px;color:#1b4e3f;text-decoration:none;transition:border-color .2s,background .2s}
+.od-kit-library-callout:hover{border-color:#91c3ad;background:#fafdfb}
+.od-kit-library-callout:focus-visible{outline:3px solid #2b8f71;outline-offset:2px}
+.od-kit-library-symbol{width:44px;height:44px;flex:none;display:grid;place-items:center;background:#ecf6ee;color:#26765d;border-radius:11px}
+.od-kit-library-callout>span:nth-child(2){flex:1;min-width:0}
+.od-kit-library-callout small{display:block;font-size:9px;letter-spacing:.11em;font-weight:800;color:#418871}
+.od-kit-library-callout strong{display:block;font-size:15px;color:#214d3d;margin:5px 0}
+.od-kit-library-callout em{display:block;font-size:11px;line-height:1.6;font-style:normal;color:#7b9485}
+.od-kit-library-arrow{color:#3f856a}
+.od-kit-print-identity{display:flex;align-items:center;gap:13px;margin:8px 0 23px;padding-bottom:18px;border-bottom:1px solid #e1ece5}
+.od-kit-print-identity img{max-width:100px;height:43px;object-fit:contain}
+.od-kit-print-identity strong{display:block;font-size:13px;line-height:1.3;color:#235141}
+.od-kit-print-identity small{font-size:9px;color:#81958c;letter-spacing:.06em;display:block;margin-top:4px}
+.od-kit-print-monogram{width:39px;height:39px;display:grid;place-items:center;flex:none;background:#176b58;color:#fff;border-radius:10px;font-weight:800}
+.od-kit-print-notes{display:none}
+@media(max-width:520px){.od-kit-library-callout{padding:15px;gap:11px}.od-kit-library-symbol{width:38px;height:38px}}
+@media print{
+ .od-kit-print-identity{display:flex!important;border-color:#ddd!important}
+ .od-kit-print-notes:not(:empty){display:block!important;border-top:1px solid #ddd;padding-top:12px;margin-top:25px}
+ .od-kit-print-notes strong{font-size:12px;color:#333}
+ .od-kit-print-notes p{font-size:11px;white-space:pre-line;color:#444;line-height:1.65}
+}
