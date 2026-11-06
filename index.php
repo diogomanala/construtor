@@ -22,17 +22,19 @@ function redirect(string $url='?'):never{header('Location: '.$url, true,303);exi
 function user():?int{return isset($_SESSION['uid'])?(int)$_SESSION['uid']:null;}
 function clinic():?array{if(!user())return null;$s=db()->prepare('SELECT * FROM clinics WHERE user_id=? ORDER BY id LIMIT 1');$s->execute([user()]);return $s->fetch()?:null;}
 function flash(string $s):void{$_SESSION['flash']=$s;}
-function h(string $page):void {
+function h(string $page,bool $showHeading=true):void {
  $active=(string)($_GET['page']??'painel');
  $authenticated=user()!==null;
- $primary=['painel'=>'Painel','documentos'=>'Biblioteca','meus-documentos'=>'Meus documentos','boas-vindas'=>'Meu mapa'];
+ $primary=['painel'=>'Início','documentos'=>'Documentos','rotinas'=>'Rotinas','clinica'=>'Minha clínica'];
  $menu=[
-  'ÁREA DA CLÍNICA'=>['painel'=>'Painel','documentos'=>'Biblioteca','meus-documentos'=>'Meus documentos','boas-vindas'=>'Meu mapa','diagnostico'=>'Perfil da clínica'],
-  'CONTROLES'=>['registros-esterilizacao'=>'Esterilização','registros-limpeza'=>'Limpeza','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
-  'AVALIAÇÃO'=>['inspecao'=>'Autoavaliação básica','auto360'=>'Autoinspeção 360'],
-  'CONTA'=>['identidade'=>'Identidade visual','sair'=>'Sair']
+  'COMECE AQUI'=>['painel'=>'Início','trilha'=>'Trilha de primeiros passos'],
+  'DOCUMENTOS'=>['documentos'=>'Biblioteca completa','meus-documentos'=>'Minhas versões'],
+  'ROTINAS'=>['registros-limpeza'=>'Limpeza','registros-esterilizacao'=>'Esterilização','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
+  'ACOMPANHAMENTO'=>['acompanhamento'=>'Temas e pendências','inspecao'=>'Autoavaliação','auto360'=>'Autoinspeção 360'],
+  'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
+  'CONTA'=>['sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=1"><link rel="stylesheet" href="legal-review.css?v=1"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -46,12 +48,14 @@ function h(string $page):void {
  }
  echo '</div></header><main>';
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
- echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';
+ if($showHeading)echo '<h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
+require_once __DIR__.'/guided-ux.php';
+require_once __DIR__.'/legal-review.php';
 require_once __DIR__.'/document-engine.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
@@ -127,6 +131,12 @@ if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não at
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='logo-clinica')od_brand_logo();
  if($page==='identidade')od_brand_page();
+ if($page==='painel')od_guided_dashboard_page();
+ if($page==='trilha')od_guided_trail_page();
+ if($page==='documentos')od_guided_library_page();
+ if($page==='rotinas')od_guided_rotinas_page();
+ if($page==='clinica')od_guided_clinic_page();
+ if($page==='acompanhamento')od_guided_groups_page();
  if($page==='editar')odx_page();
 if($page==='documentos')odx_library();
 if($page==='registros-esterilizacao')odx_steril_page();
