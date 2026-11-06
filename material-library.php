@@ -17,6 +17,8 @@ function od_mat_by_id(): array {
     return $items;
 }
 function od_mat_defaults(int $templateId,array $clinic): array {
+    // Imagens suspensas: os PNGs atuais retêm fundo branco no próprio recorte.
+    return [];
     $map=[
       6=>['mascara_cirurgica','oculos_protecao','luvas_descartaveis','touca_descartavel'],
       8=>['bandeja_perfurada','cassete_instrumentais'],
@@ -70,8 +72,9 @@ function od_mat_view_items(array $clinic,int $templateId,?int $version=null,?int
     return od_mat_defaults($templateId,$clinic);
 }
 function od_mat_snapshot(PDO $db,array $clinic,int $templateId,int $version): void {
-    $draft=od_mat_read((int)$clinic['id'],$templateId);
-    $items=$draft??od_mat_defaults($templateId,$clinic);
+    // Manter seleções anteriores intactas, mas nunca anexar imagens não aprovadas
+    // às novas revisões enquanto a biblioteca estiver em quarentena visual.
+    $items=[];
     $q=$db->prepare('INSERT INTO od_material_history(clinic_id,template_id,version,items_json,pack_version) VALUES(?,?,?,?,?)');
     $q->execute([(int)$clinic['id'],$templateId,$version,json_encode($items,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR),'materials-v1']);
 }
@@ -98,6 +101,7 @@ function od_mat_post(): never {
     redirect('?page=editar&id='.(int)$id);
 }
 function od_mat_preview(array $clinic,int $templateId,?int $historicalVersion=null,?int $savedVersion=null): string {
+    return ''; // Nenhuma ilustração de qualidade insuficiente no documento.
     $items=od_mat_view_items($clinic,$templateId,$historicalVersion,$savedVersion);
     if(!$items)return '';
     $known=od_mat_by_id();
