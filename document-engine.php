@@ -135,6 +135,7 @@ function odx_page():never {
     $histQ->execute([(int)$c['id'],(int)$id]);
     $revisions=$histQ->fetchAll();
     if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
+    if((int)$id===11)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Monitorização de esterilização</h4><p>Registre os ciclos e consulte o histórico de sua clínica, sem planilhas separadas.</p><a href="?page=registros-esterilizacao">Abrir registros de ciclos ↗</a></div>';
     echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div><button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools"><button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
     echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top"><div class="odx-seal"><span>OD</span></div><div><strong>'.esc($c['name']).'</strong><small>'.esc($c['city']).($c['state']?' · '.esc($c['state']):'').' &nbsp;·&nbsp; '.esc($c['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
@@ -183,4 +184,49 @@ function odx_saved():never {
         echo '<a class="odx-saved-card" href="?page=editar&id='.(int)$d['id'].'"><div class="odx-saved-icon">▤</div><div><small>'.esc($meta['number']).' · Versão '.(int)$row['version'].'</small><h3>'.esc($d['title']).'</h3><p>'.esc($row['stage']==='revisao_rt'?'Aguardando revisão do responsável técnico':'Minuta em elaboração').' · Atualizado em '.esc($row['updated_at']).'</p></div><strong>Continuar ↗</strong></a>';
     }
     echo '</div><div class="odx-bottom-hint">Todos os documentos continuam sendo minutas e dependem de avaliação profissional.</div>';foot();exit;
+}
+function odx_steril_schema():PDO {
+    $db=odx_schema();
+    $db->exec('CREATE TABLE IF NOT EXISTS od_steril_monitoring (id INTEGER PRIMARY KEY AUTOINCREMENT, clinic_id INTEGER NOT NULL, cycle_date TEXT NOT NULL, autoclave_id TEXT NOT NULL, cycle_code TEXT NOT NULL, operator_name TEXT NOT NULL DEFAULT \'\', indicator_notes TEXT NOT NULL DEFAULT \'\', result_status TEXT NOT NULL DEFAULT \'pendente\', notes TEXT NOT NULL DEFAULT \'\', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)');
+    $db->exec('CREATE INDEX IF NOT EXISTS od_steril_monitoring_by_clinic ON od_steril_monitoring(clinic_id, cycle_date DESC)');
+    return $db;
+}
+function odx_steril_post():never {
+    if(!user()||!($c=clinic())){http_response_code(403);exit('Acesso necessário');}
+    $date=trim((string)($_POST['cycle_date']??''));
+    $autoclave=trim((string)($_POST['autoclave_id']??''));
+    $code=trim((string)($_POST['cycle_code']??''));
+    $operator=trim((string)($_POST['operator_name']??''));
+    $indicators=trim((string)($_POST['indicator_notes']??''));
+    $status=(string)($_POST['result_status']??'pendente');
+    $notes=trim((string)($_POST['notes']??''));
+    $dt=DateTimeImmutable::createFromFormat('!Y-m-d',$date);
+    if(!$dt || $dt->format('Y-m-d')!==$date || mb_strlen($autoclave)>90 || mb_strlen($code)>100 || $autoclave==='' || $code==='' || mb_strlen($operator)>120 || mb_strlen($indicators)>1000 || mb_strlen($notes)>1000 || !in_array($status,['pendente','conferido','intercorrencia'],true)){
+        flash('Confira os campos do registro antes de salvar.');redirect('?page=registros-esterilizacao');
+    }
+    try{
+        $db=odx_steril_schema();
+        $q=$db->prepare('INSERT INTO od_steril_monitoring(clinic_id,cycle_date,autoclave_id,cycle_code,operator_name,indicator_notes,result_status,notes) VALUES(?,?,?,?,?,?,?,?)');
+        $q->execute([(int)$c['id'],$date,$autoclave,$code,$operator,$indicators,$status,$notes]);
+        flash('Registro adicionado ao histórico da clínica. Isso não significa liberação técnica da carga.');
+    }catch(Throwable $e){error_log('[Odonto] Falha no registro de monitorização');flash('Não foi possível salvar o registro.');}
+    redirect('?page=registros-esterilizacao');
+}
+function odx_steril_page():never {
+    if(!user()||!($c=clinic())){http_response_code(403);exit('Acesso necessário');}
+    $db=odx_steril_schema();
+    $q=$db->prepare('SELECT cycle_date,autoclave_id,cycle_code,operator_name,indicator_notes,result_status,notes,created_at FROM od_steril_monitoring WHERE clinic_id=? ORDER BY cycle_date DESC,id DESC LIMIT 200');
+    $q->execute([(int)$c['id']]);$rows=$q->fetchAll();
+    h('Monitorização da esterilização');
+    echo '<div class="odx-topline"><a href="?page=editar&id=11">← POP de Esterilização</a><span> / </span><strong>REGISTROS OPERACIONAIS</strong></div>';
+    echo '<div class="odx-page-title"><div><span class="odx-eyebrow">FERRAMENTA ONLINE / CONTROLE OPERACIONAL</span><h2>Histórico de ciclos e verificações.</h2><p>Registre informações conforme a rotina aprovada pela clínica. O sistema não interpreta indicadores nem autoriza o uso de materiais.</p></div><span class="odx-version">'.count($rows).' registros recentes</span></div>';
+    echo '<div class="odx-register-layout"><section class="odx-register-form"><span class="odx-side-kicker">NOVO REGISTRO</span><h3>Dados do ciclo</h3><form method="post">'.token().'<input type="hidden" name="act" value="steril_record"><div class="odx-register-grid"><label>Data do ciclo<input type="date" name="cycle_date" required value="'.esc(date('Y-m-d')).'"></label><label>Autoclave / identificação<input name="autoclave_id" required maxlength="90" placeholder="Identificação interna"></label><label>ID da carga/ciclo<input name="cycle_code" required maxlength="100" placeholder="Código ou lote do ciclo"></label><label>Operador / responsável<input name="operator_name" maxlength="120" placeholder="Nome conforme rotina interna"></label></div><label>Indicadores e parâmetros observados<textarea name="indicator_notes" maxlength="1000" rows="3" placeholder="Anote resultados observados conforme registros do equipamento e rotina validada"></textarea></label><label>Situação registrada<select name="result_status"><option value="pendente">Aguardando conferência</option><option value="conferido">Conferido internamente</option><option value="intercorrencia">Intercorrência identificada</option></select></label><label>Observações ou encaminhamento<textarea name="notes" maxlength="1000" rows="3" placeholder="Descreva a ocorrência e providência tomada, quando existir"></textarea></label><button type="submit" class="odx-save">Registrar ciclo <span>↗</span></button></form><p class="odx-safe">Não inclua dados pessoais de pacientes. Registre resultados somente depois da execução real do procedimento.</p></section><section class="odx-register-history"><div class="odx-register-title"><div><span>HISTÓRICO DA UNIDADE</span><h3>Registros lançados</h3></div><small>Até 200 registros mais recentes</small></div>';
+    if(!$rows)echo '<div class="odx-register-empty"><b>Nenhum ciclo registrado ainda.</b><p>Depois de preencher o primeiro registro, ele aparecerá aqui com data, equipamento e situação.</p></div>';
+    foreach($rows as $r){$labels=['pendente'=>'Aguardando conferência','conferido'=>'Conferido internamente','intercorrencia'=>'Intercorrência'];$status=$r['result_status'];
+        echo '<article class="odx-register-row"><div class="odx-register-row-head"><b>'.esc($r['cycle_date']).' · '.esc($r['cycle_code']).'</b><span class="odx-cycle-'.esc($status).'">'.esc($labels[$status]??'Pendente').'</span></div><div class="odx-register-row-meta"><span>Equipamento: '.esc($r['autoclave_id']).'</span><span>Operador: '.esc($r['operator_name']?:'Não informado').'</span></div>';
+        if($r['indicator_notes']!=='')echo '<p><strong>Indicadores e parâmetros:</strong> '.nl2br(esc($r['indicator_notes'])).'</p>';
+        if($r['notes']!=='')echo '<p><strong>Observações:</strong> '.nl2br(esc($r['notes'])).'</p>';
+        echo '<small>Inserido em '.esc($r['created_at']).'</small></article>';
+    }
+    echo '<div class="odx-bottom-hint"><strong>Controle administrativo.</strong> A decisão técnica sobre a carga depende dos critérios, indicadores e procedimentos definidos pelo RT e das normas aplicáveis.</div></section></div>';foot();exit;
 }
