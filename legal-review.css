@@ -1,0 +1,47 @@
+/* Odonto em Dia: checagem estrutural, sem selo de aprovação regulatória. */
+.od-legal-review{margin:30px 0 12px;padding:24px 25px;border:1px solid #d9e9e0;border-radius:18px;background:#f7faf7;color:#285047}
+.od-legal-review-heading{display:flex;align-items:flex-start;gap:14px}
+.od-legal-review-symbol{width:39px;height:39px;display:grid;place-items:center;background:#e4f3e9;color:#24775e;border:1px solid #c9e9d4;border-radius:12px;font-size:21px;flex:none}
+.od-legal-mini{font-size:9px;color:#28735f;letter-spacing:.13em;font-weight:850}
+.od-legal-review h3{font-size:17px;line-height:1.3;letter-spacing:-.035em;margin:6px 0 6px;color:#1a4134}
+.od-legal-review-heading p{font-size:11px;line-height:1.65;color:#728b7e;margin:0}
+.od-legal-pills{display:flex;gap:7px;flex-wrap:wrap;margin:19px 0}
+.od-legal-pill{display:inline-flex;align-items:center;gap:7px;font-size:10px;line-height:1.35;font-weight:750;padding:7px 10px;border:1px solid #cae4d7;background:#e7f5eb;color:#1f7054;border-radius:50px}
+.od-legal-pill svg{width:14px;height:14px}
+.od-legal-pill-neutral{background:#f6f2ea;border-color:#eadfca;color:#91713e}
+.od-legal-sources{border-top:1px solid #e2ece5;padding-top:13px;margin-top:5px}
+.od-legal-sources>summary{font-size:11px;color:#276b55;font-weight:790;cursor:pointer;list-style:none;display:flex;gap:9px;align-items:center}
+.od-legal-sources>summary::before{content:"+";font-size:14px;line-height:1;font-weight:800}
+.od-legal-sources[open]>summary::before{content:"−"}
+.od-legal-sources>div{padding:12px 0 4px}
+.od-legal-sources p{font-size:11px;color:#83978a;line-height:1.55;margin:3px 0 15px}
+.od-legal-sources a{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #dfebe3;border-radius:9px;padding:10px 11px;margin:6px 0;color:#286453;text-decoration:none}
+.od-legal-sources a strong{font-size:11px;flex:none}
+.od-legal-sources a small{font-size:10px;color:#7b9084;flex:1}
+.od-legal-sources a>span{color:#519981;font-size:13px}
+.od-legal-sources a:hover{border-color:#9cccb7}
+.od-legal-confirm{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;font-size:11px!important;font-weight:570!important;line-height:1.5!important;color:#4c6d60!important;margin:20px 0 14px!important;cursor:pointer}
+.od-legal-confirm input{width:17px!important;height:17px!important;flex:none;margin:0!important;padding:0!important;accent-color:#17765d}
+.od-legal-trigger{display:flex!important;align-items:center;justify-content:center;gap:11px;width:100%;min-height:46px;padding:12px 15px!important;border:0!important;border-radius:11px!important;background:#176b57!important;color:white!important;font-size:12px!important;font-weight:790;cursor:pointer}
+.od-legal-trigger:hover{background:#124c3d!important;transform:none!important}
+.od-legal-trigger:disabled{cursor:progress;opacity:.75}
+.od-legal-trigger>span:last-child{margin-left:auto;font-size:18px}
+.od-legal-trigger-icon{font-size:22px;line-height:.7;transform:rotate(-45deg)}
+.od-legal-result{padding:17px 18px;margin-top:15px;background:#fff;border:1px solid #dbeae0;border-radius:12px}
+.od-legal-result[hidden]{display:none}
+.od-legal-result h4{font-size:13px;color:#1d5d49;margin:0 0 7px}
+.od-legal-result p,.od-legal-historical{font-size:11px;color:#607c6c;line-height:1.7;margin:0}
+.od-legal-result ul{padding-left:18px;color:#6d7e76;margin:9px 0;font-size:11px;line-height:1.65}
+.od-legal-result a{font-size:11px;font-weight:760;color:#21715a}
+.od-legal-result.is-complete{border-color:#a2ceb3;background:#f1faf4}
+.od-legal-historical{background:#f3f7f4;padding:12px;margin-top:12px;border-radius:9px}
+.odx-paper{position:relative}
+.odx-paper.is-reviewing::after{content:"";position:absolute;z-index:4;pointer-events:none;left:0;right:0;top:0;height:5px;background:linear-gradient(90deg,transparent,#80dfbb 38%,#f1fff5 50%,#80dfbb 62%,transparent);box-shadow:0 0 20px 8px #59c79b50,0 0 90px #3dcf8960;animation:od-review-scan 1.05s cubic-bezier(.36,.05,.6,.98) both}
+@keyframes od-review-scan{from{top:0;opacity:0}8%{opacity:1}88%{opacity:1}to{top:100%;opacity:0}}
+.odx-suggestion-control{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-9px 0 17px;flex-wrap:wrap}
+.odx-suggestion-control button{font-size:10px!important;font-weight:740;padding:7px 10px!important;border-radius:8px;background:#eaf4ee!important;color:#247257!important;transform:none!important;line-height:1.4}
+.odx-suggestion-control button:hover{background:#d9ede0!important}
+.odx-suggestion-control small{font-size:9px;color:#8aa097;line-height:1.5;max-width:190px}
+.od-legal-review :is(a,button,summary,input):focus-visible{outline:3px solid #4ea284;outline-offset:3px}
+@media(max-width:620px){.od-legal-review{padding:18px}.od-legal-review-heading{gap:10px}.od-legal-review-symbol{width:34px;height:34px}.od-legal-sources a{display:flex;flex-wrap:wrap}.od-legal-sources a small{flex-basis:100%;order:3}}
+@media(prefers-reduced-motion:reduce){.odx-paper.is-reviewing::after{animation:none;display:none}.od-legal-trigger{transition:none!important}}
