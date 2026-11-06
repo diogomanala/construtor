@@ -99,7 +99,6 @@ function od_brand_save(): never {
         $db->beginTransaction();
         $q=$db->prepare('UPDATE clinics SET name=? WHERE id=? AND user_id=?');
         $q->execute([$name,(int)$c['id'],(int)user()]);
-        if($q->rowCount()!==1)throw new RuntimeException('Clínica sem autorização');
         $q=$db->prepare("INSERT INTO od_clinic_branding(clinic_id,palette,accent,logo_mime,logo_blob,updated_at)
             VALUES(?,?,?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id) DO UPDATE SET
             palette=excluded.palette,accent=excluded.accent,logo_mime=excluded.logo_mime,
@@ -154,7 +153,7 @@ function od_brand_logo(): never {
         if(!$tid||!$ver){http_response_code(404);exit;}
         $brand=od_brand_historical((int)$c['id'],(int)$tid,(int)$ver);
     }else $brand=od_brand_current($c);
-    if(!$brand || !$brand['logo_mime'] || !is_string($brand['logo_blob']) || $brand['logo_blob']===''){
+    if(!$brand || !in_array(($brand['logo_mime']??null),['image/png','image/jpeg','image/webp'],true) || !is_string($brand['logo_blob']) || $brand['logo_blob']===''){
         http_response_code(404);exit;
     }
     header('Content-Type: '.$brand['logo_mime']);
