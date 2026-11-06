@@ -88,3 +88,8 @@
 }
 
 @media print{.od-kit-print-notes:has(p:empty){display:none!important}}
+
+/* A mesma biblioteca de 54 imagens alimenta também as bancadas iniciais. */
+.od-kit-choice-icons .od-mat-image{width:23%;max-width:122px;aspect-ratio:1;flex:0 1 23%;background-color:transparent}
+.od-kit-item-art .od-mat-image{width:100%;height:100%;background-color:transparent}
+@media print{.od-kit-item-art .od-mat-image{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
