@@ -6,7 +6,7 @@
 <meta name="description" content="RDC Anvisa 1.002/2025: organize a documentação do consultório com 30 materiais de referência, 17 frentes de acompanhamento, painel online e onboarding guiado. Kit por R$ 67.">
 <meta name="theme-color" content="#0c2e35">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
-<link rel="stylesheet" href="sales.css?v=5-20261106">
+<link rel="stylesheet" href="sales.css?v=6-20261106">
 </head>
 <body class="sales">
 <svg style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -33,7 +33,65 @@
 <header class="site-nav"><div class="wrap nav-inner"><a href="?page=inicio" class="logo" aria-label="Odonto em Dia, início"><span class="logo-icon">✦</span><span>odonto<span class="logo-accent">em dia</span><small>GESTÃO DOCUMENTAL</small></span></a><nav aria-label="Navegação principal"><a href="#metodo">Como funciona</a><a href="#entrega">O que recebo</a><a href="#duvidas">Perguntas</a></nav><div class="nav-actions"><a href="?page=entrar" class="text-login">Entrar</a><a href="?page=demo" class="btn btn-small">Explorar painel <?=si('arrow')?></a></div></div></header>
 <main>
 <section class="hero"><div class="wrap hero-layout"><div class="hero-copy"><div class="pill-label"> <?=si('shield')?> Organização documental para consultórios e clínicas</div><h1>A nova RDC chegou. <span>Organize sua clínica</span> com um caminho claro.</h1><p>Preencha o perfil do consultório, veja as frentes que precisam de acompanhamento e tenha acesso a minutas e controles para trabalhar com seu responsável técnico. Tudo em uma plataforma online.</p><div class="hero-buttons"><a class="btn btn-large" href="#oferta">Conhecer o kit de R$ 67 <?=si('arrow')?></a><a class="btn btn-outline btn-large" href="?page=demo">Ver painel funcionando <?=si('monitor')?></a></div><div class="hero-footline"><span><?=si('check')?> Acesso pelo navegador</span><span><?=si('check')?> Sem assinatura automática prevista</span><span><?=si('check')?> Materiais editáveis</span></div><p class="tiny">Modelos de apoio para análise e aprovação do RT. Não substitui processos técnicos ou licenças.</p></div>
-<div class="hero-media"><div class="photo-card"><img src="https://images.unsplash.com/photo-1704455306251-b4634215d98f?auto=format&amp;fit=crop&amp;w=1100&amp;q=82" alt="Fotografia de um ambiente real de consultório odontológico organizado" loading="eager"><div class="photo-shade"></div><div class="photo-top"><span class="photo-dot"></span> DO CONSULTÓRIO PARA O PAINEL</div><div class="floating-card"><div class="float-top"><span class="float-icon"><?=si('clipboard')?></span><span><b>Mapa de Adequação Assistida</b><small>Visão de acompanhamento</small></span></div><div class="float-items"><span><i class="ok"><?=si('check')?></i> Higienização e rotinas</span><strong>Em revisão</strong></div><div class="float-items"><span><i class="wait"><?=si('clock')?></i> Processamento de materiais</span><strong>Em aberto</strong></div><div class="float-items"><span><i class="wait"><?=si('clock')?></i> Segurança do paciente</span><strong>Em aberto</strong></div><div class="float-small">Exemplo de visualização. Status ilustrativos.</div></div></div><div class="photo-credit">Foto: Kari Bjorn Photography / Unsplash</div></div></div>
+
+<div class="hero-media">
+  <div class="od-showcase" data-od-showcase aria-label="Demonstração ilustrativa das etapas da plataforma Odonto em Dia">
+    <div class="od-glow od-glow-a" aria-hidden="true"></div><div class="od-glow od-glow-b" aria-hidden="true"></div>
+    <div class="od-device">
+      <div class="od-device-rim">
+        <span class="od-camera-dot" aria-hidden="true"></span>
+        <span class="od-device-label">ODONTO EM DIA <i></i> ÁREA DE TRABALHO</span>
+      </div>
+      <div class="od-screen">
+        <div class="od-screen-header">
+          <div class="od-screen-brand"><span class="od-screen-mark">✓</span><span>odonto <b>em dia</b></span></div>
+          <span class="od-screen-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+        <div class="od-tabbar" role="tablist" aria-label="Etapas do exemplo">
+          <button type="button" class="od-tab is-active" role="tab" aria-selected="true" aria-controls="od-view-1" id="od-tab-1" data-od-tab="0"><span>01</span> Perfil</button>
+          <button type="button" class="od-tab" role="tab" aria-selected="false" aria-controls="od-view-2" id="od-tab-2" data-od-tab="1"><span>02</span> Documento</button>
+          <button type="button" class="od-tab" role="tab" aria-selected="false" aria-controls="od-view-3" id="od-tab-3" data-od-tab="2"><span>03</span> Painel</button>
+        </div>
+        <div class="od-screens">
+          <section class="od-view is-active" id="od-view-1" data-od-view="0" role="tabpanel" aria-labelledby="od-tab-1">
+            <div class="od-view-title"><div><span class="od-view-kicker">PASSO 01 / DADOS DO CONSULTÓRIO</span><h3>Seu perfil em poucos passos.</h3><p>Informações usadas para preparar seus modelos.</p></div><span class="od-step-ring">01</span></div>
+            <div class="od-form-demo">
+              <div class="od-fake-field od-field-full"><small>ESTABELECIMENTO</small><strong>Clínica Exemplo</strong><i class="od-field-check">✓</i></div>
+              <div class="od-fake-field"><small>RESPONSÁVEL TÉCNICO</small><strong>Profissional cadastrado</strong><i class="od-field-check">✓</i></div>
+              <div class="od-fake-field"><small>ESTERILIZAÇÃO</small><strong>Processamento interno</strong><i class="od-field-check">✓</i></div>
+            </div>
+            <div class="od-demo-confirm"><span>✓</span><div><strong>Perfil registrado</strong><small>Pronto para iniciar a personalização.</small></div></div>
+          </section>
+          <section class="od-view" id="od-view-2" data-od-view="1" role="tabpanel" aria-labelledby="od-tab-2" hidden>
+            <div class="od-view-title"><div><span class="od-view-kicker">PASSO 02 / DOCUMENTO EDITÁVEL</span><h3>Do modelo à sua minuta.</h3><p>Preencha, revise e salve versões.</p></div><span class="od-step-ring">02</span></div>
+            <div class="od-doc-preview">
+              <div class="od-doc-top"><span class="od-doc-symbol">▤</span><span>POP DE ESTERILIZAÇÃO</span><span class="od-doc-badge">MINUTA</span></div>
+              <div class="od-doc-name">Clínica Exemplo <span>✓</span></div>
+              <div class="od-doc-bar od-doc-bar-wide"></div><div class="od-doc-bar od-doc-bar-med"></div><div class="od-doc-bar od-doc-bar-short"></div>
+              <div class="od-doc-progress"><span>Campos de exemplo preenchidos</span><strong>3 de 3</strong><div class="od-progress-line"><i></i></div></div>
+            </div>
+            <div class="od-demo-note"><span class="od-note-dot"></span> Minuta salva para revisão do responsável técnico.</div>
+          </section>
+          <section class="od-view" id="od-view-3" data-od-view="2" role="tabpanel" aria-labelledby="od-tab-3" hidden>
+            <div class="od-view-title"><div><span class="od-view-kicker">PASSO 03 / ACOMPANHAMENTO</span><h3>Saiba o que ainda falta.</h3><p>Uma visão clara das suas tarefas.</p></div><span class="od-step-ring">03</span></div>
+            <div class="od-board">
+              <div class="od-board-head"><strong>Meu mapa documental</strong><span>EXEMPLO</span></div>
+              <div class="od-board-row"><span class="od-board-check od-checked">✓</span><div><strong>Cadastro do consultório</strong><small>Dados informados</small></div><em class="od-chip od-chip-done">Concluído</em></div>
+              <div class="od-board-row"><span class="od-board-check od-review">◷</span><div><strong>POP de esterilização</strong><small>Revisão técnica pendente</small></div><em class="od-chip od-chip-review">Em revisão</em></div>
+              <div class="od-board-row"><span class="od-board-check od-pending">·</span><div><strong>Controle de evidências</strong><small>Próxima atividade</small></div><em class="od-chip od-chip-pending">Pendente</em></div>
+            </div>
+          </section>
+        </div>
+        <div class="od-screen-bottom">
+          <span class="od-screen-counter">PASSO <b data-od-counter>01</b> DE 03</span>
+          <div class="od-timeline" aria-label="Evolução da demonstração"><span class="is-active" data-od-track="0"><i></i></span><span data-od-track="1"><i></i></span><span data-od-track="2"><i></i></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="od-device-caption"><span class="od-pulse-dot"></span> Demonstração interativa do fluxo <span>•</span> Dados fictícios</div>
+  </div>
+</div>
+</div>
 </section>
 <section class="facts"><div class="wrap facts-grid"><div><b>30</b><span>materiais na biblioteca</span></div><div><b>18</b><span>minutas de POPs</span></div><div><b>17</b><span>frentes de acompanhamento</span></div><div><b>15</b><span>verificações iniciais</span></div></div></section>
 <section class="space problem" id="problema"><div class="wrap"><div class="sec-label">O desafio na rotina da clínica</div><div class="section-heading split"><h2>Você sabe onde estão os documentos. <em>Mas sabe o que ainda está pendente?</em></h2><p>A RDC envolve diferentes planos, procedimentos, registros e responsabilidades. Ter arquivos espalhados em pastas não mostra quais materiais precisam ser atualizados nem quem deve acompanhar cada etapa.</p></div><div class="tiles tiles3"><article class="tile"><div class="icon-box"><?=si('file')?></div><h3>Documentos espalhados</h3><p>Planilhas, POPs e registros guardados em lugares diferentes, sem uma visão simples do que já foi conferido.</p></article><article class="tile"><div class="icon-box"><?=si('clock')?></div><h3>Prazos sem responsável</h3><p>Uma pendência é identificada, mas depois fica difícil lembrar quem deveria resolver e quando voltar a verificar.</p></article><article class="tile"><div class="icon-box"><?=si('search')?></div><h3>Começar do zero</h3><p>Montar cada minuta sem referência de estrutura consome tempo que poderia ir para a conferência técnica e a implementação.</p></article></div></div></section>
@@ -89,5 +147,6 @@
 </main>
 <footer class="site-footer"><div class="wrap footer-flex"><div><a href="?page=inicio" class="footer-brand">✦ odonto<span>em dia</span></a><p>Ferramenta auxiliar de organização documental odontológica.<br>Sem vínculo, endosso ou certificação da Anvisa, CRO ou órgãos fiscalizadores.</p></div><div class="footer-links"><a href="?page=demo">Demonstração</a><a href="?page=entrar">Entrar</a><a href="#base-legal">Base normativa</a><span>© 2026 Odonto em Dia</span></div></div></footer>
 <div class="mobile-sticky"><span><small>Kit principal</small><b>R$ 67</b></span><a href="?page=checkout" class="btn">Conferir compra <?=si('arrow')?></a></div>
+<script src="assets/hero-preview.js?v=1" defer></script>
 </body>
 </html>
