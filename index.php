@@ -30,9 +30,9 @@ function h(string $page):void {
   'ÁREA DA CLÍNICA'=>['painel'=>'Painel','documentos'=>'Biblioteca','meus-documentos'=>'Meus documentos','boas-vindas'=>'Meu mapa','diagnostico'=>'Perfil da clínica'],
   'CONTROLES'=>['registros-esterilizacao'=>'Esterilização','registros-limpeza'=>'Limpeza','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
   'AVALIAÇÃO'=>['inspecao'=>'Autoavaliação básica','auto360'=>'Autoinspeção 360'],
-  'CONTA'=>['sair'=>'Sair']
+  'CONTA'=>['identidade'=>'Identidade visual','sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -48,9 +48,10 @@ function h(string $page):void {
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
  echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
+require_once __DIR__.'/clinic-branding.php';
 require_once __DIR__.'/document-engine.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
@@ -102,6 +103,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  if($act==='login'){$q=db()->prepare('SELECT * FROM users WHERE email=?');$q->execute([strtolower(trim((string)($_POST['email']??'')))]);$u=$q->fetch();if($u && password_verify((string)($_POST['password']??''),$u['password'])){session_regenerate_id(true);$_SESSION['uid']=(int)$u['id'];redirect('?page=painel');}flash('E-mail ou senha incorretos.');redirect('?page=entrar');}
  if(!user()){http_response_code(401);exit('Faça login.');}
  if(!od_is_pilot((int)user()) && !od_mp_entitlement((int)user())){http_response_code(403);exit('Seu acesso está inativo ou expirado. Verifique a situação da compra.');}
+  if($act==='brand_save')od_brand_save();
   if($act==='premium_save')odx_post();
   if($act==='steril_record')odx_steril_post();
   if($act==='cleaning_record')odx_cleaning_post();
@@ -123,7 +125,9 @@ if($page==='sair'){$_SESSION=[];session_destroy();redirect('?page=entrar');}
 if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form></section><section class="card"><h2>Ativar conta de teste do proprietário</h2><p class="muted">Crie a conta proprietária de teste uma única vez. Você entrará automaticamente na biblioteca, com uma clínica fictícia pronta para testar. Depois, altere os dados em Perfil. Não inclua informações de pacientes.</p><form method="post">'.token().'<input type="hidden" name="act" value="register"><label>E-mail<input name="email" type="email" required></label><label>Senha (12 caracteres ou mais)<input name="password" type="password" required minlength="12" autocomplete="new-password"></label><label>Código de ativação do piloto<input name="invite" type="password" required autocomplete="off" placeholder="Código exclusivo do proprietário"></label><button class="secondary">Criar conta e abrir plataforma</button></form></section></div>';foot();exit;}
 if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não ativo');echo '<p class="lead">Este acesso está inativo ou expirado. Se concluiu uma compra, use o link de confirmação do pedido.</p><a class="btn" href="?page=checkout">Conhecer as opções</a>';foot();exit;}
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
-if($page==='editar')odx_page();
+if($page==='logo-clinica')od_brand_logo();
+ if($page==='identidade')od_brand_page();
+ if($page==='editar')odx_page();
 if($page==='documentos')odx_library();
 if($page==='registros-esterilizacao')odx_steril_page();
 if($page==='registros-limpeza')odx_cleaning_page();
