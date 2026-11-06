@@ -233,3 +233,21 @@ function od_guided_field_suggestion(array $field,array $c): string {
   ];
   return $suggestions[$key]??'';
 }
+
+/**
+ * Substitui SOMENTE campos cadastrais inequívocos já fornecidos.
+ * Outros marcadores, como [DATA], [PREENCHER] e ASSINATURA, exigem ação humana.
+ */
+function od_guided_prepare_template_html(string $html,array $clinic): string {
+  $name=trim((string)($clinic['name']??''));
+  $cnpj=trim((string)($clinic['cnpj']??''));
+  $rt=trim((string)($clinic['rt_name']??''));
+  $cro=trim((string)($clinic['rt_cro']??''));
+  $replacements=[];
+  if($name!==''&&$cnpj!=='')$replacements['[NOME / CNPJ]']=esc($name.' / '.$cnpj);
+  if($rt!==''&&$cro!==''){
+    $replacements['[NOME / CRO-UF]']=esc($rt.' / '.$cro);
+    $replacements['[NOME / CRO]']=esc($rt.' / '.$cro);
+  }
+  return strtr($html,$replacements);
+}
