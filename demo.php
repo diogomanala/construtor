@@ -1,5 +1,5 @@
 <?php declare(strict_types=1); ?>
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prévia do painel | Odonto em Dia</title><link rel="stylesheet" href="style.css"></head><body>
+<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prévia do painel | Odonto em Dia</title><link rel="stylesheet" href="style.css"></head><body>
 <header class="top"><a class="brand" href="?page=inicio">◇ Odonto <span>em Dia</span></a><nav><a href="?page=inicio">Página de apresentação</a><a href="?page=entrar">Entrar</a></nav></header>
 <main><div class="eyebrow">DEMONSTRAÇÃO COM DADOS FICTÍCIOS</div><h1>Seu consultório em uma visão organizada.</h1><p class="lead">Explore a aparência do painel. Esta demonstração não grava informações e não representa uma avaliação sanitária.</p>
 <div class="stats"><div class="stat"><strong>17</strong><span>Categorias de acompanhamento</span></div><div class="stat"><strong>5</strong><span>Em análise</span></div><div class="stat"><strong>12</strong><span>A acompanhar</span></div></div>
