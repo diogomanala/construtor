@@ -26,6 +26,24 @@ function odx_fields(int $templateId): array {
             ['key'=>'processo','label'=>'Rotina real de processamento','hint'=>'Descreva o procedimento aprovado, com referência ao fabricante','type'=>'textarea'],
             ['key'=>'monitoramento','label'=>'Como os ciclos são monitorados','hint'=>'Indique os indicadores e critérios definidos pelo RT','type'=>'textarea'],
             ['key'=>'registros','label'=>'Registro, rastreabilidade e liberação','hint'=>'Indique onde guardar registros e quem decide sobre a liberação','type'=>'textarea']
+        ],
+        6 => [
+            ['key'=>'epis','label'=>'EPIs conforme riscos identificados','hint'=>'Relacione os itens adequados conforme o procedimento e a avaliação do RT','type'=>'textarea'],
+            ['key'=>'entrega','label'=>'Como ocorre entrega e reposição','hint'=>'Descreva local, responsáveis e critério para reposição','type'=>'textarea'],
+            ['key'=>'orientacoes','label'=>'Orientação, utilização e guarda','hint'=>'Referencie as orientações efetivamente adotadas na clínica','type'=>'textarea'],
+            ['key'=>'evidencias_epi','label'=>'Registros e comprovações internas','hint'=>'Informe onde ficam os registros de entrega e treinamento','type'=>'textarea']
+        ],
+        7 => [
+            ['key'=>'ambientes','label'=>'Ambientes e superfícies abrangidos','hint'=>'Descreva as áreas reais do estabelecimento','type'=>'textarea'],
+            ['key'=>'produtos','label'=>'Produtos e diluições conforme validação técnica','hint'=>'Registre os produtos aprovados, com referência às instruções do fabricante','type'=>'textarea'],
+            ['key'=>'rotina_limpeza','label'=>'Sequência, responsáveis e frequência','hint'=>'Descreva a rotina efetivamente adotada e aprovada','type'=>'textarea'],
+            ['key'=>'controle_limpeza','label'=>'Registro e tratamento de ocorrências','hint'=>'Indique como registrar, conferir e tratar desvios','type'=>'textarea']
+        ],
+        21 => [
+            ['key'=>'inventario','label'=>'Inventário e identificação dos equipamentos','hint'=>'Indique localização do inventário e forma de identificação','type'=>'textarea'],
+            ['key'=>'cronograma','label'=>'Plano e periodicidade de manutenção','hint'=>'Definir conforme fabricante, risco e avaliação técnica','type'=>'textarea'],
+            ['key'=>'prestadores','label'=>'Responsáveis e prestadores envolvidos','hint'=>'Informe responsáveis internos e contratos quando existirem','type'=>'textarea'],
+            ['key'=>'evidencia_manut','label'=>'Comprovantes e tratamento de falhas','hint'=>'Onde registrar serviços, laudos e equipamentos indisponíveis','type'=>'textarea']
         ]
     ];
     return array_merge($common, $special[$templateId] ?? [
@@ -37,7 +55,10 @@ function odx_spec(int $id, string $category): array {
     $all = [
         3 => ['name'=>'Manual de Boas Práticas','eyebrow'=>'Governança e organização documental','number'=>'SDBPF / 01','flow'=>['Identificar','Definir responsabilidades','Organizar evidências','Revisar com RT'],'accent'=>'jade'],
         24 => ['name'=>'PGRSS','eyebrow'=>'Gerenciamento dos resíduos de saúde','number'=>'PLANO / PGRSS','flow'=>['Mapear geração','Definir segregação','Registrar destinação','Revisar com RT'],'accent'=>'amber'],
-        11 => ['name'=>'POP de Esterilização','eyebrow'=>'Processamento e monitorização','number'=>'POP / 08','flow'=>['Preparar rotina','Monitorar ciclos','Registrar resultados','Revisar com RT'],'accent'=>'blue']
+        11 => ['name'=>'POP de Esterilização','eyebrow'=>'Processamento e monitorização','number'=>'POP / 08','flow'=>['Preparar rotina','Monitorar ciclos','Registrar resultados','Revisar com RT'],'accent'=>'blue'],
+        6 => ['name'=>'POP de EPI','eyebrow'=>'Saúde ocupacional e rotinas da equipe','number'=>'POP / 03','flow'=>['Avaliar riscos','Definir itens','Orientar equipe','Registrar entregas'],'accent'=>'jade'],
+        7 => ['name'=>'POP de Limpeza de Ambientes','eyebrow'=>'Higienização, execução e registros','number'=>'POP / 04','flow'=>['Mapear áreas','Definir produtos','Executar rotina','Registrar limpeza'],'accent'=>'blue'],
+        21 => ['name'=>'Inventário e Manutenção','eyebrow'=>'Gestão de equipamentos e intervenções','number'=>'POP / 18','flow'=>['Identificar equipamentos','Programar cuidados','Registrar serviços','Revisar evidências'],'accent'=>'amber']
     ];
     return $all[$id] ?? ['name'=>'Documento da clínica','eyebrow'=>$category,'number'=>strtoupper($category).' / '.str_pad((string)$id,2,'0',STR_PAD_LEFT),'flow'=>['Identificar','Personalizar','Reunir evidências','Revisar com RT'],'accent'=>'jade'];
 }
@@ -170,7 +191,7 @@ function odx_library():never {
     echo '<div class="odx-category-filter" role="group" aria-label="Filtrar documentos"><button type="button" class="is-selected" data-odx-filter="all">Todos</button>';
     foreach(['SDBPF','POPs','Planos','Formulários','Guia de uso'] as $cat){if(isset($counts[$cat]))echo '<button type="button" data-odx-filter="'.esc($cat).'">'.esc($cat).' <span>'.(int)$counts[$cat].'</span></button>';}
     echo '</div><div class="odx-library-grid">';
-    foreach($all as $d){$id=(int)$d['id'];$meta=odx_spec($id,(string)$d['category']);$state=$saved[$id]??null;$isPilot=in_array($id,[3,24,11],true);$labels=['SDBPF'=>'Governança','POPs'=>'Procedimentos','Planos'=>'Planejamento','Formulários'=>'Registros','Guia de uso'=>'Orientações'];
+    foreach($all as $d){$id=(int)$d['id'];$meta=odx_spec($id,(string)$d['category']);$state=$saved[$id]??null;$isPilot=in_array($id,[3,24,11,6,7,21],true);$labels=['SDBPF'=>'Governança','POPs'=>'Procedimentos','Planos'=>'Planejamento','Formulários'=>'Registros','Guia de uso'=>'Orientações'];
         echo '<a href="?page=editar&id='.$id.'" class="odx-library-card" data-odx-category="'.esc($d['category']).'"><div class="odx-card-preview odx-accent-'.esc($meta['accent']).'"><div class="odx-card-strip"><span>ODONTO EM DIA</span><small>'.esc($meta['number']).'</small></div><div class="odx-card-preview-content"><div class="odx-card-mini-label">'.esc($labels[$d['category']]??$d['category']).'</div><strong>'.esc($d['title']).'</strong><i></i><i></i><i></i></div><div class="odx-card-preview-bottom"><span>MINUTA TÉCNICA</span><em>◈</em></div></div><div class="odx-card-info"><span class="odx-card-status">'.($state?($state['stage']==='revisao_rt'?'Em revisão do RT':'Versão '.(int)$state['version'].' salva'):'Não iniciado').'</span>'.($isPilot?'<span class="odx-card-feature">Layout aprimorado</span>':'').'<h3>'.esc($d['title']).'</h3><p>'.esc($d['category']).' · Editar e acompanhar na plataforma</p><span class="odx-card-go">Abrir documento <b>↗</b></span></div></a>';
     }
     echo '</div>';foot();exit;
