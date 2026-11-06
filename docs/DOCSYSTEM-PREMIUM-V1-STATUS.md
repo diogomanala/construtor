@@ -100,3 +100,14 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 - README atualizado para não orientar futuros agentes à entrega antiga de ZIP/Word.
 - **Não significa QA funcional autenticado**. O arquivo SQLite de produção ainda não aparece na listagem do diretório `rdc/data/` nesta sessão; não há evidência de ativação real do primeiro proprietário. Não compartilhar convites ou senhas no GitHub/Notion.
 - Revisão clínica/regulatória por RT habilitado não concluída. Campos são guiados de organização administrativa e as minutas continuam sem certificação.
+
+## Checkpoint v1.6 (06/11/2026): cobertura guiada dos 30 modelos
+
+- Criado `data/document-guides.json` com mapas editoriais e quatro perguntas específicas para os **18 modelos que ainda usavam campos genéricos**: ids `1,2,4,5,8,9,10,12,13,14,15,16,17,18,19,20,29,30`.
+- `document-plan-config.php` agora fornece `odx_document_configs()`, mesclando os seis planos documentais anteriores e os 18 adicionais com validação de chaves/estrutura, fallback para conteúdo original se JSON ausente ou inválido.
+- `document-engine.php` utiliza o mapa completo na biblioteca e no editor. Os seis modelos já especializados no próprio motor (ids `3,6,7,11,21,24`) permanecem intactos.
+- **30/30 documentos têm campos guiados e mapas de quatro etapas de organização**. Os 24 migrados recentemente preservam os campos legados `aplicabilidade` e `evidencias`, além do HTML de origem. Nada foi sobrescrito no banco.
+- Novo `tests/document-guide-coverage.php`: teste CLI em PHP local aprovou cobertura exata 1..30, ausência de colisões e quatro campos/etapas por configuração. Integração de 24 esquemas com os dados legados verificada em cópia local do renderizador. Não é teste em produção autenticada.
+- GitHub: `data/document-guides.json`, `document-plan-config.php`, `document-engine.php`, teste e README; deploy Hostinger confirmado e presença de arquivos no servidor conferida; CDN limpa.
+- **Não significa que o conteúdo técnico ou a diagramação de cada minuta foram validados**. Os fluxos são mapas administrativos, sem instruções clínicas inventadas. Ainda falta revisão documental, elementos gráficos e fichas específicas com RT habilitado.
+- **P0 de QA permanece:** cadastro de primeira conta real não confirmado; `rdc/data/` ainda não mostrava SQLite na listagem de arquivos. Testar login, versões e isolamento entre duas clínicas no navegador com contas autorizadas; Mercado Pago sem teste completo.
