@@ -1,99 +1,207 @@
 (() => {
   "use strict";
-  const root=document.querySelector("[data-od-showcase]");
-  if(!root)return;
-  const tabs=[...root.querySelectorAll("[data-od-tab]")];
-  const scenes=[...root.querySelectorAll("[data-od-view]")];
-  const tracks=[...root.querySelectorAll("[data-od-track]")];
-  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const $=selector=>root.querySelector(selector);
-  const $$=selector=>[...root.querySelectorAll(selector)];
-  let index=0,generation=0,visible=true;
-  let timers=[],typeTimer=null,frame=null;
-  function after(ms,fn){timers.push(setTimeout(fn,ms));}
-  function stop(){timers.forEach(clearTimeout);timers=[];if(typeTimer!==null){clearInterval(typeTimer);typeTimer=null;}if(frame!==null){cancelAnimationFrame(frame);frame=null;}generation++;}
-  function textOf(sel,text){const el=$(sel);if(el)el.textContent=text;}
-  function reset(idx){
-    $$(".od-kit-tile").forEach(el=>el.classList.remove("od-animated-in","od-selected"));
-    const f=$(".od-kit-file");if(f)f.classList.remove("od-animated-in");
-    textOf("[data-od-typing]","");
-    textOf("[data-od-fieldcount]","0 de 3");
-    textOf("[data-od-savestatus]","Preenchendo os campos...");
-    $$(".od-doc-bar").forEach(el=>el.classList.remove("od-animated-in"));
-    const name=$(".od-doc-name");if(name)name.classList.remove("od-is-saved");
-    const pb=$(".od-progress-line i");if(pb)pb.style.width="0%";
-    $$(".od-board-row").forEach(el=>{
-      el.classList.remove("od-animated-in");
-      const label=el.querySelector(".od-chip"),check=el.querySelector(".od-board-check");
-      label.textContent="Pendente";label.className="od-chip od-chip-pending";
-      check.textContent="·";check.className="od-board-check od-board-check-idle";
-    });
-    textOf("[data-od-done]","0 de 3 etapas");
-    tracks.forEach((el,i)=>{
-      el.classList.remove("is-active","is-complete");
-      if(i<idx)el.classList.add("is-complete");
-      if(i===idx)el.classList.add("is-active");
-      const bar=el.querySelector("i");if(bar)bar.style.transform=i<idx?"scaleX(1)":"scaleX(0)";
-    });
-    $$(".od-screen-dots i").forEach((el,i)=>el.classList.toggle("od-dot-active",i===idx));
+  const root = document.querySelector("[data-od-showcase]");
+  if (!root) return;
+  const $ = selector => root.querySelector(selector);
+  const $$ = selector => Array.from(root.querySelectorAll(selector));
+  const tabs = $$("[data-od-tab]");
+  const views = $$("[data-od-view]");
+  const tracks = $$("[data-od-track]");
+  const device = $(".od-device");
+  const pointer = $(".od-demo-pointer");
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DURATION = 6400;
+  let step = 0, sequence = 0, visible = true, timeouts = [], raf = null, typing = null;
+  function setText(selector, value) { const target = $(selector); if (target) target.textContent = value; }
+  function later(ms, run, ticket) {
+    timeouts.push(window.setTimeout(() => { if (ticket === sequence) run(); }, ms));
   }
-  function updateRow(el,i){
-    el.classList.add("od-animated-in");
-    const chip=el.querySelector(".od-chip"),mark=el.querySelector(".od-board-check");
-    if(i===0){chip.textContent="Concluído";chip.className="od-chip od-chip-done";mark.textContent="✓";mark.className="od-board-check od-checked";}
-    else if(i===1){chip.textContent="Em revisão";chip.className="od-chip od-chip-review";mark.textContent="◷";mark.className="od-board-check od-review";}
-    else{chip.textContent="Acompanhar";chip.className="od-chip od-chip-pending";mark.textContent="·";mark.className="od-board-check od-pending";}
-  }
-  function finalScene(idx){
-    if(idx===0){$$(".od-kit-tile").forEach(el=>el.classList.add("od-animated-in"));$(".od-kit-tile").classList.add("od-selected");$(".od-kit-file").classList.add("od-animated-in");}
-    if(idx===1){textOf("[data-od-typing]","Clínica Exemplo");textOf("[data-od-fieldcount]","3 de 3");textOf("[data-od-savestatus]","Minuta salva para revisão do RT");$$(".od-doc-bar").forEach(el=>el.classList.add("od-animated-in"));$(".od-progress-line i").style.width="100%";$(".od-doc-name").classList.add("od-is-saved");}
-    if(idx===2){$$(".od-board-row").forEach((el,i)=>updateRow(el,i));textOf("[data-od-done]","3 etapas organizadas");}
-    const bar=tracks[idx].querySelector("i");if(bar)bar.style.transform="scaleX(1)";
-  }
-  function show(next){
-    stop();index=(next+scenes.length)%scenes.length;const ticket=generation;
-    tabs.forEach((tab,i)=>{let selected=i===index;tab.classList.toggle("is-active",selected);tab.setAttribute("aria-selected",selected?"true":"false");});
-    scenes.forEach((scene,i)=>{let selected=i===index;scene.hidden=!selected;scene.classList.toggle("is-active",selected);});
-    textOf("[data-od-counter]",String(index+1).padStart(2,"0"));reset(index);
-    if(reduced||!visible||document.hidden){finalScene(index);return;}
-    const start=performance.now(),duration=5850;
-    function animate(now){
-      if(ticket!==generation)return;
-      const width=Math.min(1,(now-start)/duration);
-      const bar=tracks[index].querySelector("i");if(bar)bar.style.transform="scaleX("+width+")";
-      if(width<1)frame=requestAnimationFrame(animate);
+  function cancel() {
+    sequence += 1;
+    timeouts.forEach(window.clearTimeout);
+    timeouts = [];
+    if (typing !== null) { window.clearInterval(typing); typing = null; }
+    if (raf !== null) { window.cancelAnimationFrame(raf); raf = null; }
+    if (pointer) {
+      pointer.classList.remove("is-visible", "is-clicking");
+      pointer.style.transition = "none";
+      pointer.style.transform = "translate3d(0,0,0)";
     }
-    frame=requestAnimationFrame(animate);
-    if(index===0){
-      $$(".od-kit-tile").forEach((el,i)=>after(300+i*440,()=>el.classList.add("od-animated-in")));
-      after(2500,()=>$(".od-kit-tile").classList.add("od-selected"));
-      after(3120,()=>$(".od-kit-file").classList.add("od-animated-in"));
-    }else if(index===1){
-      after(290,()=>$$(".od-doc-bar").forEach((el,i)=>after(i*320,()=>el.classList.add("od-animated-in"))));
-      after(570,()=>{
-        const el=$("[data-od-typing]"),word="Clínica Exemplo";let n=0;
-        typeTimer=setInterval(()=>{
-          if(ticket!==generation){clearInterval(typeTimer);typeTimer=null;return;}
-          el.textContent=word.slice(0,++n);
-          if(n>=word.length){clearInterval(typeTimer);typeTimer=null;textOf("[data-od-fieldcount]","1 de 3");}
-        },92);
-      });
-      after(2900,()=>textOf("[data-od-fieldcount]","2 de 3"));
-      after(3600,()=>{textOf("[data-od-fieldcount]","3 de 3");$(".od-progress-line i").style.width="100%";});
-      after(4600,()=>{textOf("[data-od-savestatus]","Minuta salva para revisão do RT");$(".od-doc-name").classList.add("od-is-saved");});
-    }else{
-      $$(".od-board-row").forEach((el,i)=>after(590+i*1220,()=>{updateRow(el,i);textOf("[data-od-done]",String(i+1)+" de 3 etapas");}));
-      after(4500,()=>textOf("[data-od-done]","3 etapas organizadas"));
+  }
+  function moveTo(target, clickAfter = false) {
+    if (!pointer || !device || !target) return;
+    const outer = device.getBoundingClientRect(), rect = target.getBoundingClientRect();
+    const x = Math.max(8, rect.left - outer.left + rect.width * .62);
+    const y = Math.max(14, rect.top - outer.top + rect.height * .50);
+    pointer.style.transition = "transform .63s cubic-bezier(.16,.74,.28,1), opacity .18s ease";
+    pointer.classList.add("is-visible");
+    pointer.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+    if (clickAfter) {
+      const ticket = sequence;
+      later(670, () => {
+        pointer.classList.remove("is-clicking");
+        void pointer.offsetWidth;
+        pointer.classList.add("is-clicking");
+        target.classList.add("od-target-active");
+        later(440, () => { pointer.classList.remove("is-clicking"); target.classList.remove("od-target-active"); }, ticket);
+      }, ticket);
     }
-    after(duration+330,()=>{if(ticket===generation&&visible&&!document.hidden)show(index+1);});
   }
-  tabs.forEach((tab,i)=>tab.addEventListener("click",()=>show(i)));
-  document.addEventListener("visibilitychange",()=>{if(document.hidden)stop();else if(visible)show(index);});
-  if("IntersectionObserver" in window){
-    const observer=new IntersectionObserver(entries=>{
-      const next=entries[0].isIntersecting;if(visible===next)return;visible=next;
-      if(visible)show(index);else stop();
-    },{threshold:.18});observer.observe(root);
+  function setStatus(row, index) {
+    row.classList.add("od-animated-in");
+    const chip = row.querySelector(".od-chip"), mark = row.querySelector(".od-board-check");
+    if (!chip || !mark) return;
+    if (index === 0) {
+      chip.textContent = "Concluído"; chip.className = "od-chip od-chip-done";
+      mark.textContent = "✓"; mark.className = "od-board-check od-checked";
+    } else if (index === 1) {
+      chip.textContent = "Em revisão"; chip.className = "od-chip od-chip-review";
+      mark.textContent = "◷"; mark.className = "od-board-check od-review";
+    } else {
+      chip.textContent = "Acompanhar"; chip.className = "od-chip od-chip-pending";
+      mark.textContent = "·"; mark.className = "od-board-check od-pending";
+    }
   }
-  show(0);
+  function reset(index) {
+    $$(".od-kit-tile").forEach(node => node.classList.remove("od-animated-in", "od-selected", "od-target-active"));
+    const file = $(".od-kit-file"); if (file) file.classList.remove("od-animated-in","od-target-active");
+    setText("[data-od-typing]", "");
+    setText("[data-od-fieldcount]", "0 de 3");
+    setText("[data-od-savestatus]", "Personalizando minuta...");
+    $$(".od-doc-bar").forEach(node => node.classList.remove("od-animated-in"));
+    const name = $(".od-doc-name"); if (name) name.classList.remove("od-is-saved");
+    const fill = $(".od-progress-line i"); if (fill) fill.style.width = "0%";
+    const save = $("[data-od-save]"), exportBtn = $("[data-od-export]");
+    if (save) save.classList.remove("od-saved","od-target-active");
+    if (exportBtn) exportBtn.classList.remove("od-ready","od-target-active");
+    $$(".od-board-row").forEach(row => {
+      row.classList.remove("od-animated-in", "od-target-active");
+      const chip = row.querySelector(".od-chip"), mark = row.querySelector(".od-board-check");
+      if (chip) { chip.textContent = "Pendente"; chip.className = "od-chip od-chip-pending"; }
+      if (mark) { mark.textContent = "·"; mark.className = "od-board-check od-board-check-idle"; }
+    });
+    const meter = $("[data-od-board-meter]"); if (meter) meter.style.width = "0%";
+    setText("[data-od-done]", "0 de 3 etapas");
+    tracks.forEach((node, i) => {
+      node.classList.toggle("is-active", i === index);
+      node.classList.toggle("is-complete", i < index);
+      const bar = node.querySelector("i"); if (bar) bar.style.transform = "scaleX(" + (i < index ? 1 : 0) + ")";
+    });
+  }
+  function finalState(index) {
+    if (index === 0) {
+      $$(".od-kit-tile").forEach(node => node.classList.add("od-animated-in"));
+      const file = $(".od-kit-file"); if(file) file.classList.add("od-animated-in");
+    } else if (index === 1) {
+      setText("[data-od-typing]", "Clínica Exemplo");
+      setText("[data-od-fieldcount]", "3 de 3");
+      setText("[data-od-savestatus]", "Minuta salva para revisão do RT");
+      $$(".od-doc-bar").forEach(node => node.classList.add("od-animated-in"));
+      const fill = $(".od-progress-line i"); if(fill) fill.style.width = "100%";
+      const save = $("[data-od-save]"); if (save) { save.classList.add("od-saved"); save.textContent = "✓ Versão salva"; }
+      const exp = $("[data-od-export]"); if (exp) exp.classList.add("od-ready");
+    } else {
+      $$(".od-board-row").forEach((node,i) => setStatus(node,i));
+      const meter = $("[data-od-board-meter]"); if (meter) meter.style.width = "100%";
+      setText("[data-od-done]", "3 etapas organizadas");
+    }
+    const bar = tracks[index]?.querySelector("i");
+    if (bar) bar.style.transform = "scaleX(1)";
+  }
+  function play(index) {
+    cancel();
+    step = (index + views.length) % views.length;
+    const ticket = sequence;
+    tabs.forEach((tab, i) => {
+      const isCurrent = i === step;
+      tab.classList.toggle("is-active", isCurrent);
+      tab.setAttribute("aria-selected", isCurrent ? "true" : "false");
+      tab.setAttribute("tabindex", isCurrent ? "0" : "-1");
+    });
+    views.forEach((view, i) => {
+      const isCurrent = i === step;
+      view.hidden = !isCurrent;
+      view.classList.toggle("is-active", isCurrent);
+    });
+    setText("[data-od-counter]", String(step + 1).padStart(2, "0"));
+    reset(step);
+    const save = $("[data-od-save]"); if (save) save.textContent = "Salvar versão";
+    if (reduced || !visible || document.hidden) { finalState(step); return; }
+    const t0 = performance.now();
+    function progress(now) {
+      if (ticket !== sequence) return;
+      const pct = Math.min(1, (now - t0) / DURATION);
+      const bar = tracks[step]?.querySelector("i");
+      if (bar) bar.style.transform = "scaleX(" + pct.toFixed(3) + ")";
+      if (pct < 1) raf = window.requestAnimationFrame(progress);
+    }
+    raf = window.requestAnimationFrame(progress);
+    if (step === 0) {
+      const tiles = $$(".od-kit-tile");
+      tiles.forEach((node, i) => later(350 + i * 350, () => node.classList.add("od-animated-in"), ticket));
+      later(1740, () => moveTo(tiles[0], true), ticket);
+      later(2550, () => tiles[0]?.classList.add("od-selected"), ticket);
+      later(3000, () => { const file = $(".od-kit-file"); if (file) file.classList.add("od-animated-in"); }, ticket);
+      later(3500, () => moveTo($(".od-kit-file"), true), ticket);
+      later(4720, () => { const file = $(".od-kit-file"); if (file) file.classList.add("od-opened"); }, ticket);
+    } else if (step === 1) {
+      $$(".od-doc-bar").forEach((node, i) => later(350 + i * 260, () => node.classList.add("od-animated-in"), ticket));
+      later(700, () => moveTo($(".od-doc-name"), true), ticket);
+      later(1220, () => {
+        const input = $("[data-od-typing]"); if (!input) return;
+        const word = "Clínica Exemplo";
+        let position = 0;
+        typing = window.setInterval(() => {
+          if (ticket !== sequence) { window.clearInterval(typing); typing=null; return; }
+          input.textContent = word.slice(0, ++position);
+          if (position === word.length) {
+            window.clearInterval(typing); typing = null;
+            setText("[data-od-fieldcount]", "1 de 3");
+          }
+        }, 78);
+      }, ticket);
+      later(2750, () => setText("[data-od-fieldcount]", "2 de 3"), ticket);
+      later(3290, () => { setText("[data-od-fieldcount]", "3 de 3"); const fill = $(".od-progress-line i"); if (fill) fill.style.width = "100%"; }, ticket);
+      later(3940, () => moveTo($("[data-od-save]"), true), ticket);
+      later(4740, () => {
+        const btn = $("[data-od-save]"); if (btn) { btn.classList.add("od-saved"); btn.textContent = "✓ Versão salva"; }
+        setText("[data-od-savestatus]", "Minuta salva para revisão do RT");
+        const name = $(".od-doc-name"); if (name) name.classList.add("od-is-saved");
+      }, ticket);
+      later(5220, () => { const btn = $("[data-od-export]"); if(btn) btn.classList.add("od-ready"); moveTo(btn, true); }, ticket);
+    } else {
+      const rows = $$(".od-board-row");
+      rows.forEach((node,i) => later(650 + i*1240, () => {
+        moveTo(node, true);
+        setStatus(node, i);
+        const meter = $("[data-od-board-meter]"); if(meter) meter.style.width = String(Math.round((i+1)/3*100)) + "%";
+        setText("[data-od-done]", String(i+1) + " de 3 etapas");
+      }, ticket));
+    }
+    later(DURATION + 300, () => { if(visible && !document.hidden) play(step+1); }, ticket);
+  }
+  tabs.forEach((tab,i) => {
+    tab.addEventListener("click", () => play(i));
+    tab.addEventListener("keydown", event => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      event.preventDefault();
+      const next = (i + (event.key === "ArrowRight" ? 1 : views.length-1)) % views.length;
+      tabs[next].focus(); play(next);
+    });
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancel();
+    else if (visible) play(step);
+  });
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      const current = entries[0]?.isIntersecting ?? true;
+      if (visible === current) return;
+      visible = current;
+      if (current) play(step);
+      else cancel();
+    }, {threshold:.20});
+    observer.observe(root);
+  }
+  play(0);
 })();
