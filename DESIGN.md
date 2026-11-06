@@ -32,8 +32,14 @@ O CSS existente é a fonte de verdade em runtime (modelo B da frontend-design-pr
 - Cards e documentos: cantos suaves; sombras pequenas; fundo predominantemente branco; linhas separadoras funcionais. Nenhuma informação obrigatória deve depender só da cor.
 - Segurança visual: o status “minuta / aguardando revisão” não pode parecer aprovação técnica.
 
-## Personalização futura por clínica (ainda não implementada)
-Paletas e logotipo enviados pela clínica devem ser opções isoladas por clínica e aplicadas à prévia/documentos, **sem substituir a marca Odonto em Dia no sistema**. Confirmar controle de acesso, formatos de arquivo seguros, contraste e persistência por clínica antes de adicionar as opções. Tarefa no [backlog do Notion](https://app.notion.com/p/410739c88b0a81808084d79bc9320a1b).
+## Identidade visual da clínica (implementada em código)
+- Configuração em `?page=identidade` com cinco paletas aprovadas: jade, navy, graphite, plum e clay, além de cor personalizada hexadecimal com contraste mínimo 4.5:1 contra branco.
+- Cada clínica tem nome próprio e logo PNG/JPG/WebP validado pelo PHP com máximo 350 KB e 3000 px por dimensão. Imagem armazenada como BLOB privado no SQLite, não em diretório público. Endpoint autenticado: `?page=logo-clinica`.
+- `clinic-branding.php` é dono do esquema, validações e tratamento de imagens; `clinic-branding.css` do visual e override do papel; `clinic-branding.js` da prévia instantânea. Não duplicar nem converter estes estilos em tema global.
+- O DocSystem aplica cores e nome no cabeçalho/na capa da minuta. A marca Odonto em Dia (`assets/favicon.svg`) permanece global, não é substituída pela identidade da clínica.
+- No salvamento de uma nova versão, `od_document_brand_history` congela nome/dados de cabeçalho, cor e logo. Ao trocar a identidade, as versões antigas sem snapshot são congeladas com os dados disponíveis naquele momento, pois alterações anteriores à implantação não são recuperáveis.
+- Design e isolamento ainda requerem QA autenticado, especialmente imagens grandes, contraste, versões anteriores, clínicas distintas e 320px/390px.
+- [Tarefa e critérios no Notion](https://app.notion.com/p/410739c88b0a81808084d79bc9320a1b).
 
 ## Checklist de revisão
 1. Verificar a mesma marca em landing e área autenticada.
