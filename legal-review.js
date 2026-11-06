@@ -10,6 +10,8 @@
       if (!target || target.readOnly) return;
       if (target.value.trim() && !window.confirm('Este campo já contém informações. Deseja substituir pela sugestão?')) return;
       target.value = button.dataset.suggestion || '';
+      target.dataset.odxSuggested = '1';
+      target.addEventListener('input', () => {if(target.value.trim() !== (button.dataset.suggestion || '').trim())delete target.dataset.odxSuggested;});
       target.dispatchEvent(new Event('input', {bubbles:true}));
       target.focus();
       button.textContent = 'Texto inserido. Revise antes de salvar.';
@@ -56,7 +58,8 @@
     const fields = [...form.querySelectorAll('[data-odx-field]')];
     const templateId = form.querySelector('input[name="id"]')?.value || '';
     // Campos legados mantidos nos seis planos não são exigências adicionais para novas minutas.
-    const legacyOptional = new Set(['22','23','25','26','27','28']).has(templateId);
+    // Campos preservados de migrações antigas não são obrigatórios novos.
+    const legacyOptional = true;
     const empty = fields.filter(field => !field.value.trim() && !(legacyOptional && ['g[aplicabilidade]','g[evidencias]'].includes(field.name)));
     const nameValid = panel.dataset.legalClinic === '1';
     const rtValid = panel.dataset.legalRt === '1';
@@ -68,27 +71,42 @@
     const finalization = markers.filter(marker => /^\[(?:DATA|ASSINATURA\b[^\]]*)\]$/i.test(marker));
     const preparationMarkers = markers.filter(marker => !finalization.includes(marker));
     const exampleCount = preparationMarkers.length;
-    const items = [];
-    if(!nameValid) items.push('Confirme o nome do estabelecimento no perfil.');
-    if(!rtValid) items.push('Informe o nome e o CRO do responsável técnico no perfil.');
-    if(empty.length) items.push('Preencha ou adapte ' + empty.length + ' campo(s) do documento.');
-    if(!contentValid) items.push('Confira a presença do conteúdo principal da minuta.');
-    if(exampleCount) items.push('Substitua ' + exampleCount + ' marcador(es) de exemplo no corpo do documento, incluindo datas e assinaturas.');
-    if(!accuracy.checked) items.push('Confirme que os dados correspondem à realidade da clínica.');
-
-    const complete = items.length === 0;
+    const suggested = fields.filter(field => field.dataset.odxSuggested === '1');
+    const checks = [
+      {ok:nameValid,problem:'Confirme o nome do estabelecimento no perfil.',section:'?page=diagnostico'},
+      {ok:rtValid,problem:'Informe nome e CRO do responsável técnico.',section:'?page=diagnostico'},
+      {ok:empty.length===0,problem:'Preencha ou adapte '+empty.length+' campo(s) guiados; os dados precisam refletir a clínica.',section:'#odx-form'},
+      {ok:contentValid,problem:'Confira a presença do conteúdo principal da minuta.',section:'#odx-document-body'},
+      {ok:exampleCount===0,problem:'Substitua '+exampleCount+' marcador(es) de exemplo no corpo do documento.',section:'#odx-document-body'},
+      {ok:suggested.length===0,problem:'Revise e adapte '+suggested.length+' texto(s) sugerido(s) antes de concluir a checagem.',section:'#odx-form'},
+      {ok:accuracy.checked,problem:'Confirme que as informações foram conferidas e correspondem à realidade do serviço.',section:'#od-legal-confirm'}
+    ];
+    const passed = checks.filter(check=>check.ok).length;
+    const problems = checks.filter(check=>!check.ok);
+    const complete = problems.length === 0;
     result.classList.toggle('is-complete', complete);
     if (complete) {
-      result.innerHTML = '<h4>Checagem estrutural concluída</h4>'
-      + '<p>Os campos verificados estão preenchidos. A minuta pode ser salva e encaminhada à revisão do responsável técnico. Isso não é aprovação sanitária nem certificação.</p>'
-      + '<p><strong>Próximo passo:</strong> selecione “Aguardando revisão do RT” e salve uma nova versão. As datas de revisão e assinaturas ainda pendentes devem ser formalizadas pelos responsáveis competentes, especialmente a aprovação e assinatura do responsável legal para a SDBPF.</p>';
+      result.innerHTML = '<div class="od-legal-scan-summary"><strong>'+passed+' de '+checks.length+' checagens de estrutura concluídas</strong><span>Verificação local, sem certificação sanitária</span></div>'
+      + '<h4>Minuta pronta para revisão técnica</h4>'
+      + '<p>A estrutura e os dados declarados passaram nas conferências indicadas. Salve a versão, selecione “Aguardando revisão do RT” e providencie a avaliação técnica e a formalização pertinentes. Isso não verifica a execução dos procedimentos nem confirma conformidade legal.</p>'
+      + (finalization.length?'<p><strong>Atenção:</strong> '+finalization.length+' marcador(es) de data ou assinatura permanecem para formalização profissional.</p>':'');
     } else {
-      result.innerHTML = '<h4>Faltam ' + items.length + ' pontos para preparar a minuta</h4>'
-      + '<p>Revise os itens abaixo e execute uma nova conferência.</p><ul>'
-      + items.map(item => '<li>' + escapeText(item) + '</li>').join('')
-      + '</ul><button type="button" class="od-legal-edit-cta" id="od-legal-edit-cta">Abrir edição do texto</button>'
-      + ' <a href="?page=diagnostico">Editar dados da clínica</a>';
+      result.innerHTML = '<div class="od-legal-scan-summary"><strong>'+passed+' de '+checks.length+' checagens de estrutura concluídas</strong><span>'+problems.length+' ponto(s) para revisar</span></div>'
+      + '<h4>Vamos ajustar alguns detalhes</h4><p>Veja o que precisa ser conferido antes da revisão técnica.</p><ul class="od-legal-review-list">'
+      + problems.map((item,index)=>'<li><span>'+escapeText(item.problem)+'</span><a href="'+escapeText(item.section)+'" data-od-legal-link="'+index+'">Corrigir</a></li>').join('')
+      + '</ul>';
     }
+    result.querySelectorAll('[data-od-legal-link]').forEach(link=>link.addEventListener('click', event=>{
+      const href=link.getAttribute('href')||'';
+      if(!href.startsWith('#'))return;
+      event.preventDefault();
+      let target;
+      if(href==='#odx-form')target=empty[0]||suggested[0]||form;
+      else target=document.querySelector(href);
+      target?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
+      target?.focus({preventScroll:true});
+      if(target===documentBody && documentBody?.getAttribute('contenteditable')!=='true')document.getElementById('odx-edit-toggle')?.click();
+    }));
     result.hidden = false;
     result.querySelector('#od-legal-edit-cta')?.addEventListener('click',()=>{
       const toggle=document.getElementById('odx-edit-toggle');
