@@ -11,7 +11,14 @@
     }));
   }
   if (!root) return;
+  const readOnlyHistory = root.dataset.odxReadonly === 'true';
   const fields = [...root.querySelectorAll('[data-odx-field]')];
+  if (readOnlyHistory) {
+    fields.forEach(field => { field.readOnly = true; field.setAttribute('aria-readonly', 'true'); });
+    const status = root.querySelector('#odx-status'); if (status) status.disabled = true;
+    const save = root.querySelector('.odx-save'); if (save) save.hidden = true;
+    const toggle = root.querySelector('#odx-edit-toggle'); if (toggle) toggle.hidden = true;
+  }
   const documentBody = document.getElementById('odx-document-body');
   const hiddenHtml = document.getElementById('odx-body-html');
   const toggle = document.getElementById('odx-edit-toggle');
