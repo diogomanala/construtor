@@ -6,7 +6,7 @@ Comportamento compartilhado da área de membros PHP. Registrar decisões observ�
 ## Navegação canônica
 - Dono da estrutura: `index.php::h(string $page)`. Dono do visual da navegação: `member-shell.css`.
 - A marca é a mesma da landing, usa `assets/favicon.svg`; o link leva ao painel com sessão ou à página inicial sem sessão.
-- Todas as rotas continuam disponíveis: painel, biblioteca, meus documentos, meu mapa, perfil, esterilização, limpeza, manutenção, EPI, autoavaliação, Autoinspeção 360 e sair.
+- Todas as rotas continuam disponíveis: painel, biblioteca, meus documentos, meu mapa, perfil, esterilização, limpeza, manutenção, EPI, autoavaliação, Autoinspeção 360, identidade visual e sair.
 - Desktop acima de 920 px: destinos principais em acesso rápido, menu `details/summary` nativo para recursos adicionais. Móvel: menu nativo como entrada única, sem navegação extensa ou escondida por overflow.
 - A rota atual recebe `aria-current="page"`. Links são `a` sem handlers globais; `summary` tem interação nativa por toque/teclado. Menu abre sobre o conteúdo, sem alterar a altura da página, e sua rolagem é limitada.
 - Sair é um link identificado e visualmente distinto, sem operação destrutiva disfarçada.
@@ -24,8 +24,13 @@ Comportamento compartilhado da área de membros PHP. Registrar decisões observ�
 - Teste com duas clínicas distintas, persistência e isolamento, versão documental e controle de acesso expirado.
 - Verificação de compra e ativação Mercado Pago em fluxo controlado. Nenhum desses testes está aprovado apenas por um deploy.
 
-## Tarefa futura: identidade de clínica
-A identidade visual da clínica será configurada por clínica (nome, imagem e paleta), com upload validado, prévia, persistência, isolamento e aplicação ao documento. A marca da plataforma permanece estável. [Backlog](https://app.notion.com/p/410739c88b0a81808084d79bc9320a1b).
+## Identidade visual por clínica
+- Rota autenticada: `?page=identidade`. Formulário POST `brand_save`, protegido pelo mesmo CSRF, sessão e regra de compra vigente que o editor.
+- Atualizar nome, paleta predefinida, tom próprio escuro com contraste 4.5:1 e logo PNG/JPG/WebP de até 350 KB e 3000 px. Substituição/remoção são explícitas.
+- Upload é inspecionado pelo PHP (MIME, conteúdo e tamanho), mantido apenas no SQLite e servido em `?page=logo-clinica` com sessão e escopo de clínica. Nunca usar SVG enviado pelo cliente nem mostrar acesso público aos logos.
+- Prévia de marca instantânea no formulário, sem alterar a marca da navegação. Editor renderiza imagem e tema no cabeçalho/capa.
+- Cada versão nova grava identidade com o documento em `od_document_brand_history`; ao mudar o tema são congeladas as versões legadas sem snapshot com os dados atuais disponíveis.
+- Pendente: teste autenticado real de arquivos, isolamento multi-clínica, histórico e comportamento responsivo. [Tarefa no Notion](https://app.notion.com/p/410739c88b0a81808084d79bc9320a1b).
 
 ## Fontes
 - [Cérebro](https://app.notion.com/p/410739c88b0a81f8a436d82129ff205a)
