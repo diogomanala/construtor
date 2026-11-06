@@ -9,7 +9,7 @@ function od_360_schema():PDO{
 function od_360_allowed():bool{
     if(!user())return false;
     // A única conta piloto tem acesso de avaliação; nunca use essa exceção em uma conta comercial.
-    if((int)user()===1 && !od_mp_entitlement(1))return true;
+    if(od_is_pilot((int)user()))return true;
     $e=od_mp_entitlement((int)user());return $e && (int)$e['addon']===1;
 }
 function od_360_save():never{
