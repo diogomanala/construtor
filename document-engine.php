@@ -44,6 +44,7 @@ function odx_spec(int $id, string $category): array {
 function odx_schema(): PDO {
     $db=od_editor_schema();
     $db->exec('CREATE TABLE IF NOT EXISTS od_document_details (clinic_id INTEGER NOT NULL, template_id INTEGER NOT NULL, fields_json TEXT NOT NULL DEFAULT \'{}\', updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (clinic_id, template_id))');
+    $db->exec('CREATE TABLE IF NOT EXISTS od_document_fields_history (clinic_id INTEGER NOT NULL, template_id INTEGER NOT NULL, version INTEGER NOT NULL, fields_json TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(clinic_id,template_id,version))');
     return $db;
 }
 function odx_get_fields(int $clinicId,int $templateId): array {
@@ -79,7 +80,9 @@ function odx_post(): never {
         $v=$q->fetchColumn();$next=$v===false?1:(int)$v+1;
         $db->prepare('INSERT INTO od_documents(clinic_id,template_id,content_html,version,stage,updated_at) VALUES(?,?,?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id,template_id) DO UPDATE SET content_html=excluded.content_html,version=excluded.version,stage=excluded.stage,updated_at=CURRENT_TIMESTAMP')->execute([$c['id'],$id,$html,$next,$stage]);
         $db->prepare('INSERT INTO od_document_history(clinic_id,template_id,version,content_html,stage) VALUES(?,?,?,?,?)')->execute([$c['id'],$id,$next,$html,$stage]);
-        $db->prepare('INSERT INTO od_document_details(clinic_id,template_id,fields_json,updated_at) VALUES(?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id,template_id) DO UPDATE SET fields_json=excluded.fields_json,updated_at=CURRENT_TIMESTAMP')->execute([$c['id'],$id,json_encode($data,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR)]);
+        $fieldsJson=json_encode($data,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
+        $db->prepare('INSERT INTO od_document_details(clinic_id,template_id,fields_json,updated_at) VALUES(?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id,template_id) DO UPDATE SET fields_json=excluded.fields_json,updated_at=CURRENT_TIMESTAMP')->execute([$c['id'],$id,$fieldsJson]);
+        $db->prepare('INSERT INTO od_document_fields_history(clinic_id,template_id,version,fields_json) VALUES(?,?,?,?)')->execute([$c['id'],$id,$next,$fieldsJson]);
         $db->commit();
         flash('Versão '.$next.' salva. A revisão técnica ainda precisa ser realizada pelo RT.');
     } catch(Throwable $e) {
@@ -100,14 +103,27 @@ function odx_page():never {
     $doc=$id?template_by_id($id):null;
     if(!$doc){http_response_code(404);exit('Documento não encontrado');}
     $saved=od_editor_doc((int)$id,(int)$c['id']);
-    $html=$saved['content_html']??od_safe_document((string)$doc['html']);
+    $requestedVersion=filter_var($_GET['version']??null,FILTER_VALIDATE_INT);
+    $historical=null;
+    if($requestedVersion && $saved && $requestedVersion<=(int)$saved['version']){
+        $query=odx_schema()->prepare('SELECT version,stage,content_html FROM od_document_history WHERE clinic_id=? AND template_id=? AND version=?');
+        $query->execute([(int)$c['id'],(int)$id,$requestedVersion]);
+        $historical=$query->fetch()?:null;
+    }
+    $html=$historical['content_html']??$saved['content_html']??od_safe_document((string)$doc['html']);
     $data=odx_get_fields((int)$c['id'],(int)$id);
+    if($historical){
+        $q=odx_schema()->prepare('SELECT fields_json FROM od_document_fields_history WHERE clinic_id=? AND template_id=? AND version=?');
+        $q->execute([(int)$c['id'],(int)$id,$requestedVersion]);
+        $snapshot=$q->fetchColumn();$data=is_string($snapshot)?(json_decode($snapshot,true)?:[]):[];
+    }
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
     h('Documento da clínica');
     echo '<div class="odx-topline"><a href="?page=documentos">← Biblioteca</a><span> / </span><span>'.esc($doc['category']).'</span><span> / </span><strong>'.esc($meta['number']).'</strong></div>';
     echo '<div class="odx-page-title"><div><span class="odx-eyebrow">DOCSYSTEM / DOCUMENTAÇÃO DA CLÍNICA</span><h2>'.esc($doc['title']).'</h2><p>Preencha ao lado, acompanhe o documento e salve novas versões. Os materiais são minutas para revisão do RT.</p></div><span class="odx-version">'.($saved?'Versão '.(int)$saved['version']:'Novo documento').'</span></div>';
-    echo '<form method="post" class="odx-workspace" id="odx-form">'.token().'<input type="hidden" name="act" value="premium_save"><input type="hidden" name="id" value="'.(int)$id.'"><textarea hidden name="body_html" id="odx-body-html"></textarea>';
+    if($historical)echo '<div class="odx-history-banner"><strong>Visualizando versão '.(int)$historical['version'].'.</strong> Arquivo histórico somente para leitura. <a href="?page=editar&id='.(int)$id.'">Voltar à versão atual</a></div>';
+    echo '<form method="post" class="odx-workspace" id="odx-form"'.($historical?' data-odx-readonly="true"':'').'>'.token().'<input type="hidden" name="act" value="premium_save"><input type="hidden" name="id" value="'.(int)$id.'"><textarea hidden name="body_html" id="odx-body-html"></textarea>';
     echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO GUIADO</span><h3>Dados da sua unidade</h3><p>Esses campos ficam salvos com o documento e aparecem imediatamente na prévia.</p></div><div class="odx-completion"><div><span>Informações fornecidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
     foreach($fields as $i=>$f){$key=$f['key'];$value=(string)($data[$key]??'');$tag=$f['type']??'text';$idAttr='odx-f-'.$key;
         echo '<label class="odx-field" for="'.esc($idAttr).'"><span><em>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</em>'.esc($f['label']).'</span>';
@@ -115,6 +131,10 @@ function odx_page():never {
         else echo '<input id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" value="'.esc($value).'" placeholder="'.esc($f['hint']).'">';
         echo '</label>';
     }
+    $histQ=odx_schema()->prepare('SELECT version,stage,created_at FROM od_document_history WHERE clinic_id=? AND template_id=? ORDER BY version DESC LIMIT 5');
+    $histQ->execute([(int)$c['id'],(int)$id]);
+    $revisions=$histQ->fetchAll();
+    if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
     echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div><button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools"><button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
     echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top"><div class="odx-seal"><span>OD</span></div><div><strong>'.esc($c['name']).'</strong><small>'.esc($c['city']).($c['state']?' · '.esc($c['state']):'').' &nbsp;·&nbsp; '.esc($c['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
