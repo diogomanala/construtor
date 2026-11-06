@@ -23,6 +23,34 @@
   const accuracy = document.getElementById('od-legal-confirm');
   if (!trigger || !result || !panel || !accuracy) return;
 
+  const autofill = document.getElementById('odx-fill-clinic');
+  const documentBody = document.getElementById('odx-document-body');
+  autofill?.addEventListener('click', () => {
+    if (!documentBody) return;
+    const name = (panel.dataset.odName || '').trim();
+    const cnpj = (panel.dataset.odCnpj || '').trim();
+    const rt = (panel.dataset.odRtname || '').trim();
+    const cro = (panel.dataset.odCro || '').trim();
+    const replaces = [];
+    if(name && cnpj)replaces.push(['[NOME / CNPJ]', name+' / '+cnpj]);
+    if(rt && cro){
+      replaces.push(['[NOME / CRO-UF]',rt+' / '+cro]);
+      replaces.push(['[NOME / CRO]',rt+' / '+cro]);
+    }
+    let updated=0;
+    const walker=document.createTreeWalker(documentBody,NodeFilter.SHOW_TEXT);
+    let node;
+    while((node=walker.nextNode())){
+      let next=node.nodeValue;
+      for(const [from,to] of replaces){
+        if(next.includes(from)){next=next.split(from).join(to);updated++;}
+      }
+      if(next!==node.nodeValue)node.nodeValue=next;
+    }
+    if(updated)documentBody.dispatchEvent(new Event('input',{bubbles:true}));
+    autofill.textContent=updated?'Dados inseridos. Revise e salve.':'Não há dados cadastrais pendentes para preencher.';
+  });
+
   const escapeText = (text) => String(text).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
   function scanNow(){
     const fields = [...form.querySelectorAll('[data-odx-field]')];
@@ -31,11 +59,15 @@
     const rtValid = panel.dataset.legalRt === '1';
     const content = document.getElementById('odx-document-body');
     const contentValid = Boolean(content && content.textContent.trim().length >= 100);
+    // A minuta não está pronta enquanto houver marcadores de exemplo no seu corpo.
+    const markers = content?.textContent.match(/\[[^\]\n]{2,90}\]/g) || [];
+    const exampleCount = markers.length;
     const items = [];
     if(!nameValid) items.push('Confirme o nome do estabelecimento no perfil.');
     if(!rtValid) items.push('Informe o nome e o CRO do responsável técnico no perfil.');
     if(empty.length) items.push('Preencha ou adapte ' + empty.length + ' campo(s) do documento.');
     if(!contentValid) items.push('Confira a presença do conteúdo principal da minuta.');
+    if(exampleCount) items.push('Substitua ' + exampleCount + ' marcador(es) de exemplo no corpo do documento, incluindo datas e assinaturas.');
     if(!accuracy.checked) items.push('Confirme que os dados correspondem à realidade da clínica.');
 
     const complete = items.length === 0;
@@ -48,12 +80,18 @@
       result.innerHTML = '<h4>Faltam ' + items.length + ' pontos para preparar a minuta</h4>'
       + '<p>Revise os itens abaixo e execute uma nova conferência.</p><ul>'
       + items.map(item => '<li>' + escapeText(item) + '</li>').join('')
-      + '</ul><a href="?page=diagnostico">Editar dados da clínica</a>';
+      + '</ul><button type="button" class="od-legal-edit-cta" id="od-legal-edit-cta">Abrir edição do texto</button>'
+      + ' <a href="?page=diagnostico">Editar dados da clínica</a>';
     }
     result.hidden = false;
+    result.querySelector('#od-legal-edit-cta')?.addEventListener('click',()=>{
+      const toggle=document.getElementById('odx-edit-toggle');
+      if(documentBody?.getAttribute('contenteditable')!=='true')toggle?.click();
+      documentBody?.scrollIntoView({behavior:'smooth',block:'start'});
+    });
     trigger.disabled = false;
     trigger.querySelector('span:nth-child(2)').textContent = 'Conferir novamente';
-    result.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+    result.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
   }
   trigger.addEventListener('click', () => {
     if(trigger.disabled)return;
