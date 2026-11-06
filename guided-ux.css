@@ -151,3 +151,5 @@
 @media(max-width:900px){.od-ui-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}.od-ui-recommend-grid{grid-template-columns:1fr}}
 @media(max-width:680px){.od-ui-welcome,.od-ui-docs-head{align-items:flex-start;flex-direction:column;gap:14px}.od-ui-next{align-items:flex-start;flex-wrap:wrap}.od-ui-next .od-ui-action{width:100%}.od-ui-journey-top{gap:12px}.od-ui-shortcuts,.od-ui-operational,.od-ui-all-grid{grid-template-columns:1fr}.od-ui-task-state{display:none}.od-ui-task>summary{gap:9px;padding:14px}.od-ui-task-main small{font-size:10px}.od-ui-task-content{padding:15px}.od-ui-two{grid-template-columns:1fr}.od-ui-section-head{align-items:flex-start}.od-ui-docs-stat{min-width:0}}
 @media(prefers-reduced-motion:reduce){.od-ui-page *, .od-ui-page *:before, .od-ui-page *:after{transition:none!important;animation:none!important}}
+
+.od-ui-page [hidden]{display:none!important}
