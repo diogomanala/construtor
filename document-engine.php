@@ -1,6 +1,7 @@
 <?php
 /** Odonto em Dia / Document System v1: ferramenta online de minutas, não certificação sanitária. */
 declare(strict_types=1);
+require_once __DIR__.'/document-plan-config.php';
 
 function odx_fields(int $templateId): array {
     $common = [
@@ -46,6 +47,14 @@ function odx_fields(int $templateId): array {
             ['key'=>'evidencia_manut','label'=>'Comprovantes e tratamento de falhas','hint'=>'Onde registrar serviços, laudos e equipamentos indisponíveis','type'=>'textarea']
         ]
     ];
+    // Preserve os campos legados mesmo quando uma minuta passa a ter preenchimento especializado.
+    // Dessa forma, conteúdo já salvo permanece visível e editável na plataforma.
+    $legacy = [
+        ['key'=>'aplicabilidade','label'=>'Aplicabilidade já informada','hint'=>'Informações do modelo original, se já preenchido','type'=>'textarea'],
+        ['key'=>'evidencias','label'=>'Evidências já informadas','hint'=>'Registros do modelo anterior, se já preenchidos','type'=>'textarea']
+    ];
+    $plan = odx_plan_configs()[$templateId] ?? null;
+    if ($plan !== null) return array_merge($common, $plan['fields'], $legacy);
     return array_merge($common, $special[$templateId] ?? [
         ['key'=>'aplicabilidade','label'=>'Como se aplica à sua clínica','hint'=>'Descreva o uso real do documento neste estabelecimento','type'=>'textarea'],
         ['key'=>'evidencias','label'=>'Registros e evidências relacionados','hint'=>'Indique onde encontrar evidências da rotina','type'=>'textarea']
@@ -60,7 +69,8 @@ function odx_spec(int $id, string $category): array {
         7 => ['name'=>'POP de Limpeza de Ambientes','eyebrow'=>'Higienização, execução e registros','number'=>'POP / 04','flow'=>['Mapear áreas','Definir produtos','Executar rotina','Registrar limpeza'],'accent'=>'blue'],
         21 => ['name'=>'Inventário e Manutenção','eyebrow'=>'Gestão de equipamentos e intervenções','number'=>'POP / 18','flow'=>['Identificar equipamentos','Programar cuidados','Registrar serviços','Revisar evidências'],'accent'=>'amber']
     ];
-    return $all[$id] ?? ['name'=>'Documento da clínica','eyebrow'=>$category,'number'=>strtoupper($category).' / '.str_pad((string)$id,2,'0',STR_PAD_LEFT),'flow'=>['Identificar','Personalizar','Reunir evidências','Revisar com RT'],'accent'=>'jade'];
+    $plans = odx_plan_configs();
+    return $all[$id] ?? ($plans[$id]['spec'] ?? ['name'=>'Documento da clínica','eyebrow'=>$category,'number'=>strtoupper($category).' / '.str_pad((string)$id,2,'0',STR_PAD_LEFT),'flow'=>['Identificar','Personalizar','Reunir evidências','Revisar com RT'],'accent'=>'jade']);
 }
 function odx_schema(): PDO {
     $db=od_editor_schema();
@@ -158,7 +168,7 @@ function odx_page():never {
     if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
     if((int)$id===11)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Monitorização de esterilização</h4><p>Registre os ciclos e consulte o histórico de sua clínica, sem planilhas separadas.</p><a href="?page=registros-esterilizacao">Abrir registros de ciclos ↗</a></div>';
     if((int)$id===7)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Controle de limpeza dos ambientes</h4><p>Registre cada execução e acompanhe pendências e ocorrências sem arquivos avulsos.</p><a href="?page=registros-limpeza">Abrir registro de limpeza ↗</a></div>';
-    if((int)$id===21)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Manutenção de equipamentos</h4><p>Registre serviços, verificações e próximas datas por equipamento, mantendo histórico da clínica.</p><a href="?page=registros-manutencao">Abrir controle de manutenção ↗</a></div>';
+    if(in_array((int)$id,[21,25,28],true))echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Manutenção de equipamentos</h4><p>Registre serviços, verificações e próximas datas por equipamento, mantendo histórico da clínica.</p><a href="?page=registros-manutencao">Abrir controle de manutenção ↗</a></div>';
     if((int)$id===6)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Entrega e orientação sobre EPI</h4><p>Documente entregas e orientações internas, com histórico e acompanhamento de ocorrências.</p><a href="?page=registros-epi">Abrir controle de EPI ↗</a></div>';
     echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div><button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools"><button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
