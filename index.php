@@ -22,8 +22,8 @@ function redirect(string $url='?'):never{header('Location: '.$url, true,303);exi
 function user():?int{return isset($_SESSION['uid'])?(int)$_SESSION['uid']:null;}
 function clinic():?array{if(!user())return null;$s=db()->prepare('SELECT * FROM clinics WHERE user_id=? ORDER BY id LIMIT 1');$s->execute([user()]);return $s->fetch()?:null;}
 function flash(string $s):void{$_SESSION['flash']=$s;}
-function h(string $page):void {$title='Odonto em Dia';echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.$title.'</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=1"></head><body><header class="top"><a class="brand" href="?page=inicio">◇ Odonto <span>em Dia</span></a><nav>';if(user())echo '<a href="?page=painel">Painel</a><a href="?page=boas-vindas">Meu mapa</a><a href="?page=diagnostico">Perfil</a><a href="?page=documentos">Biblioteca</a><a href="?page=meus-documentos">Meus documentos</a><a href="?page=inspecao">Autoavaliação básica</a><a href="?page=auto360">Autoinspeção 360</a><a href="?page=sair">Sair</a>';echo '</nav></header><main>';if(!empty($_SESSION['flash'])){echo '<div class="notice">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';}
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=1" defer></script></body></html>';}
+function h(string $page):void {$title='Odonto em Dia';echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.$title.'</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=2"></head><body><header class="top"><a class="brand" href="?page=inicio">◇ Odonto <span>em Dia</span></a><nav>';if(user())echo '<a href="?page=painel">Painel</a><a href="?page=boas-vindas">Meu mapa</a><a href="?page=diagnostico">Perfil</a><a href="?page=documentos">Biblioteca</a><a href="?page=meus-documentos">Meus documentos</a><a href="?page=inspecao">Autoavaliação básica</a><a href="?page=auto360">Autoinspeção 360</a><a href="?page=sair">Sair</a>';echo '</nav></header><main>';if(!empty($_SESSION['flash'])){echo '<div class="notice">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/document-engine.php';
@@ -64,8 +64,9 @@ if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não at
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='editar')odx_page();
 if($page==='documentos')odx_library();
-if($page==='meus-documentos')od_editor_page('meus-documentos');
+if($page==='meus-documentos')odx_saved();
 if(in_array($page,['baixar-docx','imprimir'],true)){redirect('?page=editar&id='.(int)($_GET['id']??0));}
+if(in_array($page,['modelo','exportar'],true)){redirect('?page=documentos');}
 if($page==='auto360')od_360_page();
 if($page==='baixar-kit')redirect('?page=documentos');
 if($page==='baixar-auto360')redirect('?page=auto360');
