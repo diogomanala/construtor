@@ -53,7 +53,7 @@ function odx_fields(int $templateId): array {
         ['key'=>'aplicabilidade','label'=>'Aplicabilidade já informada','hint'=>'Informações do modelo original, se já preenchido','type'=>'textarea'],
         ['key'=>'evidencias','label'=>'Evidências já informadas','hint'=>'Registros do modelo anterior, se já preenchidos','type'=>'textarea']
     ];
-    $plan = odx_plan_configs()[$templateId] ?? null;
+    $plan = odx_document_configs()[$templateId] ?? null;
     if ($plan !== null) return array_merge($common, $plan['fields'], $legacy);
     return array_merge($common, $special[$templateId] ?? [
         ['key'=>'aplicabilidade','label'=>'Como se aplica à sua clínica','hint'=>'Descreva o uso real do documento neste estabelecimento','type'=>'textarea'],
@@ -69,7 +69,7 @@ function odx_spec(int $id, string $category): array {
         7 => ['name'=>'POP de Limpeza de Ambientes','eyebrow'=>'Higienização, execução e registros','number'=>'POP / 04','flow'=>['Mapear áreas','Definir produtos','Executar rotina','Registrar limpeza'],'accent'=>'blue'],
         21 => ['name'=>'Inventário e Manutenção','eyebrow'=>'Gestão de equipamentos e intervenções','number'=>'POP / 18','flow'=>['Identificar equipamentos','Programar cuidados','Registrar serviços','Revisar evidências'],'accent'=>'amber']
     ];
-    $plans = odx_plan_configs();
+    $plans = odx_document_configs();
     return $all[$id] ?? ($plans[$id]['spec'] ?? ['name'=>'Documento da clínica','eyebrow'=>$category,'number'=>strtoupper($category).' / '.str_pad((string)$id,2,'0',STR_PAD_LEFT),'flow'=>['Identificar','Personalizar','Reunir evidências','Revisar com RT'],'accent'=>'jade']);
 }
 function odx_schema(): PDO {
