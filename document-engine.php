@@ -105,6 +105,7 @@ function odx_post(): never {
     $stage=(string)($_POST['stage']??'rascunho');
     if(!in_array($stage,['rascunho','revisao_rt'],true))$stage='rascunho';
     $db=odx_schema();
+    od_visual_schema();
     try {
         $db->beginTransaction();
         $q=$db->prepare('SELECT version FROM od_documents WHERE clinic_id=? AND template_id=?');$q->execute([(int)$c['id'],(int)$id]);
@@ -115,6 +116,7 @@ function odx_post(): never {
         $db->prepare('INSERT INTO od_document_details(clinic_id,template_id,fields_json,updated_at) VALUES(?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id,template_id) DO UPDATE SET fields_json=excluded.fields_json,updated_at=CURRENT_TIMESTAMP')->execute([$c['id'],$id,$fieldsJson]);
         $db->prepare('INSERT INTO od_document_fields_history(clinic_id,template_id,version,fields_json) VALUES(?,?,?,?)')->execute([$c['id'],$id,$next,$fieldsJson]);
         od_brand_snapshot($db,$c,(int)$id,$next);
+        od_visual_snapshot($db,(int)$c['id'],(int)$id,$next);
         $db->commit();
         flash('Versão '.$next.' salva. A revisão técnica ainda precisa ser realizada pelo RT.');
     } catch(Throwable $e) {
@@ -160,6 +162,7 @@ function odx_page():never {
             $brandLogoUrl='?page=logo-clinica&template_id='.(int)$id.'&version='.(int)$requestedVersion;
         }
     }
+    $visual=$historical ? od_visual_historical((int)$c['id'],(int)$id,(int)$requestedVersion) : od_visual_current((int)$id);
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
     h('Documento da clínica',false);
@@ -188,7 +191,7 @@ function odx_page():never {
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools">'.($historical?'':'<button type="button" id="odx-fill-clinic" class="odx-fill-clinic">'.od_ui_icon('building').' Preencher dados da clínica</button>').'<button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
     $brandMark=$brand['logo_mime']?'<img class="odx-brand-logo" src="'.esc($brandLogoUrl).'" alt="Logo da clínica">':'<div class="odx-seal"><span>'.esc(mb_strtoupper(mb_substr((string)$paperClinic['name'],0,1))).'</span></div>';
     echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).' odx-branded" style="--odx-brand-cover:'.esc($brand['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top">'.$brandMark.'<div><strong>'.esc($paperClinic['name']).'</strong><small>'.esc($paperClinic['city']).($paperClinic['state']?' · '.esc($paperClinic['state']):'').' &nbsp;·&nbsp; '.esc($paperClinic['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
-    echo '<div class="odx-cover"><div class="odx-cover-lines"><span></span><span></span><span></span></div><span class="odx-cover-kicker">'.esc($meta['eyebrow']).'</span><h2>'.esc($meta['name']).'</h2><p>'.esc($doc['title']).'</p><div class="odx-cover-meta"><span>DOCUMENTO DE TRABALHO</span><strong>'.($historical?'VERSÃO '.(int)$historical['version']:($saved?'VERSÃO '.(int)$saved['version']:'VERSÃO INICIAL')).'</strong></div></div>';
+    echo '<div class="odx-cover'.($visual?' odx-cover--with-art':'').'"><div class="odx-cover-lines"><span></span><span></span><span></span></div><span class="odx-cover-kicker">'.esc($meta['eyebrow']).'</span><h2>'.esc($meta['name']).'</h2><p>'.esc($doc['title']).'</p><div class="odx-cover-meta"><span>DOCUMENTO DE TRABALHO</span><strong>'.($historical?'VERSÃO '.(int)$historical['version']:($saved?'VERSÃO '.(int)$saved['version'] :'VERSÃO INICIAL')).'</strong></div>'.od_visual_cover_markup($visual).'</div>';
     echo '<div class="odx-paper-inside"><div class="odx-facts"><div><small>Estabelecimento</small><strong>'.esc($paperClinic['name']).'</strong></div><div><small>Responsável técnico</small><strong>'.esc($paperClinic['rt_name']).($paperClinic['rt_cro']?' · '.esc($paperClinic['rt_cro']):'').'</strong></div><div><small>Status</small><strong>'.esc(odx_stage($historical?:($saved??[]))).'</strong></div></div>';
     echo '<section class="odx-flow" aria-label="Mapa de organização do documento"><div class="odx-flow-head"><div><span>VISÃO DO PROCESSO</span><h3>Etapas para organizar este material</h3></div><small>Esquema de organização, não instrução clínica</small></div><div class="odx-flow-steps">';
     foreach($meta['flow'] as $i=>$name){echo '<div class="odx-flow-step"><span>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</span><strong>'.esc($name).'</strong></div>';}
