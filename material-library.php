@@ -105,7 +105,9 @@ function od_mat_preview(array $clinic,int $templateId,?int $historicalVersion=nu
     foreach(array_slice($items,0,18) as $id){$item=$known[$id]??null;if(!$item)continue;
         $html.='<div class="od-mat-preview-item">'.od_mat_sprite($item).'<strong>'.esc($item['label']).'</strong></div>';
     }
-    return $html.'</div><p class="od-mat-preview-note">Ilustrações em revisão técnica. O responsável técnico deve verificar a pertinência e a identificação dos itens para a unidade.</p></section>';
+    $status='Ilustrações em revisão técnica. O responsável técnico deve verificar a pertinência e a identificação dos itens para a unidade.';
+    if($historicalVersion===null && $savedVersion!==null && od_mat_read((int)$clinic['id'],$templateId)!==null)$status='Prévia da seleção atual. Salve uma nova versão da minuta para registrar as mudanças no histórico. '.$status;
+    return $html.'</div><p class="od-mat-preview-note">'.esc($status).'</p></section>';
 }
 function od_mat_gallery(): never {
     $clinic=clinic();
@@ -123,6 +125,7 @@ function od_mat_gallery(): never {
     h('Biblioteca visual',false);
     echo '<div class="od-mat-page"><header class="od-mat-header"><a href="'.($template?'?page=editar&id='.(int)$id:'?page=documentos').'">← '.($template?'Voltar ao documento':'Voltar à biblioteca').'</a><span>ACERVO ILUSTRADO</span><h1>54 imagens, organizadas por material.</h1><p>Escolha uma categoria, encontre o objeto e monte um quadro visual. Os itens são ilustrativos e precisam de conferência técnica antes de serem usados como referência clínica.</p></header>';
     if($template)echo '<div class="od-mat-context"><div><small>PERSONALIZAÇÃO DO DOCUMENTO</small><strong>'.esc($template['title']).'</strong><p>Os itens selecionados aparecerão na prévia. Depois, salve uma versão do documento para preservar essa seleção.</p></div><a href="?page=editar&id='.(int)$id.'">Voltar ao editor</a></div>';
+    if(!$template)echo '<div class="od-mat-guidance"><strong>Quer montar um quadro?</strong><span>Abra um documento pela biblioteca e use “Editar imagens”. Para conjuntos clínicos ilustrativos, escolha <a href="?page=kits-bancada">Bancadas prontas</a>.</span></div>';
     echo '<div class="od-mat-toolbar"><label class="od-mat-search">'.od_ui_icon('search').'<input type="search" id="od-mat-search" placeholder="Buscar instrumento ou material" aria-label="Buscar imagens"></label><div class="od-mat-filters" role="group" aria-label="Categorias"><button type="button" data-mat-filter="all" class="is-active">Todos (54)</button>';
     foreach($catalog['display_categories'] as $cat=>$title){
         $n=count(array_filter($items,static fn($x)=>$x['category']===$cat));
@@ -133,9 +136,10 @@ function od_mat_gallery(): never {
     echo '<div class="od-mat-grid">';
     foreach($items as $item){
         $id2=(string)$item['id'];$category=(string)$item['category'];
-        echo '<label class="od-mat-tile" data-mat-category="'.esc($category).'" data-mat-search="'.esc(mb_strtolower($item['label'].' '.$category)).'">';
+        $tag=$template?'label':'article';
+        echo '<'.$tag.' class="od-mat-tile" data-mat-category="'.esc($category).'" data-mat-search="'.esc(mb_strtolower($item['label'].' '.$category)).'">';
         if($template)echo '<input type="checkbox" name="materials[]" value="'.esc($id2).'" '.(isset($selected[$id2])?'checked':'').'>';
-        echo od_mat_sprite($item).'<strong>'.esc($item['label']).'</strong><small>'.esc($catalog['display_categories'][$category]??$category).'</small></label>';
+        echo od_mat_sprite($item).'<strong>'.esc($item['label']).'</strong><small>'.esc($catalog['display_categories'][$category]??$category).'</small></'.$tag.'>';
     }
     echo '</div><p id="od-mat-empty" class="od-mat-empty" hidden>Nenhuma imagem encontrada. Tente outro termo ou categoria.</p>';
     if($template)echo '</form>';
