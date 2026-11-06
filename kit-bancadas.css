@@ -86,3 +86,5 @@
  .od-kit-print-notes strong{font-size:12px;color:#333}
  .od-kit-print-notes p{font-size:11px;white-space:pre-line;color:#444;line-height:1.65}
 }
+
+@media print{.od-kit-print-notes:has(p:empty){display:none!important}}
