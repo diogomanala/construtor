@@ -87,11 +87,9 @@ function od_kit_post(): never {
     redirect('?page=kits-bancada&kit='.$key);
 }
 function od_kit_icon(array $item): string {
-    $tile=(int)$item['tile'];
-    $col=$tile%4;$row=intdiv($tile,4);
-    $x=$col*100/3;$y=$row*100/3;
-    $style='background-position:'.number_format($x,4,'.','').'% '.number_format($y,4,'.','').'%';
-    return '<span class="od-kit-photo" style="'.$style.'" aria-hidden="true"></span>';
+    $catalog=od_mat_by_id();
+    $asset=$catalog[(string)$item['id']]??null;
+    return $asset ? od_mat_sprite($asset) : '<span class="od-mat-image" aria-hidden="true"></span>';
 }
 function od_kits_page(): never {
     $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
