@@ -158,7 +158,7 @@
     text('[data-od-stage-counter]',labels[active]);
     text('[data-od-stage-caption]',captions[active]);
     reset();
-    if(immediate||reduced()){completedState(active);return;}
+    if(immediate||reduced()){completedState(active);if(!paused&&!document.hidden)schedule(4700,()=>{if(active===2)cycle++;root.dataset.cycle=String(cycle);show(active+1);});return;}
     const token=serial;
     window.requestAnimationFrame(()=>{if(serial===token)animateTimer(active,token);});
     sequenceStep(active);
@@ -178,6 +178,5 @@
     if(document.hidden){clearRunning();}
     else if(!paused)show(active);
   });
-  if(reduced()) { paused=true; root.classList.add('is-paused'); if(toggle){toggle.textContent='Reproduzir';toggle.setAttribute('aria-label','Reproduzir animação');} const message = root.querySelector('.od-demo-caption>span:nth-child(2)'); if(message) message.textContent = 'Animação pausada pela preferência de movimento'; show(0,true); }
-  else show(0);
+  show(0);
 })();
