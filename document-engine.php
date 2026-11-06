@@ -114,6 +114,7 @@ function odx_post(): never {
         $fieldsJson=json_encode($data,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
         $db->prepare('INSERT INTO od_document_details(clinic_id,template_id,fields_json,updated_at) VALUES(?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id,template_id) DO UPDATE SET fields_json=excluded.fields_json,updated_at=CURRENT_TIMESTAMP')->execute([$c['id'],$id,$fieldsJson]);
         $db->prepare('INSERT INTO od_document_fields_history(clinic_id,template_id,version,fields_json) VALUES(?,?,?,?)')->execute([$c['id'],$id,$next,$fieldsJson]);
+        od_brand_snapshot($db,$c,(int)$id,$next);
         $db->commit();
         flash('Versão '.$next.' salva. A revisão técnica ainda precisa ser realizada pelo RT.');
     } catch(Throwable $e) {
@@ -148,11 +149,22 @@ function odx_page():never {
         $q->execute([(int)$c['id'],(int)$id,$requestedVersion]);
         $snapshot=$q->fetchColumn();$data=is_string($snapshot)?(json_decode($snapshot,true)?:[]):[];
     }
+    $brand=od_brand_current($c);
+    $paperClinic=$c;
+    $brandLogoUrl='?page=logo-clinica';
+    if($historical){
+        $brandAtVersion=od_brand_historical((int)$c['id'],(int)$id,(int)$requestedVersion);
+        if($brandAtVersion){
+            $brand=$brandAtVersion;
+            $paperClinic=array_merge($c,$brandAtVersion['clinic_info']);
+            $brandLogoUrl='?page=logo-clinica&template_id='.(int)$id.'&version='.(int)$requestedVersion;
+        }
+    }
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
     h('Documento da clínica');
     echo '<div class="odx-topline"><a href="?page=documentos">← Biblioteca</a><span> / </span><span>'.esc($doc['category']).'</span><span> / </span><strong>'.esc($meta['number']).'</strong></div>';
-    echo '<div class="odx-page-title"><div><span class="odx-eyebrow">DOCSYSTEM / DOCUMENTAÇÃO DA CLÍNICA</span><h2>'.esc($doc['title']).'</h2><p>Preencha ao lado, acompanhe o documento e salve novas versões. Os materiais são minutas para revisão do RT.</p></div><span class="odx-version">'.($saved?'Versão '.(int)$saved['version']:'Novo documento').'</span></div>';
+    echo '<div class="odx-page-title"><div><span class="odx-eyebrow">DOCSYSTEM / DOCUMENTAÇÃO DA CLÍNICA</span><h2>'.esc($doc['title']).'</h2><p>Preencha ao lado, acompanhe o documento e salve novas versões. Os materiais são minutas para revisão do RT. <a href="?page=identidade">Personalizar identidade da clínica</a></p></div><span class="odx-version">'.($saved?'Versão '.(int)$saved['version']:'Novo documento').'</span></div>';
     if($historical)echo '<div class="odx-history-banner"><strong>Visualizando versão '.(int)$historical['version'].'.</strong> Arquivo histórico somente para leitura. <a href="?page=editar&id='.(int)$id.'">Voltar à versão atual</a></div>';
     echo '<form method="post" class="odx-workspace" id="odx-form"'.($historical?' data-odx-readonly="true"':'').'>'.token().'<input type="hidden" name="act" value="premium_save"><input type="hidden" name="id" value="'.(int)$id.'"><textarea hidden name="body_html" id="odx-body-html"></textarea>';
     echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO GUIADO</span><h3>Dados da sua unidade</h3><p>Esses campos ficam salvos com o documento e aparecem imediatamente na prévia.</p></div><div class="odx-completion"><div><span>Informações fornecidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
@@ -172,9 +184,10 @@ function odx_page():never {
     if((int)$id===6)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Entrega e orientação sobre EPI</h4><p>Documente entregas e orientações internas, com histórico e acompanhamento de ocorrências.</p><a href="?page=registros-epi">Abrir controle de EPI ↗</a></div>';
     echo '<div class="odx-review-control"><label for="odx-status">Situação da minuta</label><select name="stage" id="odx-status"><option value="rascunho">Em elaboração</option><option value="revisao_rt" '.(($saved['stage']??'')==='revisao_rt'?'selected':'').'>Aguardando revisão do RT</option></select><p>O status é interno e não representa aprovação sanitária.</p></div><button class="odx-save" type="submit">Salvar versão da minuta <span>↗</span></button><p class="odx-safe">Os dados pertencem somente à sua clínica. Nenhuma informação de paciente é necessária para preencher este modelo.</p></aside>';
     echo '<section class="odx-document-area" aria-label="Visualização e conteúdo da minuta"><div class="odx-toolbar"><div><span class="odx-live"></span> PRÉVIA DO DOCUMENTO <span class="odx-subline">atualizada enquanto você preenche</span></div><div class="odx-tools"><button type="button" id="odx-edit-toggle" aria-pressed="false">Editar texto</button><button type="button" id="odx-sections-toggle">Ver seções</button></div></div>';
-    echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top"><div class="odx-seal"><span>OD</span></div><div><strong>'.esc($c['name']).'</strong><small>'.esc($c['city']).($c['state']?' · '.esc($c['state']):'').' &nbsp;·&nbsp; '.esc($c['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
-    echo '<div class="odx-cover"><div class="odx-cover-lines"><span></span><span></span><span></span></div><span class="odx-cover-kicker">'.esc($meta['eyebrow']).'</span><h2>'.esc($meta['name']).'</h2><p>'.esc($doc['title']).'</p><div class="odx-cover-meta"><span>DOCUMENTO DE TRABALHO</span><strong>'.($saved?'VERSÃO '.(int)$saved['version']:'VERSÃO INICIAL').'</strong></div></div>';
-    echo '<div class="odx-paper-inside"><div class="odx-facts"><div><small>Estabelecimento</small><strong>'.esc($c['name']).'</strong></div><div><small>Responsável técnico</small><strong>'.esc($c['rt_name']).($c['rt_cro']?' · '.esc($c['rt_cro']):'').'</strong></div><div><small>Status</small><strong>'.esc(odx_stage($saved??[])).'</strong></div></div>';
+    $brandMark=$brand['logo_mime']?'<img class="odx-brand-logo" src="'.esc($brandLogoUrl).'" alt="Logo da clínica">':'<div class="odx-seal"><span>'.esc(mb_strtoupper(mb_substr((string)$paperClinic['name'],0,1))).'</span></div>';
+    echo '<article class="odx-paper odx-accent-'.esc($meta['accent']).' odx-branded" style="--odx-brand-cover:'.esc($brand['accent']).'" aria-label="Documento da clínica"><div class="odx-paper-top">'.$brandMark.'<div><strong>'.esc($paperClinic['name']).'</strong><small>'.esc($paperClinic['city']).($paperClinic['state']?' · '.esc($paperClinic['state']):'').' &nbsp;·&nbsp; '.esc($paperClinic['cnpj']).'</small></div><div class="odx-paper-code">'.esc($meta['number']).'</div></div>';
+    echo '<div class="odx-cover"><div class="odx-cover-lines"><span></span><span></span><span></span></div><span class="odx-cover-kicker">'.esc($meta['eyebrow']).'</span><h2>'.esc($meta['name']).'</h2><p>'.esc($doc['title']).'</p><div class="odx-cover-meta"><span>DOCUMENTO DE TRABALHO</span><strong>'.($historical?'VERSÃO '.(int)$historical['version']:($saved?'VERSÃO '.(int)$saved['version']:'VERSÃO INICIAL')).'</strong></div></div>';
+    echo '<div class="odx-paper-inside"><div class="odx-facts"><div><small>Estabelecimento</small><strong>'.esc($paperClinic['name']).'</strong></div><div><small>Responsável técnico</small><strong>'.esc($paperClinic['rt_name']).($paperClinic['rt_cro']?' · '.esc($paperClinic['rt_cro']):'').'</strong></div><div><small>Status</small><strong>'.esc(odx_stage($saved??[])).'</strong></div></div>';
     echo '<section class="odx-flow" aria-label="Mapa de organização do documento"><div class="odx-flow-head"><div><span>VISÃO DO PROCESSO</span><h3>Etapas para organizar este material</h3></div><small>Esquema de organização, não instrução clínica</small></div><div class="odx-flow-steps">';
     foreach($meta['flow'] as $i=>$name){echo '<div class="odx-flow-step"><span>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</span><strong>'.esc($name).'</strong></div>';}
     echo '</div></section>';
