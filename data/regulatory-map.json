@@ -1,0 +1,1230 @@
+{
+  "meta": {
+    "version": "2026-11-06.v1",
+    "updated_at": "2026-11-06",
+    "kind": "referências preliminares, não certificado ou parecer",
+    "normative_source": "Diário Oficial da União / Anvisa",
+    "roi_source": "https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/projeto-de-melhoria-do-processo-de-inspecao-sanitaria-em-servicos-de-saude-e-de-interesse-para-a-saude/harmonizacao-de-roteiros-objetivos-de-inspecao-roi/confira-os-materiais-disponibilizados-roi-planilhas-sintese-e-links-de-limesurvey/",
+    "review_required": "RT habilitado e assessor jurídico, com registro de evidências e versão da norma"
+  },
+  "references": {
+    "rdc1002": {
+      "title": "RDC Anvisa 1.002/2025",
+      "url": "https://www.vigilanciasanitaria.sc.gov.br/index.php/legisla-geral-2022.html?download=1592%3Ardc-anvisa-1002-2025-boas-praticas-de-funcionamento-para-os-servicos-que-prestam-assistencia-odontologica&id=288%3Aservicos-odontologicos&view=category",
+      "scope": "Boas práticas da assistência odontológica",
+      "note": "Artigos e vigência devem ser conferidos em texto consolidado"
+    },
+    "rdc63": {
+      "title": "RDC Anvisa 63/2011",
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/seguranca-do-paciente/legislacao",
+      "scope": "Boas práticas gerais de serviços de saúde, conforme art. 109 da RDC 1.002"
+    },
+    "rdc222": {
+      "title": "RDC Anvisa 222/2018",
+      "url": "https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/gerenciamento-de-residuos",
+      "scope": "Resíduos de serviços de saúde e PGRSS"
+    },
+    "conama358": {
+      "title": "CONAMA 358/2005",
+      "url": "https://www.ibama.gov.br/sophia/cnia/legislacao/MMA/RE0358-290405.PDF",
+      "scope": "Destinação de resíduos e requisitos ambientais aplicáveis"
+    },
+    "rdc15": {
+      "title": "RDC Anvisa 15/2012",
+      "url": "https://bvs.saude.gov.br/bvs/saudelegis/anvisa/2012/rdc0015_15_03_2012.html",
+      "scope": "Processamento de produtos para saúde, observar exclusões do art. 3º"
+    },
+    "rdc36": {
+      "title": "RDC Anvisa 36/2013",
+      "url": "https://bvs.saude.gov.br/bvs/saudelegis/anvisa/2013/rdc0036_25_07_2013.html",
+      "scope": "NSP conforme art. 117 da RDC 1.002; avaliar porte e modalidade"
+    },
+    "rdc509": {
+      "title": "RDC Anvisa 509/2021",
+      "url": "https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=9431&cod_modulo=310&link=S&numeroAto=00000509&orgao=RDC%2FDC%2FANVISA%2FMS&seqAto=000&tipo=RDC&valorAno=2021",
+      "scope": "Gestão de tecnologias, manutenção e PGTS"
+    },
+    "nr32": {
+      "title": "NR-32",
+      "url": "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/norma-regulamentadora-no-32-nr-32",
+      "scope": "Saúde e segurança ocupacional"
+    },
+    "nr6": {
+      "title": "NR-06",
+      "url": "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/ctpp-nrs/normas-regulamentadoras-nrs",
+      "scope": "EPI no contexto trabalhista"
+    },
+    "cfo118": {
+      "title": "Resolução CFO 118/2012",
+      "url": "https://sistemas.cfo.org.br/visualizar/atos/RESOLU%C3%87%C3%83O/SEC/2012/118",
+      "scope": "Código de Ética Odontológica, verificar texto consolidado"
+    },
+    "lgpd": {
+      "title": "Lei 13.709/2018 (LGPD)",
+      "url": "https://www.gov.br/saude/pt-br/acesso-a-informacao/lgpd/legislacao",
+      "scope": "Dados pessoais e dados de saúde sensíveis"
+    },
+    "rdc611": {
+      "title": "RDC Anvisa 611/2022",
+      "url": "https://www.gov.br/saude/pt-br/composicao/sgtes/degerts/qualificacao-de-engenharia-clinica/ementario",
+      "scope": "Radiologia e proteção radiológica somente onde houver serviço sujeito à regra"
+    }
+  },
+  "documents": [
+    {
+      "id": 1,
+      "template": "Comece aqui",
+      "category": "Guia de uso",
+      "topic": "Orientação de implantação da SDBPF",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "110–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 2,
+      "template": "Mapa dos 17 grupos da SDBPF",
+      "category": "SDBPF",
+      "topic": "Mapa documental da SDBPF",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "110–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 3,
+      "template": "Manual-mestre da SDBPF",
+      "category": "SDBPF",
+      "topic": "Manual de boas práticas da unidade",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "110–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 4,
+      "template": "POP 01 | Identificação do paciente e atendimento seguro",
+      "category": "POPs",
+      "topic": "Identificação e atendimento seguro",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 117–118",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "cfo118",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "lgpd",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 5,
+      "template": "POP 02 | Higienização das mãos e precauções",
+      "category": "POPs",
+      "topic": "Higiene das mãos e precauções",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 118",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 6,
+      "template": "POP 03 | EPI e saúde ocupacional",
+      "category": "POPs",
+      "topic": "EPI e saúde ocupacional",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "108, 113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "nr6",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 7,
+      "template": "POP 04 | Limpeza de ambientes e superfícies",
+      "category": "POPs",
+      "topic": "Limpeza e desinfecção de ambientes",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 8,
+      "template": "POP 05 | Recolhimento e transporte de dispositivos usados",
+      "category": "POPs",
+      "topic": "Recolhimento e transporte de instrumentais",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "RDC 15/2012 apenas se serviço enquadrado no escopo; consultório individualizado não vinculado possui exclusão específica",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 9,
+      "template": "POP 06 | Limpeza e inspeção de dispositivos médicos",
+      "category": "POPs",
+      "topic": "Limpeza e inspeção de produtos para saúde",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "RDC 15/2012 não é universal para consultórios individualizados",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 10,
+      "template": "POP 07 | Preparo, embalagem e identificação dos dispositivos",
+      "category": "POPs",
+      "topic": "Preparo, embalagem e identificação",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Processo e exigências dependem dos instrumentos e da estrutura de processamento",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 11,
+      "template": "POP 08 | Esterilização e monitoramento das cargas",
+      "category": "POPs",
+      "topic": "Esterilização, registros e monitorização",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Verificar equipamentos e modalidade de processamento; não liberar carga automaticamente",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 12,
+      "template": "POP 09 | Armazenamento e rastreabilidade",
+      "category": "POPs",
+      "topic": "Armazenamento e rastreabilidade de dispositivos",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Validar fluxo local e escopo da RDC 15",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 13,
+      "template": "POP 10 | Desinfecção química de dispositivos",
+      "category": "POPs",
+      "topic": "Desinfecção química de dispositivos",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "112–113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc15",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Aplica-se somente se o procedimento existir e for admitido tecnicamente",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 14,
+      "template": "POP 11 | Segregação e coleta de resíduos",
+      "category": "POPs",
+      "topic": "Segregação e coleta de resíduos",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "122",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc222",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "conama358",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 15,
+      "template": "POP 12 | Acidentes com exposição a material biológico",
+      "category": "POPs",
+      "topic": "Acidentes com exposição biológica",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "108, 115",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "nr6",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 16,
+      "template": "POP 13 | Urgências, emergências e remoção",
+      "category": "POPs",
+      "topic": "Urgências, emergências e remoção",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 116",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "cfo118",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 17,
+      "template": "POP 14 | Vigilância de incidentes e eventos adversos",
+      "category": "POPs",
+      "topic": "Monitoramento de incidentes e eventos adversos",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 119–120",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc36",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "NSP conforme o tipo de serviço; RT permanece responsável nas unidades individuais",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 18,
+      "template": "POP 15 | Controle da água e pontos de uso",
+      "category": "POPs",
+      "topic": "Controle da água e pontos de uso",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 19,
+      "template": "POP 16 | Gestão de contratos e documentos de terceiros",
+      "category": "POPs",
+      "topic": "Contratos e documentos de terceiros",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 20,
+      "template": "POP 17 | Capacitação e ciência da SDBPF",
+      "category": "POPs",
+      "topic": "Capacitação e ciência da equipe",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113–114",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "cfo118",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 21,
+      "template": "POP 18 | Inventário e manutenção de tecnologias",
+      "category": "POPs",
+      "topic": "Inventário e manutenção de tecnologias",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "130–136",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc509",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 22,
+      "template": "Plano de Segurança do Paciente (PSP)",
+      "category": "Planos",
+      "topic": "Plano de Segurança do Paciente",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 117–118",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc36",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "PSP deve refletir a unidade; com dois ou mais consultórios individuais, constitui-se NSP conforme art. 117",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 23,
+      "template": "Plano de Prevenção e Controle de Infecções (PP-IRAS)",
+      "category": "Planos",
+      "topic": "Plano de Prevenção e Controle de Infecções",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113, 117–120",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc36",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Monitoramento de incidentes sob responsabilidade do RT ou NSP conforme configuração",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 24,
+      "template": "PGRSS - Roteiro estruturado para elaboração",
+      "category": "Planos",
+      "topic": "Plano de Gerenciamento de Resíduos dos Serviços de Saúde",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "122",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc222",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "conama358",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 25,
+      "template": "Plano de Gerenciamento de Tecnologias em Saúde (PGTS)",
+      "category": "Planos",
+      "topic": "Plano de Gerenciamento de Tecnologias em Saúde",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "130–136",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc509",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 26,
+      "template": "Plano de Monitoramento e Controle da Água",
+      "category": "Planos",
+      "topic": "Plano de Monitoramento e Controle da Água",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 27,
+      "template": "Plano Anual de Educação Permanente",
+      "category": "Planos",
+      "topic": "Plano de Educação Permanente",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113–114",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 28,
+      "template": "Plano Anual de Manutenção",
+      "category": "Planos",
+      "topic": "Plano de Manutenção",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "130–136",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "rdc509",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 29,
+      "template": "Formulários imprimíveis e termos",
+      "category": "Formulários",
+      "topic": "Formulários e termos administrativos",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "lgpd",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "cfo118",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Proteção de dados e revisão jurídica conforme conteúdo efetivamente utilizado",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    },
+    {
+      "id": 30,
+      "template": "Termo de ciência da equipe",
+      "category": "Formulários",
+      "topic": "Ciência e treinamento da equipe",
+      "regulatory_links": [
+        {
+          "code": "rdc1002",
+          "articles": "113–114",
+          "conditional": false
+        },
+        {
+          "code": "rdc63",
+          "articles": null,
+          "conditional": true
+        },
+        {
+          "code": "nr32",
+          "articles": null,
+          "conditional": false
+        },
+        {
+          "code": "cfo118",
+          "articles": null,
+          "conditional": false
+        }
+      ],
+      "applicability_note": "Confirmar com o RT a aplicação efetiva ao serviço, sua estrutura e regulamentação local.",
+      "automatic_checks": [
+        "identificação do estabelecimento",
+        "campos guiados presentes",
+        "marcadores de exemplo pendentes",
+        "conteúdo e versão documental"
+      ],
+      "human_checks": [
+        "aplicabilidade jurídica e clínica",
+        "autenticidade das evidências",
+        "procedimentos realmente implantados",
+        "revisão técnica e aprovação formal pertinentes"
+      ],
+      "technical_review": "pendente",
+      "legal_review": "pendente"
+    }
+  ]
+}
