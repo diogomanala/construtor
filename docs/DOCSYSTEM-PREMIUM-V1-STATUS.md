@@ -88,3 +88,15 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 - Hostinger confirmou deploy Git e arquivo index.php atualizado. A listagem de `rdc/data` não apresentava arquivo SQLite na consulta; isso sugere, sem provar, que o primeiro cadastro ainda não foi concluído.
 - **Não confundir:** um deploy não cria uma sessão no navegador do cliente. O próprio proprietário precisa definir e-mail e senha pelo formulário de primeiro acesso. O agente não criou usuário real nem conhece a senha; login e persistência aguardam verificação do proprietário.
 - Nenhuma credencial real, senha ou código de convite deve ser registrado em GitHub/Notion. O convite existente deve perder utilidade após o primeiro cadastro pelo bloqueio de usuários.
+
+## Checkpoint v1.5 (06/11/2026): mais seis planos específicos dentro do editor
+
+- Adicionado `document-plan-config.php` com formulários guiados e mapas de organização próprios dos modelos **22 (PSP), 23 (PP-IRAS), 25 (PGTS), 26 (Água), 27 (Educação Permanente) e 28 (Manutenção)**.
+- `document-engine.php` integra os campos e a aparência dos seis planos à mesma biblioteca, à prévia e ao versionamento; vincula os planos 25 e 28 ao controle operacional de manutenção já existente.
+- Retrocompatibilidade: os campos legados `aplicabilidade` e `evidencias` continuam visíveis/editáveis nos seis planos, caso um usuário os tenha preenchido antes da especialização. Documentos originais e versões permanecem armazenados, sem alteração do conteúdo clínico.
+- Total atual **12 de 30** modelos com campos e mapa específicos: ids **3,6,7,11,21,22,23,24,25,26,27,28**. **18 ainda utilizam campos genéricos**, exigindo aprimoramento individual.
+- Regressão local PHP: `php -l` da nova configuração aprovado; validação de chaves únicas, quatro campos específicos por plano, quatro etapas visuais e integrações testadas em PHP 8.4 local. Adicionado `tests/plan-config-regression.php`, somente CLI.
+- Hostinger aceitou deploy do branch `odonto-em-dia-hostinger`, confirmou presença de `document-plan-config.php`, `document-engine.php`, README e teste, e aceitou limpeza da CDN.
+- README atualizado para não orientar futuros agentes à entrega antiga de ZIP/Word.
+- **Não significa QA funcional autenticado**. O arquivo SQLite de produção ainda não aparece na listagem do diretório `rdc/data/` nesta sessão; não há evidência de ativação real do primeiro proprietário. Não compartilhar convites ou senhas no GitHub/Notion.
+- Revisão clínica/regulatória por RT habilitado não concluída. Campos são guiados de organização administrativa e as minutas continuam sem certificação.
