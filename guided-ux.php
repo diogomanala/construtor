@@ -98,3 +98,138 @@ function od_guided_doc_links(array $ids):string {
   foreach(array_slice($ids,0,3) as $id){$doc=template_by_id($id);if($doc)$s.='<a href="?page=editar&id='.(int)$id.'">'.od_ui_icon('file').'<span>'.esc($doc['title']).'</span>'.od_ui_icon('arrow').'</a>';}
   return $s;
 }
+
+function od_guided_dashboard_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  h('Início',false);
+  echo '<div class="od-ui-page"><header class="od-ui-welcome"><div><span class="od-ui-kicker">ÁREA DA CLÍNICA</span><h1>Bom ter você por aqui.</h1><p>'.esc($c['name']).' · Continue a organização da clínica a partir do próximo passo.</p></div><a href="?page=clinica" class="od-ui-textlink">'.od_ui_icon('building').' Dados da clínica</a></header>';
+  echo od_guided_steps($c);
+  echo '<section class="od-ui-section"><div class="od-ui-section-head"><div><span class="od-ui-kicker">ACESSO RÁPIDO</span><h2>O que você precisa fazer?</h2></div></div><div class="od-ui-shortcuts">';
+  foreach([
+    ['documentos','file','Preparar documentos','Comece por sugestões prioritárias e depois consulte os 30 materiais.'],
+    ['rotinas','clipboard','Registrar uma rotina','Limpeza, esterilização, manutenção e EPI, somente após atividade real.'],
+    ['acompanhamento','list','Organizar pendências','Confira o que falta por tema e use sugestões de próximos passos.']
+  ] as [$url,$icon,$title,$desc])echo '<a href="?page='.$url.'" class="od-ui-shortcut"><span class="od-ui-shortcut-icon">'.od_ui_icon($icon).'</span><strong>'.esc($title).'</strong><small>'.esc($desc).'</small><span class="od-ui-shortcut-go">'.od_ui_icon('arrow').'</span></a>';
+  echo '</div></section>';
+  $q=odx_schema()->prepare('SELECT template_id,version,stage FROM od_documents WHERE clinic_id=? ORDER BY updated_at DESC LIMIT 3');$q->execute([(int)$c['id']]);$last=$q->fetchAll();
+  if($last){echo '<section class="od-ui-section"><div class="od-ui-section-head"><div><span class="od-ui-kicker">CONTINUE DE ONDE PAROU</span><h2>Documentos em andamento</h2></div><a href="?page=meus-documentos" class="od-ui-textlink">Ver todos '.od_ui_icon('arrow').'</a></div><div class="od-ui-resume">';
+    foreach($last as $row){$d=template_by_id((int)$row['template_id']);if(!$d)continue;echo '<a href="?page=editar&id='.(int)$row['template_id'].'"><span class="od-ui-resume-icon">'.od_ui_icon('file').'</span><span><strong>'.esc($d['title']).'</strong><small>Versão '.(int)$row['version'].' · '.($row['stage']==='revisao_rt'?'Aguardando revisão do RT':'Em elaboração').'</small></span>'.od_ui_icon('arrow').'</a>';}
+    echo '</div></section>';
+  }
+  echo '<p class="od-ui-disclaimer">'.od_ui_icon('info').' As etapas ajudam a usar a plataforma. A avaliação dos requisitos e a aprovação de documentos dependem do responsável técnico e das autoridades competentes.</p></div>';
+  foot();exit;
+}
+function od_guided_trail_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  h('Minha trilha',false);
+  echo '<div class="od-ui-page od-ui-narrow"><header class="od-ui-simple-head"><a href="?page=painel" class="od-ui-back">Início / Minha trilha</a><h1>Vamos organizar sua clínica.</h1><p>Estas etapas orientam o uso da plataforma. Você pode voltar a qualquer uma delas quando precisar.</p></header>';
+  echo od_guided_steps($c,true);
+  echo '<div class="od-ui-help-note">'.od_ui_icon('info').' Não há necessidade de preencher dados fictícios para avançar. Cada conclusão é baseada em informação salva ou atividade registrada de verdade.</div></div>';foot();exit;
+}
+function od_guided_clinic_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  h('Minha clínica',false);
+  echo '<div class="od-ui-page"><header class="od-ui-simple-head"><span class="od-ui-kicker">CONFIGURAÇÕES DA UNIDADE</span><h1>Sua clínica, seus documentos.</h1><p>Os dados e a identidade visual são reaproveitados nas minutas. Configure uma vez e edite quando necessário.</p></header><div class="od-ui-shortcuts od-ui-settings">';
+  foreach([
+    ['diagnostico','building','Dados e responsável técnico','Nome, CNPJ, endereço básico, equipe técnica e perfil da unidade.'],
+    ['identidade','palette','Logo e identidade visual','Nome exibido, logotipo, cores e prévia dos documentos.'],
+    ['boas-vindas','list','Mapa da unidade','Pontos de atenção com base nos serviços informados.']
+  ] as [$route,$ico,$title,$desc])echo '<a href="?page='.$route.'" class="od-ui-shortcut"><span class="od-ui-shortcut-icon">'.od_ui_icon($ico).'</span><strong>'.esc($title).'</strong><small>'.esc($desc).'</small><span class="od-ui-shortcut-go">'.od_ui_icon('arrow').'</span></a>';
+  echo '</div><a class="od-ui-textlink" href="?page=trilha">Voltar à trilha de uso '.od_ui_icon('arrow').'</a></div>';foot();exit;
+}
+function od_guided_rotinas_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  h('Rotinas',false);
+  echo '<div class="od-ui-page"><header class="od-ui-simple-head"><span class="od-ui-kicker">REGISTROS OPERACIONAIS</span><h1>Registre o que foi feito.</h1><p>Escolha uma rotina para registrar uma execução real e consultar seu histórico. Não é necessário abrir uma planilha.</p></header>';
+  echo '<div class="od-ui-operational">';
+  foreach([
+    ['registros-limpeza','sparkles','Limpeza de ambientes','Registre ambiente, horário, responsável e o que ocorreu.','Registro de execução'],
+    ['registros-esterilizacao','shield','Esterilização','Anote dados dos ciclos e indicadores observados, sem liberação automática de carga.','Rastreabilidade'],
+    ['registros-manutencao','wrench','Manutenção','Acompanhe equipamentos, serviços e verificações realizadas.','Equipamentos'],
+    ['registros-epi','users','Entrega e orientação de EPI','Registre entregas, orientações e ocorrências da equipe.','Equipe']
+  ] as [$route,$icon,$title,$desc,$tag])echo '<a class="od-ui-operational-card" href="?page='.$route.'"><span class="od-ui-operational-symbol">'.od_ui_icon($icon).'</span><small>'.esc($tag).'</small><h2>'.esc($title).'</h2><p>'.esc($desc).'</p><span>Abrir controle '.od_ui_icon('arrow').'</span></a>';
+  echo '</div><div class="od-ui-help-note">'.od_ui_icon('info').' Estes quatro controles são os registros digitais disponíveis agora. Outros assuntos possuem minutas e orientações na biblioteca, mas não necessariamente um formulário de registro próprio.</div></div>';foot();exit;
+}
+function od_guided_groups_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  $db=db();$q=$db->prepare('SELECT * FROM tasks WHERE clinic_id=?');$q->execute([(int)$c['id']]);$byGroup=[];
+  foreach($q as $r)$byGroup[(int)$r['group_no']]=$r;
+  $guide=od_guided_task_guides();
+  $buckets=[
+   ['Comece pela organização', 'Dados, responsáveis e documentos básicos para levantar com a clínica.',[1,2,3,9,10,12]],
+   ['Cuide dos processos do dia a dia','Verifique as atividades e registros que fazem parte da rotina real.',[5,6,7,8,11,13,14,15]],
+   ['Mantenha o acompanhamento','Controle serviços, treinamentos e ações corretivas.',[4,16,17]]
+  ];
+  h('Acompanhamento',false);
+  echo '<div class="od-ui-page od-ui-follow"><header class="od-ui-simple-head"><span class="od-ui-kicker">ACOMPANHAMENTO DA CLÍNICA</span><h1>O que precisa ser conferido?</h1><p>Escolha um assunto. Cada item explica o que levantar e sugere uma próxima ação. Responsável e prazo só são necessários quando você decidir acompanhar uma pendência concreta.</p></header>';
+  echo '<div class="od-ui-help-note">'.od_ui_icon('info').' Os 17 temas organizam o trabalho dentro da plataforma. Eles não são 17 exigências independentes ou uma aprovação automática da Anvisa.</div>';
+  foreach($buckets as $k=>$bucket){
+    [$title,$sub,$ids]=$bucket;
+    echo '<section class="od-ui-bucket"><div class="od-ui-section-head"><div><span class="od-ui-kicker">ETAPA '.($k+1).'</span><h2>'.esc($title).'</h2><p>'.esc($sub).'</p></div><span class="od-ui-count">'.count($ids).' assuntos</span></div><div class="od-ui-accordion">';
+    foreach($ids as $i=>$id){
+      $t=$byGroup[$id]??[];[$title2,$check,$suggest,$templates]=$guide[$id];
+      $status=(string)($t['status']??'pendente');
+      $statusName=['pendente'=>'A conferir','em_andamento'=>'Em acompanhamento','revisao_rt'=>'Aguardando RT','concluido'=>'Conferido internamente'][$status]??'A conferir';
+      echo '<details class="od-ui-task" '.($k===0 && $i===0?'open':'').'><summary><span class="od-ui-task-no">'.str_pad((string)$id,2,'0',STR_PAD_LEFT).'</span><span class="od-ui-task-main"><strong>'.esc($title2).'</strong><small>'.esc($check).'</small></span><span class="od-ui-task-state">'.esc($statusName).'</span><span class="od-ui-caret"></span></summary><div class="od-ui-task-content">';
+      echo '<div class="od-ui-task-explain"><span class="od-ui-kicker">O QUE CONFERIR</span><p>'.esc($check).'</p></div>';
+      if($templates)echo '<div class="od-ui-task-related"><span class="od-ui-kicker">MODELOS QUE PODEM AJUDAR</span>'.od_guided_doc_links($templates).'</div>';
+      echo '<form method="post" class="od-ui-task-form">'.token().'<input type="hidden" name="act" value="task"><input type="hidden" name="number" value="'.$id.'">';
+      echo '<label class="od-ui-label">Andamento da verificação<select name="status">';
+      foreach(['pendente'=>'Ainda não conferido','em_andamento'=>'Em acompanhamento','revisao_rt'=>'Solicitar revisão do RT','concluido'=>'Conferido internamente (não é certificação)'] as $value=>$label)echo '<option value="'.$value.'"'.($status===$value?' selected':'').'>'.esc($label).'</option>';
+      echo '</select></label>';
+      echo '<div class="od-ui-suggestion"><span class="od-ui-kicker">SUGESTÃO DE PRÓXIMO PASSO</span><p>'.esc($suggest).'</p><button type="button" class="od-ui-example" data-ui-target="od-ui-note-'.$id.'" data-ui-text="'.esc($suggest).'">'.od_ui_icon('check').' Usar este texto</button></div>';
+      echo '<label class="od-ui-label">Próxima ação ou pendência identificada<textarea id="od-ui-note-'.$id.'" name="notes" maxlength="1000" rows="3" placeholder="Descreva uma ação real a realizar ou use a sugestão acima.">'.esc($t['notes']??'').'</textarea><small>Você pode editar a sugestão antes de salvar. Não marque como conferido sem verificar.</small></label>';
+      echo '<details class="od-ui-optional"'.(!empty($t['responsible'])||!empty($t['due_date'])?' open':'').'><summary>'.od_ui_icon('calendar').' Definir responsável e prazo (opcional)</summary><div class="od-ui-two"><label class="od-ui-label">Quem vai acompanhar?<input name="responsible" maxlength="120" value="'.esc($t['responsible']??'').'" placeholder="Nome ou função"></label><label class="od-ui-label">Até quando?<input type="date" name="due_date" value="'.esc($t['due_date']??'').'"></label></div></details>';
+      echo '<div class="od-ui-task-actions"><button type="submit" class="od-ui-action">Salvar acompanhamento '.od_ui_icon('arrow').'</button><small>Registro interno, sem validação sanitária automática.</small></div></form></div></details>';
+    }
+    echo '</div></section>';
+  }
+  echo '</div>';foot();exit;
+}
+function od_guided_library_page(): never {
+  $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+  $q=odx_schema()->prepare('SELECT template_id,version,stage FROM od_documents WHERE clinic_id=?');$q->execute([(int)$c['id']]);$saved=[];foreach($q as $row)$saved[(int)$row['template_id']]=$row;
+  $all=template_catalog();$counts=[];foreach($all as $d)$counts[$d['category']]=($counts[$d['category']]??0)+1;
+  h('Documentos',false);
+  echo '<div class="od-ui-page od-ui-docs"><header class="od-ui-docs-head"><div><span class="od-ui-kicker">DOCUMENTAÇÃO DA CLÍNICA</span><h1>Seus documentos, por ordem de uso.</h1><p>Os modelos já incluem conteúdo de referência e campos guiados. Comece por uma sugestão ou encontre um dos 30 materiais.</p></div><div class="od-ui-docs-stat"><strong>'.count($saved).' <span>/ '.count($all).'</span></strong><small>minutas iniciadas</small></div></header>';
+  echo '<div class="od-ui-section-head od-ui-recommended-head"><div><span class="od-ui-kicker">SUGESTÕES PARA COMEÇAR</span><h2>Primeiros documentos</h2><p>Ordem prática de preparação. Ajuste conforme a atividade da clínica e orientação do RT.</p></div></div>';
+  echo '<div class="od-ui-recommend-grid">';
+  foreach(od_guided_recommendations($c) as $index=>$rec){
+    $id=$rec['id'];$d=template_by_id($id);if(!$d)continue;
+    $state=$saved[$id]??null;
+    echo '<a class="od-ui-recommend-card" href="?page=editar&id='.$id.'"><div class="od-ui-recommend-symbol">'.od_ui_icon('file').'</div><div class="od-ui-recommend-content"><span>'.esc($d['category']).' · '.($state?'Versão '.(int)$state['version']:'Sugestão '.($index+1)).'</span><strong>'.esc($d['title']).'</strong><small>'.esc($rec['why']).'</small></div><span class="od-ui-recommend-go">'.od_ui_icon('arrow').'</span></a>';
+  }
+  echo '</div>';
+  echo '<details class="od-ui-catalog" id="od-ui-catalog"><summary><span class="od-ui-catalog-icon">'.od_ui_icon('book').'</span><span><strong>Explorar todos os '.count($all).' modelos</strong><small>POPs, planos, SDBPF, formulários e orientações</small></span><span class="od-ui-caret"></span></summary><div class="od-ui-catalog-content"><label class="od-ui-search">'.od_ui_icon('search').'<span class="sr-only">Buscar documentos</span><input type="search" id="od-ui-search" placeholder="Buscar pelo nome do documento" autocomplete="off"></label><div class="od-ui-filters" role="group" aria-label="Filtrar modelos"><button type="button" class="is-selected" data-ui-filter="all">Todos <span>'.count($all).'</span></button>';
+  foreach(['SDBPF','POPs','Planos','Formulários','Guia de uso'] as $cat)if(isset($counts[$cat]))echo '<button type="button" data-ui-filter="'.esc($cat).'">'.esc($cat).' <span>'.(int)$counts[$cat].'</span></button>';
+  echo '</div><p class="od-ui-empty" id="od-ui-no-results" hidden>Nenhum modelo encontrado. Tente outro termo ou categoria.</p><div class="od-ui-all-grid">';
+  foreach($all as $d){
+    $id=(int)$d['id'];$state=$saved[$id]??null;
+    echo '<a class="od-ui-all-card" data-ui-category="'.esc($d['category']).'" data-ui-search="'.esc(mb_strtolower((string)$d['title'])).'" href="?page=editar&id='.$id.'"><span class="od-ui-all-card-icon">'.od_ui_icon('file').'</span><span><small>'.esc($d['category']).($state?' · Versão '.(int)$state['version']:'').'</small><strong>'.esc($d['title']).'</strong></span>'.od_ui_icon('arrow').'</a>';
+  }
+  echo '</div></div></details><div class="od-ui-help-note">'.od_ui_icon('info').' Minutas para adaptação e revisão profissional. Nenhum arquivo constitui certificação, aprovação sanitária ou comprovação automática de execução.</div></div>';
+  foot();exit;
+}
+function od_guided_field_suggestion(array $field,array $c): string {
+  $key=(string)($field['key']??'');
+  $name=trim((string)($c['name']??''));
+  $suggestions=[
+    'setor'=>'Áreas e processos da unidade a identificar conforme a rotina real; confirmar aplicabilidade com o responsável técnico.',
+    'executor'=>'Profissionais designados para o procedimento conforme suas atribuições e a organização real da clínica, a confirmar pelo responsável técnico.',
+    'frequencia'=>'Definir a frequência segundo os riscos, as instruções de fabricantes e a rotina efetiva do serviço. Submeter à revisão técnica antes de implementar.',
+    'aplicabilidade'=>'Conferir a aplicação deste procedimento à realidade de '.($name?:'sua clínica').', considerando os serviços efetivamente prestados e a avaliação do RT.',
+    'evidencias'=>'Relacionar apenas os registros e comprovantes existentes, identificando data, responsável, local de guarda e referência ao processo correspondente.',
+    'governanca'=>'Descrever as atribuições do responsável legal, do RT e dos demais profissionais conforme a organização efetiva da clínica. Conferir com os envolvidos.',
+    'capacitacao'=>'Relacionar treinamentos realizados e necessidades de orientação da equipe, com responsável, data e evidências quando disponíveis.',
+    'registro'=>'Relacionar contratos, comprovantes e registros efetivamente disponíveis e indicar onde serão guardados, após conferência.',
+    'controle_limpeza'=>'Definir quem verifica os registros de execução, como serão anotadas ocorrências e como as correções serão acompanhadas pelo RT.',
+    'evidencias_epi'=>'Conferir registros de entrega, orientações e treinamentos existentes. Indicar local de guarda e responsável por atualizá-los.',
+    'evidencia_manut'=>'Relacionar comprovantes reais de manutenção, laudos e registros de equipamento retirado de uso, com local de guarda.',
+    'psp_notificacao'=>'Definir com a equipe como os incidentes serão registrados, comunicados e analisados, incluindo responsável e tratamento de ocorrências.',
+    'iras_evidencias'=>'Relacionar apenas os indicadores e registros efetivamente mantidos pela clínica; definir quem os monitora e onde ficam arquivados.',
+    'pgts_inventario'=>'Conferir o inventário de equipamentos, número de identificação, localização, situação de uso e documentos técnicos existentes.',
+    'edu_evidencias'=>'Relacionar listas de presença, materiais de orientação e comprovantes de treinamentos efetivamente realizados.',
+    'manut_pendencias'=>'Descrever como serão registradas falhas e pendências de manutenção, identificando equipamento, responsável e ação corretiva.'
+  ];
+  return $suggestions[$key]??'';
+}
