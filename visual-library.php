@@ -16,7 +16,10 @@ function od_visual_catalog(): array {
     ];
 }
 function od_visual_current(int $templateId): ?array {
-    return od_visual_catalog()[$templateId] ?? null;
+    // Controle de qualidade: nenhuma das artes de capa existentes foi aprovada
+    // para exibição. Preservar o catálogo e os snapshots históricos, sem ativar
+    // imagens borradas ou recortadas na capa de novas versões.
+    return null;
 }
 function od_visual_schema(): PDO {
     $db=db();
@@ -47,9 +50,8 @@ function od_visual_historical(int $clinicId,int $templateId,int $version): ?arra
     return $spec && $spec['key']===$row['asset_key'] ? $spec : null;
 }
 function od_visual_cover_markup(?array $spec): string {
-    if(!$spec)return '';
-    // A imagem não substitui orientação técnica; por isso é ignorada por leitores de tela.
-    return '<div class="odx-cover-art" aria-hidden="true"><span class="odx-visual-3d odx-visual-3d--'.esc($spec['key']).'"></span></div>';
+    // A experiência documental fica limpa enquanto as artes passam por revisão.
+    return '';
 }
 function od_visual_card_markup(int $templateId): string {
     $spec=od_visual_current($templateId);
