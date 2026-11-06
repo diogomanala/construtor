@@ -11,5 +11,11 @@
     update();
   }));
   boxes.forEach(box=>box.addEventListener('change',update));
+  const notes=form.querySelector('textarea[name="notes"]');
+  const printNotes=document.querySelector('#od-kit-print-notes p');
+  if(notes&&printNotes){
+    const sync=()=>{printNotes.textContent=notes.value;};
+    notes.addEventListener('input',sync);sync();
+  }
   update();
 })();
