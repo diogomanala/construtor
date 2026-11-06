@@ -24,17 +24,22 @@ function od_ui_icon(string $name): string {
   return '<svg class="od-ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'.($icons[$name]??$icons['file']).'</svg>';
 }
 function od_guided_recommendations(array $c): array {
+  // Ordem editorial de primeiro uso; não é classificação legal nem dispensa outros documentos.
+  $multi=(int)($c['chairs']??1)>=2;
+  $psp=$multi
+    ? 'Conferir medidas do PSP e a constituição do NSP exigida para serviço com dois ou mais consultórios individuais.'
+    : 'O PSP também se aplica ao consultório individual e deve ser elaborado pelo RT conforme as atividades.';
   $set=[
-    ['id'=>3,'why'=>'Documento central para reunir a organização e as rotinas do serviço.'],
-    ['id'=>24,'why'=>'Mapeie como a clínica gerencia resíduos e os registros de destinação.'],
-    ['id'=>5,'why'=>'Organize a rotina de higienização das mãos e precauções.'],
-    ['id'=>7,'why'=>'Defina as rotinas de limpeza aplicáveis aos ambientes.'],
-    ['id'=>23,'why'=>'Estruture prevenção, monitoramento e controle de infecções.'],
-    ['id'=>16,'why'=>'Defina como a equipe responde a urgências e intercorrências.']
+    ['id'=>3,'why'=>'Reunir rotinas, responsabilidades e referências documentais da unidade.'],
+    ['id'=>22,'why'=>$psp],
+    ['id'=>24,'why'=>'Descrever os resíduos realmente gerados e reunir contratos e comprovantes aplicáveis.'],
+    ['id'=>5,'why'=>'Organizar o protocolo de higiene das mãos e precauções do serviço.'],
+    ['id'=>7,'why'=>'Definir a limpeza dos ambientes de acordo com a rotina e os produtos utilizados.']
   ];
-  if(($c['sterilization']??'interna')==='terceirizada')$set[]= ['id'=>19,'why'=>'Conferir contratos, responsáveis e evidências do prestador de processamento.'];
-  else $set[]= ['id'=>11,'why'=>'Descrever processamento e monitorização apenas conforme os equipamentos e procedimentos reais.'];
-  if((int)($c['chairs']??1)>=2)$set[]=['id'=>22,'why'=>'Detalhar responsabilidades e ações de segurança do paciente compatíveis com a estrutura.'];
+  $thirdParty=in_array((string)($c['sterilization']??'interna'),['terceirizada','mista'],true);
+  $set[]=$thirdParty
+    ? ['id'=>19,'why'=>'Verificar contratos de processamento externo e registros de rastreabilidade, quando houver.']
+    : ['id'=>11,'why'=>'Organizar a rotina de processamento e monitorização conforme equipamentos e protocolos efetivos.'];
   return $set;
 }
 function od_journey_data(array $c): array {
