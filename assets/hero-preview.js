@@ -64,7 +64,7 @@
   }
   function reset(index) {
     $$(".od-kit-tile").forEach(node => node.classList.remove("od-animated-in", "od-selected", "od-target-active"));
-    const file = $(".od-kit-file"); if (file) file.classList.remove("od-animated-in","od-target-active");
+    const file = $(".od-kit-file"); if (file) file.classList.remove("od-animated-in","od-target-active","od-opened");
     setText("[data-od-typing]", "");
     setText("[data-od-fieldcount]", "0 de 3");
     setText("[data-od-savestatus]", "Personalizando minuta...");
