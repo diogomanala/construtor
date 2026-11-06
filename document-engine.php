@@ -170,3 +170,17 @@ function odx_library():never {
     }
     echo '</div>';foot();exit;
 }
+function odx_saved():never {
+    $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
+    $s=odx_schema()->prepare('SELECT template_id,version,stage,updated_at FROM od_documents WHERE clinic_id=? ORDER BY updated_at DESC');
+    $s->execute([(int)$c['id']]);$saved=$s->fetchAll();
+    h('Minhas versões');
+    echo '<div class="odx-lib-header"><div><span>ACERVO PERSONALIZADO</span><h2>Seus documentos em andamento.</h2><p>Retome as minutas e consulte versões anteriores sem precisar localizar arquivos no computador.</p></div><div class="odx-lib-stats"><b>'.count($saved).'</b><span>documentos iniciados</span></div></div>';
+    if(!$saved){echo '<div class="odx-library-alert">Você ainda não personalizou nenhum documento. <a href="?page=documentos">Abra a biblioteca e escolha um modelo para começar.</a></div>';foot();exit;}
+    echo '<div class="odx-saved-grid">';
+    foreach($saved as $row){$d=template_by_id((int)$row['template_id']);if(!$d)continue;
+        $meta=odx_spec((int)$d['id'],(string)$d['category']);
+        echo '<a class="odx-saved-card" href="?page=editar&id='.(int)$d['id'].'"><div class="odx-saved-icon">▤</div><div><small>'.esc($meta['number']).' · Versão '.(int)$row['version'].'</small><h3>'.esc($d['title']).'</h3><p>'.esc($row['stage']==='revisao_rt'?'Aguardando revisão do responsável técnico':'Minuta em elaboração').' · Atualizado em '.esc($row['updated_at']).'</p></div><strong>Continuar ↗</strong></a>';
+    }
+    echo '</div><div class="odx-bottom-hint">Todos os documentos continuam sendo minutas e dependem de avaliação profissional.</div>';foot();exit;
+}
