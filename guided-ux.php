@@ -202,7 +202,7 @@ function od_guided_library_page(): never {
   foreach(od_guided_recommendations($c) as $index=>$rec){
     $id=$rec['id'];$d=template_by_id($id);if(!$d)continue;
     $state=$saved[$id]??null;
-    echo '<a class="od-ui-recommend-card" href="?page=editar&id='.$id.'"><div class="od-ui-recommend-symbol">'.od_ui_icon('file').'</div><div class="od-ui-recommend-content"><span>'.esc($d['category']).' · '.($state?'Versão '.(int)$state['version']:'Sugestão '.($index+1)).'</span><strong>'.esc($d['title']).'</strong><small>'.esc($rec['why']).'</small></div><span class="od-ui-recommend-go">'.od_ui_icon('arrow').'</span></a>';
+    echo '<a class="od-ui-recommend-card" href="?page=editar&id='.$id.'">'.od_visual_card_markup((int)$id).'<div class="od-ui-recommend-content"><span>'.esc($d['category']).' · '.($state?'Versão '.(int)$state['version']:'Sugestão '.($index+1)).'</span><strong>'.esc($d['title']).'</strong><small>'.esc($rec['why']).'</small></div><span class="od-ui-recommend-go">'.od_ui_icon('arrow').'</span></a>';
   }
   echo '</div>';
   echo '<details class="od-ui-catalog" id="od-ui-catalog"><summary><span class="od-ui-catalog-icon">'.od_ui_icon('book').'</span><span><strong>Explorar todos os '.count($all).' modelos</strong><small>POPs, planos, SDBPF, formulários e orientações</small></span><span class="od-ui-caret"></span></summary><div class="od-ui-catalog-content"><label class="od-ui-search">'.od_ui_icon('search').'<span class="sr-only">Buscar documentos</span><input type="search" id="od-ui-search" placeholder="Buscar pelo nome do documento" autocomplete="off"></label><div class="od-ui-filters" role="group" aria-label="Filtrar modelos"><button type="button" class="is-selected" data-ui-filter="all">Todos <span>'.count($all).'</span></button>';
