@@ -1,0 +1,399 @@
+{
+  "schema_version": "1.0",
+  "revision": "2026-11-06",
+  "source": "Arte original gerada por IA, PNG de origem 320x320 transparente",
+  "image_pack": "assets/illustrations/odonto-materiais-54-v1.avif",
+  "cols": 9,
+  "rows": 6,
+  "display_categories": {
+    "instrumentais": "Instrumentais",
+    "exodontia": "Extração",
+    "materiais": "Materiais e insumos",
+    "profilaxia": "Profilaxia",
+    "esterilizacao": "Esterilização",
+    "epi": "Proteção individual",
+    "residuos": "Resíduos",
+    "equipamentos": "Equipamentos"
+  },
+  "usage": "Exemplo visual. Ilustrações não comprovam segurança, eficácia, requisitos de embalagem, classificação de resíduos ou adequação clínica.",
+  "items": [
+    {
+      "id": "espelho_clinico",
+      "category": "instrumentais",
+      "label": "Espelho clínico",
+      "index": 0,
+      "review": "pendente"
+    },
+    {
+      "id": "sonda_exploradora",
+      "category": "instrumentais",
+      "label": "Sonda exploradora",
+      "index": 1,
+      "review": "pendente"
+    },
+    {
+      "id": "pinca_clinica",
+      "category": "instrumentais",
+      "label": "Pinça clínica",
+      "index": 2,
+      "review": "pendente"
+    },
+    {
+      "id": "sonda_periodontal",
+      "category": "instrumentais",
+      "label": "Sonda periodontal",
+      "index": 3,
+      "review": "pendente"
+    },
+    {
+      "id": "cureta_periodontal",
+      "category": "instrumentais",
+      "label": "Cureta periodontal",
+      "index": 4,
+      "review": "pendente"
+    },
+    {
+      "id": "forceps_dentario",
+      "category": "exodontia",
+      "label": "Fórceps dentário",
+      "index": 5,
+      "review": "pendente"
+    },
+    {
+      "id": "elevador_dentario",
+      "category": "exodontia",
+      "label": "Elevador dentário",
+      "index": 6,
+      "review": "pendente"
+    },
+    {
+      "id": "periotomo",
+      "category": "exodontia",
+      "label": "Periótomo",
+      "index": 7,
+      "review": "pendente"
+    },
+    {
+      "id": "tesoura_cirurgica",
+      "category": "exodontia",
+      "label": "Tesoura cirúrgica",
+      "index": 8,
+      "review": "pendente"
+    },
+    {
+      "id": "bisturi",
+      "category": "exodontia",
+      "label": "Bisturi",
+      "index": 9,
+      "review": "pendente"
+    },
+    {
+      "id": "tubete_anestesico",
+      "category": "materiais",
+      "label": "Tubete anestésico",
+      "index": 10,
+      "review": "pendente"
+    },
+    {
+      "id": "seringa_carpule",
+      "category": "materiais",
+      "label": "Seringa carpule",
+      "index": 11,
+      "review": "pendente"
+    },
+    {
+      "id": "gaze",
+      "category": "materiais",
+      "label": "Gaze",
+      "index": 12,
+      "review": "pendente"
+    },
+    {
+      "id": "rolete_algodao",
+      "category": "materiais",
+      "label": "Rolete de algodão",
+      "index": 13,
+      "review": "pendente"
+    },
+    {
+      "id": "pasta_profilatica",
+      "category": "materiais",
+      "label": "Pasta profilática",
+      "index": 14,
+      "review": "pendente"
+    },
+    {
+      "id": "copo_dappen",
+      "category": "materiais",
+      "label": "Copo Dappen",
+      "index": 15,
+      "review": "pendente"
+    },
+    {
+      "id": "ponta_ultrassom",
+      "category": "profilaxia",
+      "label": "Ponta de ultrassom",
+      "index": 16,
+      "review": "pendente"
+    },
+    {
+      "id": "escova_profilaxia",
+      "category": "profilaxia",
+      "label": "Escova de profilaxia",
+      "index": 17,
+      "review": "pendente"
+    },
+    {
+      "id": "taca_borracha",
+      "category": "profilaxia",
+      "label": "Taça de borracha",
+      "index": 18,
+      "review": "pendente"
+    },
+    {
+      "id": "disco_polimento",
+      "category": "profilaxia",
+      "label": "Disco de polimento",
+      "index": 19,
+      "review": "pendente"
+    },
+    {
+      "id": "pasta_polimento",
+      "category": "profilaxia",
+      "label": "Pasta de polimento",
+      "index": 20,
+      "review": "pendente"
+    },
+    {
+      "id": "autoclave",
+      "category": "esterilizacao",
+      "label": "Autoclave",
+      "index": 21,
+      "review": "pendente"
+    },
+    {
+      "id": "seladora",
+      "category": "esterilizacao",
+      "label": "Seladora",
+      "index": 22,
+      "review": "pendente"
+    },
+    {
+      "id": "envelope_esterilizacao",
+      "category": "esterilizacao",
+      "label": "Envelope para esterilização",
+      "index": 23,
+      "review": "pendente"
+    },
+    {
+      "id": "indicador_quimico",
+      "category": "esterilizacao",
+      "label": "Indicador químico",
+      "index": 24,
+      "review": "pendente"
+    },
+    {
+      "id": "indicador_biologico",
+      "category": "esterilizacao",
+      "label": "Indicador biológico",
+      "index": 25,
+      "review": "pendente"
+    },
+    {
+      "id": "cassete_instrumentais",
+      "category": "esterilizacao",
+      "label": "Cassete de instrumentais",
+      "index": 26,
+      "review": "pendente"
+    },
+    {
+      "id": "mascara_cirurgica",
+      "category": "epi",
+      "label": "Máscara cirúrgica",
+      "index": 27,
+      "review": "pendente"
+    },
+    {
+      "id": "mascara_pff2",
+      "category": "epi",
+      "label": "Máscara PFF2",
+      "index": 28,
+      "review": "pendente"
+    },
+    {
+      "id": "oculos_protecao",
+      "category": "epi",
+      "label": "Óculos de proteção",
+      "index": 29,
+      "review": "pendente"
+    },
+    {
+      "id": "protetor_facial",
+      "category": "epi",
+      "label": "Protetor facial",
+      "index": 30,
+      "review": "pendente"
+    },
+    {
+      "id": "luvas_descartaveis",
+      "category": "epi",
+      "label": "Luvas descartáveis",
+      "index": 31,
+      "review": "pendente"
+    },
+    {
+      "id": "touca_descartavel",
+      "category": "epi",
+      "label": "Touca descartável",
+      "index": 32,
+      "review": "pendente"
+    },
+    {
+      "id": "coletor_perfurocortante",
+      "category": "residuos",
+      "label": "Coletor de perfurocortantes",
+      "index": 33,
+      "review": "pendente"
+    },
+    {
+      "id": "recipiente_infectante",
+      "category": "residuos",
+      "label": "Recipiente para resíduos infectantes",
+      "index": 34,
+      "review": "pendente"
+    },
+    {
+      "id": "recipiente_reciclaveis",
+      "category": "residuos",
+      "label": "Recipiente para recicláveis",
+      "index": 35,
+      "review": "pendente"
+    },
+    {
+      "id": "recipiente_comum",
+      "category": "residuos",
+      "label": "Recipiente para resíduos comuns",
+      "index": 36,
+      "review": "pendente"
+    },
+    {
+      "id": "recipiente_quimico",
+      "category": "residuos",
+      "label": "Recipiente para resíduos químicos",
+      "index": 37,
+      "review": "pendente"
+    },
+    {
+      "id": "saco_infectante",
+      "category": "residuos",
+      "label": "Saco ilustrativo para infectantes",
+      "index": 38,
+      "review": "pendente"
+    },
+    {
+      "id": "cadeira_odontologica",
+      "category": "equipamentos",
+      "label": "Cadeira odontológica",
+      "index": 39,
+      "review": "pendente"
+    },
+    {
+      "id": "aparelho_raio_x",
+      "category": "equipamentos",
+      "label": "Aparelho de raios X",
+      "index": 40,
+      "review": "pendente"
+    },
+    {
+      "id": "sugador_odontologico",
+      "category": "equipamentos",
+      "label": "Sugador odontológico",
+      "index": 41,
+      "review": "pendente"
+    },
+    {
+      "id": "compressor",
+      "category": "equipamentos",
+      "label": "Compressor",
+      "index": 42,
+      "review": "pendente"
+    },
+    {
+      "id": "fotopolimerizador",
+      "category": "equipamentos",
+      "label": "Fotopolimerizador",
+      "index": 43,
+      "review": "pendente"
+    },
+    {
+      "id": "bomba_vacuo",
+      "category": "equipamentos",
+      "label": "Bomba a vácuo",
+      "index": 44,
+      "review": "pendente"
+    },
+    {
+      "id": "curetas_gracey",
+      "category": "profilaxia",
+      "label": "Curetas Gracey",
+      "index": 45,
+      "review": "pendente"
+    },
+    {
+      "id": "pedra_afiar",
+      "category": "profilaxia",
+      "label": "Pedra de afiar",
+      "index": 46,
+      "review": "pendente"
+    },
+    {
+      "id": "agulha_gengival",
+      "category": "exodontia",
+      "label": "Agulha gengival",
+      "index": 47,
+      "review": "pendente"
+    },
+    {
+      "id": "anestesico_carpule",
+      "category": "exodontia",
+      "label": "Tubete anestésico (referência)",
+      "index": 48,
+      "review": "pendente"
+    },
+    {
+      "id": "pinca_hemostatica",
+      "category": "exodontia",
+      "label": "Pinça hemostática",
+      "index": 49,
+      "review": "pendente"
+    },
+    {
+      "id": "cureta_alveolar",
+      "category": "exodontia",
+      "label": "Cureta alveolar",
+      "index": 50,
+      "review": "pendente"
+    },
+    {
+      "id": "fio_sutura",
+      "category": "exodontia",
+      "label": "Fio de sutura (referência)",
+      "index": 51,
+      "review": "pendente"
+    },
+    {
+      "id": "ultrassom_profilaxia",
+      "category": "profilaxia",
+      "label": "Ultrassom de profilaxia",
+      "index": 52,
+      "review": "pendente"
+    },
+    {
+      "id": "bandeja_perfurada",
+      "category": "esterilizacao",
+      "label": "Bandeja perfurada",
+      "index": 53,
+      "review": "pendente"
+    }
+  ]
+}
