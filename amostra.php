@@ -1,0 +1,12 @@
+<?php declare(strict_types=1);
+$source=json_decode((string)@file_get_contents(__DIR__.'/data/templates.json'),true);
+$sample=is_array($source)?($source[3]??null):null;
+$rawText=$sample?trim(strip_tags(str_replace('</p>',"</p>\n",(string)$sample['html']))):'';
+$excerpt=function_exists('mb_substr')?mb_substr($rawText,0,1350):substr($rawText,0,1350);
+?>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Amostra do kit | Odonto em Dia</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="top"><a class="brand" href="?page=inicio">✦ Odonto <span>em Dia</span></a><nav><a href="?page=inicio">Voltar à apresentação</a><a href="?page=demo">Ver painel</a></nav></header>
+<main><div class="eyebrow">AMOSTRA DA BIBLIOTECA · MATERIAL ILUSTRATIVO</div><h1>Veja a estrutura de uma minuta.</h1><p class="lead">Esta amostra é parte do conteúdo preparatório disponível no kit. O texto completo e os demais materiais ficam dentro da plataforma. Nenhum modelo dispensa revisão técnica.</p>
+<div class="template-document"><div class="template-draft">MODELO DE TRABALHO · NÃO APROVADO</div><h2><?=esc($sample['title']??'POP de identificação do paciente')?></h2><div class="draft-warning"><b>ATENÇÃO:</b> esta é uma amostra parcial para conhecer a estrutura do material. O POP final exige adaptação à rotina real do consultório, validação e implementação pelo responsável técnico.</div><p style="white-space:pre-line"><?=esc($excerpt)?></p><p style="color:#729089;font-style:italic">[Continuação do documento disponível na biblioteca do kit.]</p></div>
+<div class="card" style="max-width:900px;margin:auto"><h2>O kit tem 30 materiais de referência</h2><p class="muted">18 minutas de POPs, 7 roteiros de planos, 2 materiais de SDBPF, 2 materiais de formulários e 1 guia de implantação. Além disso, há o painel com 17 frentes documentais e 15 verificações iniciais.</p><a href="?page=demo" class="btn">Explorar o painel</a> <a href="?page=inicio#oferta" class="btn btn-light">Ver oferta de R$ 67</a></div>
+<footer>Amostra ilustrativa e parcial, sem aprovação técnica. Sem vínculo com órgãos fiscalizadores.</footer></main></body></html>

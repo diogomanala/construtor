@@ -20,7 +20,7 @@ h('Vamos configurar seu consultório');
 <div class="onboard-step" data-step="1">
 <div class="eyebrow">ETAPA 2 DE 3 · PERFIL OPERACIONAL</div>
 <h2>Como funciona seu atendimento?</h2><p class="muted">Essas informações servem de contexto. Elas não determinam, por si só, o enquadramento sanitário.</p>
-<label>Quantidade de consultórios/cadeiras<input type="number" name="chairs" min="1" max="200" value="<?=esc($c['chairs']??1)?>" required></label>
+<label>Quantidade de consultórios individuais<input type="number" name="chairs" min="1" max="200" value="<?=esc($c['chairs']??1)?>" required></label>
 <label>Processamento e esterilização<select name="sterilization">
 <?php foreach(['interna'=>'Realizado na clínica','terceirizada'=>'Serviço terceirizado','mista'=>'Ambos'] as $k=>$v): ?>
 <option value="<?=esc($k)?>" <?=($c['sterilization']??'interna')===$k?'selected':''?>><?=esc($v)?></option>
