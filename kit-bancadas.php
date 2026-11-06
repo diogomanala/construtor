@@ -67,7 +67,13 @@ function od_kit_post(): never {
     $raw=$_POST['items']??[];
     if(!is_array($raw)||count($raw)>50){http_response_code(400);exit('Materiais inválidos');}
     $allow=array_column($data['items'],'id');
-    $selected=array_values(array_unique(array_filter(array_map('strval',$raw),static fn($v)=>in_array($v,$allow,true))));
+    $clean=[];
+    foreach($raw as $value){
+        if(!is_string($value)){http_response_code(400);exit('Material inválido');}
+        if(in_array($value,$allow,true))$clean[$value]=true;
+    }
+    $selected=array_keys($clean);
+    if(!is_string($_POST['notes']??'')){http_response_code(400);exit('Observação inválida');}
     $notes=trim((string)($_POST['notes']??''));
     if(mb_strlen($notes)>1200){flash('Observações devem ter até 1.200 caracteres.');redirect('?page=kits-bancada&kit='.$key);}
     $q=od_kit_schema()->prepare(
@@ -106,13 +112,18 @@ function od_kits_page(): never {
     $kit=$all[$key];$saved=od_kit_saved((int)$c['id'],$key);
     $selected=$saved?array_fill_keys($saved['selected'],true):array_fill_keys(array_column($kit['items'],'id'),true);
     echo '<div class="od-kit-workspace"><form class="od-kit-form" method="post">'.token().'<input type="hidden" name="act" value="kit_visual_save"><input type="hidden" name="kit" value="'.esc($key).'">';
-    echo '<div class="od-kit-tools"><a href="?page=kits-bancada" class="od-kit-back">← Ver outros conjuntos</a><span>'.($saved?'SALVO · EDIÇÃO '.(int)$saved['revision']:'SUGESTÃO INICIAL').'</span></div><div class="od-kit-intro"><span>CONJUNTO ILUSTRADO</span><h2>'.esc($kit['title']).'</h2><p>'.esc($kit['summary']).'</p></div>';
+    echo '<div class="od-kit-tools"><a href="?page=kits-bancada" class="od-kit-back">← Ver outros conjuntos</a><span>'.($saved?'SALVO · EDIÇÃO '.(int)$saved['revision']:'SUGESTÃO INICIAL').'</span></div>';
+    $brand=od_brand_current($c);
+    $mark=$brand['logo_mime']?'<img src="?page=logo-clinica" alt="Logo da clínica">':'<span class="od-kit-print-monogram">'.esc(mb_strtoupper(mb_substr((string)$c['name'],0,1))).'</span>';
+    echo '<div class="od-kit-print-identity">'.$mark.'<div><strong>'.esc($c['name']).'</strong><small>MATERIAL VISUAL DE APOIO · REVISÃO TÉCNICA NECESSÁRIA</small></div></div>';
+    echo '<div class="od-kit-intro"><span>CONJUNTO ILUSTRADO</span><h2>'.esc($kit['title']).'</h2><p>'.esc($kit['summary']).'</p></div>';
     echo '<div class="od-kit-controls"><button type="button" data-kit-action="all">Selecionar todos</button><button type="button" data-kit-action="none">Limpar seleção</button><span id="od-kit-count" aria-live="polite"></span></div><div class="od-kit-grid">';
     foreach($kit['items'] as $item){
         $slug=$item['id'];
         echo '<label class="od-kit-item"><input type="checkbox" name="items[]" value="'.esc($slug).'" '.(isset($selected[$slug])?'checked':'').'><span class="od-kit-item-art">'.od_kit_icon($item).'</span><strong>'.esc($item['label']).'</strong><small>Incluir na composição</small></label>';
     }
-    echo '</div><label class="od-kit-note-label">Observações específicas da clínica<textarea name="notes" maxlength="1200" rows="3" placeholder="Descreva somente o que foi confirmado na sua rotina.">'.esc($saved['notes']??'').'</textarea></label>';
+    echo '</div><label class="od-kit-note-label">Observações específicas da clínica<textarea name="notes" maxlength="1200" rows="3" placeholder="Não inclua dados de pacientes. Descreva apenas a rotina confirmada.">'.esc($saved['notes']??'').'</textarea></label>';
+    echo '<div class="od-kit-print-notes" id="od-kit-print-notes"><strong>Observações da clínica</strong><p>'.nl2br(esc($saved['notes']??'')).'</p></div>';
     echo '<div class="od-kit-actions"><button type="submit">Salvar minha seleção</button><button type="button" class="od-kit-print" onclick="window.print()">Imprimir visualização</button></div>';
     echo '<p class="od-kit-warning">Atenção: os objetos são ilustrativos. O conjunto não corresponde a uma lista mínima ou obrigatória de instrumentais. Uma revisão do RT é necessária antes do uso clínico.</p></form></div></div>';
     foot();exit;
