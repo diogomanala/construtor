@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
 <link rel="stylesheet" href="sales.css?v=9-20261106">
+<link rel="stylesheet" href="assets/hero-demo-v10.css?v=10-20261106">
 </head>
 <body class="sales">
 <svg style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -33,63 +34,79 @@
 <div class="reg-bar"><div class="wrap"><span class="reg-status"></span><strong>RDC ANVISA 1.002/2025 em vigor.</strong><span>Prazo de adequação dos serviços existentes previsto para dezembro de 2026.</span> <a href="#base-legal">Confira a base normativa <?=si('arrow')?></a></div></div>
 <header class="site-nav"><div class="wrap nav-inner"><a href="?page=inicio" class="logo" aria-label="Odonto em Dia, início"><img class="brand-mark" src="assets/favicon.svg" width="30" height="30" alt=""><span>odonto<span class="logo-accent">em dia</span><small>GESTÃO DOCUMENTAL</small></span></a><nav aria-label="Navegação principal"><a href="#metodo">Como funciona</a><a href="#entrega">O que recebo</a><a href="#duvidas">Perguntas</a></nav><div class="nav-actions"><a href="?page=entrar" class="text-login">Entrar</a><a href="#entrega" class="btn btn-small">O que vem no kit <?=si('arrow')?></a></div></div></header>
 <main>
-<section class="hero"><div class="wrap hero-layout"><div class="hero-copy"><div class="pill-label"> <?=si('shield')?> Organização documental para consultórios e clínicas</div><h1>30 materiais para organizar a documentação da clínica, <span>com edição e acompanhamento online.</span></h1><p>Os POPs, planos, formulários e guias ficam <strong>organizados numa plataforma própria</strong>. Abra cada minuta, personalize com os dados do consultório, salve versões e acompanhe pendências. Quando precisar, baixe em Word ou salve em PDF para revisão do responsável técnico.</p><div class="hero-buttons"><a class="btn btn-large" href="?page=checkout">Quero meu kit por R$ 67 <?=si('arrow')?></a><a class="btn btn-outline btn-large" href="#entrega">Ver os materiais incluídos <?=si('monitor')?></a></div><div class="hero-footline"><span><?=si('check')?> Documentos organizados por categoria</span><span><?=si('check')?> Edição e versões salvas</span><span><?=si('check')?> Compra única</span></div><p class="tiny">Modelos de apoio para análise e aprovação do RT. Não substitui processos técnicos ou licenças.</p></div>
-
+<section class="hero"><div class="wrap hero-layout">
+<div class="hero-copy">
+ <div class="pill-label"><?=si('shield')?> RDC 1.002/2025 · KIT DIGITAL COM PLATAFORMA</div>
+ <h1>Se pedirem os documentos da sua clínica hoje, <span>você sabe o que está pronto e o que falta?</span></h1>
+ <p>Organize POPs, planos e formulários em uma <strong>plataforma com 30 materiais de referência, editor online e acompanhamento de pendências</strong>. Personalize, salve versões e baixe em Word. Tudo no mesmo acesso.</p>
+ <div class="hero-buttons"><a class="btn btn-large" href="?page=checkout">Organizar meus documentos por R$ 67 <?=si('arrow')?></a><a class="btn btn-outline btn-large" href="#entrega">Ver tudo que está incluído <?=si('book')?></a></div>
+ <div class="hero-footline"><span><?=si('check')?> Biblioteca organizada</span><span><?=si('check')?> Editor com versões salvas</span><span><?=si('check')?> Acesso online por 12 meses</span></div>
+ <p class="tiny">Materiais de referência para adaptar e revisar com o responsável técnico. Não substituem licenças nem aprovação sanitária.</p>
+</div>
 <div class="hero-media">
-  <div class="od-showcase" data-od-showcase aria-label="Demonstração ilustrativa das etapas da plataforma Odonto em Dia">
-    <div class="od-glow od-glow-a" aria-hidden="true"></div><div class="od-glow od-glow-b" aria-hidden="true"></div>
-    <div class="od-device">
-      <div class="od-device-rim">
-        <span class="od-camera-dot" aria-hidden="true"></span>
-        <span class="od-device-label">ODONTO EM DIA <i></i> ÁREA DE TRABALHO</span>
-      </div>
-      <div class="od-screen">
-        <div class="od-screen-header">
-          <div class="od-screen-brand"><span class="od-screen-mark">✓</span><span>odonto <b>em dia</b></span></div>
-          <span class="od-screen-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        </div>
-        <div class="od-tabbar" role="tablist" aria-label="Etapas do exemplo">
-          <button type="button" class="od-tab is-active" role="tab" aria-selected="true" aria-controls="od-view-1" id="od-tab-1" data-od-tab="0"><span>01</span> Kit</button>
-          <button type="button" class="od-tab" role="tab" aria-selected="false" aria-controls="od-view-2" id="od-tab-2" data-od-tab="1"><span>02</span> Personalizar</button>
-          <button type="button" class="od-tab" role="tab" aria-selected="false" aria-controls="od-view-3" id="od-tab-3" data-od-tab="2"><span>03</span> Acompanhar</button>
-        </div>
-        <div class="od-screens">
-          <section class="od-view is-active" id="od-view-1" data-od-view="0" role="tabpanel" aria-labelledby="od-tab-1">
-<div class="od-view-title"><div><span class="od-view-kicker">PASSO 01 / BIBLIOTECA DO KIT</span><h3>Seus 30 materiais digitais.</h3><p>POPs, planos e formulários organizados.</p></div><span class="od-step-ring">01</span></div>
-<div class="od-kit-grid"><div class="od-kit-tile"><i>▤</i><b>18</b><small>POPs</small></div><div class="od-kit-tile"><i>▦</i><b>7</b><small>Planos</small></div><div class="od-kit-tile"><i>▧</i><b>2</b><small>SDBPF</small></div><div class="od-kit-tile"><i>☷</i><b>3</b><small>Formulários + guia</small></div></div>
-<div class="od-kit-file"><span class="od-kit-word">W</span><span><strong>POP de Esterilização</strong><small>Minuta editável · Word</small></span><em>↗</em></div>
-</section>
-          <section class="od-view" id="od-view-2" data-od-view="1" role="tabpanel" aria-labelledby="od-tab-2" hidden>
-            <div class="od-view-title"><div><span class="od-view-kicker">PASSO 02 / DOCUMENTO EDITÁVEL</span><h3>Do modelo à sua minuta.</h3><p>Preencha, revise e salve versões.</p></div><span class="od-step-ring">02</span></div>
-            <div class="od-doc-preview">
-              <div class="od-doc-top"><span class="od-doc-symbol">▤</span><span>POP DE ESTERILIZAÇÃO</span><span class="od-doc-badge">MINUTA</span></div>
-              <div class="od-doc-name"><span data-od-typing></span><span class="od-type-cursor" aria-hidden="true"></span></div>
-              <div class="od-doc-bar od-doc-bar-wide"></div><div class="od-doc-bar od-doc-bar-med"></div><div class="od-doc-bar od-doc-bar-short"></div>
-              <div class="od-doc-progress"><span>Campos preenchidos neste exemplo</span><strong data-od-fieldcount>0 de 3</strong><div class="od-progress-line"><i></i></div></div><div class="od-doc-actions"><span class="od-save-action" data-od-save>Salvar versão</span><span class="od-export-action" data-od-export>↓ Word</span></div>
-            </div>
-            <div class="od-demo-note"><span class="od-note-dot"></span> <span data-od-savestatus>Salvando a minuta...</span></div>
-          </section>
-          <section class="od-view" id="od-view-3" data-od-view="2" role="tabpanel" aria-labelledby="od-tab-3" hidden>
-            <div class="od-view-title"><div><span class="od-view-kicker">PASSO 03 / ACOMPANHAMENTO</span><h3>Saiba o que ainda falta.</h3><p>Uma visão clara das suas tarefas.</p></div><span class="od-step-ring">03</span></div>
-            <div class="od-board">
-              <div class="od-board-head"><strong>Meu mapa documental</strong><span data-od-done>0 de 3 etapas</span></div><div class="od-board-meter"><i data-od-board-meter></i></div>
-              <div class="od-board-row"><span class="od-board-check od-checked">✓</span><div><strong>Cadastro do consultório</strong><small>Dados informados</small></div><em class="od-chip od-chip-done">Concluído</em></div>
-              <div class="od-board-row"><span class="od-board-check od-review">◷</span><div><strong>POP de esterilização</strong><small>Revisão técnica pendente</small></div><em class="od-chip od-chip-review">Em revisão</em></div>
-              <div class="od-board-row"><span class="od-board-check od-pending">·</span><div><strong>Controle de evidências</strong><small>Próxima atividade</small></div><em class="od-chip od-chip-pending">Pendente</em></div>
-            </div>
-          </section>
-        </div>
-        <div class="od-screen-bottom">
-          <span class="od-screen-counter">PASSO <b data-od-counter>01</b> DE 03</span>
-          <div class="od-timeline" aria-label="Evolução da demonstração"><span class="is-active" data-od-track="0"><i></i></span><span data-od-track="1"><i></i></span><span data-od-track="2"><i></i></span></div>
-        </div>
-      </div><span class="od-demo-pointer" aria-hidden="true"><svg viewBox="0 0 24 28" width="23" height="28"><path d="M2 1.5 3.4 22l5.3-5 4.1 9 4.1-2-4.3-9 7.5-.7Z" fill="#fff" stroke="#174e46" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-    </div>
-    <div class="od-device-caption"><span class="od-pulse-dot"></span> Reprodução automática das 3 etapas <span>•</span> Exemplo ilustrativo</div>
-  </div>
+ <div class="od-demo" data-od-demo aria-label="Demonstração animada da plataforma Odonto em Dia, com biblioteca, editor e acompanhamento de pendências">
+   <div class="od-demo-aura" aria-hidden="true"></div>
+   <div class="od-tablet">
+     <div class="od-tablet-bezel"><span class="od-bezel-lens" aria-hidden="true"></span><span>ODONTO EM DIA <i>•</i> PLATAFORMA DO KIT</span></div>
+     <div class="od-app">
+       <div class="od-app-head">
+         <div class="od-app-brand"><span class="od-app-icon">✓</span><strong>odonto<span>em dia</span></strong></div>
+         <span class="od-app-live"><i></i> AMBIENTE DE EXEMPLO</span>
+       </div>
+       <div class="od-app-body">
+         <aside class="od-app-sidebar">
+           <span class="od-app-sidebar-label">MINHA CLÍNICA</span>
+           <button class="od-app-nav is-active" data-od-nav="0" type="button" aria-label="Mostrar biblioteca"><span class="od-nav-icon">▤</span><span>Biblioteca</span><b>30</b></button>
+           <button class="od-app-nav" data-od-nav="1" type="button" aria-label="Mostrar editor"><span class="od-nav-icon">✎</span><span>Editor online</span></button>
+           <button class="od-app-nav" data-od-nav="2" type="button" aria-label="Mostrar painel"><span class="od-nav-icon">◫</span><span>Pendências</span></button>
+           <div class="od-app-sidebar-foot"><span class="od-app-sidebar-pulse">●</span> <span>Versões salvas</span></div>
+         </aside>
+         <div class="od-app-main">
+           <div class="od-app-stage-label"><span data-od-stage-counter>ETAPA 01/03</span><span data-od-stage-caption>ABRIR DOCUMENTO</span></div>
+           <div class="od-app-scene-stack">
+             <section class="od-app-scene is-current" data-od-scene="0" aria-label="Biblioteca de documentos">
+               <div class="od-stage-title"><div><h3>Biblioteca do kit</h3><p>30 materiais por categoria</p></div><span class="od-stage-tag">INCLUÍDO</span></div>
+               <div class="od-folders">
+                 <div class="od-folder" data-od-folder="0"><span class="od-folder-icon">▤</span><b>18 POPs</b><small>Rotinas</small></div>
+                 <div class="od-folder" data-od-folder="1"><span class="od-folder-icon">▥</span><b>7 planos</b><small>Gestão</small></div>
+                 <div class="od-folder" data-od-folder="2"><span class="od-folder-icon">▣</span><b>2 SDBPF</b><small>Boas práticas</small></div>
+                 <div class="od-folder" data-od-folder="3"><span class="od-folder-icon">☷</span><b>3 arquivos</b><small>Form. + guia</small></div>
+               </div>
+               <div class="od-library-file" data-od-file><span class="od-file-square">W</span><span><b>POP de Esterilização</b><small>Minuta editável para sua clínica</small></span><i>↗</i></div>
+               <div class="od-app-bottomline"><span class="od-softdot"></span><span>Escolha um material para personalizar</span></div>
+             </section>
+             <section class="od-app-scene" data-od-scene="1" aria-label="Editor online de documentos">
+               <div class="od-stage-title"><div><h3>Editar POP</h3><p>Salve e retome quando quiser</p></div><span class="od-stage-tag">DOCX</span></div>
+               <div class="od-editor-document">
+                 <div class="od-editor-document-head"><span class="od-file-square">W</span><b>POP de Esterilização</b><span class="od-editor-mini-tag">MINUTA</span></div>
+                 <div class="od-editor-field"><small>NOME DO CONSULTÓRIO</small><strong><span data-od-typed></span><span class="od-editor-caret">|</span></strong></div>
+                 <div class="od-editor-line od-editor-line-one"></div><div class="od-editor-line od-editor-line-two"></div>
+                 <div class="od-editor-check"><span class="od-checkmark">✓</span><span>Responsável técnico</span></div>
+                 <div class="od-editor-check"><span class="od-checkmark">✓</span><span>Rotina de esterilização</span></div>
+               </div>
+               <div class="od-editor-actions"><span class="od-action-save" data-od-save>Salvar versão</span><span class="od-action-download" data-od-download>↓ Baixar Word</span></div>
+               <div class="od-editor-toast" data-od-toast><span>✓</span> Versão 1 salva para revisão do RT</div>
+             </section>
+             <section class="od-app-scene" data-od-scene="2" aria-label="Painel para acompanhar a documentação">
+               <div class="od-stage-title"><div><h3>Pendências e revisões</h3><p>Visualize o andamento da clínica</p></div><span class="od-stage-tag">PAINEL</span></div>
+               <div class="od-status-overview"><div><small>ITENS ORGANIZADOS</small><strong><span data-od-meter-value>0</span><em>/ 3</em></strong></div><div class="od-status-gauge"><i data-od-meter></i></div></div>
+               <div class="od-task-list">
+                 <div class="od-task" data-od-task="0"><span class="od-task-icon">·</span><div><b>Dados da clínica</b><small>Perfil cadastrado</small></div><em>Pendente</em></div>
+                 <div class="od-task" data-od-task="1"><span class="od-task-icon">·</span><div><b>POP de Esterilização</b><small>Aguardando revisão do RT</small></div><em>Pendente</em></div>
+                 <div class="od-task" data-od-task="2"><span class="od-task-icon">·</span><div><b>Documentos complementares</b><small>Próxima atividade</small></div><em>Pendente</em></div>
+               </div>
+             </section>
+           </div>
+           <div class="od-app-timeline"><div class="od-app-timeline-bars" aria-label="Etapas da animação"><span class="is-current" data-od-progress="0"><i></i></span><span data-od-progress="1"><i></i></span><span data-od-progress="2"><i></i></span></div><span>EXEMPLO ILUSTRATIVO</span></div>
+         </div>
+       </div>
+       <div class="od-sim-cursor" aria-hidden="true"><svg viewBox="0 0 24 28" width="24" height="28"><path d="M2 1.5 3.4 22l5.3-5 4.1 9 4.1-2-4.3-9 7.5-.7Z" fill="#fff" stroke="#13453c" stroke-width="1.7" stroke-linejoin="round"/></svg><i></i></div>
+     </div>
+   </div>
+   <div class="od-demo-caption"><span class="od-demo-live-dot"></span><span>Demonstração automática de como usar o kit</span><button class="od-demo-toggle" type="button" data-od-toggle aria-label="Pausar animação">Pausar</button></div>
+ </div>
 </div>
-</div>
-</section>
+</div></section>
 <section class="kit-clarity" aria-label="Entenda exatamente o produto"><div class="wrap"><div class="kit-clarity-head"><span class="sec-label">Como funciona depois da compra</span><h2>Documentos organizados, <em>com uma área para trabalhar neles.</em></h2><p>Você não precisa procurar arquivos em pastas soltas nem refazer alterações a cada acesso. A biblioteca, o editor e o acompanhamento ficam juntos na plataforma.</p></div><div class="kit-clarity-grid">
 <article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('book')?></div><div><h3>1. Encontre o documento</h3><p>Os <strong>30 materiais</strong> ficam separados em POPs, planos, SDBPF, formulários e guia, todos na mesma biblioteca.</p></div></article>
 <article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('file')?></div><div><h3>2. Edite sem sair da plataforma</h3><p>Abra uma minuta, adapte os procedimentos da clínica e <strong>salve quantas versões precisar</strong> para revisão técnica.</p></div></article>
@@ -151,6 +168,6 @@
 </main>
 <footer class="site-footer"><div class="wrap footer-flex"><div><a href="?page=inicio" class="footer-brand"><img class="footer-mark" src="assets/favicon.svg" width="26" height="26" alt=""> odonto<span>em dia</span></a><p>Ferramenta auxiliar de organização documental odontológica.<br>Sem vínculo, endosso ou certificação da Anvisa, CRO ou órgãos fiscalizadores.</p></div><div class="footer-links"><a href="#entrega">Ver materiais</a><a href="?page=entrar">Entrar</a><a href="#base-legal">Base normativa</a><span>© 2026 Odonto em Dia</span></div></div></footer>
 <div class="mobile-sticky"><span><small>Kit principal</small><b>R$ 67</b></span><a href="?page=checkout" class="btn">Conferir compra <?=si('arrow')?></a></div>
-<script src="assets/hero-preview.js?v=9-20261106" defer></script>
+<script src="assets/hero-preview.js?v=10-20261106" defer></script>
 </body>
 </html>
