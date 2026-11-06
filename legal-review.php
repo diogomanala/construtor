@@ -5,46 +5,6 @@ declare(strict_types=1);
  * Fonte: docs/BASE-NORMATIVA-ODONTO-2026-11-06.md.
  * Importante: o resultado não é laudo, homologação, licença ou aprovação oficial.
  */
-function od_legal_reference_map(): array {
-    return [
-        'RDC 1.002/2025'=>[
-            'note'=>'Boas práticas odontológicas, SDBPF e documentação aplicável',
-            'url'=>'https://visa.jundiai.sp.gov.br/wp-content/uploads/2025/12/RDC-10022025-BP-ODONTO.pdf',
-        ],
-        'RDC 63/2011'=>[
-            'note'=>'Boas práticas gerais para serviços de saúde, quando aplicáveis',
-            'url'=>'https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/seguranca-do-paciente/legislacao',
-        ],
-        'RDC 222/2018'=>[
-            'note'=>'Gerenciamento de resíduos de serviços de saúde',
-            'url'=>'https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/gerenciamento-de-residuos',
-        ],
-        'RDC 509/2021'=>[
-            'note'=>'Gerenciamento de tecnologias em saúde; revogou RDC 2/2010',
-            'url'=>'https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&cod_menu=9431&cod_modulo=310&link=S&numeroAto=00000509&orgao=RDC%2FDC%2FANVISA%2FMS&seqAto=000&tipo=RDC&valorAno=2021',
-        ],
-        'RDC 36/2013'=>[
-            'note'=>'Segurança do paciente conforme configuração do serviço',
-            'url'=>'https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/seguranca-do-paciente/legislacao',
-        ],
-        'NR-32'=>[
-            'note'=>'Saúde e segurança ocupacional nos serviços de saúde',
-            'url'=>'https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/norma-regulamentadora-no-32-nr-32',
-        ],
-        'LGPD'=>[
-            'note'=>'Tratamento de dados pessoais; aplicabilidade conforme os dados tratados',
-            'url'=>'https://www.gov.br/saude/pt-br/acesso-a-informacao/lgpd/legislacao',
-        ],
-        'CFO 118/2012'=>[
-            'note'=>'Código de Ética Odontológica',
-            'url'=>'https://sistemas.cfo.org.br/visualizar/atos/RESOLU%C3%87%C3%83O/SEC/2012/118',
-        ],
-        'RDC 611/2022'=>[
-            'note'=>'Radiologia diagnóstica/intervencionista apenas quando houver atividade correspondente',
-            'url'=>'https://www.gov.br/saude/pt-br/composicao/sgtes/degerts/qualificacao-de-engenharia-clinica/ementario',
-        ],
-    ];
-}
 function od_legal_matrix(): array {
     static $map=null;
     if($map!==null)return $map;
