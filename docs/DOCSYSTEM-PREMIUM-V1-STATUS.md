@@ -48,3 +48,26 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 - [Banco Execução e decisões](https://app.notion.com/p/9d000ffdd9654a69a058422911cb7d7a)
 - [Agent Operating Guide](https://app.notion.com/p/40f739c88b0a81808ae5fc4c50cab231)
 - Regra: GitHub permanece como fonte do código. Notion registra decisões, pendências, prioridades, checkpoints e link à versão; não salvar credenciais, logs sensíveis ou conversas completas.
+
+## Checkpoint v1.2 (06/11/2026) — Registros de manutenção e EPI
+
+### Implementado no branch `odonto-em-dia-hostinger`
+- Novo módulo `operational-records.php`, com dois formulários online: `?page=registros-manutencao` e `?page=registros-epi`.
+- Estrutura persistente `od_ops_records` (SQLite existente), com `clinic_id` sempre obtido do servidor, `record_kind`, data, responsável, situação administrativa, detalhes em JSON e registro temporal. Histórico limitado a 200 resultados com filtros por data e status; consultas com parâmetros.
+- Validações positivas e negativas, sem status de "aprovado tecnicamente". Registro de EPI não equivale a comprovante assinado; manutenção não substitui relatórios/laudos do prestador.
+- Novos campos guiados e mapas visuais específicos nos POPs 03 (id 6), 04 (id 7) e 18 (id 21). Total: 6 modelos com configuração individual (ids 3,6,7,11,21,24); outros 24 ainda genéricos.
+- Links no menu principal, biblioteca e nos três respectivos POPs. CSS existente reutilizado.
+- Proteção reforçada no `index.php`: POSTs de documentos, registros, atividades e autoavaliações exigem conta piloto autorizada ou direito de acesso pago ainda ativo, como no GET.
+- Removida a informação desatualizada "checkout ainda não está ativo" do primeiro cadastro; isso não valida o checkout.
+
+### Evidências verificadas
+- `php -l` no novo módulo e script CLI de testes no PHP 8.4 local: sem erros de sintaxe.
+- Testes locais positivos e negativos para manutenção e EPI (data, quantidade, tipo, status, limites e campos malformados) passaram.
+- Consulta SQLite em base sintética confirmou separação por `clinic_id` e tipo de registro; **não é teste ponta a ponta na hospedagem**.
+- Hostinger aceitou deploy Git e confirmou presença de `operational-records.php`, `index.php`, `document-engine.php`, e arquivos de teste protegidos em `tests/.htaccess`; cache CDN limpo.
+
+### Pendências P0 sem evidência ainda
+1. Entrar na aplicação em duas contas de clínica, gravar registros de limpeza/esterilização/manutenção/EPI, recarregar, testar filtros e ausência de acesso cruzado. Verificar também histórico de documentos e proteção de POST expirado.
+2. Testar compra Mercado Pago válida, webhook, recuperação, expiração, pedido cancelado e direito de acesso.
+3. Revisão clínica/regulatória por RT habilitado e, quando necessário, jurídica. Sem selo ou certificação automática.
+4. Continuar aprimorando os demais 24 modelos de referência, priorizando os POPs com registro operacional. Não acrescentar arte clínica sem validação de conteúdo ou direitos.
