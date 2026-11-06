@@ -54,14 +54,20 @@
   const escapeText = (text) => String(text).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
   function scanNow(){
     const fields = [...form.querySelectorAll('[data-odx-field]')];
-    const empty = fields.filter(field => !field.value.trim());
+    const templateId = form.querySelector('input[name="id"]')?.value || '';
+    // Campos legados mantidos nos seis planos não são exigências adicionais para novas minutas.
+    const legacyOptional = new Set(['22','23','25','26','27','28']).has(templateId);
+    const empty = fields.filter(field => !field.value.trim() && !(legacyOptional && ['g[aplicabilidade]','g[evidencias]'].includes(field.name)));
     const nameValid = panel.dataset.legalClinic === '1';
     const rtValid = panel.dataset.legalRt === '1';
     const content = document.getElementById('odx-document-body');
     const contentValid = Boolean(content && content.textContent.trim().length >= 100);
     // A minuta não está pronta enquanto houver marcadores de exemplo no seu corpo.
     const markers = content?.textContent.match(/\[[^\]\n]{2,90}\]/g) || [];
-    const exampleCount = markers.length;
+    // Datas de vigência/revisão e assinatura são concluídas na formalização humana.
+    const finalization = markers.filter(marker => /^\[(?:DATA|ASSINATURA\b[^\]]*)\]$/i.test(marker));
+    const preparationMarkers = markers.filter(marker => !finalization.includes(marker));
+    const exampleCount = preparationMarkers.length;
     const items = [];
     if(!nameValid) items.push('Confirme o nome do estabelecimento no perfil.');
     if(!rtValid) items.push('Informe o nome e o CRO do responsável técnico no perfil.');
@@ -75,7 +81,7 @@
     if (complete) {
       result.innerHTML = '<h4>Checagem estrutural concluída</h4>'
       + '<p>Os campos verificados estão preenchidos. A minuta pode ser salva e encaminhada à revisão do responsável técnico. Isso não é aprovação sanitária nem certificação.</p>'
-      + '<p><strong>Próximo passo:</strong> selecione “Aguardando revisão do RT” e salve uma nova versão. Para a SDBPF, a formalização pelo responsável legal continua necessária.</p>';
+      + '<p><strong>Próximo passo:</strong> selecione “Aguardando revisão do RT” e salve uma nova versão. As datas de revisão e assinaturas ainda pendentes devem ser formalizadas pelos responsáveis competentes, especialmente a aprovação e assinatura do responsável legal para a SDBPF.</p>';
     } else {
       result.innerHTML = '<h4>Faltam ' + items.length + ' pontos para preparar a minuta</h4>'
       + '<p>Revise os itens abaixo e execute uma nova conferência.</p><ul>'
