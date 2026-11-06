@@ -1,6 +1,7 @@
 <?php
+if (PHP_SAPI !== 'cli') {http_response_code(404);exit;}
 if(!function_exists('mb_strlen')){function mb_strlen($s){return strlen($s);}}
-require __DIR__.'/operational-records.php';
+require dirname(__DIR__).'/operational-records.php';
 function verify($condition,$message){if(!$condition){fwrite(STDERR,"FAIL: $message\n");exit(1);}echo "PASS: $message\n";}
 $m=['event_date'=>'2026-11-06','subject'=>'Autoclave A','actor'=>'Técnico B','notes'=>'Calibração concluída','status'=>'registrado','service_type'=>'calibracao','provider'=>'Laboratório X','service_note'=>'Relatório arquivado','next_date'=>'2027-05-06'];
 verify(odx_ops_validate('maintenance',$m)['ok'],'maintenance accepts valid fields');
