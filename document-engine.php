@@ -189,10 +189,6 @@ function odx_page():never {
     $histQ->execute([(int)$c['id'],(int)$id]);
     $revisions=$histQ->fetchAll();
     if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
-    if(!$historical){
-      $hasMaterialSuggestions=count(od_mat_defaults((int)$id,$c))>0;
-      echo '<div class="odx-inline-tool"><span>REFERÊNCIAS VISUAIS · OPCIONAL</span><h4>Quadro de materiais ilustrados</h4><p>'.($hasMaterialSuggestions?'Este modelo já tem sugestões de imagens.':'Adicione imagens apenas se elas ajudarem a identificar materiais ou equipamentos.').' Revise a pertinência com o RT.</p><a href="?page=acervo-visual&id='.(int)$id.'">'.($hasMaterialSuggestions?'Personalizar':'Escolher').' imagens deste documento ↗</a></div>';
-    }
     if((int)$id===11)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Monitorização de esterilização</h4><p>Registre os ciclos e consulte o histórico de sua clínica, sem planilhas separadas.</p><a href="?page=registros-esterilizacao">Abrir registros de ciclos ↗</a></div>';
     if((int)$id===7)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Controle de limpeza dos ambientes</h4><p>Registre cada execução e acompanhe pendências e ocorrências sem arquivos avulsos.</p><a href="?page=registros-limpeza">Abrir registro de limpeza ↗</a></div>';
     if(in_array((int)$id,[21,25,28],true))echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Manutenção de equipamentos</h4><p>Registre serviços, verificações e próximas datas por equipamento, mantendo histórico da clínica.</p><a href="?page=registros-manutencao">Abrir controle de manutenção ↗</a></div>';
@@ -212,7 +208,6 @@ function odx_page():never {
     echo '<div class="odx-source-head"><div><span>MINUTA DE REFERÊNCIA</span><h3>Conteúdo técnico para adaptação</h3></div><p>Revisar procedimentos, equipamentos e referências com o responsável técnico.</p></div>';
     echo '<div class="odx-document-body" id="odx-document-body" aria-label="Conteúdo técnico" contenteditable="false">'.$html.'</div>';
     echo '<div class="odx-approval"><div><span>CONTROLE E REVISÃO</span><h3>Revisão e formalização</h3><p>Esta minuta não recebe aprovação automática. O RT deve revisar o conteúdo; a SDBPF exige também aprovação e assinatura do responsável legal, conforme a RDC 1.002/2025, art. 111. A assinatura exibida aqui é apenas um espaço de referência, não uma assinatura eletrônica.</p></div><div class="odx-approval-line"><small>Responsável técnico / CRO</small><span>Assinatura e data após validação</span></div></div>';
-    echo od_mat_preview($c,(int)$id,$historical?(int)$historical['version']:null,$saved?(int)$saved['version']:null);
     echo '<div class="odx-paper-foot"><span>ODONTO EM DIA · DOCUMENTAÇÃO INTERNA</span><span>Modelo de referência · sem certificação automática</span></div></div></article>';
     echo '<div class="odx-outline" hidden id="odx-outline"><h3>Seções do documento</h3><ol data-odx-outline></ol></div>';
     echo '<div class="odx-bottom-hint"><strong>Este material é uma minuta de referência.</strong> Não substitui a avaliação da aplicabilidade, a revisão e a aprovação profissional.</div></section></form>';
