@@ -88,6 +88,12 @@ function od_mp_activate():never{
     }catch(Throwable $e){if($db->inTransaction())$db->rollBack();error_log('[Odonto] Erro na ativacao');flash('Não foi possível ativar este cadastro.');redirect('?page=pedido&code='.$order['public_code']);}
     session_regenerate_id(true);$_SESSION['uid']=$uid;redirect('?page=diagnostico');
 }
+function od_is_pilot(int $userId):bool {
+    if($userId!==1)return false;
+    $q=od_orders_db()->prepare('SELECT 1 FROM od_orders WHERE activated_user_id=? LIMIT 1');
+    $q->execute([$userId]);
+    return $q->fetchColumn()===false;
+}
 function od_mp_entitlement(int $userId):?array{
     $s=od_orders_db()->prepare('SELECT * FROM od_entitlements WHERE user_id=? AND status=\'active\' AND (expires_at IS NULL OR expires_at>=CURRENT_TIMESTAMP)');$s->execute([$userId]);return $s->fetch()?:null;
 }
