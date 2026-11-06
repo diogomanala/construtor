@@ -54,8 +54,15 @@ function od_visual_cover_markup(?array $spec): string {
     return '';
 }
 function od_visual_card_markup(int $templateId): string {
-    $spec=od_visual_current($templateId);
-    return $spec
-        ? '<span class="od-ui-recommend-symbol od-ui-recommend-symbol--3d" aria-hidden="true"><span class="odx-visual-3d odx-visual-3d--'.esc($spec['key']).'"></span></span>'
-        : '<span class="od-ui-recommend-symbol">'.od_ui_icon('file').'</span>';
+    // Ícones vetoriais uniformes: funcionam com qualquer tema, escala e impressão.
+    $doc=template_by_id($templateId);
+    $cat=(string)($doc['category']??'');
+    $icon=match($cat) {
+        'SDBPF'=>'book',
+        'Planos'=>'shield',
+        'POPs'=>'clipboard',
+        'Formulários'=>'list',
+        default=>'file'
+    };
+    return '<span class="od-ui-recommend-symbol od-ui-recommend-symbol--icon" aria-hidden="true">'.od_ui_icon($icon).'</span>';
 }
