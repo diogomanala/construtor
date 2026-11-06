@@ -106,6 +106,7 @@ function odx_post(): never {
     if(!in_array($stage,['rascunho','revisao_rt'],true))$stage='rascunho';
     $db=odx_schema();
     od_visual_schema();
+    od_mat_schema();
     try {
         $db->beginTransaction();
         $q=$db->prepare('SELECT version FROM od_documents WHERE clinic_id=? AND template_id=?');$q->execute([(int)$c['id'],(int)$id]);
@@ -117,6 +118,7 @@ function odx_post(): never {
         $db->prepare('INSERT INTO od_document_fields_history(clinic_id,template_id,version,fields_json) VALUES(?,?,?,?)')->execute([$c['id'],$id,$next,$fieldsJson]);
         od_brand_snapshot($db,$c,(int)$id,$next);
         od_visual_snapshot($db,(int)$c['id'],(int)$id,$next);
+        od_mat_snapshot($db,$c,(int)$id,$next);
         $db->commit();
         flash('Versão '.$next.' salva. A revisão técnica ainda precisa ser realizada pelo RT.');
     } catch(Throwable $e) {
@@ -187,6 +189,9 @@ function odx_page():never {
     $histQ->execute([(int)$c['id'],(int)$id]);
     $revisions=$histQ->fetchAll();
     if($revisions){echo '<div class="odx-history"><h4>Versões anteriores</h4><div class="odx-history-items">';foreach($revisions as $revision){echo '<a href="?page=editar&id='.(int)$id.'&version='.(int)$revision['version'].'">v'.(int)$revision['version'].' <span>'.esc($revision['created_at']).'</span></a>';}echo '</div></div>';}
+    if(od_mat_defaults((int)$id,$c) || od_mat_read((int)$c['id'],(int)$id)!==null){
+      echo '<div class="odx-inline-tool"><span>REFERÊNCIAS VISUAIS</span><h4>Quadro de materiais e equipamentos</h4><p>Ilustrações individuais já sugeridas para este modelo. Remova ou substitua conforme a realidade da clínica.</p><a href="?page=acervo-visual&id='.(int)$id.'">Editar imagens deste documento ↗</a></div>';
+    }
     if((int)$id===11)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Monitorização de esterilização</h4><p>Registre os ciclos e consulte o histórico de sua clínica, sem planilhas separadas.</p><a href="?page=registros-esterilizacao">Abrir registros de ciclos ↗</a></div>';
     if((int)$id===7)echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Controle de limpeza dos ambientes</h4><p>Registre cada execução e acompanhe pendências e ocorrências sem arquivos avulsos.</p><a href="?page=registros-limpeza">Abrir registro de limpeza ↗</a></div>';
     if(in_array((int)$id,[21,25,28],true))echo '<div class="odx-inline-tool"><span>FERRAMENTA OPERACIONAL</span><h4>Manutenção de equipamentos</h4><p>Registre serviços, verificações e próximas datas por equipamento, mantendo histórico da clínica.</p><a href="?page=registros-manutencao">Abrir controle de manutenção ↗</a></div>';
@@ -206,6 +211,7 @@ function odx_page():never {
     echo '<div class="odx-source-head"><div><span>MINUTA DE REFERÊNCIA</span><h3>Conteúdo técnico para adaptação</h3></div><p>Revisar procedimentos, equipamentos e referências com o responsável técnico.</p></div>';
     echo '<div class="odx-document-body" id="odx-document-body" aria-label="Conteúdo técnico" contenteditable="false">'.$html.'</div>';
     echo '<div class="odx-approval"><div><span>CONTROLE E REVISÃO</span><h3>Revisão e formalização</h3><p>Esta minuta não recebe aprovação automática. O RT deve revisar o conteúdo; a SDBPF exige também aprovação e assinatura do responsável legal, conforme a RDC 1.002/2025, art. 111. A assinatura exibida aqui é apenas um espaço de referência, não uma assinatura eletrônica.</p></div><div class="odx-approval-line"><small>Responsável técnico / CRO</small><span>Assinatura e data após validação</span></div></div>';
+    echo od_mat_preview($c,(int)$id,$historical?(int)$historical['version']:null,$saved?(int)$saved['version']:null);
     echo '<div class="odx-paper-foot"><span>ODONTO EM DIA · DOCUMENTAÇÃO INTERNA</span><span>Modelo de referência · sem certificação automática</span></div></div></article>';
     echo '<div class="odx-outline" hidden id="odx-outline"><h3>Seções do documento</h3><ol data-odx-outline></ol></div>';
     echo '<div class="odx-bottom-hint"><strong>Este material é uma minuta de referência.</strong> Não substitui a avaliação da aplicabilidade, a revisão e a aprovação profissional.</div></section></form>';
