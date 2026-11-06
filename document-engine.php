@@ -230,3 +230,93 @@ function odx_steril_page():never {
     }
     echo '<div class="odx-bottom-hint"><strong>Controle administrativo.</strong> A decisão técnica sobre a carga depende dos critérios, indicadores e procedimentos definidos pelo RT e das normas aplicáveis.</div></section></div>';foot();exit;
 }
+
+/* Controles de limpeza: registro de execução e histórico, sem validação sanitária automática. */
+function odx_cleaning_schema(): PDO {
+    $db=odx_schema();
+    $db->exec("CREATE TABLE IF NOT EXISTS od_cleaning_records (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        clinic_id INTEGER NOT NULL,
+        executed_on TEXT NOT NULL,
+        executed_at TEXT NOT NULL,
+        area_name TEXT NOT NULL,
+        product_info TEXT NOT NULL DEFAULT '',
+        responsible TEXT NOT NULL,
+        stage TEXT NOT NULL DEFAULT 'registrado',
+        notes TEXT NOT NULL DEFAULT '',
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )");
+    $db->exec('CREATE INDEX IF NOT EXISTS od_cleaning_by_clinic ON od_cleaning_records(clinic_id, executed_on DESC, id DESC)');
+    return $db;
+}
+function odx_cleaning_post(): never {
+    if(!user() || !($c=clinic())){http_response_code(403);exit('Acesso necessário');}
+    $date=trim((string)($_POST['executed_on']??''));
+    $time=trim((string)($_POST['executed_at']??''));
+    $area=trim((string)($_POST['area_name']??''));
+    $product=trim((string)($_POST['product_info']??''));
+    $responsible=trim((string)($_POST['responsible']??''));
+    $stage=(string)($_POST['stage']??'registrado');
+    $notes=trim((string)($_POST['notes']??''));
+    $day=DateTimeImmutable::createFromFormat('!Y-m-d',$date);
+    $validDate=$day && $day->format('Y-m-d')===$date;
+    if(!$validDate || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/',$time) ||
+        $area==='' || mb_strlen($area)>150 || mb_strlen($product)>400 ||
+        $responsible==='' || mb_strlen($responsible)>120 || mb_strlen($notes)>1500 ||
+        !in_array($stage,['registrado','aguardando_conferencia','ocorrencia'],true)) {
+        flash('Confira os dados do registro de limpeza.');
+        redirect('?page=registros-limpeza');
+    }
+    try{
+        $db=odx_cleaning_schema();
+        $stmt=$db->prepare('INSERT INTO od_cleaning_records(clinic_id,executed_on,executed_at,area_name,product_info,responsible,stage,notes) VALUES(?,?,?,?,?,?,?,?)');
+        $stmt->execute([(int)$c['id'],$date,$time,$area,$product,$responsible,$stage,$notes]);
+        flash('Execução registrada no histórico da clínica. A conferência técnica continua sendo responsabilidade da equipe.');
+    }catch(Throwable $e){
+        error_log('[Odonto] Falha ao registrar limpeza');
+        flash('Não foi possível salvar o registro de limpeza.');
+    }
+    redirect('?page=registros-limpeza');
+}
+function odx_cleaning_page(): never {
+    if(!user() || !($c=clinic())){http_response_code(403);exit('Acesso necessário');}
+    $db=odx_cleaning_schema();
+    $status=(string)($_GET['status']??'');
+    $validStatuses=['registrado','aguardando_conferencia','ocorrencia'];
+    if(!in_array($status,$validStatuses,true))$status='';
+    $date=trim((string)($_GET['date']??''));
+    $dt=DateTimeImmutable::createFromFormat('!Y-m-d',$date);
+    if(!$dt || $dt->format('Y-m-d')!==$date)$date='';
+    $sql='SELECT executed_on,executed_at,area_name,product_info,responsible,stage,notes,created_at FROM od_cleaning_records WHERE clinic_id=?';
+    $params=[(int)$c['id']];
+    if($status!==''){$sql.=' AND stage=?';$params[]=$status;}
+    if($date!==''){$sql.=' AND executed_on=?';$params[]=$date;}
+    $sql.=' ORDER BY executed_on DESC, executed_at DESC, id DESC LIMIT 200';
+    $q=$db->prepare($sql);$q->execute($params);$rows=$q->fetchAll();
+    h('Controle de limpeza de ambientes');
+    echo '<div class="odx-topline"><a href="?page=editar&id=7">← POP de Limpeza de Ambientes</a><span> / </span><strong>REGISTRO NA PLATAFORMA</strong></div>';
+    echo '<div class="odx-page-title"><div><span class="odx-eyebrow">ROTINAS DA CLÍNICA / REGISTROS</span><h2>Limpeza documentada, sem planilhas avulsas.</h2><p>Registre a execução de cada rotina conforme o POP aprovado da sua clínica e consulte o histórico por data e situação.</p></div><span class="odx-version">Registro operacional</span></div>';
+    echo '<div class="odx-register-layout"><section class="odx-register-form"><span class="odx-side-kicker">NOVO REGISTRO</span><h3>Informações da execução</h3><form method="post">'.token().'<input type="hidden" name="act" value="cleaning_record">';
+    echo '<div class="odx-register-grid"><label>Data da execução<input name="executed_on" type="date" required value="'.esc(date('Y-m-d')).'"></label><label>Horário<input name="executed_at" type="time" required value="'.esc(date('H:i')).'"></label><label>Ambiente / área<input name="area_name" required maxlength="150" placeholder="Ex.: consultório 1"></label><label>Responsável pela execução<input name="responsible" required maxlength="120" placeholder="Nome ou matrícula interna"></label></div>';
+    echo '<label>Produto e diluição conforme rotina validada<input name="product_info" maxlength="400" placeholder="Identificação do produto e concentração utilizada"></label>';
+    echo '<label>Situação do registro<select name="stage"><option value="registrado">Execução registrada</option><option value="aguardando_conferencia">Aguardando conferência interna</option><option value="ocorrencia">Ocorrência / desvio registrado</option></select></label>';
+    echo '<label>Observações ou intercorrências<textarea name="notes" maxlength="1500" rows="3" placeholder="Somente fatos observados durante a execução"></textarea></label>';
+    echo '<button class="odx-save" type="submit">Salvar registro <span>↗</span></button></form>';
+    echo '<p class="odx-safe">Não inclua dados de pacientes. O registro deve refletir uma atividade realmente executada e não substitui a validação do POP pelo responsável técnico.</p></section>';
+    echo '<section class="odx-register-history"><div class="odx-register-title"><div><span>HISTÓRICO DA CLÍNICA</span><h3>Execuções registradas</h3></div><small>Até 200 resultados</small></div>';
+    echo '<form method="get" class="odx-clean-filter"><input type="hidden" name="page" value="registros-limpeza"><label>Filtrar por data<input type="date" name="date" value="'.esc($date).'"></label><label>Situação<select name="status"><option value="">Todas</option>';
+    foreach(['registrado'=>'Registrada','aguardando_conferencia'=>'Aguardando conferência','ocorrencia'=>'Ocorrência'] as $v=>$label)echo '<option value="'.esc($v).'" '.($status===$v?'selected':'').'>'.esc($label).'</option>';
+    echo '</select></label><button type="submit">Filtrar</button><a href="?page=registros-limpeza">Limpar</a></form>';
+    if(!$rows)echo '<div class="odx-register-empty"><b>Nenhum registro encontrado.</b><p>Preencha a rotina executada ou remova os filtros para consultar o histórico.</p></div>';
+    $labels=['registrado'=>'Registrada','aguardando_conferencia'=>'Aguardando conferência','ocorrencia'=>'Ocorrência'];
+    foreach($rows as $row){
+        $stage=$row['stage'];$class=match($stage){'registrado'=>'odx-cycle-conferido','aguardando_conferencia'=>'odx-cycle-pendente','ocorrencia'=>'odx-cycle-intercorrencia',default=>'odx-cycle-pendente'};
+        echo '<article class="odx-register-row"><div class="odx-register-row-head"><b>'.esc($row['executed_on']).' · '.esc($row['executed_at']).' · '.esc($row['area_name']).'</b><span class="'.esc($class).'">'.esc($labels[$stage]??'Registrada').'</span></div>';
+        echo '<div class="odx-register-row-meta"><span>Executado por: '.esc($row['responsible']).'</span></div>';
+        if($row['product_info']!=='')echo '<p><strong>Produto / diluição informada:</strong> '.esc($row['product_info']).'</p>';
+        if($row['notes']!=='')echo '<p><strong>Observações:</strong> '.nl2br(esc($row['notes'])).'</p>';
+        echo '<small>Registrado no sistema em '.esc($row['created_at']).'</small></article>';
+    }
+    echo '<div class="odx-bottom-hint"><strong>Registro administrativo:</strong> o sistema armazena os dados lançados, mas não atesta a desinfecção, a eficácia do produto nem a conformidade sanitária.</div></section></div>';
+    foot();exit;
+}
