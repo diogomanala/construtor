@@ -111,8 +111,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  if(!user()){http_response_code(401);exit('Faça login.');}
  if(!od_is_pilot((int)user()) && !od_mp_entitlement((int)user())){http_response_code(403);exit('Seu acesso está inativo ou expirado. Verifique a situação da compra.');}
   if($act==='brand_save')od_brand_save();
-  if($act==='material_selection_save')od_mat_post();
-  if($act==='kit_visual_save')od_kit_post();
+  if($act==='material_selection_save'){flash('As imagens estão em revisão de qualidade e não podem ser aplicadas agora.');redirect('?page=documentos');}
+  if($act==='kit_visual_save'){flash('As bancadas ilustradas estão temporariamente indisponíveis.');redirect('?page=documentos');}
   if($act==='premium_save')odx_post();
   if($act==='steril_record')odx_steril_post();
   if($act==='cleaning_record')odx_cleaning_post();
