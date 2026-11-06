@@ -6,14 +6,14 @@ Nunca modificar main (outro projeto) nem os arquivos do site principal.
 ENTREGÁVEL
 - 30 modelos de referência (18 POPs, 7 planos, 2 SDBPF, 2 formulários, 1 guia).
 - DocSystem Premium com biblioteca, preenchimento guiado, prévia visual, histórico e edição dentro da plataforma.
-- 12 modelos com roteiro de campos específico: ids 3, 6, 7, 11, 21, 22, 23, 24, 25, 26, 27 e 28. Os demais usam esquema de campos geral.
+- Os 30 modelos possuem roteiros de campos e mapas visuais individualizados: seis casos diretamente no motor, seis planos em document-plan-config.php e os demais 18 em data/document-guides.json. Em documentos recém-especializados os campos legados permanecem acessíveis.
 - Registros operacionais: esterilização, limpeza de ambientes, manutenção e entrega de EPI.
 - Não depender de download de ZIP, DOCX, PDF ou Canva para a experiência principal.
 - Conteúdo técnico são MINUTAS de referência; NÃO existe aprovação automática ou certificação sanitária. Revisão pelo RT e jurídica quando pertinente permanece pendente.
 
 ARQUITETURA
 - PHP 8.2 na Hostinger. Dados locais em SQLite dentro de /rdc/data, protegidos por .htaccess.
-- Arquivos-chave: index.php, document-engine.php, document-plan-config.php, document-engine.css/js, operational-records.php, payments.php e webhook.php.
+- Arquivos-chave: index.php, document-engine.php, document-plan-config.php, data/document-guides.json, document-engine.css/js, operational-records.php, payments.php e webhook.php.
 - O cadastro piloto existente cria apenas a primeira conta proprietária com convite exclusivo e senha definida pelo usuário. Após cadastro, cria clínica fictícia, inicia a sessão e abre a biblioteca. NÃO há perfil admin com painel de usuários separado.
 - Pagamento: Mercado Pago Orders + webhook; proprietário informou configurar chaves externas. Não consta QA de compra real e ativação confirmados no checkpoint.
 - Credenciais e segredos permanecem fora do webroot, nunca no código ou no Notion.
