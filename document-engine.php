@@ -162,7 +162,11 @@ function odx_page():never {
             $brandLogoUrl='?page=logo-clinica&template_id='.(int)$id.'&version='.(int)$requestedVersion;
         }
     }
-    $visual=$historical ? od_visual_historical((int)$c['id'],(int)$id,(int)$requestedVersion) : od_visual_current((int)$id);
+    // Documentos existentes exibem a arte gravada na própria versão.
+    // Para versões anteriores ao pack, não adicionamos uma ilustração retroativamente.
+    $visual=$historical
+        ? od_visual_historical((int)$c['id'],(int)$id,(int)$requestedVersion)
+        : ($saved ? od_visual_historical((int)$c['id'],(int)$id,(int)$saved['version']) : od_visual_current((int)$id));
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
     h('Documento da clínica',false);
