@@ -80,3 +80,11 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 - `docs/QA-ACESSO-CLINICAS.md`: matriz com **12 casos P0** para teste autenticado, separação entre clínicas, histórico, controles operacionais, permissões e Mercado Pago.
 - Chamadas públicas de verificação por ferramentas externas não alcançaram o domínio; a confirmação funcional real permanece **pendente**.
 - Estado esperado no Notion: **P0 QA em execução**, não "Verificado". Próximo passo: executar casos autenticados A/B e registrar resultados, depois testar o pagamento de forma controlada.
+
+## Checkpoint v1.4 (06/11/2026): primeiro acesso do proprietário
+- `index.php` commit `8fca787f`: cadastro piloto do primeiro usuário agora usa transação e verifica contagem de usuários dentro dela; exige convite exclusivo, e-mail válido e senha criada pelo proprietário (mínimo de 12 caracteres). Não contém senha fixa.
+- Após criação atômica, o sistema inclui uma **clínica fictícia de demonstração** (sem pacientes, RT ou CNPJ) e estabelece a sessão do próprio navegador com `session_regenerate_id(true)`. Redireciona direto para a biblioteca, pronto para teste dos documentos.
+- O primeiro usuário recebe acesso de proprietário no fluxo piloto existente (`od_is_pilot`); **não existe um módulo de papéis administrativos separado**.
+- Hostinger confirmou deploy Git e arquivo index.php atualizado. A listagem de `rdc/data` não apresentava arquivo SQLite na consulta; isso sugere, sem provar, que o primeiro cadastro ainda não foi concluído.
+- **Não confundir:** um deploy não cria uma sessão no navegador do cliente. O próprio proprietário precisa definir e-mail e senha pelo formulário de primeiro acesso. O agente não criou usuário real nem conhece a senha; login e persistência aguardam verificação do proprietário.
+- Nenhuma credencial real, senha ou código de convite deve ser registrado em GitHub/Notion. O convite existente deve perder utilidade após o primeiro cadastro pelo bloqueio de usuários.
