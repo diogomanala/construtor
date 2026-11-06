@@ -45,3 +45,11 @@
 .od-legal-review :is(a,button,summary,input):focus-visible{outline:3px solid #4ea284;outline-offset:3px}
 @media(max-width:620px){.od-legal-review{padding:18px}.od-legal-review-heading{gap:10px}.od-legal-review-symbol{width:34px;height:34px}.od-legal-sources a{display:flex;flex-wrap:wrap}.od-legal-sources a small{flex-basis:100%;order:3}}
 @media(prefers-reduced-motion:reduce){.odx-paper.is-reviewing::after{animation:none;display:none}.od-legal-trigger{transition:none!important}}
+
+.odx-tools{flex-wrap:wrap}
+.odx-tools .odx-fill-clinic{display:inline-flex;align-items:center;gap:7px;background:#e7f4eb;color:#256b52;border:1px solid #cee7d5}
+.odx-tools .odx-fill-clinic:hover{background:#d8eddf;color:#15563e;transform:none}
+.odx-tools .odx-fill-clinic .od-ui-icon{width:15px;height:15px}
+.od-legal-edit-cta{display:inline-flex;align-items:center;justify-content:center;border:1px solid #c7e1d1;background:#eaf6ee;color:#236d52;border-radius:9px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer;margin:4px 8px 4px 0}
+.od-legal-edit-cta:hover{background:#d9eddf}
+@media(max-width:650px){.odx-toolbar .odx-tools{width:100%;justify-content:flex-start}.odx-toolbar .odx-tools button{font-size:10px!important;padding:9px 10px!important}.od-legal-result button{width:100%;margin-bottom:8px}}
