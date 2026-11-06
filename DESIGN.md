@@ -53,3 +53,11 @@ O CSS existente é a fonte de verdade em runtime (modelo B da frontend-design-pr
 - [Repositório e branch](https://github.com/diogomanala/construtor/tree/odonto-em-dia-hostinger)
 - [Cérebro do projeto](https://app.notion.com/p/410739c88b0a81f8a436d82129ff205a)
 - Skills aplicadas em 06/11/2026: `frontend-design` e `frontend-design-premium`.
+
+## Biblioteca visual 3D aprovada, 06/11/2026
+- Seis ilustrações aprovadas pelo usuário foram reunidas em um atlas leve AVIF de 540×360 px, aprox. 12,7 KB: `assets/illustrations/odonto-3d-atlas.avif`.
+- Mapeamento fixo no `visual-library.php`: 3 Manual SDBPF (`manual`), 24 PGRSS (`residuos`), 11 POP Esterilização (`esterilizacao`), 7 POP Limpeza (`limpeza`), 6 POP EPI (`epi`), 22 PSP (`seguranca`). O sprite 3×2 usa exatamente essa ordem e `visual-library.css` aplica a imagem à capa e aos cartões recomendados.
+- São ilustrações conceituais/decorativas, **não** demonstrações corretas de procedimentos ou símbolos oficiais. Não usar a composição de resíduos para prescrever cores ou classificações; isso exige revisão do RT com a regra aplicável.
+- As capas continuam legíveis: objeto no lado direito em telas maiores, acima do título em telas estreitas. Não colocar 3D no corpo da minuta, nos campos ou nas assinaturas.
+- `od_document_visual_history` registra o pacote visual da versão no salvamento. Versões antigas sem fotografia visual permanecem sem essas ilustrações, evitando alterações retrospectivas silenciosas.
+- QA ainda necessário: telas 320/390/768/1440px, contraste, impressão, performance da imagem, histórico, salvamento, isolamento de clínicas e verificação no navegador autenticado. Aprovação visual das artes não significa certificação dos textos.
