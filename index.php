@@ -36,12 +36,43 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  if($act==='checkout_start')od_mp_start();
   if($act==='order_activate')od_mp_activate();
   if($act==='register'){
-  if(!hash_equals('c3a6589f57181a1c5f74395272b1a7eb150cddbd20f8cff4d254baef4084003a',hash('sha256',trim((string)($_POST['invite']??''))))){flash('Código de ativação inválido. O acesso piloto é restrito.');redirect('?page=entrar');}
-  // Durante o piloto, apenas uma conta inicial pode ser criada. Compradores precisarão de provisionamento após pagamento validado.
-  if((int)db()->query('SELECT COUNT(*) FROM users')->fetchColumn()>=1){flash('O cadastro de testes está fechado. Entre com sua conta existente.');redirect('?page=entrar');}
-  $email=strtolower(trim((string)($_POST['email']??'')));$pw=(string)($_POST['password']??'');
-  if(!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($pw)<12){flash('Use um e-mail válido e senha de pelo menos 12 caracteres.');redirect('?page=entrar');}
-  try{$q=db()->prepare('INSERT INTO users(email,password) VALUES(?,?)');$q->execute([$email,password_hash($pw,PASSWORD_DEFAULT)]);session_regenerate_id(true);$_SESSION['uid']=(int)db()->lastInsertId();redirect('?page=diagnostico');}catch(PDOException $e){flash('Não foi possível cadastrar este e-mail.');redirect('?page=entrar');}
+  $invite=$_POST['invite']??null;
+  if(!is_string($invite)||!hash_equals('c3a6589f57181a1c5f74395272b1a7eb150cddbd20f8cff4d254baef4084003a',hash('sha256',trim($invite)))){
+    flash('Código de ativação inválido. O acesso piloto é restrito.');redirect('?page=entrar');
+  }
+  $inputEmail=$_POST['email']??null;
+  $inputPassword=$_POST['password']??null;
+  if(!is_string($inputEmail)||!is_string($inputPassword)){
+    flash('Informe um e-mail e uma senha válidos.');redirect('?page=entrar');
+  }
+  $email=strtolower(trim($inputEmail));$pw=$inputPassword;
+  if(!filter_var($email,FILTER_VALIDATE_EMAIL)||strlen($email)>180||strlen($pw)<12||strlen($pw)>256){
+    flash('Use um e-mail válido e senha entre 12 e 256 caracteres.');redirect('?page=entrar');
+  }
+  $pdo=db();
+  try{
+    $pdo->beginTransaction();
+    if((int)$pdo->query('SELECT COUNT(*) FROM users')->fetchColumn()!==0){
+      $pdo->rollBack();flash('A conta do proprietário já existe. Entre com as credenciais cadastradas.');redirect('?page=entrar');
+    }
+    $q=$pdo->prepare('INSERT INTO users(email,password) VALUES(?,?)');
+    $q->execute([$email,password_hash($pw,PASSWORD_DEFAULT)]);
+    $uid=(int)$pdo->lastInsertId();
+    if($uid!==1)throw new RuntimeException('Identificador do proprietário inesperado');
+    // Dados exclusivamente fictícios para que o proprietário teste a plataforma sem um onboarding longo.
+    $q=$pdo->prepare('INSERT INTO clinics(user_id,name,chairs,has_xray,has_sedation,sterilization) VALUES(?,?,?,?,?,?)');
+    $q->execute([$uid,'Clínica Demonstração Odonto em Dia',1,0,0,'interna']);
+    $pdo->commit();
+    session_regenerate_id(true);
+    $_SESSION['uid']=$uid;
+    flash('Conta proprietária de teste ativada. Você já está conectado. A clínica fictícia pode ser editada em Perfil.');
+    redirect('?page=documentos');
+  }catch(Throwable $e){
+    if($pdo->inTransaction())$pdo->rollBack();
+    error_log('[Odonto] Falha no cadastro inicial do proprietário');
+    flash('Não foi possível ativar a conta. Verifique se já existe um cadastro ou tente novamente.');
+    redirect('?page=entrar');
+  }
  }
  if($act==='login'){$q=db()->prepare('SELECT * FROM users WHERE email=?');$q->execute([strtolower(trim((string)($_POST['email']??'')))]);$u=$q->fetch();if($u && password_verify((string)($_POST['password']??''),$u['password'])){session_regenerate_id(true);$_SESSION['uid']=(int)$u['id'];redirect('?page=painel');}flash('E-mail ou senha incorretos.');redirect('?page=entrar');}
  if(!user()){http_response_code(401);exit('Faça login.');}
@@ -64,7 +95,7 @@ if($page==='inicio'){require __DIR__.'/landing.php';exit;}
 if($page==='demo'){require __DIR__.'/demo.php';exit;}
 if($page==='amostra'){require __DIR__.'/amostra.php';exit;}
 if($page==='sair'){$_SESSION=[];session_destroy();redirect('?page=entrar');}
-if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form></section><section class="card"><h2>Primeiro acesso do proprietário</h2><p class="muted">O cadastro piloto é reservado ao proprietário. Após uma compra confirmada, o cliente ativa o acesso pelo link do pedido. Não inclua dados de pacientes.</p><form method="post">'.token().'<input type="hidden" name="act" value="register"><label>E-mail<input name="email" type="email" required></label><label>Senha (12 caracteres ou mais)<input name="password" type="password" required minlength="12" autocomplete="new-password"></label><label>Código de ativação do piloto<input name="invite" type="password" required autocomplete="off" placeholder="Código exclusivo do proprietário"></label><button class="secondary">Ativar minha conta piloto</button></form></section></div>';foot();exit;}
+if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form></section><section class="card"><h2>Ativar conta de teste do proprietário</h2><p class="muted">Crie a conta proprietária de teste uma única vez. Você entrará automaticamente na biblioteca, com uma clínica fictícia pronta para testar. Depois, altere os dados em Perfil. Não inclua informações de pacientes.</p><form method="post">'.token().'<input type="hidden" name="act" value="register"><label>E-mail<input name="email" type="email" required></label><label>Senha (12 caracteres ou mais)<input name="password" type="password" required minlength="12" autocomplete="new-password"></label><label>Código de ativação do piloto<input name="invite" type="password" required autocomplete="off" placeholder="Código exclusivo do proprietário"></label><button class="secondary">Criar conta e abrir plataforma</button></form></section></div>';foot();exit;}
 if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não ativo');echo '<p class="lead">Este acesso está inativo ou expirado. Se concluiu uma compra, use o link de confirmação do pedido.</p><a class="btn" href="?page=checkout">Conhecer as opções</a>';foot();exit;}
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='editar')odx_page();
