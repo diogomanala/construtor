@@ -22,7 +22,32 @@ function redirect(string $url='?'):never{header('Location: '.$url, true,303);exi
 function user():?int{return isset($_SESSION['uid'])?(int)$_SESSION['uid']:null;}
 function clinic():?array{if(!user())return null;$s=db()->prepare('SELECT * FROM clinics WHERE user_id=? ORDER BY id LIMIT 1');$s->execute([user()]);return $s->fetch()?:null;}
 function flash(string $s):void{$_SESSION['flash']=$s;}
-function h(string $page):void {$title='Odonto em Dia';echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.$title.'</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"></head><body><header class="top"><a class="brand" href="?page=inicio">◇ Odonto <span>em Dia</span></a><nav>';if(user())echo '<a href="?page=painel">Painel</a><a href="?page=boas-vindas">Meu mapa</a><a href="?page=diagnostico">Perfil</a><a href="?page=documentos">Biblioteca</a><a href="?page=meus-documentos">Meus documentos</a><a href="?page=registros-limpeza">Registros de limpeza</a><a href="?page=registros-manutencao">Manutenção</a><a href="?page=registros-epi">EPIs</a><a href="?page=inspecao">Autoavaliação básica</a><a href="?page=auto360">Autoinspeção 360</a><a href="?page=sair">Sair</a>';echo '</nav></header><main>';if(!empty($_SESSION['flash'])){echo '<div class="notice">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';}
+function h(string $page):void {
+ $active=(string)($_GET['page']??'painel');
+ $authenticated=user()!==null;
+ $primary=['painel'=>'Painel','documentos'=>'Biblioteca','meus-documentos'=>'Meus documentos','boas-vindas'=>'Meu mapa'];
+ $menu=[
+  'ÁREA DA CLÍNICA'=>['painel'=>'Painel','documentos'=>'Biblioteca','meus-documentos'=>'Meus documentos','boas-vindas'=>'Meu mapa','diagnostico'=>'Perfil da clínica'],
+  'CONTROLES'=>['registros-esterilizacao'=>'Esterilização','registros-limpeza'=>'Limpeza','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
+  'AVALIAÇÃO'=>['inspecao'=>'Autoavaliação básica','auto360'=>'Autoinspeção 360'],
+  'CONTA'=>['sair'=>'Sair']
+ ];
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"></head><body>';
+ echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
+ if($authenticated){
+  echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
+  foreach($primary as $route=>$label)echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').'>'.esc($label).'</a>';
+  echo '</nav><details class="member-menu"><summary>Menu</summary><div class="member-menu-panel"><nav aria-label="Todas as áreas">';
+  foreach($menu as $section=>$items){
+   echo '<span class="member-menu-heading">'.esc($section).'</span>';
+   foreach($items as $route=>$label)echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').($route==='sair'?' class="member-logout"':'').'>'.esc($label).'</a>';
+  }
+  echo '</nav></div></details></div>';
+ }
+ echo '</div></header><main>';
+ if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
+ echo '<div class="eyebrow">ODONTO EM DIA &nbsp; / &nbsp; ORGANIZAÇÃO DOCUMENTAL</div><h1>'.esc($page).'</h1>';
+}
 function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
