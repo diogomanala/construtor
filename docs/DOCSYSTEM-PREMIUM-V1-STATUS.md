@@ -34,3 +34,17 @@ Prioridade comercial: entregável da plataforma, não PDFs/DOCX nem links para e
 3. Aprofundar figuras e diagramas originais pertinentes nos demais documentos, observando direitos de imagem e validação profissional.
 4. Testar compra real em ambiente adequado e webhook do Mercado Pago, provisionamento, expiração de acesso e pedido cancelado.
 5. Avaliar proteção de registros e retenção conforme obrigações legais; evitar dados pessoais de pacientes.
+
+## Implementação adicional, 06/11/2026: controle de limpeza
+- Nova rota autenticada: `?page=registros-limpeza`, no mesmo sistema PHP/SQLite (sem serviços pagos).
+- Tabela `od_cleaning_records`, índice por clínica/data, inserção com CSRF na rota `cleaning_record`, data e horário explícitos, área, produto/diluição, responsável, status administrativo e observações.
+- Histórico por clínica com filtro por data e situação; limite de 200 registros por listagem. Campos de texto validados, saída HTML escapada, consultas parametrizadas e identificação da clínica vinda exclusivamente da sessão.
+- Acesso pelo menu, biblioteca e POP 04 de Limpeza de Ambientes (id 7). Não coleta dados de pacientes nem aprova automaticamente o processo.
+- Arquivos alterados: `document-engine.php`, `document-engine.css`, `index.php`; deploy Git na Hostinger confirmado e presença física dos arquivos conferida, com solicitação de limpeza da CDN.
+- **Verificação ainda pendente:** teste ponta a ponta em conta autenticada, persistência/recarregamento, isolamento entre clínicas, mobile e fluxo de erros. O deploy não equivale a QA final.
+
+## Cérebro permanente
+- [Cérebro do projeto no Notion](https://app.notion.com/p/410739c88b0a81f8a436d82129ff205a)
+- [Banco Execução e decisões](https://app.notion.com/p/9d000ffdd9654a69a058422911cb7d7a)
+- [Agent Operating Guide](https://app.notion.com/p/40f739c88b0a81808ae5fc4c50cab231)
+- Regra: GitHub permanece como fonte do código. Notion registra decisões, pendências, prioridades, checkpoints e link à versão; não salvar credenciais, logs sensíveis ou conversas completas.
