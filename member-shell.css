@@ -1,0 +1,32 @@
+
+/* Odonto em Dia: identidade compartilhada e navegação da área de membros */
+.member-header{display:block;position:relative;z-index:80;padding:0 24px;min-height:78px;background:#fffffffa;border-bottom:1px solid #e2ece8;box-shadow:0 4px 24px #0f37320b}
+.member-header .member-header-inner{width:min(1240px,100%);min-height:78px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.member-header .member-brand{display:inline-flex;align-items:center;gap:11px;flex:none;text-decoration:none;font-size:inherit;line-height:1}
+.member-header .member-brand-mark{display:block;width:38px;height:38px;border-radius:10px;flex:none}
+.member-header .member-brand-word{display:block;color:#102e33;font-size:21px;font-weight:790;letter-spacing:-1.2px;line-height:.98}
+.member-header .member-brand-word>span{color:#117c70}
+.member-header .member-brand-word small{display:block;margin-top:5px;color:#849a96;font-size:8px;font-weight:740;letter-spacing:1.65px;line-height:1.5}
+.member-header .member-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}
+.member-header .member-primary{display:flex;align-items:center;flex-wrap:nowrap;gap:3px}
+.member-header .member-primary a{display:inline-flex;align-items:center;min-height:41px;padding:10px 13px;border-radius:10px;color:#536b69;text-decoration:none;white-space:nowrap;font-size:12px;font-weight:680;line-height:1.25;transition:background .15s,color .15s}
+.member-header .member-primary a:hover,.member-header .member-primary a[aria-current="page"]{color:#0c6c60;background:#eaf5ef}
+.member-header .member-menu{position:relative;flex:none}
+.member-header .member-menu>summary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:104px;min-height:42px;padding:10px 14px;border:1px solid #d6e4df;border-radius:11px;background:#fff;color:#173c39;font-size:12px;font-weight:760;cursor:pointer;list-style:none;user-select:none}
+.member-header .member-menu>summary::-webkit-details-marker{display:none}
+.member-header .member-menu>summary::after{content:"";width:6px;height:6px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
+.member-header .member-menu[open]>summary{border-color:#94cbbc;background:#f0f8f4}
+.member-header .member-menu[open]>summary::after{transform:translateY(2px) rotate(225deg)}
+.member-header .member-menu-panel{position:absolute;top:calc(100% + 10px);right:0;width:min(334px,calc(100vw - 28px));max-height:min(72vh,590px);overflow-y:auto;padding:12px;border:1px solid #dbe9e2;border-radius:16px;background:#fff;box-shadow:0 20px 60px #0e352e26;scrollbar-color:#b5cfc5 #f4f8f5}
+.member-header .member-menu-panel nav{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:0;margin:0}
+.member-header .member-menu-heading{display:block;padding:12px 12px 5px;color:#849792;font-size:9px;letter-spacing:1.2px;font-weight:800}
+.member-header .member-menu-heading:not(:first-child){border-top:1px solid #ecf1ee;margin-top:7px;padding-top:17px}
+.member-header .member-menu-panel a{display:flex;align-items:center;min-height:42px;padding:10px 12px;border-radius:9px;color:#405f5b;text-decoration:none;line-height:1.4;font-size:13px;font-weight:620;overflow-wrap:anywhere}
+.member-header .member-menu-panel a:hover,.member-header .member-menu-panel a[aria-current="page"]{color:#0d7163;background:#edf7f1}
+.member-header .member-menu-panel a.member-logout{color:#9a4f47}
+.member-header .member-menu-panel a.member-logout:hover{color:#893b33;background:#fbf0ed}
+.member-header a:focus-visible,.member-header summary:focus-visible{outline:3px solid #208f7a;outline-offset:3px}
+@media(max-width:920px){.member-header{padding:0 18px}.member-header .member-header-inner{gap:12px}.member-header .member-primary{display:none}}
+@media(max-width:520px){.member-header{padding:0 14px;min-height:68px}.member-header .member-header-inner{min-height:68px}.member-header .member-brand-mark{width:33px;height:33px}.member-header .member-brand-word{font-size:19px}.member-header .member-menu>summary{min-width:92px;min-height:40px}}
+@media(max-width:350px){.member-header .member-brand-word small{display:none}.member-header .member-brand{gap:7px}}
+@media(prefers-reduced-motion:reduce){.member-header *{transition-duration:.01ms!important}}
