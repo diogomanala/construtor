@@ -1,0 +1,272 @@
+[
+  {
+    "area": "Legal",
+    "pergunta": "Licença sanitária vigente e disponível",
+    "prioridade": "Alta",
+    "fundamento": "Art. 8"
+  },
+  {
+    "area": "Legal",
+    "pergunta": "RT formalmente designado",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 5-7"
+  },
+  {
+    "area": "Legal",
+    "pergunta": "RT substituto, quando exigido",
+    "prioridade": "Média",
+    "fundamento": "Art. 5"
+  },
+  {
+    "area": "Legal",
+    "pergunta": "PBA aprovado arquivado",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 13; 113 I"
+  },
+  {
+    "area": "Legal",
+    "pergunta": "Classificação do serviço revisada pelo RT",
+    "prioridade": "Alta",
+    "fundamento": "Art. 11"
+  },
+  {
+    "area": "SDBPF",
+    "pergunta": "Manual SDBPF adaptado e formalmente aprovado",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 110-111"
+  },
+  {
+    "area": "SDBPF",
+    "pergunta": "17 grupos documentais mapeados",
+    "prioridade": "Alta",
+    "fundamento": "Art. 113"
+  },
+  {
+    "area": "SDBPF",
+    "pergunta": "POPs acessíveis à equipe",
+    "prioridade": "Alta",
+    "fundamento": "Art. 111"
+  },
+  {
+    "area": "SDBPF",
+    "pergunta": "Controle de versão e revisões documentado",
+    "prioridade": "Média",
+    "fundamento": "Art. 111"
+  },
+  {
+    "area": "SDBPF",
+    "pergunta": "Termo de ciência da equipe assinado",
+    "prioridade": "Média",
+    "fundamento": "Art. 6"
+  },
+  {
+    "area": "Equipe",
+    "pergunta": "Fichas e habilitações profissionais atualizadas",
+    "prioridade": "Alta",
+    "fundamento": "Art. 113 II"
+  },
+  {
+    "area": "Equipe",
+    "pergunta": "Capacitação admissional documentada",
+    "prioridade": "Alta",
+    "fundamento": "Art. 114"
+  },
+  {
+    "area": "Equipe",
+    "pergunta": "Capacitação periódica documentada",
+    "prioridade": "Média",
+    "fundamento": "Art. 114"
+  },
+  {
+    "area": "Equipe",
+    "pergunta": "EPI conforme risco disponível e entregue",
+    "prioridade": "Alta",
+    "fundamento": "Art. 108"
+  },
+  {
+    "area": "Equipe",
+    "pergunta": "Registros de entrega e orientação de EPI",
+    "prioridade": "Média",
+    "fundamento": "Art. 108"
+  },
+  {
+    "area": "Infraestrutura",
+    "pergunta": "Ambientes e fluxos compatíveis com a classe",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 13-35"
+  },
+  {
+    "area": "Infraestrutura",
+    "pergunta": "Condições de limpeza e desinfecção executadas",
+    "prioridade": "Alta",
+    "fundamento": "Art. 113 XI"
+  },
+  {
+    "area": "Infraestrutura",
+    "pergunta": "Água monitorada com registros e laudos",
+    "prioridade": "Alta",
+    "fundamento": "Art. 113 V"
+  },
+  {
+    "area": "Infraestrutura",
+    "pergunta": "Controle de pragas com evidência",
+    "prioridade": "Média",
+    "fundamento": "Art. 113 VI"
+  },
+  {
+    "area": "Infraestrutura",
+    "pergunta": "Plano anual de manutenção executado",
+    "prioridade": "Média",
+    "fundamento": "Art. 113 VII"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Fluxo sujo/limpo revisado",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 57-76"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "POPs de cada etapa implementados",
+    "prioridade": "Alta",
+    "fundamento": "Art. 57"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Compatibilidade de ciclo e dispositivos verificada",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 84-87"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Bowie & Dick no 1º ciclo, se autoclave a vácuo",
+    "prioridade": "Alta",
+    "fundamento": "Art. 88"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Pacote-teste semanal registrado",
+    "prioridade": "Alta",
+    "fundamento": "Art. 89"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Indicadores dos demais ciclos registrados",
+    "prioridade": "Alta",
+    "fundamento": "Art. 90"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Lote único, parâmetros e operador por carga",
+    "prioridade": "Alta",
+    "fundamento": "Art. 91"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Registros arquivados por pelo menos 5 anos",
+    "prioridade": "Alta",
+    "fundamento": "Art. 92"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Pacote rastreado até atendimento",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 91-92"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Estoque de esterilizados íntegro e exclusivo",
+    "prioridade": "Alta",
+    "fundamento": "Art. 102"
+  },
+  {
+    "area": "Esterilização",
+    "pergunta": "Processamento por terceiros regularizado, se houver",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 105-107"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "PSP compatível com assistência praticada",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 117-118"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "NSP formalizado, se obrigatório",
+    "prioridade": "Alta",
+    "fundamento": "Art. 117"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "Riscos e incidentes monitorados",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 118-120"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "Fluxo de notificação de eventos definido",
+    "prioridade": "Alta",
+    "fundamento": "Art. 120"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "Protocolo de urgência e encaminhamento ativo",
+    "prioridade": "Alta",
+    "fundamento": "Art. 116"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "Protocolo de perfurocortantes e referência ativo",
+    "prioridade": "Alta",
+    "fundamento": "Art. 115"
+  },
+  {
+    "area": "Segurança",
+    "pergunta": "PP-IRAS implementado e acessível",
+    "prioridade": "Alta",
+    "fundamento": "Art. 113 XVI"
+  },
+  {
+    "area": "Resíduos",
+    "pergunta": "PGRSS compatível com resíduos gerados",
+    "prioridade": "Alta",
+    "fundamento": "Art. 122"
+  },
+  {
+    "area": "Resíduos",
+    "pergunta": "Coleta e destinação com comprovantes",
+    "prioridade": "Alta",
+    "fundamento": "Art. 122"
+  },
+  {
+    "area": "Tecnologias",
+    "pergunta": "PGTS adequado a equipamentos existentes",
+    "prioridade": "Média",
+    "fundamento": "Arts. 130-132"
+  },
+  {
+    "area": "Tecnologias",
+    "pergunta": "OS e registros de manutenção arquivados",
+    "prioridade": "Média",
+    "fundamento": "Art. 134"
+  },
+  {
+    "area": "Tecnologias",
+    "pergunta": "Equipamentos com falha retirados de uso quando cabível",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 130-135"
+  },
+  {
+    "area": "Condicional",
+    "pergunta": "Radiologia e proteção radiológica verificados, se houver",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 138-153"
+  },
+  {
+    "area": "Condicional",
+    "pergunta": "Sedação e recursos de emergência verificados, se houver",
+    "prioridade": "Alta",
+    "fundamento": "Arts. 14-35"
+  }
+]
