@@ -210,3 +210,9 @@
 .pasta-visual-warning{margin:12px 0 0;color:#718a79;font-size:9px;line-height:1.5}
 @media(max-width:650px){.pasta-visual-legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media print{.pasta-visual{border:1px solid #dbe8de;break-inside:avoid;padding:9px}.pasta-visual-marker{width:20px;height:20px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.pasta-visual-legend{grid-template-columns:repeat(4,minmax(0,1fr))}.pasta-visual-legend li{gap:4px}.pasta-visual-legend img{width:32px;height:32px}}
+
+.pasta-trail-cta{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border:1px solid #cce3d2;border-radius:12px;padding:17px 18px;margin-top:20px;text-decoration:none;color:#21583e}
+.pasta-trail-cta strong{display:block;font-size:13px;color:#1f513b}
+.pasta-trail-cta span{display:block;color:#7b9485;font-size:11px;line-height:1.6;margin-top:5px}
+.pasta-trail-cta>svg{width:19px;height:19px;flex:none;color:#398363}
+.pasta-trail-cta:hover{background:#f5faf6}
