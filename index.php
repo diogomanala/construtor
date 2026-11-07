@@ -34,7 +34,7 @@ function h(string $page,bool $showHeading=true):void {
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-visual.css?v=1"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -50,7 +50,7 @@ function h(string $page,bool $showHeading=true):void {
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
  if($showHeading)echo '<h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-visual.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
@@ -60,6 +60,7 @@ require_once __DIR__.'/material-library.php';
 require_once __DIR__.'/guided-ux.php';
 require_once __DIR__.'/legal-review.php';
 require_once __DIR__.'/document-engine.php';
+require_once __DIR__.'/steril-visual.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
 require_once __DIR__.'/downloads.php';
@@ -113,7 +114,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if($act==='brand_save')od_brand_save();
   if($act==='material_selection_save'){flash('As imagens estão em revisão de qualidade e não podem ser aplicadas agora.');redirect('?page=documentos');}
   if($act==='kit_visual_save'){flash('As bancadas ilustradas estão temporariamente indisponíveis.');redirect('?page=documentos');}
-  if($act==='premium_save')odx_post();
+  if($act==='steril_visual_save')od_steril_visual_post();
+   if($act==='premium_save')odx_post();
   if($act==='steril_record')odx_steril_post();
   if($act==='cleaning_record')odx_cleaning_post();
   if($act==='op_record')odx_ops_post();
@@ -146,7 +148,8 @@ if($page==='logo-clinica')od_brand_logo();
  if($page==='acompanhamento')od_guided_groups_page();
  if($page==='editar')odx_page();
 if($page==='documentos')odx_library();
-if($page==='registros-esterilizacao')odx_steril_page();
+if($page==='ilustracao-esterilizacao')od_steril_visual_page();
+ if($page==='registros-esterilizacao')odx_steril_page();
 if($page==='registros-limpeza')odx_cleaning_page();
 if($page==='registros-manutencao')odx_ops_page('maintenance');
 if($page==='registros-epi')odx_ops_page('epi');
