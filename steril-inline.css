@@ -97,3 +97,25 @@
 }
 @media(prefers-reduced-motion:reduce){.si-detail-photo img{transition:none}}
 @media print{.si-detail-photo{display:none!important}}
+
+/* Guias novos: números desenhados pelo HTML, não embutidos na fotografia. */
+.si-hotspot-number{display:none}
+.si-scene--numbered .si-hotspot{
+  display:grid!important;place-items:center!important;
+  background:#087454!important;color:#fff!important;
+  border:2px solid #fff!important;border-radius:50%!important;
+  box-shadow:0 2px 6px #0c422d66!important;
+  font:800 14px/1 Inter,system-ui,sans-serif!important;
+  transition:box-shadow .2s,filter .2s;
+}
+.si-scene--numbered .si-hotspot-number{display:block;line-height:1!important}
+.si-scene--numbered .si-hotspot:hover,
+.si-scene--numbered .si-hotspot.is-current{
+  background:#075a42!important;box-shadow:0 0 0 3px #ffffff,0 0 0 6px #19765b!important;
+}
+@media(max-width:480px){
+  .si-scene--numbered .si-hotspot{width:32px;height:32px;font-size:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .si-scene--numbered .si-hotspot{transition:none}
+}
