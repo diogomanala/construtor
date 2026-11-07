@@ -76,6 +76,32 @@ function od_pasta_page(): never {
     echo '<div class="pasta-actions"><div><strong>Próximo passo: conferir a prévia</strong><small>A impressão abre em uma nova aba. Você pode escolher a impressora ou “Salvar como PDF” pelo navegador.</small></div><button class="pasta-generate" id="pasta-generate" type="submit">Preparar pasta para impressão '.od_ui_icon('arrow').'</button></div></form>';
     echo '</div>';foot();exit;
 }
+function od_pasta_visual(int $templateId): string {
+    $scene=null;$items=[];
+    if($templateId===11){
+        $scene=['asset'=>'assets/illustrations/sterilization-bench-photo-v1.avif','width'=>977,'height'=>483,'numbers_in_image'=>true];
+        foreach(od_steril_visual_items() as $key=>$info){$items[]=['key'=>$key,'name'=>$info['name'],'asset'=>od_steril_visual_asset($key)];}
+    }else{
+        $guide=od_illustrated_guide_for_document($templateId);
+        if(!$guide)return '';
+        $scene=$guide['scene'];$items=$guide['items'];
+    }
+    if(!$scene||!$items)return '';
+    $html='<section class="pasta-visual"><div class="pasta-visual-head"><span>REFERÊNCIA VISUAL</span><h3>Materiais e equipamentos ilustrados</h3><p>Quadro de identificação ilustrativa. Itens e orientações precisam ser confirmados conforme a realidade da clínica.</p></div>';
+    $html.='<figure class="pasta-visual-scene"><img src="'.esc($scene['asset']).'" alt="Conjunto ilustrativo de materiais" width="'.(int)$scene['width'].'" height="'.(int)$scene['height'].'">';
+    if(($scene['numbers_in_image']??true)===false){
+        foreach($items as $index=>$item){
+            $point=$item['point']??null;
+            if(!is_array($point)||count($point)!==2)continue;
+            $html.='<span class="pasta-visual-marker" style="left:'.(float)$point[0].'%;top:'.(float)$point[1].'%">'.($index+1).'</span>';
+        }
+    }
+    $html.='</figure><ol class="pasta-visual-legend">';
+    foreach($items as $index=>$item){
+        $html.='<li><img src="'.esc($item['asset']).'" alt="" width="810" height="810"><div><small>'.str_pad((string)($index+1),2,'0',STR_PAD_LEFT).'</small><strong>'.esc($item['name']).'</strong></div></li>';
+    }
+    return $html.'</ol><p class="pasta-visual-warning">Imagem de referência, não comprovação de conformidade, exigência universal ou execução de procedimentos.</p></section>';
+}
 function od_pasta_print(): never {
     $c=clinic();if(!$c||!user()){http_response_code(403);exit('Acesso necessário');}
     $selected=od_pasta_selected();
@@ -128,6 +154,7 @@ function od_pasta_print(): never {
                 echo '</div></section>';
             }
             echo '<section class="pasta-document-content">'.$html.'</section>';
+            echo od_pasta_visual($id);
             echo '<section class="pasta-approval"><h3>Revisão, aprovação e assinaturas</h3><p>Validar o conteúdo com o responsável técnico e formalizar a SDBPF conforme a RDC Anvisa 1.002/2025. As linhas abaixo são espaços para assinatura manual, não assinaturas digitais.</p><div class="pasta-signatures"><div><span></span><strong>Responsável técnico / CRO</strong><small>Assinatura e data</small></div><div><span></span><strong>Responsável legal</strong><small>Aprovação, assinatura e data</small></div></div></section>';
             echo '<footer class="pasta-doc-footer"><span>ODONTO EM DIA · DOCUMENTAÇÃO INTERNA</span><span>'.esc(od_pasta_status($state)).'</span></footer></article>';
         }
