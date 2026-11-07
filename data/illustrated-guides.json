@@ -17,8 +17,13 @@
       "document_ids": [
         6
       ],
-      "status": "aguardando_assets_visuais",
-      "scene": null,
+      "status": "aguardando_aprovacao_visual",
+      "scene": {
+        "asset": "assets/illustrations/epi-scene-v1.avif",
+        "width": 1014,
+        "height": 488,
+        "alt": "Bancada ilustrativa com máscara cirúrgica, luvas de procedimento, óculos de proteção, protetor facial, gorro e avental, identificados por números."
+      },
       "items": [
         {
           "key": "mascara",
@@ -26,8 +31,11 @@
           "kind": "Proteção respiratória",
           "description": "Item de proteção selecionado conforme o risco e o procedimento.",
           "check": "Confirmar modelo, indicação, uso e troca com o protocolo da clínica.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/mascara-v1.webp",
+          "point": [
+            63.8,
+            25.4
+          ]
         },
         {
           "key": "luvas",
@@ -35,8 +43,11 @@
           "kind": "Proteção das mãos",
           "description": "Luvas utilizadas nas atividades em que sua indicação se aplica.",
           "check": "Conferir tipo, tamanho, integridade e indicação no protocolo da unidade.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/luvas-v1.webp",
+          "point": [
+            31.8,
+            64.3
+          ]
         },
         {
           "key": "oculos",
@@ -44,8 +55,11 @@
           "kind": "Proteção ocular",
           "description": "Proteção dos olhos quando há risco de exposição a respingos e partículas.",
           "check": "Conferir integridade, cobertura e higienização conforme fabricante.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/oculos-v1.webp",
+          "point": [
+            44.8,
+            32.8
+          ]
         },
         {
           "key": "protetor_facial",
@@ -53,8 +67,11 @@
           "kind": "Proteção da face",
           "description": "Barreira facial complementar quando indicada pela avaliação de risco.",
           "check": "Confirmar indicação, ajuste e cuidados de limpeza.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/protetor_facial-v1.webp",
+          "point": [
+            19.7,
+            16.8
+          ]
         },
         {
           "key": "gorro",
@@ -62,8 +79,11 @@
           "kind": "Barreira de proteção",
           "description": "Cobertura capilar empregada nas situações definidas pelo serviço.",
           "check": "Verificar indicação e forma de descarte ou processamento.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/gorro-v1.webp",
+          "point": [
+            85.2,
+            19.7
+          ]
         },
         {
           "key": "avental",
@@ -71,10 +91,20 @@
           "kind": "Proteção do corpo",
           "description": "Vestuário de proteção definido para atividade e risco correspondentes.",
           "check": "Confirmar material, finalidade, conservação e troca.",
-          "asset": null,
-          "point": null
+          "asset": "assets/illustrations/epi-detail/avental-v1.webp",
+          "point": [
+            65.9,
+            62.7
+          ]
         }
-      ]
+      ],
+      "visual_review": {
+        "date": "2026-11-07",
+        "preliminary": "seis objetos individuais renderizados com transparência e testados sobre verde e fundo claro; falta aprovação explícita do lote e verificação no navegador autenticado",
+        "assets_original": "originais PNG 810x810 guardados no pacote de revisão",
+        "status": "aguardando_aprovacao_do_usuario",
+        "note": "A cena gerada contém círculos numéricos visíveis; botões transparentes coincidem com a numeração, sem duplicar rótulos."
+      }
     },
     {
       "key": "residuos",
