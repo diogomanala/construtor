@@ -187,8 +187,24 @@
   .pasta-document-content,.pasta-document-content p,.pasta-document-content ul,.pasta-document-content ol{orphans:3;widows:3}
   .pasta-document-content tr,.pasta-document-content img,.pasta-document-content li{break-inside:avoid;page-break-inside:avoid}
   .pasta-document-title,.pasta-document-head,.pasta-clinic-facts,.pasta-draft-banner{break-inside:avoid}
-  .pasta-cover,.pasta-divider,.pasta-appendix,.pasta-index{break-inside:avoid;page-break-inside:avoid}
-  .pasta-field-info{break-inside:avoid}
+  /* O indice pode ultrapassar uma folha quando todos os modelos sao selecionados. */
+  .pasta-cover,.pasta-divider,.pasta-appendix{break-inside:avoid;page-break-inside:avoid}
+  .pasta-index{display:block!important;min-height:0!important;break-inside:auto!important;page-break-inside:auto!important}
+  .pasta-index-group{break-inside:avoid-page;page-break-inside:avoid}
+  .pasta-index-group li{break-inside:avoid-page;page-break-inside:avoid}
+  .pasta-index-note{margin-top:12mm!important;break-inside:avoid-page}
+  /* Campos guiados extensos devem continuar em outra pagina, sem corte do quadro. */
+  .pasta-field-info{break-inside:auto;page-break-inside:auto}
+  .pasta-field-info>div{display:block!important}
+  .pasta-field-info>div>div{break-inside:avoid-page;page-break-inside:avoid}
+  .pasta-field-info h3{break-after:avoid-page}
+  /* Tabelas compridas podem paginar e repetir o cabecalho quando houver thead. */
+  .pasta-document-content table{table-layout:fixed!important;break-inside:auto;page-break-inside:auto}
+  .pasta-document-content thead{display:table-header-group}
+  .pasta-document-content tfoot{display:table-footer-group}
+  .pasta-document-content th,.pasta-document-content td{overflow-wrap:anywhere;word-break:normal}
+  .pasta-document-content pre{white-space:pre-wrap;overflow-wrap:anywhere}
+  .pasta-document-content h1,.pasta-document-content h2,.pasta-document-content h3,.pasta-document-content h4{break-after:avoid-page;page-break-after:avoid}
   .pasta-clinic-logo{max-height:40px}
   .pasta-cover,.pasta-divider,.pasta-draft-banner,.pasta-document-meta span{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   a{color:inherit!important;text-decoration:none!important}
