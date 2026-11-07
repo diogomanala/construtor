@@ -115,7 +115,7 @@
         14,
         24
       ],
-      "status": "aguardando_aprovacao_visual",
+      "status": "aprovado_visualmente",
       "scene": {
         "asset": "assets/illustrations/residuos-scene-v1.avif",
         "width": 1672,
@@ -175,61 +175,86 @@
       ],
       "visual_review": {
         "date": "2026-11-07",
-        "status": "aguardando_aprovacao_do_usuario",
+        "status": "aprovado_pelo_usuario_em_2026_11_07",
         "quality_checks": "4 objetos originais 810×810 com alpha real em WebP, avaliados sobre claro e verde-escuro; cena 1672×941 sem símbolos, alegações normativas nem texto incorporado; rótulos e pontos estão no HTML.",
-        "note": "Cena e quatro imagens já versionadas. Não chamar de conformidade aprovada pela Anvisa. Identificação e aplicabilidade sujeitos à conferência técnica; falta avaliação visual do usuário e QA autenticado."
+        "note": "Aprovação explícita da prévia de resíduos na conversa. O quadro é ilustrativo; revisão RT de PGRSS, legendas e especificação permanece pendente."
       }
     },
     {
       "key": "equipamentos",
       "title": "Equipamentos e tecnologias da clínica",
       "eyebrow": "REFERÊNCIA VISUAL · EQUIPAMENTOS",
-      "description": "Reconheça os principais equipamentos do inventário e os registros de manutenção correspondentes à unidade.",
+      "description": "Explore os equipamentos ilustrados para relacionar características e controles de manutenção. O inventário deve refletir apenas os equipamentos realmente existentes na sua unidade.",
       "document_ids": [
         21,
         25,
         28
       ],
-      "status": "aguardando_assets_visuais",
-      "scene": null,
+      "status": "aprovado_visualmente",
+      "scene": {
+        "asset": "assets/illustrations/equipamentos-scene-v1.avif",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Ambiente clínico ilustrativo com conjunto odontológico, compressor, sistema de sucção e equipamento de raios X intraoral, identificáveis por pontos selecionáveis."
+      },
       "items": [
         {
           "key": "cadeira",
           "name": "Conjunto odontológico",
-          "kind": "Equipamento assistencial",
-          "description": "Conjunto de atendimento odontológico presente na estrutura clínica.",
-          "check": "Conferir modelo, patrimônio, manuais, verificações e manutenção.",
-          "asset": null,
-          "point": null
+          "kind": "Equipamento de atendimento",
+          "description": "Conjunto de atendimento ilustrado, incluindo cadeira e acessórios integrados. O modelo e seus componentes variam entre as clínicas.",
+          "check": "Confirmar identificação patrimonial, modelo, manuais, procedimentos de limpeza, verificações e manutenção previstos para o equipamento existente.",
+          "asset": "assets/illustrations/equipamentos-detail/cadeira-v1.webp",
+          "point": [
+            39.4,
+            60.5
+          ]
         },
         {
           "key": "compressor",
           "name": "Compressor odontológico",
           "kind": "Sistema de apoio",
-          "description": "Equipamento associado ao fornecimento de ar para as operações compatíveis da unidade.",
-          "check": "Conferir identificação, manuais e procedimentos de inspeção/manutenção aplicáveis.",
-          "asset": null,
-          "point": null
+          "description": "Equipamento de ar comprimido utilizado conforme a infraestrutura do estabelecimento.",
+          "check": "Conferir identificação, características, qualidade do ar quando aplicável, manual, inspeção e rotina de manutenção.",
+          "asset": "assets/illustrations/equipamentos-detail/compressor-v1.webp",
+          "point": [
+            82.7,
+            62.6
+          ]
         },
         {
           "key": "sugador",
           "name": "Sistema de sucção",
-          "kind": "Sistema de apoio",
-          "description": "Sistema de aspiração utilizado conforme o arranjo de equipamentos da clínica.",
-          "check": "Verificar especificações, limpeza, controle de desempenho e manutenção previstas.",
-          "asset": null,
-          "point": null
+          "kind": "Sistema de aspiração",
+          "description": "Equipamento ilustrativo de aspiração; a configuração real pode ser móvel ou centralizada.",
+          "check": "Conferir compatibilidade com a unidade, orientações de limpeza, desempenho, filtros e manutenção aplicável.",
+          "asset": "assets/illustrations/equipamentos-detail/sugador-v1.webp",
+          "point": [
+            10.3,
+            62.6
+          ]
         },
         {
           "key": "raio_x",
-          "name": "Equipamento de raios X intraoral",
-          "kind": "Equipamento de diagnóstico",
-          "description": "Equipamento radiológico presente somente nos serviços que realizam a atividade.",
-          "check": "Conferir requisitos específicos, programa de qualidade e controle radiológico aplicáveis.",
-          "asset": null,
-          "point": null
+          "name": "Raios X intraoral",
+          "kind": "Equipamento radiológico",
+          "description": "Exemplo de equipamento de radiografia intraoral, somente para estabelecimentos que realizam esse serviço.",
+          "check": "Confirmar se existe na clínica e verificar os requisitos específicos de radioproteção, qualidade, inspeções e manutenção aplicáveis.",
+          "asset": "assets/illustrations/equipamentos-detail/raio_x-v1.webp",
+          "point": [
+            88.1,
+            28.8
+          ]
         }
-      ]
+      ],
+      "visual_review": {
+        "date": "2026-11-07",
+        "status": "aprovado_pelo_usuario_em_2026_11_07",
+        "assets_original": "quatro PNGs originais de equipamentos gerados no projeto, 1254x1254",
+        "checks": "WebP alpha 810x810 para cada item; cena AVIF original 1672x941; verificados sobre fundos branco e verde escuro, hashes SHA confirmados.",
+        "note": "Aprovação visual explícita de cena e objetos. Não se trata de verificação técnica/RT ou de prova de conformidade. QA em sessão autenticada e impressão ainda pendentes."
+      }
     }
   ]
 }
