@@ -44,3 +44,10 @@ Comportamento compartilhado da área de membros PHP. Registrar decisões observ�
 - No móvel, `dialog.showModal()` abre detalhe, fecha pelo botão, Escape e fechamento nativo, com foco gerenciado pelo navegador. Sem JS, a documentação original continua acessível; o protótipo exige JS para os cliques.
 - A4: ocultar botões, exibir somente objetos incluídos e legenda numerada, dados identificáveis da clínica e advertência de revisão técnica. Não inserir este quadro automaticamente no corpo de minutas/históricos anteriores.
 - Estados de QA: 7 objetos, estados incluído/excluído, seleção vazia, nome longo, RT ausente, dois tenants, JS desativado, 320/390/768/1440 px, impressão, contrastes, foco e botão fechar. Nenhum resultado é “aprovado pela Anvisa”.
+
+## Guia fotográfico embutido no POP 08 (07/11/2026)
+- A rota legada `?page=ilustracao-esterilizacao` redireciona para `?page=editar&id=11#odx-esteril-visual`, sempre dentro de sessão autenticada e direito ativo. O atalho do POP aponta diretamente para a âncora.
+- No documento atual, o guia aparece após a identificação da unidade e antes do mapa de etapas. O guia não aparece em versões históricas. Não introduzir formulário aninhado nem checkbox no grid.
+- Foto com sete pontos de clique (botões `type=button` e `aria-pressed`), painel de detalhes atualizado com `textContent`, lista de acesso alternativo e legenda permanente para A4. A interação não salva operações clínicas nem aprova esterilização.
+- Se JavaScript falhar, a fotografia e a legenda impressa continuam legíveis; selecionar pontos exige JS. A imagem não altera o corpo ou o histórico de versões.
+- Prioridade de teste: navegador autenticado, posicionamento dos sete hotspots em 320/390/768/1440px, acessibilidade de teclado, impressão, carregamento AVIF, compatibilidade e RT. Não reivindicar QA E2E sem execução.
