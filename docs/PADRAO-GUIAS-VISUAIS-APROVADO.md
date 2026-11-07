@@ -37,3 +37,10 @@ Os componentes, a cena e a seleção são **referências visuais**, não listage
 - [ ] Habilitação de cada grupo por manifesto só depois das checagens e aprovação visual
 
 **Estado:** padrão aprovado, estrutura reutilizável preparada, três grupos planejados. **As cenas e os objetos novos ainda não foram aprovados nem publicados na UI.** Não anunciar os demais como concluídos até os assets e o teste real estarem prontos.
+
+## Primeiro lote de EPI preparado, 07/11/2026
+- **Seis objetos originais transparentes**, 810 × 810: `mascara`, `luvas`, `oculos`, `protetor_facial`, `gorro`, `avental`; diretório `assets/illustrations/epi-detail/*-v1.webp`. Cada objeto foi testado sobre fundo verde-escuro e claro; metadados e arquivos versionados no GitHub.
+- **Cena contextual 1014 × 488** em `assets/illustrations/epi-scene-v1.avif`. É um recorte de cena gerada para o projeto com seis itens e números 1 a 6 já incorporados à foto. Os hotspots são botões transparentes posicionados sobre esses círculos; não adicionar um segundo conjunto de números.
+- Mapeamento no manifesto `data/illustrated-guides.json`, modelos `[6]`, com `scene`, `asset` e coordenadas `point` por item. Campo `status: aguardando_aprovacao_visual` **impede a publicação ao cliente** via gate no PHP, mesmo com imagens existentes no servidor.
+- Uma montagem de revisão visual da página foi gerada localmente para conferência do usuário; é uma prévia estática, não teste E2E autenticado. O texto da máscara distingue máscara cirúrgica de respirador, sem alegar equivalência de proteção.
+- **Pendências:** aprovação visual explícita do conjunto; checar hotspots na página real, mobile e impressão, legibilidade dos itens claros, nomenclatura e indicação pelo RT. Só depois habilitar no POP 03. Evitar ultrapassar a qualidade visual do POP 08 aprovado.
