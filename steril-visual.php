@@ -214,6 +214,7 @@ function od_steril_visual_detail_html(string $suffix): string {
     $icon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     return '<div class="sv-detail-content" data-sv-content>
       <span class="sv-detail-tag" data-sv-kind>Equipamento</span>
+      <div class="sv-detail-visual" data-sv-art aria-hidden="true"></div>
       <h2 data-sv-name>Autoclave</h2>
       <p class="sv-detail-intro" data-sv-description>Selecione um objeto para conhecer sua função.</p>
       <div class="sv-detail-divider"></div>
