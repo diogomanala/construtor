@@ -236,15 +236,22 @@ function od_steril_visual_page(): never {
     echo '<header class="sv-head"><div class="sv-head-copy"><a class="sv-back" href="?page=editar&amp;id=11">Documentos / POP 08 / Ilustração</a><div class="sv-eyebrow"><span class="sv-dot"></span> BIBLIOTECA VISUAL · PROTÓTIPO</div><h1>Conheça os materiais de esterilização.</h1><p>Toque em um objeto para ver para que serve, o que conferir e decidir se ele faz parte da sua composição visual.</p></div><div class="sv-head-side"><span class="sv-folio">01 <span>/ 01</span></span><span class="sv-head-pill">7 objetos ilustrados</span></div></header>';
     echo '<div class="sv-warning"><span class="sv-warning-icon">i</span><p>Ilustrações vetoriais conceituais, não fotografias nem instruções de operação. A seleção e o conteúdo técnico exigem revisão do responsável técnico.</p></div>';
     echo '<form method="post" id="sv-form" class="sv-form">'.token().'<input type="hidden" name="act" value="steril_visual_save">';
-    echo '<div class="sv-workspace"><section class="sv-stage" aria-label="Objetos de processamento e esterilização"><div class="sv-stage-top"><div><span class="sv-small-label">QUADRO INTERATIVO</span><h2>Selecione um objeto</h2></div><span class="sv-stage-status"><i></i> Ilustração técnica conceitual</span></div><div class="sv-objects">';
+    echo '<div class="sv-workspace"><section class="sv-stage" aria-label="Bancada ilustrada de esterilização"><div class="sv-stage-top"><div><span class="sv-small-label">BANCADA INTERATIVA</span><h2>Toque nos números para conhecer os materiais</h2></div><span class="sv-stage-status"><i></i> Ilustração conceitual</span></div>';
+    echo '<div class="sv-photo-scene"><img src="assets/illustrations/sterilization-bench-photo-v1.avif" alt="Composição ilustrada com autoclave, seladora, embalagens, indicadores químico e biológico, bandeja e cassete" width="977" height="483" loading="eager" decoding="async">';
+    $spots=['autoclave'=>[15.8,15.7],'seladora'=>[53.2,37.1],'embalagem'=>[80.3,29.6],'quimico'=>[25.8,74.1],'biologico'=>[36.2,73.9],'bandeja'=>[47.2,71.4],'cassete'=>[71.3,72.1]];
     $index=0;
     foreach($items as $key=>$info){
-        $index++;
-        $on=isset($selected[$key]);
-        echo '<button type="button" class="sv-object '.($index===1?'is-active ':'').($on?'is-included':'is-excluded').'" data-sv-object="'.esc($key).'" data-sv-name="'.esc($info['name']).'" data-sv-kind="'.esc($info['kind']).'" data-sv-description="'.esc($info['description']).'" data-sv-check="'.esc($info['check']).'" data-sv-index="'.$index.'" aria-pressed="'.($index===1?'true':'false').'"><span class="sv-object-number">'.str_pad((string)$index,2,'0',STR_PAD_LEFT).'</span><span class="sv-object-art">'.od_steril_visual_svg($key).'</span><span class="sv-object-footer"><strong>'.esc($info['name']).'</strong><span class="sv-object-state">'.($on?'Incluído':'Fora do quadro').'</span></span></button>';
+        $index++;$on=isset($selected[$key]);$xy=$spots[$key];
+        echo '<button class="sv-photo-hotspot '.($index===1?'is-active ':'').($on?'is-included':'is-excluded').'" type="button" style="--spot-x:'.$xy[0].'%;--spot-y:'.$xy[1].'%" data-sv-object="'.esc($key).'" data-sv-name="'.esc($info['name']).'" data-sv-kind="'.esc($info['kind']).'" data-sv-description="'.esc($info['description']).'" data-sv-check="'.esc($info['check']).'" data-sv-index="'.$index.'" aria-label="'.$index.'. '.esc($info['name']).'" aria-pressed="'.($index===1?'true':'false').'"><span class="sv-hotspot-ring"></span><span class="sv-hotspot-label">'.esc($info['name']).'</span></button>';
         echo '<input type="checkbox" hidden name="items[]" value="'.esc($key).'" data-sv-input="'.esc($key).'"'.($on?' checked':'').'>';
     }
-    echo '</div><p class="sv-stage-caption">Os objetos podem variar de acordo com o método, os equipamentos e a rotina da unidade.</p></section>';
+    echo '</div><div class="sv-photo-index" aria-label="Lista de objetos ilustrados">';
+    $index=0;
+    foreach($items as $key=>$info){
+      $index++;
+      echo '<button type="button" data-sv-index-target="'.esc($key).'" class="sv-photo-chip '.(isset($selected[$key])?'is-included':'is-excluded').'"><span>'.str_pad((string)$index,2,'0',STR_PAD_LEFT).'</span><strong>'.esc($info['name']).'</strong><small>'.(isset($selected[$key])?'Incluído':'Fora').'</small></button>';
+    }
+    echo '</div><p class="sv-stage-caption">Toque no número do equipamento ou em seu nome para ver detalhes. Os itens apresentados são exemplos e não uma lista obrigatória.</p></section>';
     echo '<aside class="sv-detail sv-detail-desktop" id="sv-detail" aria-label="Detalhes do objeto selecionado">'.od_steril_visual_detail_html('desktop').'</aside></div>';
     echo '<div class="sv-bottom"><div class="sv-bottom-text"><span class="sv-small-label">PERSONALIZAÇÃO DA CLÍNICA</span><strong data-sv-count>'.count($selected).' de '.count($items).' objetos incluídos</strong><p>Salve somente os materiais pertinentes, depois da conferência do RT.</p></div><div class="sv-bottom-actions"><button type="button" class="sv-btn sv-btn-secondary" id="sv-print">Imprimir quadro</button><button type="submit" class="sv-btn sv-btn-primary">Salvar composição</button></div></div>';
     echo '<label class="sv-notes-label">Observações da unidade <span>(opcional, sem dados de pacientes)</span><textarea rows="2" maxlength="600" name="notes" id="sv-notes" placeholder="Ex.: confirmar compatibilidade dos acessórios com o equipamento utilizado.">'.esc($saved['notes']??'').'</textarea></label>';
@@ -258,4 +265,22 @@ function od_steril_visual_page(): never {
     echo '<a class="sv-footer-link" href="?page=editar&amp;id=11">Voltar ao POP 08 · Esterilização e monitoramento</a></div>';
     echo '<dialog class="sv-modal" id="sv-mobile-modal" aria-label="Detalhes do material"><div class="sv-modal-header"><strong>DETALHES DO OBJETO</strong><button type="button" class="sv-modal-close" data-sv-close aria-label="Fechar detalhes">×</button></div>'.od_steril_visual_detail_html('mobile').'</dialog>';
     foot();exit;
+}
+
+/**
+ * Prévia clicável diretamente dentro do editor, fora do documento versionado.
+ * O quadro é uma ferramenta complementar e fica oculto na impressão da minuta.
+ */
+function od_steril_visual_inline(): string {
+  $items=od_steril_visual_items();
+  $spots=['autoclave'=>[15.8,15.7],'seladora'=>[53.2,37.1],'embalagem'=>[80.3,29.6],'quimico'=>[25.8,74.1],'biologico'=>[36.2,73.9],'bandeja'=>[47.2,71.4],'cassete'=>[71.3,72.1]];
+  $s='<section class="sv-inline" data-sv-inline aria-label="Bancada de esterilização interativa"><div class="sv-inline-head"><div><span>REFERÊNCIA VISUAL DO POP 08</span><h3>Conheça os materiais da bancada</h3><p>Clique nos objetos para entender sua identificação e os pontos de conferência.</p></div><a href="?page=ilustracao-esterilizacao">Personalizar composição ↗</a></div>';
+  $s.='<div class="sv-inline-layout"><div class="sv-inline-scene"><img src="assets/illustrations/sterilization-bench-photo-v1.avif" alt="Bancada ilustrada com sete materiais identificados por números" width="977" height="483" loading="lazy">';
+  $i=0;
+  foreach($items as $key=>$data){
+    $i++;$pos=$spots[$key];
+    $s.='<button type="button" class="sv-inline-spot" style="--spot-x:'.$pos[0].'%;--spot-y:'.$pos[1].'%" data-sv-inline-object="'.esc($key).'" data-sv-inline-name="'.esc($data['name']).'" data-sv-inline-text="'.esc($data['description']).'" aria-label="'.$i.'. '.esc($data['name']).'"><span class="sv-visually-hidden">'.esc($data['name']).'</span></button>';
+  }
+  $s.='</div><div class="sv-inline-detail"><span>OBJETO SELECIONADO</span><strong data-sv-inline-name>Autoclave</strong><p data-sv-inline-description>'.esc($items['autoclave']['description']).'</p><a href="?page=ilustracao-esterilizacao">Ver composição completa</a></div></div><p class="sv-inline-foot">Ilustração conceitual de apoio, não faz parte da minuta salva e não substitui os protocolos do responsável técnico.</p></section>';
+  return $s;
 }
