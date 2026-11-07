@@ -193,3 +193,17 @@
   .pasta-cover,.pasta-divider,.pasta-draft-banner,.pasta-document-meta span{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   a{color:inherit!important;text-decoration:none!important}
 }
+
+/* Descoberta da pasta na biblioteca sem criar um novo fluxo confuso. */
+.pasta-library-callout{display:flex;align-items:center;gap:16px;min-width:0;padding:20px 22px;margin:0 0 27px;background:#fff;border:1px solid #cbded1;border-radius:14px;text-decoration:none;color:#214f3a;transition:background .2s,border-color .2s}
+.pasta-library-callout:hover{background:#f8fcf9;border-color:#86b99c}
+.pasta-library-callout:focus-visible{outline:3px solid #1b7858;outline-offset:3px}
+.pasta-library-icon{display:grid;place-items:center;flex:none;width:53px;height:53px;border-radius:12px;background:#eaf5ee;color:#267e59}
+.pasta-library-icon svg{width:27px;height:27px;stroke-width:1.65}
+.pasta-library-text{display:flex;flex:1;flex-direction:column;min-width:0;gap:5px}
+.pasta-library-text small{color:#478966;font-weight:850;letter-spacing:.10em;font-size:9px}
+.pasta-library-text strong{color:#205440;letter-spacing:-.025em;font-size:15px}
+.pasta-library-text em{font-style:normal;color:#769183;font-size:11px;line-height:1.55}
+.pasta-library-go{color:#367e5c}
+.pasta-library-go svg{width:19px;height:19px}
+@media(max-width:540px){.pasta-library-callout{gap:11px;padding:16px}.pasta-library-icon{width:43px;height:43px}.pasta-library-icon svg{width:23px;height:23px}.pasta-library-text strong{font-size:13px}.pasta-library-text em{font-size:10px}}
