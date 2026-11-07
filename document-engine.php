@@ -200,6 +200,8 @@ function odx_page():never {
     echo '<div class="odx-cover'.($visual?' odx-cover--with-art':'').'"><div class="odx-cover-lines"><span></span><span></span><span></span></div><span class="odx-cover-kicker">'.esc($meta['eyebrow']).'</span><h2>'.esc($meta['name']).'</h2><p>'.esc($doc['title']).'</p><div class="odx-cover-meta"><span>DOCUMENTO DE TRABALHO</span><strong>'.($historical?'VERSÃO '.(int)$historical['version']:($saved?'VERSÃO '.(int)$saved['version'] :'VERSÃO INICIAL')).'</strong></div>'.od_visual_cover_markup($visual).'</div>';
     echo '<div class="odx-paper-inside"><div class="odx-facts"><div><small>Estabelecimento</small><strong>'.esc($paperClinic['name']).'</strong></div><div><small>Responsável técnico</small><strong>'.esc($paperClinic['rt_name']).($paperClinic['rt_cro']?' · '.esc($paperClinic['rt_cro']):'').'</strong></div><div><small>Status</small><strong>'.esc(odx_stage($historical?:($saved??[]))).'</strong></div></div>';
     if((int)$id===11 && !$historical)echo od_steril_inline_html();
+    // Guias adicionais só são exibidos quando a cena e todos os assets individuais passam pelo gate de qualidade.
+    if(!$historical)echo od_illustrated_guide_html((int)$id);
     echo '<section class="odx-flow" aria-label="Mapa de organização do documento"><div class="odx-flow-head"><div><span>VISÃO DO PROCESSO</span><h3>Etapas para organizar este material</h3></div><small>Esquema de organização, não instrução clínica</small></div><div class="odx-flow-steps">';
     foreach($meta['flow'] as $i=>$name){echo '<div class="odx-flow-step"><span>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</span><strong>'.esc($name).'</strong></div>';}
     echo '</div></section>';
