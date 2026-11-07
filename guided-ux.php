@@ -129,6 +129,7 @@ function od_guided_trail_page(): never {
   h('Minha trilha',false);
   echo '<div class="od-ui-page od-ui-narrow"><header class="od-ui-simple-head"><a href="?page=painel" class="od-ui-back">Início / Minha trilha</a><h1>Vamos organizar sua clínica.</h1><p>Estas etapas orientam o uso da plataforma. Você pode voltar a qualquer uma delas quando precisar.</p></header>';
   echo od_guided_steps($c,true);
+  echo '<a class="pasta-trail-cta" href="?page=pasta-documental"><div><strong>Preparar a pasta documental para impressão</strong><span>Depois de revisar as minutas, reúna capa, índice, divisórias e documentos em uma única sequência A4.</span></div>'.od_ui_icon('arrow').'</a>'; 
   echo '<div class="od-ui-help-note">'.od_ui_icon('info').' Não há necessidade de preencher dados fictícios para avançar. Cada conclusão é baseada em informação salva ou atividade registrada de verdade.</div></div>';foot();exit;
 }
 function od_guided_clinic_page(): never {
