@@ -51,3 +51,49 @@
 .si-scene{aspect-ratio:977/483}
 @media(max-width:830px){.si-detail-photo{height:174px;background-size:245% auto}}
 @media print{.si-detail-photo{display:none!important}}
+
+/* v3: detalhes utilizam as sete imagens isoladas aprovadas, nunca um crop da bancada. */
+.si-layout{grid-template-columns:minmax(0,1fr) 260px;gap:16px}
+.si-detail{padding:18px 17px 20px}
+.si-detail-photo{
+  position:relative!important;display:flex!important;
+  align-items:center!important;justify-content:center!important;
+  width:100%!important;height:197px!important;min-height:197px!important;
+  padding:16px 12px 11px!important;margin:0 0 18px!important;
+  border:1px solid #bcd9c7!important;border-radius:12px!important;
+  background:#eaf4ed!important;background-image:none!important;
+  background-size:auto!important;overflow:hidden;box-sizing:border-box;
+}
+.si-detail-photo img{
+  display:block!important;width:100%!important;max-width:245px!important;
+  height:172px!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center!important;
+  filter:drop-shadow(0 10px 10px #123d2920);
+  opacity:1;transition:opacity .18s ease;
+}
+.si-detail-photo img[hidden]{display:none!important}
+.si-detail-photo.is-loading img{opacity:.15}
+.si-photo-badge{
+  position:absolute;z-index:1;top:9px;left:10px;
+  color:#618c74;font-size:8px;font-weight:800;letter-spacing:.13em;
+  line-height:1.2;pointer-events:none;
+}
+.si-detail-photo.is-unavailable:after{
+  content:"Imagem temporariamente indisponível";
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;color:#5b7f6a;font-size:11px;font-weight:650;
+}
+@media(max-width:1070px){
+  .si-layout{grid-template-columns:minmax(0,1fr) 235px}
+}
+@media(max-width:830px){
+  .si-layout{grid-template-columns:1fr}
+  .si-detail-photo{height:220px!important;min-height:220px!important}
+  .si-detail-photo img{height:194px!important;max-width:290px!important}
+}
+@media(max-width:520px){
+  .si-detail-photo{height:203px!important;min-height:203px!important}
+  .si-detail-photo img{height:177px!important}
+}
+@media(prefers-reduced-motion:reduce){.si-detail-photo img{transition:none}}
+@media print{.si-detail-photo{display:none!important}}
