@@ -1,0 +1,195 @@
+/* Odonto em Dia · pasta documental para impressão. Proprietário: pasta-documental.php */
+.pasta-page{--pasta-ink:#183e32;--pasta-accent:#176b58;--pasta-line:#dfeae2;--pasta-soft:#f3f8f4;color:var(--pasta-ink);max-width:1210px;margin:0 auto 76px;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.pasta-page *,.pasta-print-body *{box-sizing:border-box}
+.pasta-back{padding:21px 0 19px}
+.pasta-back a{display:inline-flex;align-items:center;gap:8px;color:#407c62;text-decoration:none;font-weight:650;font-size:12px}
+.pasta-back svg{width:15px;height:15px}
+.pasta-intro{position:relative;display:flex;align-items:center;justify-content:space-between;gap:26px;padding:clamp(26px,4vw,50px);border-radius:19px;overflow:hidden;background:#123e31;color:#fff;min-height:238px}
+.pasta-intro:after{content:"";position:absolute;top:-134px;right:-84px;width:390px;height:390px;border-radius:50%;border:1px solid #ffffff19;box-shadow:0 0 0 50px #ffffff06,0 0 0 100px #ffffff05;pointer-events:none}
+.pasta-intro>div:first-child{position:relative;z-index:1;max-width:730px}
+.pasta-eyebrow{display:block;letter-spacing:.16em;color:#3d8f70;font-size:10px;font-weight:850;line-height:1.7}
+.pasta-intro .pasta-eyebrow{color:#9fd8bc}
+.pasta-intro h1{color:#fff;font-size:clamp(29px,4vw,45px);letter-spacing:-.055em;line-height:1.12;margin:14px 0}
+.pasta-intro p{font-size:13px;line-height:1.8;color:#cae1d3;max-width:650px;margin:0}
+.pasta-intro-icon{display:grid;place-items:center;flex:none;width:105px;height:105px;border-radius:25px;border:1px solid #ffffff29;background:#ffffff10;position:relative;z-index:1}
+.pasta-intro-icon svg{width:51px;height:51px;color:#d3e9d8;stroke-width:1.25}
+.pasta-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 22px}
+.pasta-benefits>div{background:#fff;padding:20px 21px;border:1px solid var(--pasta-line);border-radius:14px}
+.pasta-benefits span{font-size:10px;letter-spacing:.08em;color:#388269;font-weight:850;display:block;margin-bottom:10px}
+.pasta-benefits strong{display:block;font-size:14px;color:#204a39}
+.pasta-benefits p{font-size:11px;color:#7c9587;line-height:1.6;margin:6px 0 0}
+.pasta-warning{display:flex;gap:13px;border:1px solid #d5e4d8;background:#eff6f0;padding:17px 19px;border-radius:12px;margin-bottom:29px}
+.pasta-warning>svg{width:21px;height:21px;flex:none;color:#45876a}
+.pasta-warning strong{font-size:12px;color:#20543c}
+.pasta-warning p{font-size:11px;color:#597364;line-height:1.7;margin:5px 0 0}
+.pasta-select-bar{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:17px}
+.pasta-select-bar h2{font-size:25px;letter-spacing:-.045em;color:#204735;margin:5px 0 7px}
+.pasta-select-bar p{font-size:11px;color:#789081;margin:0;line-height:1.7}
+.pasta-select-bar p strong{color:#1b7155}
+.pasta-presets{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.pasta-presets button{border:1px solid #d4e5d9;border-radius:9px;background:#fff;color:#426d55;padding:11px 13px;cursor:pointer;font-size:11px;font-weight:700}
+.pasta-presets button:hover,.pasta-presets button:focus-visible{background:#eaf5ed;border-color:#8cbea2}
+.pasta-group{margin:16px 0;border:1px solid #dae7df;border-radius:15px;overflow:hidden;background:#fff}
+.pasta-group-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:19px 21px;background:#f4f9f5;border-bottom:1px solid #e0ece3}
+.pasta-group-head small{font-size:9px;color:#498168;letter-spacing:.14em;font-weight:850}
+.pasta-group-head h3{color:#244d3b;font-size:16px;letter-spacing:-.025em;margin:5px 0 4px}
+.pasta-group-head p{font-size:11px;color:#789185;margin:0}
+.pasta-group-head>span{font-size:10px;color:#6f9380;border:1px solid #d6e8da;border-radius:30px;padding:7px 12px;white-space:nowrap}
+.pasta-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.pasta-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:76px;padding:12px 19px;border-bottom:1px solid #edf2ef}
+.pasta-row:nth-child(odd){border-right:1px solid #edf2ef}
+.pasta-row label{display:flex;align-items:center;gap:12px;flex:1;min-width:0;cursor:pointer}
+.pasta-row input[type=checkbox]{appearance:auto!important;width:17px!important;height:17px!important;min-width:17px!important;flex:none;accent-color:#1c7857!important;margin:0!important;padding:0!important;border-radius:3px!important}
+.pasta-row-title{min-width:0}
+.pasta-row-title strong{display:block;font-size:12px;color:#2a5140;line-height:1.4;font-weight:700}
+.pasta-row-title small{display:block;margin-top:6px;color:#8ca396;font-size:10px;line-height:1.3}
+.pasta-row>a{color:#277457;text-decoration:none;white-space:nowrap;font-size:10px;font-weight:750;display:flex;align-items:center;gap:3px}
+.pasta-row>a svg{width:12px;height:12px}
+.pasta-row:hover{background:#fbfdfb}
+.pasta-print-options{background:#fff;border:1px solid #dce8de;padding:21px 22px;border-radius:14px;display:flex;flex-wrap:wrap;gap:16px 25px;margin:24px 0 0}
+.pasta-print-options label{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;color:#356a52;cursor:pointer}
+.pasta-print-options input{width:16px;height:16px;accent-color:#1e7459}
+.pasta-print-options p{width:100%;margin:0;font-size:10px;color:#8b9e92;line-height:1.5}
+.pasta-actions{position:sticky;bottom:12px;z-index:8;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:18px;border:1px solid #b7d9c3;border-radius:15px;background:#fff;box-shadow:0 10px 40px #1b523326;padding:18px 21px}
+.pasta-actions strong{display:block;color:#204c39;font-size:13px}
+.pasta-actions small{display:block;color:#849789;font-size:10px;line-height:1.5;margin-top:6px}
+.pasta-generate{display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:9px;background:#176b51;color:#fff;padding:14px 19px;font-size:12px;font-weight:800;cursor:pointer;min-width:220px}
+.pasta-generate svg{height:16px;width:16px}
+.pasta-generate:disabled{opacity:.45;cursor:not-allowed}
+.pasta-generate:not(:disabled):hover{background:#12543f}
+@media(max-width:850px){.pasta-select-bar{align-items:start;flex-direction:column}.pasta-presets{justify-content:flex-start}.pasta-intro-icon{width:80px;height:80px}.pasta-benefits{gap:8px}}
+@media(max-width:650px){.pasta-intro{padding:27px 23px}.pasta-intro-icon{display:none}.pasta-benefits{grid-template-columns:1fr}.pasta-benefits>div{padding:14px 17px}.pasta-rows{grid-template-columns:1fr}.pasta-row:nth-child(odd){border-right:none}.pasta-group-head{padding:16px}.pasta-row{padding:12px 15px}.pasta-actions{position:static;flex-direction:column;align-items:stretch}.pasta-generate{width:100%}.pasta-warning{padding:13px}}
+
+/* Print preview and generated A4 sheets */
+.pasta-print-body{--pasta-accent:#176b58;margin:0;background:#e7ece8;font-family:Arial,Helvetica,sans-serif;color:#243b30;-webkit-font-smoothing:antialiased}
+.pasta-print-toolbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:18px;background:#163f30;color:#fff;padding:13px max(22px,calc((100vw - 980px)/2));box-shadow:0 4px 20px #0d2b1b1a}
+.pasta-print-toolbar strong,.pasta-print-toolbar small{display:block}
+.pasta-print-toolbar strong{font-size:13px}
+.pasta-print-toolbar small{font-size:11px;color:#bddac8;margin-top:5px}
+.pasta-print-toolbar>div:last-child{display:flex;align-items:center;gap:10px;flex:none}
+.pasta-print-toolbar button,.pasta-print-toolbar a{padding:11px 15px;border-radius:7px;font-size:11px;text-decoration:none;font-weight:750;cursor:pointer}
+.pasta-print-toolbar button{background:#fff;color:#17553b;border:0}
+.pasta-print-toolbar a{border:1px solid #8caf9b;color:#fff}
+.pasta-print-book{width:min(210mm,100%);margin:24px auto 80px}
+.pasta-print-book>section,.pasta-print-book>article{background:#fff;box-shadow:0 6px 22px #2046311b;max-width:100%;margin-bottom:24px}
+.pasta-cover,.pasta-index,.pasta-divider,.pasta-appendix{min-height:297mm;padding:19mm;display:flex;flex-direction:column}
+.pasta-cover{background:#fff;position:relative;overflow:hidden}
+.pasta-cover:before{content:"";position:absolute;inset:0 0 auto;height:11mm;background:var(--pasta-accent)}
+.pasta-cover-top{display:flex;align-items:center;gap:15px;margin-top:12mm}
+.pasta-clinic-logo{display:block;object-fit:contain;width:55px;max-height:55px;flex:none}
+.pasta-lettermark{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:10px;color:#fff;background:var(--pasta-accent);font-weight:800;font-size:20px}
+.pasta-cover-top strong,.pasta-cover-top span{display:block}
+.pasta-cover-top strong{font-size:15px;color:#1f4031}
+.pasta-cover-top span{font-size:11px;margin-top:6px;color:#718c79}
+.pasta-cover-main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative}
+.pasta-cover-main:after{content:"";position:absolute;width:115mm;height:115mm;border:1px solid #c8ddd0;border-radius:50%;right:-67mm;top:18%;box-shadow:0 0 0 20mm #f3f8f4,0 0 0 42mm #fafcf9;opacity:.6;pointer-events:none}
+.pasta-cover-eyebrow{color:var(--pasta-accent);font-weight:850;letter-spacing:.17em;font-size:10px;position:relative;z-index:1}
+.pasta-cover h1{font-size:clamp(42px,5vw,65px);font-weight:800;line-height:1.02;letter-spacing:-.065em;max-width:480px;margin:20px 0;color:#173c2e;position:relative;z-index:1}
+.pasta-cover-main p{font-size:14px;line-height:1.65;color:#708b77;max-width:375px;position:relative;z-index:1}
+.pasta-cover-line{width:56px;height:4px;background:var(--pasta-accent);margin:25px 0 20px}
+.pasta-cover-status{font-weight:850;letter-spacing:.06em;font-size:10px;color:#53846d;position:relative;z-index:1}
+.pasta-cover-bottom{display:grid;grid-template-columns:1fr 1fr;gap:26px;border-top:1px solid #dce7dd;padding-top:18px}
+.pasta-cover-bottom>div>small,.pasta-cover-bottom>div>strong,.pasta-cover-bottom>div>span{display:block}
+.pasta-cover-bottom small{color:#759585;font-size:8px;letter-spacing:.13em;font-weight:800}
+.pasta-cover-bottom strong{margin:8px 0 5px;color:#254c39;font-size:12px}
+.pasta-cover-bottom span{color:#829e8c;font-size:10px}
+.pasta-sheet-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #dae9dd;padding-bottom:16px;color:var(--pasta-accent);letter-spacing:.12em;font-size:9px;font-weight:800}
+.pasta-index h2,.pasta-appendix h2{font-size:31px;letter-spacing:-.045em;margin:29px 0 11px;color:#204735}
+.pasta-index>p,.pasta-appendix>p{font-size:12px;color:#788e7d;line-height:1.75;margin:0 0 20px}
+.pasta-index-group{border-top:1px solid #e5eee7;padding:14px 0 6px}
+.pasta-index-group>div{display:flex;align-items:center;gap:12px;margin-bottom:8px;color:#214e3b}
+.pasta-index-group>div span{font-size:10px;color:#287e59;font-weight:800}
+.pasta-index-group>div strong{font-size:13px}
+.pasta-index-group ol{padding:0;margin:0;list-style:none}
+.pasta-index-group li{display:grid;grid-template-columns:28px minmax(0,1fr) 170px;gap:5px;align-items:baseline;padding:5px 0;font-size:10px;color:#3a5f48}
+.pasta-index-group li>span{color:#548a6c;font-weight:850;font-size:9px}
+.pasta-index-group li small{text-align:right;color:#9aaea1;font-size:9px}
+.pasta-index-note{background:#f0f7f2;border:1px solid #d9e6dc;padding:13px;border-radius:8px;margin-top:auto}
+.pasta-index-note strong{font-size:11px;color:#235841}
+.pasta-index-note p{margin:6px 0 0;font-size:10px;color:#62806b;line-height:1.6}
+.pasta-divider{background:#eaf3ed!important;color:#184635;position:relative;overflow:hidden}
+.pasta-divider:after{content:"";position:absolute;width:135mm;height:135mm;border:1px solid #98c3a9;border-radius:50%;right:-70mm;bottom:-60mm;box-shadow:0 0 0 22mm #d7e8dc,0 0 0 47mm #f0f8f2;opacity:.48;pointer-events:none}
+.pasta-divider-top{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.11em;color:#3c8060;font-weight:850}
+.pasta-divider-main{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.pasta-divider-main>span{font-size:11px;letter-spacing:.19em;font-weight:850;color:#337b58}
+.pasta-divider-main h2{font-size:53px;line-height:1.08;letter-spacing:-.06em;margin:20px 0 15px;max-width:495px;color:#16412f}
+.pasta-divider-main p{font-size:14px;color:#648774;line-height:1.7;max-width:400px}
+.pasta-divider-foot{border-top:1px solid #b6d4be;padding-top:14px;display:flex;justify-content:space-between;gap:15px;color:#5f8a6d;font-size:9px;position:relative;z-index:1}
+.pasta-document{padding:17mm 18mm 18mm;font-size:11px;line-height:1.68}
+.pasta-document-head{display:flex;align-items:center;gap:10px;border-bottom:1px solid #dae7de;padding-bottom:13px}
+.pasta-document-head>.pasta-clinic-logo{width:36px;max-height:40px}
+.pasta-document-head>.pasta-lettermark{width:35px;height:35px;border-radius:7px;font-size:16px}
+.pasta-document-head-clinic{min-width:0;flex:1}
+.pasta-document-head-clinic strong,.pasta-document-head-clinic small{display:block}
+.pasta-document-head-clinic strong{font-size:12px;color:#214833}
+.pasta-document-head-clinic small{font-size:9px;color:#789583}
+.pasta-document-head>span{color:#41735b;font-size:9px;font-weight:850;letter-spacing:.08em}
+.pasta-document-title{padding:23px 0 15px}
+.pasta-document-title>small{font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#398463;font-weight:850}
+.pasta-document-title h2{font-size:27px;line-height:1.18;color:#193f30;letter-spacing:-.045em;margin:10px 0 14px}
+.pasta-document-meta{display:flex;flex-wrap:wrap;gap:7px}
+.pasta-document-meta span{font-size:9px;color:#547e61;padding:6px 9px;background:#f1f7f2;border:1px solid #dceade;border-radius:20px}
+.pasta-draft-banner{font-size:10px;line-height:1.65;color:#805f36;background:#fbf6ec;border-left:3px solid #cba46b;padding:10px 12px;margin:5px 0 18px}
+.pasta-clinic-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.pasta-clinic-facts>div{border:1px solid #e2ebe4;padding:10px 11px;border-radius:5px;min-width:0;overflow-wrap:anywhere}
+.pasta-clinic-facts small{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.09em;color:#7b9886}
+.pasta-clinic-facts strong{display:block;font-size:10px;line-height:1.5;color:#2f5842;margin-top:7px}
+.pasta-field-info{border:1px solid #dceade;border-radius:7px;padding:13px;margin:0 0 21px}
+.pasta-field-info h3{font-size:12px;letter-spacing:-.02em;color:#275d43;margin:0 0 11px}
+.pasta-field-info>div{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pasta-field-info>div>div{padding:0 4px 10px 0;border-bottom:1px solid #e6eee8;min-width:0}
+.pasta-field-info span{display:block;font-size:9px;color:#63876d;font-weight:700}
+.pasta-field-info p{font-size:10px;line-height:1.65;color:#395841;overflow-wrap:anywhere;margin:5px 0 0}
+.pasta-field-info .pasta-not-filled{grid-column:1/-1;color:#9a7545;margin:0}
+.pasta-document-content{font-family:Georgia,"Times New Roman",serif;font-size:10.5pt;line-height:1.6;color:#303a32;overflow-wrap:anywhere}
+.pasta-document-content h1,.pasta-document-content h2,.pasta-document-content h3,.pasta-document-content h4{font-family:Arial,Helvetica,sans-serif;color:#244b36;line-height:1.3;break-after:avoid;margin:19px 0 8px}
+.pasta-document-content h2{font-size:15pt}.pasta-document-content h3{font-size:12pt}.pasta-document-content h4{font-size:11pt}
+.pasta-document-content p{margin:8px 0 10px}
+.pasta-document-content ul,.pasta-document-content ol{padding-left:23px}
+.pasta-document-content li{margin:5px 0}
+.pasta-document-content table{max-width:100%;width:100%!important;border-collapse:collapse;table-layout:auto;margin:13px 0;font-size:9pt}
+.pasta-document-content td,.pasta-document-content th{border:1px solid #d0dcd3;padding:7px 8px;text-align:left;overflow-wrap:anywhere;vertical-align:top}
+.pasta-document-content th{background:#f0f6f2;color:#28583f}
+.pasta-document-content img{max-width:100%;height:auto}
+.pasta-approval{break-inside:avoid;margin-top:23px;border-top:2px solid #d3e4d6;padding-top:15px}
+.pasta-approval h3{color:#244a37;font-size:13px;margin:0 0 7px}
+.pasta-approval p{font-size:10px;color:#607d68;line-height:1.65;margin:0}
+.pasta-signatures{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin:46px 0 0}
+.pasta-signatures>div{display:flex;align-items:center;flex-direction:column;text-align:center}
+.pasta-signatures>div>span{width:100%;border-top:1px solid #769782}
+.pasta-signatures strong{font-size:10px;color:#315741;margin-top:7px}
+.pasta-signatures small{font-size:9px;color:#759180}
+.pasta-doc-footer{margin-top:28px;border-top:1px solid #e2ece4;padding-top:11px;display:flex;justify-content:space-between;gap:16px;color:#8aa093;font-size:8px;letter-spacing:.03em}
+.pasta-appendix ul{padding:0;margin:18px 0;list-style:none}
+.pasta-appendix li{padding:13px 0;border-bottom:1px solid #e5ede6;display:grid;grid-template-columns:25px 1fr;column-gap:9px;color:#305841;font-size:12px;line-height:1.5;break-inside:avoid}
+.pasta-box-check{width:14px;height:14px;border:1px solid #91b19a;margin-top:2px}
+.pasta-appendix li small{grid-column:2;color:#8ba293;font-size:9px;margin-top:4px}
+.pasta-appendix-note{margin-top:auto;font-size:10px;color:#69836f;line-height:1.7;border-top:1px solid #dce8dd;padding-top:12px}
+@media(max-width:700px){.pasta-print-toolbar{flex-wrap:wrap;padding:12px 18px}.pasta-print-book{margin:10px auto}.pasta-cover,.pasta-index,.pasta-divider,.pasta-appendix{min-height:0;padding:22px}.pasta-cover{min-height:620px}.pasta-cover h1{font-size:41px}.pasta-document{padding:22px}.pasta-document-meta{gap:3px}.pasta-document-meta span{font-size:8px}.pasta-index-group li{grid-template-columns:22px minmax(0,1fr)}.pasta-index-group li small{grid-column:2;text-align:left}.pasta-clinic-facts{grid-template-columns:1fr 1fr}}
+@page{
+  size:A4;
+  margin:14mm 13mm 15mm;
+  @bottom-left{content:"ODONTO EM DIA · PASTA DOCUMENTAL";font:8px Arial,Helvetica,sans-serif;color:#8ca391}
+  @bottom-right{content:"Página " counter(page);font:8px Arial,Helvetica,sans-serif;color:#8ca391}
+}
+@media print{
+  html,body{margin:0!important;padding:0!important;background:#fff!important;color:#243b30!important}
+  .pasta-print-toolbar{display:none!important}
+  .pasta-print-book{width:auto!important;max-width:none!important;margin:0!important;padding:0!important}
+  .pasta-print-book>section,.pasta-print-book>article{box-shadow:none!important;margin:0!important;max-width:none!important}
+  .pasta-cover,.pasta-index,.pasta-divider,.pasta-appendix{min-height:260mm!important;padding:3mm 5mm!important}
+  .pasta-cover:before{top:-14mm;left:-13mm;right:-13mm}
+  .pasta-cover{height:260mm!important}
+  .pasta-cover-main h1{font-size:43pt!important}
+  .pasta-divider-main h2{font-size:42pt!important}
+  .pasta-document{padding:0 3mm 7mm!important}
+  .pasta-break{break-before:page!important;page-break-before:always!important}
+  .pasta-document-content,.pasta-document-content p,.pasta-document-content ul,.pasta-document-content ol{orphans:3;widows:3}
+  .pasta-document-content tr,.pasta-document-content img,.pasta-document-content li{break-inside:avoid;page-break-inside:avoid}
+  .pasta-document-title,.pasta-document-head,.pasta-clinic-facts,.pasta-draft-banner{break-inside:avoid}
+  .pasta-cover,.pasta-divider,.pasta-appendix,.pasta-index{break-inside:avoid;page-break-inside:avoid}
+  .pasta-field-info{break-inside:avoid}
+  .pasta-clinic-logo{max-height:40px}
+  .pasta-cover,.pasta-divider,.pasta-draft-banner,.pasta-document-meta span{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{color:inherit!important;text-decoration:none!important}
+}
