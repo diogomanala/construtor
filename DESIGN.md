@@ -61,3 +61,12 @@ O CSS existente é a fonte de verdade em runtime (modelo B da frontend-design-pr
 - As capas continuam legíveis: objeto no lado direito em telas maiores, acima do título em telas estreitas. Não colocar 3D no corpo da minuta, nos campos ou nas assinaturas.
 - `od_document_visual_history` registra o pacote visual da versão no salvamento. Versões antigas sem fotografia visual permanecem sem essas ilustrações, evitando alterações retrospectivas silenciosas.
 - QA ainda necessário: telas 320/390/768/1440px, contraste, impressão, performance da imagem, histórico, salvamento, isolamento de clínicas e verificação no navegador autenticado. Aprovação visual das artes não significa certificação dos textos.
+
+## Protótipo de esterilização ilustrada, 07/11/2026
+- Rota autenticada: `?page=ilustracao-esterilizacao`, acessível pelo POP 08 (modelo id 11) em `document-engine.php`. Não adicionar outra aba principal ao menu.
+- Arte original **vetorial** em `steril-visual.php::od_steril_visual_svg()`, com objetos separados e nítidos em qualquer escala: autoclave, seladora, embalagem, indicador químico, indicador biológico, bandeja perfurada, cassete de instrumentais. A área ilustrada ocupa a maioria da tela, com painel de informações à direita; clicando no objeto ele é ampliado e apresenta função, verificação e seleção.
+- Cores: neutros metálicos, verdes clínicos contidos e alto contraste. Sem arte PNG reprovada, fundo branco embutido ou render artificial. Paleta da clínica é respeitada no acento de apresentação, sem sobrescrever os gradientes próprios dos equipamentos.
+- Responsividade: objetos em 3 colunas no desktop, destaque para a autoclave; 2 colunas até 640 px, com a autoclave em largura dupla. No celular, detalhes em `dialog` nativo com botão de fechar e Escape.
+- Impressão: quadro e legenda numerada em A4, somente itens selecionados, logotipo e nome da clínica, aviso de revisão técnica. A impressão não pode depender de tooltips ou conteúdo oculto no navegador.
+- Comportamento e dados: `steril-visual.js` orquestra clique/seleção/modal/legenda e `steril-visual.css` é dono dos estilos. Escolhas em SQLite por `clinic_id`, **separadas** dos ciclos reais, do documento e do histórico já salvo. Trata-se de referência visual, não da execução ou certificação do processamento.
+- Estado: implementação e deploy sujeitos a QA de navegador autenticado, desktop/mobile e impressão. Exigir revisão técnica da descrição e da fidelidade dos objetos antes de tratar como material assistencial validado.
