@@ -119,3 +119,17 @@
 @media(prefers-reduced-motion:reduce){
   .si-scene--numbered .si-hotspot{transition:none}
 }
+
+/* Impressão dos novos guias: números do HTML permanecem legíveis na cena.
+   O EPI com números já desenhados conserva hotspots ocultos. */
+@media print {
+ .si-scene--numbered .si-hotspot{
+   display:grid!important;place-items:center!important;
+   width:28px!important;height:28px!important;
+   background:#087454!important;border:2px solid #fff!important;
+   color:#fff!important;box-shadow:none!important;
+   transform:translate(-50%,-50%)!important;
+   -webkit-print-color-adjust:exact;print-color-adjust:exact;
+ }
+ .si-scene--numbered .si-hotspot-number{display:block!important}
+}
