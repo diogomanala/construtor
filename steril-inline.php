@@ -39,6 +39,7 @@ function od_steril_inline_html(): string {
                 <button type="button"
                         class="si-hotspot<?php echo $number===1?' is-current':''; ?>"
                         data-si-key="<?php echo esc($key); ?>"
+                        data-si-image="<?php echo esc(od_steril_visual_asset($key)); ?>"
                         data-si-name="<?php echo esc($name); ?>"
                         data-si-kind="<?php echo esc($items[$key]['kind']); ?>"
                         data-si-description="<?php echo esc($items[$key]['description']); ?>"
@@ -53,7 +54,7 @@ function od_steril_inline_html(): string {
         </div>
         <div class="si-detail" data-si-detail aria-live="polite">
           <span class="si-detail-index" data-si-number>01 / 07</span>
-          <div class="si-detail-photo" data-si-photo role="img" aria-label="Detalhe ilustrativo do equipamento selecionado"></div>
+          <figure class="si-detail-photo" data-si-photo><img data-si-image src="<?php echo esc(od_steril_visual_asset('autoclave')); ?>" alt="Autoclave isolada em fundo transparente" width="810" height="810" decoding="async" loading="lazy"><figcaption class="si-photo-badge">OBJETO SELECIONADO</figcaption></figure>
           <span class="si-detail-category" data-si-kind><?php echo esc($first['kind']); ?></span>
           <h4 data-si-name><?php echo esc($first['name']); ?></h4>
           <p data-si-description><?php echo esc($first['description']); ?></p>
