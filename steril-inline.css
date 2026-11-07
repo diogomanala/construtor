@@ -45,3 +45,9 @@
  .si-list-button span{background:none!important;color:#29664e!important;font-size:7pt}
  .si-header h3{font-size:13pt!important}.si-header p,.si-disclaimer{font-size:7pt!important}
 }
+
+/* Detalhe fotográfico do material ativo, usando a mesma cena de alta resolução. */
+.si-detail-photo{height:132px;width:100%;margin:0 0 15px;border-radius:10px;border:1px solid #4b7965;background-image:url('assets/illustrations/sterilization-bench-photo-v1.avif');background-size:270% auto;background-position:4% 4%;background-repeat:no-repeat;background-color:#28604a;box-shadow:inset 0 0 0 1px #fff1;overflow:hidden}
+.si-scene{aspect-ratio:977/483}
+@media(max-width:830px){.si-detail-photo{height:174px;background-size:245% auto}}
+@media print{.si-detail-photo{display:none!important}}
