@@ -17,7 +17,7 @@
       "document_ids": [
         6
       ],
-      "status": "aguardando_aprovacao_visual",
+      "status": "aprovado_visualmente",
       "scene": {
         "asset": "assets/illustrations/epi-scene-v1.avif",
         "width": 1014,
@@ -102,8 +102,8 @@
         "date": "2026-11-07",
         "preliminary": "seis objetos individuais renderizados com transparência e testados sobre verde e fundo claro; falta aprovação explícita do lote e verificação no navegador autenticado",
         "assets_original": "originais PNG 810x810 guardados no pacote de revisão",
-        "status": "aguardando_aprovacao_do_usuario",
-        "note": "A cena gerada contém círculos numéricos visíveis; botões transparentes coincidem com a numeração, sem duplicar rótulos."
+        "status": "aprovado_pelo_usuario_em_2026_11_07",
+        "note": "Aprovação visual explícita registrada no chat. Revisão profissional das descrições e teste autenticado permanecem pendentes."
       }
     },
     {
