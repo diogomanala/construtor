@@ -29,3 +29,6 @@ Data: 06/11/2026
 - As futuras substituições exigem QA real em sessão autenticada antes de reabilitar galeria, bancadas ou imagens de capas.
 
 **Não confundir aprovação visual do arquivo com aprovação técnica ou sanitária do documento.**
+
+## Atualização: guia fotográfico incorporado, 07/11/2026
+A quarentena dos 54 PNGs e dos seis 3D reprovados **continua vigente**. A única exceção nova é uma cena editorial gerada especificamente para o quadro do POP 08, sem recortes individuais, sem fundo removido artificialmente e exibida em resolução adequada (`esterilizacao-bancada-fotografica-v1.avif`, 720×358 px, 12.882 bytes). Não reutilizar como procedimento aprovado ou como imagem precisa de equipamento da clínica. Os sete nomes/funções e suas posições ainda exigem conferência do RT. Os checkboxes e desenhos da interface antiga foram retirados de produção; a rota antiga redireciona para o POP.
