@@ -51,6 +51,15 @@
       const kind=detail.querySelector('[data-sv-kind]');
       const description=detail.querySelector('[data-sv-description]');
       const check=detail.querySelector('[data-sv-check]');
+      const largeArt=detail.querySelector('[data-sv-art]');
+      const svg=node.querySelector('svg');
+      if(largeArt && svg){
+        // Independent SVG data image keeps original vector resolution without
+        // duplicating SVG gradient IDs between desktop and mobile panels.
+        let image=largeArt.querySelector('img');
+        if(!image){image=document.createElement('img');image.alt='';largeArt.appendChild(image);}
+        image.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg.outerHTML);
+      }
       if(name)name.textContent=node.dataset.svName||'Objeto';
       if(kind)kind.textContent=node.dataset.svKind||'Material';
       if(description)description.textContent=node.dataset.svDescription||'';
