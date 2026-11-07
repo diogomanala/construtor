@@ -180,3 +180,7 @@
 @media(max-width:1050px){.sv-inline-layout{grid-template-columns:1fr}.sv-inline-detail{min-height:140px}.sv-inline-detail>p{flex:none}.sv-photo-index{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:640px){.sv-inline{padding:15px}.sv-inline-head{display:block}.sv-inline-head>a{display:inline-block;margin-top:12px}.sv-inline-detail>strong{font-size:19px}.sv-photo-index{grid-template-columns:repeat(2,minmax(0,1fr))}.sv-photo-hotspot,.sv-inline-spot{width:35px!important;height:35px!important;min-width:35px!important;min-height:35px!important}.sv-hotspot-ring{width:32px;height:32px}.sv-photo-chip{min-height:46px}.sv-photo-chip small{display:none}}
 @media print{.sv-inline{display:none!important}.sv-photo-hotspot,.sv-inline-spot,.sv-photo-index{display:none!important}.sv-photo-scene{border-radius:8px!important;overflow:hidden!important}.sv-photo-scene img{width:100%!important;height:auto!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}.sv-photo-index{display:none!important}}
+
+/* Within the editor, use the full image width instead of squeezing the scene beside a sidebar. */
+.odx-document-area .sv-inline-layout{grid-template-columns:1fr}
+.odx-document-area .sv-inline-detail{min-height:135px}
