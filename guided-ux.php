@@ -197,6 +197,7 @@ function od_guided_library_page(): never {
   $all=template_catalog();$counts=[];foreach($all as $d)$counts[$d['category']]=($counts[$d['category']]??0)+1;
   h('Documentos',false);
   echo '<div class="od-ui-page od-ui-docs"><header class="od-ui-docs-head"><div><span class="od-ui-kicker">DOCUMENTAÇÃO DA CLÍNICA</span><h1>Seus documentos, por ordem de uso.</h1><p>Os modelos já incluem conteúdo de referência e campos guiados. Comece por uma sugestão ou encontre um dos 30 materiais.</p></div><div class="od-ui-docs-stat"><strong>'.count($saved).' <span>/ '.count($all).'</span></strong><small>minutas iniciadas</small></div></header>';
+  echo '<a href="?page=pasta-documental" class="pasta-library-callout"><span class="pasta-library-icon">'.od_ui_icon('book').'</span><span class="pasta-library-text"><small>IMPRESSÃO ORGANIZADA EM UM SÓ LUGAR</small><strong>Preparar pasta documental da clínica</strong><em>Escolha os modelos e imprima com capa, índice, divisórias e campos de assinatura. Tudo com sua identidade visual.</em></span><span class="pasta-library-go">'.od_ui_icon('arrow').'</span></a>';
   echo '<div class="od-ui-section-head od-ui-recommended-head"><div><span class="od-ui-kicker">SUGESTÕES PARA COMEÇAR</span><h2>Primeiros documentos</h2><p>Ordem prática de preparação. Ajuste conforme a atividade da clínica e orientação do RT.</p></div></div>';
   echo '<div class="od-ui-recommend-grid">';
   foreach(od_guided_recommendations($c) as $index=>$rec){
