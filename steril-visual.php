@@ -53,6 +53,11 @@ function od_steril_visual_items(): array {
 }
 
 /** Vetores originais, escaláveis e com fundo transparente, sem quadros brancos. */
+function od_steril_visual_asset(string $key): string {
+    // Explicit whitelist: only the seven approved transparent instrument images.
+    if(!array_key_exists($key,od_steril_visual_items()))$key='autoclave';
+    return 'assets/illustrations/steril-detail/'.$key.'-v1.webp';
+}
 function od_steril_visual_svg(string $key): string {
     $k=preg_replace('/[^a-z]/','',$key);
     $pre='<svg viewBox="0 0 320 250" role="presentation" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
@@ -214,7 +219,7 @@ function od_steril_visual_detail_html(string $suffix): string {
     $icon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>';
     return '<div class="sv-detail-content" data-sv-content>
       <span class="sv-detail-tag" data-sv-kind>Equipamento</span>
-      <div class="sv-detail-visual" data-sv-art aria-hidden="true"></div>
+      <figure class="sv-detail-visual" data-sv-art><img data-sv-detail-image src="'.esc(od_steril_visual_asset('autoclave')).'" alt="Autoclave isolada em fundo transparente" width="810" height="810" decoding="async"><figcaption class="sv-detail-visual-caption">OBJETO EM DESTAQUE</figcaption></figure>
       <h2 data-sv-name>Autoclave</h2>
       <p class="sv-detail-intro" data-sv-description>Selecione um objeto para conhecer sua função.</p>
       <div class="sv-detail-divider"></div>
@@ -242,7 +247,7 @@ function od_steril_visual_page(): never {
     $index=0;
     foreach($items as $key=>$info){
         $index++;$on=isset($selected[$key]);$xy=$spots[$key];
-        echo '<button class="sv-photo-hotspot '.($index===1?'is-active ':'').($on?'is-included':'is-excluded').'" type="button" style="--spot-x:'.$xy[0].'%;--spot-y:'.$xy[1].'%" data-sv-object="'.esc($key).'" data-sv-name="'.esc($info['name']).'" data-sv-kind="'.esc($info['kind']).'" data-sv-description="'.esc($info['description']).'" data-sv-check="'.esc($info['check']).'" data-sv-index="'.$index.'" aria-label="'.$index.'. '.esc($info['name']).'" aria-pressed="'.($index===1?'true':'false').'"><span class="sv-hotspot-ring"></span><span class="sv-hotspot-label">'.esc($info['name']).'</span></button>';
+        echo '<button class="sv-photo-hotspot '.($index===1?'is-active ':'').($on?'is-included':'is-excluded').'" type="button" style="--spot-x:'.$xy[0].'%;--spot-y:'.$xy[1].'%" data-sv-object="'.esc($key).'" data-sv-image="'.esc(od_steril_visual_asset($key)).'" data-sv-name="'.esc($info['name']).'" data-sv-kind="'.esc($info['kind']).'" data-sv-description="'.esc($info['description']).'" data-sv-check="'.esc($info['check']).'" data-sv-index="'.$index.'" aria-label="'.$index.'. '.esc($info['name']).'" aria-pressed="'.($index===1?'true':'false').'"><span class="sv-hotspot-ring"></span><span class="sv-hotspot-label">'.esc($info['name']).'</span></button>';
         echo '<input type="checkbox" hidden name="items[]" value="'.esc($key).'" data-sv-input="'.esc($key).'"'.($on?' checked':'').'>';
     }
     echo '</div><div class="sv-photo-index" aria-label="Lista de objetos ilustrados">';
@@ -279,8 +284,8 @@ function od_steril_visual_inline(): string {
   $i=0;
   foreach($items as $key=>$data){
     $i++;$pos=$spots[$key];
-    $s.='<button type="button" class="sv-inline-spot" style="--spot-x:'.$pos[0].'%;--spot-y:'.$pos[1].'%" data-sv-inline-object="'.esc($key).'" data-sv-inline-name="'.esc($data['name']).'" data-sv-inline-text="'.esc($data['description']).'" aria-label="'.$i.'. '.esc($data['name']).'"><span class="sv-visually-hidden">'.esc($data['name']).'</span></button>';
+    $s.='<button type="button" class="sv-inline-spot" style="--spot-x:'.$pos[0].'%;--spot-y:'.$pos[1].'%" data-sv-inline-object="'.esc($key).'" data-sv-inline-image="'.esc(od_steril_visual_asset($key)).'" data-sv-inline-name="'.esc($data['name']).'" data-sv-inline-text="'.esc($data['description']).'" aria-label="'.$i.'. '.esc($data['name']).'"><span class="sv-visually-hidden">'.esc($data['name']).'</span></button>';
   }
-  $s.='</div><div class="sv-inline-detail"><span>OBJETO SELECIONADO</span><strong data-sv-inline-name>Autoclave</strong><p data-sv-inline-description>'.esc($items['autoclave']['description']).'</p><a href="?page=ilustracao-esterilizacao">Ver composição completa</a></div></div><p class="sv-inline-foot">Ilustração conceitual de apoio, não faz parte da minuta salva e não substitui os protocolos do responsável técnico.</p></section>';
+  $s.='</div><div class="sv-inline-detail"><span>OBJETO SELECIONADO</span><figure class="sv-inline-image"><img data-sv-inline-image src="'.esc(od_steril_visual_asset('autoclave')).'" alt="Autoclave isolada em fundo transparente" width="810" height="810" loading="lazy" decoding="async"></figure><strong data-sv-inline-name>Autoclave</strong><p data-sv-inline-description>'.esc($items['autoclave']['description']).'</p><a href="?page=ilustracao-esterilizacao">Ver composição completa</a></div></div><p class="sv-inline-foot">Ilustração conceitual de apoio, não faz parte da minuta salva e não substitui os protocolos do responsável técnico.</p></section>';
   return $s;
 }
