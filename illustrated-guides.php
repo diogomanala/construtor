@@ -13,7 +13,8 @@ function od_illustrated_catalog(): array {
     if($cache!==null)return $cache;
     $json=@file_get_contents(__DIR__.'/data/illustrated-guides.json');
     $data=is_string($json)?json_decode($json,true):null;
-    return $cache=is_array($data)?($data['guides']??[]):[];
+    $cache=is_array($data)&&is_array($data['guides']??null)?$data['guides']:[];
+    return $cache;
 }
 
 function od_illustrated_asset(string $path): bool {
