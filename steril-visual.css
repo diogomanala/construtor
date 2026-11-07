@@ -131,3 +131,52 @@
   .sv-print-disclaimer{font-size:7.5pt;color:#718479;line-height:1.5;margin:12px 0}
   .sv-object,.sv-objects svg,.sv-folio{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 }
+
+/* Photo-based workstation, revision 2. These controls sit over one high-quality image,
+   never over low-resolution individual sprites. The original scene includes numbers. */
+.sv-form input[data-sv-input]{display:none!important;width:0!important;height:0!important;padding:0!important;margin:0!important;position:absolute!important;pointer-events:none!important;visibility:hidden!important}
+.sv-photo-scene,.sv-inline-scene{position:relative;isolation:isolate;overflow:hidden;border-radius:16px;background:#edf2ec;line-height:0}
+.sv-photo-scene img,.sv-inline-scene img{display:block;width:100%;height:auto;aspect-ratio:977 / 483;object-fit:cover}
+.sv-photo-hotspot,.sv-inline-spot{appearance:none;position:absolute;z-index:2;left:var(--spot-x);top:var(--spot-y);width:45px!important;height:45px!important;min-width:45px!important;min-height:45px!important;transform:translate(-50%,-50%);margin:0!important;padding:0!important;background:transparent!important;color:inherit!important;border:0!important;border-radius:50%!important;display:grid!important;place-items:center;cursor:pointer;box-shadow:none!important;outline-offset:2px}
+.sv-photo-hotspot:hover,.sv-inline-spot:hover{background:#ffffff18!important;transform:translate(-50%,-50%)!important}
+.sv-photo-hotspot:focus-visible,.sv-inline-spot:focus-visible{outline:3px solid #f5fff6!important;box-shadow:0 0 0 6px #176d50!important}
+.sv-hotspot-ring{display:block;width:38px;height:38px;aspect-ratio:1;border-radius:50%;border:2px solid transparent;transition:border-color .16s,box-shadow .16s}
+.sv-photo-hotspot:hover .sv-hotspot-ring,.sv-photo-hotspot.is-active .sv-hotspot-ring{border-color:#fff;box-shadow:0 0 0 4px #1d755399}
+.sv-hotspot-label{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#164d39;color:#fff;border-radius:7px;padding:8px 10px;font:760 11px/1.2 Inter,system-ui,sans-serif;opacity:0;pointer-events:none;box-shadow:0 5px 18px #112c2140;transition:opacity .15s}
+.sv-photo-hotspot:hover .sv-hotspot-label,.sv-photo-hotspot:focus-visible .sv-hotspot-label{opacity:1}
+.sv-photo-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
+.sv-photo-chip{appearance:none;display:flex!important;align-items:center;gap:7px;min-width:0;min-height:49px;padding:9px!important;border:1px solid #dceae0!important;background:#f8fbf8!important;color:#245b45!important;border-radius:9px!important;text-align:left!important;cursor:pointer;box-shadow:none!important;transform:none!important}
+.sv-photo-chip.is-active{border-color:#338a66!important;box-shadow:inset 0 0 0 1px #338a6622!important;background:#eaf5ed!important}
+.sv-photo-chip:hover{background:#eaf5ed!important;transform:none!important}
+.sv-photo-chip:focus-visible{outline:3px solid #328566!important;outline-offset:2px}
+.sv-photo-chip>span{display:grid;place-items:center;width:23px;height:23px;flex:none;border-radius:50%;background:#dceee2;color:#27634c;font-size:10px;font-weight:850}
+.sv-photo-chip strong{font-size:11px;font-weight:730;line-height:1.3;flex:1;min-width:0;white-space:normal}
+.sv-photo-chip small{font-size:9px;color:#6d9780;white-space:nowrap}
+.sv-photo-chip.is-excluded{opacity:.58}
+.sv-detail-visual,.sv-modal .sv-detail-visual{height:178px;border:1px solid #3b735a;border-radius:13px;background-image:url('assets/illustrations/sterilization-bench-photo-v1.avif');background-size:320% auto;background-position:50% 50%;background-repeat:no-repeat;background-color:#214f3e;overflow:hidden;margin:15px 0 0}
+.sv-modal .sv-detail-visual{height:152px}
+.sv-detail-visual img{display:none}
+.sv-objects{display:none}
+.sv-stage{overflow:visible}
+.sv-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* The same visual appears directly in POP 08 as a separate, unversioned assistance tool. */
+.sv-inline{grid-column:1 / -1;margin:0 0 24px;background:#fff;border:1px solid #dce9df;border-radius:17px;padding:20px 22px;box-shadow:0 7px 30px #193f2c0a;min-width:0}
+.sv-inline-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:15px}
+.sv-inline-head span{font-size:10px;letter-spacing:.13em;font-weight:850;color:#278269}
+.sv-inline-head h3{margin:5px 0 5px;font-size:20px;line-height:1.25;letter-spacing:-.035em;color:#194433}
+.sv-inline-head p{color:#668475;font-size:12px;line-height:1.55;margin:0}
+.sv-inline-head>a,.sv-inline-detail>a{color:#1c7658;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
+.sv-inline-head>a:hover,.sv-inline-detail>a:hover{text-decoration:underline}
+.sv-inline-layout{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:12px;align-items:stretch}
+.sv-inline-scene{align-self:start}
+.sv-inline-detail{background:#153f33;color:#e4f0e9;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.sv-inline-detail>span{font-size:10px;font-weight:850;letter-spacing:.1em;color:#a5d4ba}
+.sv-inline-detail>strong{font-size:22px;letter-spacing:-.035em;color:#fff;line-height:1.2}
+.sv-inline-detail>p{font-size:12px;color:#e0eae3;line-height:1.65;margin:0;flex:1}
+.sv-inline-detail>a{display:block;text-align:center;border-radius:8px;border:1px solid #72a689;padding:12px;color:#e3f7e9;white-space:normal}
+.sv-inline-foot{margin:12px 1px 0;color:#82958a;font-size:10px;line-height:1.6}
+.sv-inline-spot{width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important}
+.sv-inline-spot.is-active,.sv-inline-spot:hover{box-shadow:0 0 0 3px #fff,0 0 0 6px #257657!important}
+@media(max-width:1050px){.sv-inline-layout{grid-template-columns:1fr}.sv-inline-detail{min-height:140px}.sv-inline-detail>p{flex:none}.sv-photo-index{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){.sv-inline{padding:15px}.sv-inline-head{display:block}.sv-inline-head>a{display:inline-block;margin-top:12px}.sv-inline-detail>strong{font-size:19px}.sv-photo-index{grid-template-columns:repeat(2,minmax(0,1fr))}.sv-photo-hotspot,.sv-inline-spot{width:35px!important;height:35px!important;min-width:35px!important;min-height:35px!important}.sv-hotspot-ring{width:32px;height:32px}.sv-photo-chip{min-height:46px}.sv-photo-chip small{display:none}}
+@media print{.sv-inline{display:none!important}.sv-photo-hotspot,.sv-inline-spot,.sv-photo-index{display:none!important}.sv-photo-scene{border-radius:8px!important;overflow:hidden!important}.sv-photo-scene img{width:100%!important;height:auto!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}.sv-photo-index{display:none!important}}
