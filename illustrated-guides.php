@@ -69,7 +69,7 @@ function od_illustrated_guide_html(int $documentId): string {
       </header>
       <div class="si-layout">
         <div class="si-visual-wrap">
-          <div class="si-scene">
+          <div class="si-scene<?php echo ($scene['numbers_in_image']??true)===false?' si-scene--numbered':''; ?>" style="aspect-ratio:<?php echo max(1,(int)($scene['width']??1200)); ?>/<?php echo max(1,(int)($scene['height']??600)); ?>">
             <img src="<?php echo esc($scene['asset']); ?>"
               alt="<?php echo esc($scene['alt']??'Conjunto ilustrativo de materiais'); ?>"
               width="<?php echo (int)($scene['width']??1200); ?>"
@@ -87,6 +87,7 @@ function od_illustrated_guide_html(int $documentId): string {
                 aria-label="<?php echo esc('Ver objeto '.($i+1).': '.$item['name']); ?>"
                 aria-pressed="<?php echo $i===0?'true':'false'; ?>"
                 style="left:<?php echo (float)$item['point'][0]; ?>%;top:<?php echo (float)$item['point'][1]; ?>%">
+                <span class="si-hotspot-number" aria-hidden="true"><?php echo $i+1; ?></span>
               </button>
             <?php endforeach; ?>
           </div>
