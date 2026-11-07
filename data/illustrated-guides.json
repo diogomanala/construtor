@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-11-07",
+  "reference": {
+    "document_id": 11,
+    "pattern": "Foto de bancada com números clicáveis; painel com imagem isolada transparente, nome, finalidade e ponto de conferência; impressão legível; sem elementos decorativos artificiais.",
+    "assets": "assets/illustrations/steril-detail/*.webp",
+    "status": "padrao_visual_aprovado_pelo_usuario"
+  },
+  "rule": "Outros guias só aparecem no editor quando a cena e TODOS os objetos tiverem arquivos individuais de qualidade aprovada, com posições verificadas e revisão técnica identificada. Não reutilizar o pack de 54 PNGs reprovados.",
+  "guides": [
+    {
+      "key": "epi",
+      "title": "EPIs e proteção da equipe",
+      "eyebrow": "REFERÊNCIA VISUAL · EPI",
+      "description": "Identifique os itens de proteção utilizados conforme a avaliação de risco e os procedimentos da unidade.",
+      "document_ids": [
+        6
+      ],
+      "status": "aguardando_assets_visuais",
+      "scene": null,
+      "items": [
+        {
+          "key": "mascara",
+          "name": "Máscara de uso profissional",
+          "kind": "Proteção respiratória",
+          "description": "Item de proteção selecionado conforme o risco e o procedimento.",
+          "check": "Confirmar modelo, indicação, uso e troca com o protocolo da clínica.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "luvas",
+          "name": "Luvas de procedimento",
+          "kind": "Proteção das mãos",
+          "description": "Luvas utilizadas nas atividades em que sua indicação se aplica.",
+          "check": "Conferir tipo, tamanho, integridade e indicação no protocolo da unidade.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "oculos",
+          "name": "Óculos de proteção",
+          "kind": "Proteção ocular",
+          "description": "Proteção dos olhos quando há risco de exposição a respingos e partículas.",
+          "check": "Conferir integridade, cobertura e higienização conforme fabricante.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "protetor_facial",
+          "name": "Protetor facial",
+          "kind": "Proteção da face",
+          "description": "Barreira facial complementar quando indicada pela avaliação de risco.",
+          "check": "Confirmar indicação, ajuste e cuidados de limpeza.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "gorro",
+          "name": "Gorro ou cobertura capilar",
+          "kind": "Barreira de proteção",
+          "description": "Cobertura capilar empregada nas situações definidas pelo serviço.",
+          "check": "Verificar indicação e forma de descarte ou processamento.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "avental",
+          "name": "Avental de proteção",
+          "kind": "Proteção do corpo",
+          "description": "Vestuário de proteção definido para atividade e risco correspondentes.",
+          "check": "Confirmar material, finalidade, conservação e troca.",
+          "asset": null,
+          "point": null
+        }
+      ]
+    },
+    {
+      "key": "residuos",
+      "title": "Materiais para manejo de resíduos",
+      "eyebrow": "REFERÊNCIA VISUAL · RESÍDUOS",
+      "description": "Reconheça recipientes e materiais utilizados na segregação e no manejo interno, conforme os resíduos gerados pelo estabelecimento.",
+      "document_ids": [
+        14,
+        24
+      ],
+      "status": "aguardando_assets_visuais",
+      "scene": null,
+      "items": [
+        {
+          "key": "perfurocortante",
+          "name": "Coletor para perfurocortantes",
+          "kind": "Recipiente de descarte",
+          "description": "Coletor rígido próprio para o descarte dos materiais perfurocortantes, quando gerados.",
+          "check": "Conferir especificação, identificação, montagem, limite de uso e destinação conforme o PGRSS.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "lixeira_tampa",
+          "name": "Recipiente de coleta identificado",
+          "kind": "Acondicionamento",
+          "description": "Recipiente utilizado para coleta segregada, de acordo com o tipo de resíduo e o plano da unidade.",
+          "check": "Confirmar material, abertura, higienização e sinalização aplicáveis.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "saco_residuo",
+          "name": "Saco de acondicionamento apropriado",
+          "kind": "Acondicionamento",
+          "description": "Embalagem selecionada para a categoria de resíduo correspondente.",
+          "check": "Verificar tipo, identificação, resistência e compatibilidade com a exigência local.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "contentor_transporte",
+          "name": "Contentor para transporte interno",
+          "kind": "Movimentação interna",
+          "description": "Contentor destinado ao manejo interno quando essa etapa é prevista pelo serviço.",
+          "check": "Confirmar características e roteiro de transporte no PGRSS específico.",
+          "asset": null,
+          "point": null
+        }
+      ]
+    },
+    {
+      "key": "equipamentos",
+      "title": "Equipamentos e tecnologias da clínica",
+      "eyebrow": "REFERÊNCIA VISUAL · EQUIPAMENTOS",
+      "description": "Reconheça os principais equipamentos do inventário e os registros de manutenção correspondentes à unidade.",
+      "document_ids": [
+        21,
+        25,
+        28
+      ],
+      "status": "aguardando_assets_visuais",
+      "scene": null,
+      "items": [
+        {
+          "key": "cadeira",
+          "name": "Conjunto odontológico",
+          "kind": "Equipamento assistencial",
+          "description": "Conjunto de atendimento odontológico presente na estrutura clínica.",
+          "check": "Conferir modelo, patrimônio, manuais, verificações e manutenção.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "compressor",
+          "name": "Compressor odontológico",
+          "kind": "Sistema de apoio",
+          "description": "Equipamento associado ao fornecimento de ar para as operações compatíveis da unidade.",
+          "check": "Conferir identificação, manuais e procedimentos de inspeção/manutenção aplicáveis.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "sugador",
+          "name": "Sistema de sucção",
+          "kind": "Sistema de apoio",
+          "description": "Sistema de aspiração utilizado conforme o arranjo de equipamentos da clínica.",
+          "check": "Verificar especificações, limpeza, controle de desempenho e manutenção previstas.",
+          "asset": null,
+          "point": null
+        },
+        {
+          "key": "raio_x",
+          "name": "Equipamento de raios X intraoral",
+          "kind": "Equipamento de diagnóstico",
+          "description": "Equipamento radiológico presente somente nos serviços que realizam a atividade.",
+          "check": "Conferir requisitos específicos, programa de qualidade e controle radiológico aplicáveis.",
+          "asset": null,
+          "point": null
+        }
+      ]
+    }
+  ]
+}
