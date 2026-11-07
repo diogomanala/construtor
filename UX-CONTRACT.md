@@ -36,3 +36,11 @@ Comportamento compartilhado da área de membros PHP. Registrar decisões observ�
 - [Cérebro](https://app.notion.com/p/410739c88b0a81f8a436d82129ff205a)
 - [QA funcional](https://github.com/diogomanala/construtor/blob/odonto-em-dia-hostinger/docs/QA-ACESSO-CLINICAS.md)
 - [DESIGN.md](https://github.com/diogomanala/construtor/blob/odonto-em-dia-hostinger/DESIGN.md)
+
+## Quadro de esterilização ilustrado (protótipo de apoio)
+- Entrada pelo editor do POP 08 ou pela URL autenticada `?page=ilustracao-esterilizacao`.
+- Interação: botão do objeto seleciona-o, exibe SVG ampliado, nome, função e o que conferir. Botão de incluir/remover é independente de selecionar; não indica que um procedimento foi executado.
+- Persistência opcional: `steril_visual_save` valida sessão, licença vigente e CSRF no fluxo do `index.php`; backend valida chaves permitidas e limite das observações e grava em `od_steril_visual_choices` por clínica. GET apenas lê dados da clínica autenticada.
+- No móvel, `dialog.showModal()` abre detalhe, fecha pelo botão, Escape e fechamento nativo, com foco gerenciado pelo navegador. Sem JS, a documentação original continua acessível; o protótipo exige JS para os cliques.
+- A4: ocultar botões, exibir somente objetos incluídos e legenda numerada, dados identificáveis da clínica e advertência de revisão técnica. Não inserir este quadro automaticamente no corpo de minutas/históricos anteriores.
+- Estados de QA: 7 objetos, estados incluído/excluído, seleção vazia, nome longo, RT ausente, dois tenants, JS desativado, 320/390/768/1440 px, impressão, contrastes, foco e botão fechar. Nenhum resultado é “aprovado pela Anvisa”.
