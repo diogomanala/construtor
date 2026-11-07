@@ -1,8 +1,7 @@
 (() => {
   'use strict';
   const form=document.getElementById('sv-form');
-  const sceneSrc='assets/illustrations/sterilization-bench-photo-v1.avif';
-  const positions={autoclave:['18%','22%'],seladora:['53%','39%'],embalagem:['84%','30%'],quimico:['27%','79%'],biologico:['37%','78%'],bandeja:['50%','75%'],cassete:['76%','76%']};
+  // Image paths are server-side whitelisted; the main photo remains unchanged.
   if(form){
     const objects=[...form.querySelectorAll('[data-sv-object]')];
     const inputs=[...form.querySelectorAll('[data-sv-input]')];
@@ -52,9 +51,18 @@
         const fields={'[data-sv-name]':node.dataset.svName,'[data-sv-kind]':node.dataset.svKind,'[data-sv-description]':node.dataset.svDescription,'[data-sv-check]':node.dataset.svCheck};
         for(const [selector,value] of Object.entries(fields)){const el=detail.querySelector(selector);if(el)el.textContent=value||'';}
         const art=detail.querySelector('[data-sv-art]');
-        if(art){
-          art.style.backgroundImage='url("'+sceneSrc+'")';
-          art.style.backgroundPosition=(positions[node.dataset.svObject]||['50%','50%']).join(' ');
+        const img=art?.querySelector('[data-sv-detail-image]');
+        if(img){
+          const path=node.dataset.svImage||'';
+          if(path && img.getAttribute('src')!==path){
+            art.classList.add('is-loading');
+            art.classList.remove('is-unavailable');
+            img.hidden=false;
+            img.src=path;
+          }
+          img.alt=(node.dataset.svName||'Material')+' isolado, sem fundo';
+          img.onload=()=>{art.classList.remove('is-loading','is-unavailable');img.hidden=false;};
+          img.onerror=()=>{art.classList.remove('is-loading');art.classList.add('is-unavailable');img.hidden=true;};
         }
       });
       refresh();
@@ -82,10 +90,28 @@
     const buttons=[...root.querySelectorAll('[data-sv-inline-object]')];
     const title=root.querySelector('[data-sv-inline-name]');
     const description=root.querySelector('[data-sv-inline-description]');
-    buttons.forEach(button=>button.addEventListener('click',()=>{
+    const image=root.querySelector('[data-sv-inline-image]');
+    const preview=root.querySelector('.sv-inline-image');
+    const select=button=>{
       buttons.forEach(b=>{const active=b===button;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',active?'true':'false');});
       if(title)title.textContent=button.dataset.svInlineName||'Material';
       if(description)description.textContent=button.dataset.svInlineText||'';
-    }));
+      if(image){
+        const path=button.dataset.svInlineImage||'';
+        if(path&&image.getAttribute('src')!==path){
+          preview?.classList.add('is-loading');
+          preview?.classList.remove('is-unavailable');
+          image.hidden=false;
+          image.src=path;
+        }
+        image.alt=(button.dataset.svInlineName||'Material')+' isolado, sem fundo';
+      }
+    };
+    if(image){
+      image.onload=()=>{preview?.classList.remove('is-loading','is-unavailable');image.hidden=false;};
+      image.onerror=()=>{preview?.classList.remove('is-loading');preview?.classList.add('is-unavailable');image.hidden=true;};
+    }
+    buttons.forEach(button=>button.addEventListener('click',()=>select(button)));
+    if(buttons[0])select(buttons[0]);
   });
 })();
