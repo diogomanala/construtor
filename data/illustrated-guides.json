@@ -13,7 +13,7 @@
       "key": "epi",
       "title": "EPIs e proteção da equipe",
       "eyebrow": "REFERÊNCIA VISUAL · EPI",
-      "description": "Identifique os itens de proteção utilizados conforme a avaliação de risco e os procedimentos da unidade.",
+      "description": "Identifique os itens de proteção disponíveis na clínica e confira sua indicação conforme o risco de cada atividade.",
       "document_ids": [
         6
       ],
@@ -27,10 +27,10 @@
       "items": [
         {
           "key": "mascara",
-          "name": "Máscara de uso profissional",
-          "kind": "Proteção respiratória",
-          "description": "Item de proteção selecionado conforme o risco e o procedimento.",
-          "check": "Confirmar modelo, indicação, uso e troca com o protocolo da clínica.",
+          "name": "Máscara cirúrgica",
+          "kind": "Barreira facial para gotículas",
+          "description": "Máscara utilizada conforme a avaliação de risco e o protocolo da clínica. Não substitui um respirador quando este for indicado.",
+          "check": "Conferir indicação, ajuste, integridade e troca conforme o protocolo da unidade.",
           "asset": "assets/illustrations/epi-detail/mascara-v1.webp",
           "point": [
             63.8,
