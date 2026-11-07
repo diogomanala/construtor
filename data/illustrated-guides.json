@@ -108,53 +108,77 @@
     },
     {
       "key": "residuos",
-      "title": "Materiais para manejo de resíduos",
+      "title": "Materiais de segregação e acondicionamento",
       "eyebrow": "REFERÊNCIA VISUAL · RESÍDUOS",
-      "description": "Reconheça recipientes e materiais utilizados na segregação e no manejo interno, conforme os resíduos gerados pelo estabelecimento.",
+      "description": "Identifique os recipientes e materiais ilustrados. O modelo, a identificação e a utilização devem seguir os resíduos gerados e o PGRSS da clínica.",
       "document_ids": [
         14,
         24
       ],
-      "status": "aguardando_assets_visuais",
-      "scene": null,
+      "status": "aguardando_aprovacao_visual",
+      "scene": {
+        "asset": "assets/illustrations/residuos-scene-v1.avif",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Área clínica com quatro materiais ilustrativos sem rótulos: coletor rígido, saco de acondicionamento, recipiente com tampa e contentor para transporte interno."
+      },
       "items": [
         {
           "key": "perfurocortante",
           "name": "Coletor para perfurocortantes",
           "kind": "Recipiente de descarte",
-          "description": "Coletor rígido próprio para o descarte dos materiais perfurocortantes, quando gerados.",
-          "check": "Conferir especificação, identificação, montagem, limite de uso e destinação conforme o PGRSS.",
-          "asset": null,
-          "point": null
+          "description": "Representação visual de um coletor rígido. O recipiente real para perfurocortantes deve ser próprio para essa finalidade e corretamente identificado.",
+          "check": "Conferir características do produto, integridade, identificação, fechamento e limite de uso conforme fabricante, PGRSS e regras aplicáveis.",
+          "asset": "assets/illustrations/residuos-detail/perfurocortante-v1.webp",
+          "point": [
+            17.6,
+            19.5
+          ]
         },
         {
           "key": "lixeira_tampa",
-          "name": "Recipiente de coleta identificado",
+          "name": "Recipiente de coleta com tampa",
           "kind": "Acondicionamento",
-          "description": "Recipiente utilizado para coleta segregada, de acordo com o tipo de resíduo e o plano da unidade.",
-          "check": "Confirmar material, abertura, higienização e sinalização aplicáveis.",
-          "asset": null,
-          "point": null
+          "description": "Recipiente com tampa, utilizado para a coleta conforme o grupo de resíduos e o fluxo da unidade.",
+          "check": "Conferir material, mecanismo de abertura, identificação exigida, higienização e destinação aplicáveis.",
+          "asset": "assets/illustrations/residuos-detail/lixeira_tampa-v1.webp",
+          "point": [
+            59.8,
+            34.1
+          ]
         },
         {
           "key": "saco_residuo",
-          "name": "Saco de acondicionamento apropriado",
+          "name": "Saco de acondicionamento",
           "kind": "Acondicionamento",
-          "description": "Embalagem selecionada para a categoria de resíduo correspondente.",
-          "check": "Verificar tipo, identificação, resistência e compatibilidade com a exigência local.",
-          "asset": null,
-          "point": null
+          "description": "Saco de acondicionamento genérico, cuja especificação depende do resíduo e da rotina do serviço.",
+          "check": "Confirmar tipo, capacidade, identificação, resistência e compatibilidade com o PGRSS e regras aplicáveis.",
+          "asset": "assets/illustrations/residuos-detail/saco_residuo-v1.webp",
+          "point": [
+            39.8,
+            21
+          ]
         },
         {
           "key": "contentor_transporte",
-          "name": "Contentor para transporte interno",
+          "name": "Contentor de transporte interno",
           "kind": "Movimentação interna",
-          "description": "Contentor destinado ao manejo interno quando essa etapa é prevista pelo serviço.",
-          "check": "Confirmar características e roteiro de transporte no PGRSS específico.",
-          "asset": null,
-          "point": null
+          "description": "Contentor com rodas utilizado para apoio ao transporte interno quando previsto no manejo do serviço.",
+          "check": "Conferir necessidade, características, limpeza, identificação e trajeto de transporte definidos no PGRSS.",
+          "asset": "assets/illustrations/residuos-detail/contentor_transporte-v1.webp",
+          "point": [
+            84,
+            23.5
+          ]
         }
-      ]
+      ],
+      "visual_review": {
+        "date": "2026-11-07",
+        "status": "aguardando_aprovacao_do_usuario",
+        "quality_checks": "4 objetos originais 810×810 com alpha real em WebP, avaliados sobre claro e verde-escuro; cena 1672×941 sem símbolos, alegações normativas nem texto incorporado; rótulos e pontos estão no HTML.",
+        "note": "Cena e quatro imagens já versionadas. Não chamar de conformidade aprovada pela Anvisa. Identificação e aplicabilidade sujeitos à conferência técnica; falta avaliação visual do usuário e QA autenticado."
+      }
     },
     {
       "key": "equipamentos",
