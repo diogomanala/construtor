@@ -50,7 +50,7 @@ function h(string $page,bool $showHeading=true):void {
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
  if($showHeading)echo '<h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
@@ -62,6 +62,7 @@ require_once __DIR__.'/legal-review.php';
 require_once __DIR__.'/document-engine.php';
 require_once __DIR__.'/steril-visual.php';
 require_once __DIR__.'/steril-inline.php';
+require_once __DIR__.'/illustrated-guides.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
 require_once __DIR__.'/downloads.php';
