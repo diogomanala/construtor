@@ -28,8 +28,8 @@ function od_steril_inline_html(): string {
       <div class="si-layout">
         <div class="si-visual-wrap">
           <div class="si-scene">
-            <img src="assets/illustrations/esterilizacao-bancada-fotografica-v1.avif"
-                 width="720" height="358"
+            <img src="assets/illustrations/sterilization-bench-photo-v1.avif"
+                 width="977" height="483"
                  alt="Bancada ilustrativa com sete materiais numerados: autoclave, seladora, embalagem, indicador químico, indicador biológico, bandeja perfurada e cassete de instrumentais."
                  loading="lazy" decoding="async">
             <?php foreach($points as $key=>$xy):
@@ -53,6 +53,7 @@ function od_steril_inline_html(): string {
         </div>
         <div class="si-detail" data-si-detail aria-live="polite">
           <span class="si-detail-index" data-si-number>01 / 07</span>
+          <div class="si-detail-photo" data-si-photo role="img" aria-label="Detalhe ilustrativo do equipamento selecionado"></div>
           <span class="si-detail-category" data-si-kind><?php echo esc($first['kind']); ?></span>
           <h4 data-si-name><?php echo esc($first['name']); ?></h4>
           <p data-si-description><?php echo esc($first['description']); ?></p>
