@@ -3,7 +3,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="RDC Anvisa 1.002/2025: organize a documentação do consultório com 30 materiais de referência, 17 frentes de acompanhamento, painel online e onboarding guiado. Kit por R$ 67.">
+<meta name="description" content="Odonto em Dia: Trilha Documental Guiada para clínicas odontológicas, com autoavaliação inicial, 30 modelos, editor interativo, versões salvas e acompanhamento. Acesso por R$ 67.">
 <meta name="theme-color" content="#0c2e35">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/hero-motion-v1.css?v=20261108">
+<link rel="stylesheet" href="assets/hero-mobile-v2.css?v=20261108b">
 </head>
 <body class="sales">
 <svg style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -39,12 +40,12 @@
 <main>
 <section class="hero"><div class="wrap hero-layout">
 <div class="hero-copy">
- <div class="pill-label"><?=si('shield')?> RDC 1.002/2025 · KIT DIGITAL COM PLATAFORMA</div>
- <h1>Se pedirem os documentos da sua clínica hoje, <span>você sabe o que está pronto e o que falta?</span></h1>
- <p>Organize POPs, planos e formulários em uma <strong>plataforma com 30 materiais de referência, editor online e acompanhamento de pendências</strong>. Preencha os dados da clínica, revise os conteúdos e acompanhe cada versão. Tudo dentro da plataforma, sem depender de um editor externo.</p>
- <div class="hero-buttons"><a class="btn btn-large" href="?page=checkout">Organizar meus documentos por R$ 67 <?=si('arrow')?></a><a class="btn btn-outline btn-large" href="#entrega">Ver tudo que está incluído <?=si('book')?></a></div>
+ <div class="pill-label"><?=si('shield')?> TRILHA DOCUMENTAL GUIADA · RDC 1.002/2025</div>
+ <h1>Organize os documentos da sua clínica <span>passo a passo.</span></h1>
+ <p>Comece pela autoavaliação, veja seu próximo passo e prepare documentos no <strong>editor interativo da plataforma</strong>. São 30 modelos, versões salvas, acompanhamento das pendências e links para consultar normas oficiais.</p>
+ <div class="hero-buttons"><a class="btn btn-large" href="?page=checkout">Organizar meus documentos · R$ 67 <?=si('arrow')?></a><a class="btn btn-outline btn-large" href="#entrega">Ver tudo que está incluído <?=si('book')?></a></div>
  <div class="hero-footline"><span><?=si('check')?> Biblioteca organizada</span><span><?=si('check')?> Editor com versões salvas</span><span><?=si('check')?> Acesso online por 12 meses</span></div>
- <p class="tiny">Materiais de referência para adaptar e revisar com o responsável técnico. Não substituem licenças nem aprovação sanitária.</p>
+ <p class="tiny">Modelos de referência para adaptar e revisar com o responsável técnico. A plataforma não certifica conformidade sanitária.</p>
 </div>
 <div class="hero-media">
 <div class="od-visual od-motion" data-od-motion>
@@ -188,10 +189,10 @@
 </div>
 </div>
 </div></section>
-<section class="kit-clarity" aria-label="Entenda exatamente o produto"><div class="wrap"><div class="kit-clarity-head"><span class="sec-label">Como funciona depois da compra</span><h2>Documentos organizados, <em>com uma área para trabalhar neles.</em></h2><p>Você não precisa procurar arquivos em pastas soltas nem refazer alterações a cada acesso. A biblioteca, o editor e o acompanhamento ficam juntos na plataforma.</p></div><div class="kit-clarity-grid">
-<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('book')?></div><div><h3>1. Encontre o documento</h3><p>Os <strong>30 materiais</strong> ficam separados em POPs, planos, SDBPF, formulários e guia, todos na mesma biblioteca.</p></div></article>
-<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('file')?></div><div><h3>2. Edite sem sair da plataforma</h3><p>Abra uma minuta, adapte os procedimentos da clínica e <strong>salve quantas versões precisar</strong> para revisão técnica.</p></div></article>
-<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('progress')?></div><div><h3>3. Acompanhe as versões</h3><p>Veja pendências, responsáveis e prazos e retome o preenchimento pelo navegador, sem enviar arquivos para outros aplicativos.</p></div></article>
+<section class="kit-clarity" aria-label="Entenda exatamente o produto"><div class="wrap"><div class="kit-clarity-head"><span class="sec-label">Trilha Documental Guiada</span><h2>Saiba por onde começar. <em>Prepare e acompanhe cada etapa.</em></h2><p>Uma sequência de uso com autoavaliação, modelos editáveis e acompanhamento. Você prepara as minutas na plataforma e encaminha o conteúdo para revisão do responsável técnico.</p></div><div class="kit-clarity-grid">
+<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('book')?></div><div><h3>1. Veja por onde começar</h3><p>Faça a <strong>autoavaliação inicial de 15 pontos</strong> e siga a trilha de primeiros passos para organizar a documentação da clínica.</p></div></article>
+<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('file')?></div><div><h3>2. Edite dentro da plataforma</h3><p>Escolha entre <strong>30 materiais de referência</strong>, preencha os dados guiados e salve versões para revisão técnica.</p></div></article>
+<article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('progress')?></div><div><h3>3. Acompanhe o que falta</h3><p>Registre pendências, responsáveis e prazos. Consulte as referências normativas relacionadas aos modelos quando precisar.</p></div></article>
 </div><p class="kit-clarity-note">Seu acesso online permanece disponível por 12 meses. Os modelos e versões ficam organizados no ambiente da clínica.</p></div></section>
 <section class="facts"><div class="wrap facts-grid"><div><b>30</b><span>materiais na biblioteca</span></div><div><b>18</b><span>minutas de POPs</span></div><div><b>17</b><span>frentes de acompanhamento</span></div><div><b>15</b><span>verificações iniciais</span></div></div></section>
 
