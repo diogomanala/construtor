@@ -1,0 +1,21 @@
+/* Galeria de referências visuais do Odonto em Dia */
+.od-ref-page{max-width:1120px;margin:0 auto 70px;color:#224b39;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.od-ref-hero{border-radius:19px;padding:clamp(24px,4vw,48px);background:#164434;color:#fff;margin:25px 0}
+.od-ref-hero>a{display:block;font-size:11px;color:#b6dec5;text-decoration:none;margin-bottom:38px}
+.od-ref-hero>span{font-size:10px;letter-spacing:.16em;font-weight:850;color:#a2d1b4}
+.od-ref-hero h1{font-size:clamp(29px,4.5vw,46px);letter-spacing:-.052em;color:#fff;line-height:1.1;margin:13px 0}
+.od-ref-hero p{max-width:695px;color:#c6ddcd;font-size:13px;line-height:1.7}
+.od-ref-group{background:#fff;border:1px solid #dce9df;border-radius:16px;margin:15px 0;overflow:hidden}
+.od-ref-group>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 26px;cursor:pointer;list-style:none;background:#f8fbf8}
+.od-ref-group>summary::-webkit-details-marker{display:none}
+.od-ref-group>summary span{display:flex;flex-direction:column;gap:5px}
+.od-ref-group>summary small{font-size:9px;letter-spacing:.13em;color:#3b8a67;font-weight:800}
+.od-ref-group>summary strong{font-size:21px;color:#21513c;letter-spacing:-.035em}
+.od-ref-group>summary em{font-size:11px;font-style:normal;color:#789482}
+.od-ref-group>summary b{border:1px solid #c3dfca;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#2b7752;font-weight:400;font-size:21px}
+.od-ref-group[open]>summary b{transform:rotate(45deg)}
+.od-ref-group>.si-doc-illustration{margin:0 18px 18px;border-radius:11px;box-shadow:none}
+.od-ref-disclaimer{background:#f0f7f1;border:1px solid #d4e5d7;border-radius:12px;padding:17px 20px;font-size:12px;line-height:1.75;color:#547560;margin-top:22px}
+.od-ref-disclaimer strong{color:#295a41}
+@media(max-width:600px){.od-ref-hero{padding:26px 21px}.od-ref-group>summary{padding:16px}.od-ref-group>.si-doc-illustration{margin:0 7px 9px}}
+@media print{.od-ref-hero{background:#fff;color:#244e39;padding:5mm}.od-ref-hero h1{color:#244e39}.od-ref-group{break-before:page}.od-ref-group>summary{background:#fff}}
