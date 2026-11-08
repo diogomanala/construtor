@@ -28,13 +28,13 @@ function h(string $page,bool $showHeading=true):void {
  $primary=['painel'=>'Início','documentos'=>'Documentos','rotinas'=>'Rotinas','clinica'=>'Minha clínica'];
  $menu=[
   'COMECE AQUI'=>['painel'=>'Início','trilha'=>'Trilha de primeiros passos'],
-  'DOCUMENTOS'=>['documentos'=>'Biblioteca completa','meus-documentos'=>'Minhas versões','pasta-documental'=>'Pasta para impressão'],
+  'DOCUMENTOS'=>['documentos'=>'Biblioteca completa','meus-documentos'=>'Minhas versões','pasta-documental'=>'Pasta para impressão','acervo-visual'=>'Materiais ilustrados'],
   'ROTINAS'=>['registros-limpeza'=>'Limpeza','registros-esterilizacao'=>'Esterilização','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
   'ACOMPANHAMENTO'=>['acompanhamento'=>'Temas e pendências','inspecao'=>'Autoavaliação','auto360'=>'Autoinspeção 360'],
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -42,7 +42,7 @@ function h(string $page,bool $showHeading=true):void {
   echo '</nav><details class="member-menu"><summary>Menu</summary><div class="member-menu-panel"><nav aria-label="Todas as áreas">';
   foreach($menu as $section=>$items){
    echo '<span class="member-menu-heading">'.esc($section).'</span>';
-   foreach($items as $route=>$label)echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').($route==='sair'?' class="member-logout"':'').'>'.esc($label).'</a>';
+   foreach($items as $route=>$label){if($route==='acervo-visual'&&!od_reference_gallery_available())continue;echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').($route==='sair'?' class="member-logout"':'').'>'.esc($label).'</a>'; }
   }
   echo '</nav></div></details></div>';
  }
@@ -63,6 +63,7 @@ require_once __DIR__.'/document-engine.php';
 require_once __DIR__.'/steril-visual.php';
 require_once __DIR__.'/steril-inline.php';
 require_once __DIR__.'/illustrated-guides.php';
+require_once __DIR__.'/reference-gallery.php';
 require_once __DIR__.'/pasta-documental.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
@@ -143,7 +144,7 @@ if($page==='logo-clinica')od_brand_logo();
  if($page==='identidade')od_brand_page();
  if($page==='painel')od_guided_dashboard_page();
  if($page==='trilha')od_guided_trail_page();
- if($page==='acervo-visual'){flash('Galeria de imagens em revisão de qualidade. A biblioteca documental permanece disponível.');redirect('?page=documentos');}
+ if($page==='acervo-visual')od_reference_gallery_page();
   if($page==='kits-bancada'){flash('As bancadas ilustradas estão em revisão de qualidade visual.');redirect('?page=documentos');}
   if($page==='documentos')od_guided_library_page();
  if($page==='rotinas')od_guided_rotinas_page();
