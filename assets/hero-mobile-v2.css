@@ -1,0 +1,62 @@
+/* Odonto em Dia | hero 2026-11-08
+   Correção da regra tardia de grid desktop que prevalecia no mobile.
+   Hierarquia de conversão: mensagem curta > CTA > motion > detalhes.
+   Não altera o motion enviado pelo cliente, nem os outros blocos. */
+
+.hero .hero-layout{min-width:0}
+.hero .hero-media{min-width:0}
+.hero .hero-buttons>.btn{max-width:100%;white-space:normal;text-align:center;text-wrap:balance;overflow-wrap:normal}
+.hero .hero-copy>p:not(.tiny){max-width:610px}
+.hero .pill-label{max-width:100%;line-height:1.45;text-wrap:pretty}
+.hero .hero-copy h1{text-wrap:balance}
+.hero .hero-buttons>.btn .icon{flex:none}
+
+@media (min-width:821px){
+  .hero .hero-layout{grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}
+  .hero .hero-copy h1{font-size:clamp(37px,4.15vw,58px);line-height:1.085;letter-spacing:-.052em}
+  .hero .hero-copy>p:not(.tiny){font-size:15.5px;line-height:1.65}
+  .hero .hero-media{width:100%;max-width:595px}
+}
+
+@media (max-width:820px){
+  /* display:contents deixa título, ações e motion ordenáveis sem copiar o HTML */
+  .hero .hero-layout{display:flex;flex-direction:column;align-items:stretch;gap:0;width:100%;min-width:0}
+  .hero .hero-copy,.hero .hero-buttons{display:contents}
+  .hero{padding:34px 0 60px}
+  .hero .pill-label{order:1;align-self:flex-start;max-width:100%;margin:0 0 14px;padding:8px 12px;border-radius:18px;font-size:10px;letter-spacing:.025em;font-weight:750}
+  .hero .pill-label .icon{width:15px;height:15px;flex:none}
+  .hero .hero-copy h1{order:2;width:100%;max-width:100%;margin:0 0 14px;font-size:clamp(32px,7.85vw,41px);line-height:1.075;letter-spacing:-.045em;overflow-wrap:normal}
+  .hero .hero-copy>p:not(.tiny){order:3;width:100%;max-width:100%;font-size:15px;line-height:1.56;margin:0 0 20px;color:#536c6b}
+  .hero .hero-copy>p:not(.tiny) strong{color:#0c705f}
+  .hero .hero-buttons>.btn:first-child{
+    order:4;display:flex;align-self:stretch;justify-content:center;gap:9px;
+    width:100%;min-width:0;min-height:56px;padding:15px 18px;
+    font-size:15px;font-weight:760;line-height:1.28;white-space:normal;
+    text-align:center;box-shadow:0 11px 25px -15px #0b685b66
+  }
+  .hero .hero-media{
+    order:5;width:100%;max-width:560px;min-width:0;
+    margin:20px auto 6px;align-self:center;padding:0
+  }
+  .hero .hero-media .od-motion{width:100%;max-width:100%}
+  .hero .hero-media .od-motion .od-stage{display:block;width:100%;max-width:480px;margin:0 auto;aspect-ratio:36/42}
+  .hero .hero-buttons>.btn:last-child{
+    order:6;display:flex;align-self:stretch;min-width:0;width:100%;
+    min-height:48px;padding:13px 16px;border-radius:12px;
+    font-size:13px;font-weight:690;line-height:1.25;white-space:normal
+  }
+  .hero .hero-footline{order:7;display:flex;justify-content:center;gap:9px 14px;margin:19px 0 0;width:100%}
+  .hero .hero-footline span{font-size:10px;line-height:1.45}
+  .hero .hero-copy>p.tiny{order:8;margin:12px 0 0;max-width:100%;color:#71847b;font-size:10.5px;line-height:1.55;text-align:center}
+}
+
+@media (max-width:420px){
+  .hero{padding:30px 0 54px}
+  .hero .hero-copy h1{font-size:clamp(31px,8.1vw,35px);letter-spacing:-.045em}
+  .hero .hero-copy>p:not(.tiny){font-size:14.5px;line-height:1.56;margin-bottom:18px}
+  .hero .hero-media{margin-top:17px;margin-bottom:6px}
+  .hero .hero-buttons>.btn:first-child{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero .hero-buttons>.btn{transition:none}
+}
