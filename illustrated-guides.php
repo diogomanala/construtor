@@ -53,7 +53,11 @@ function od_illustrated_guide_for_document(int $documentId): ?array {
 
 function od_illustrated_guide_html(int $documentId): string {
     $guide=od_illustrated_guide_for_document($documentId);
-    if(!$guide)return '';
+    return $guide ? od_illustrated_guide_markup($guide) : '';
+}
+
+function od_illustrated_guide_markup(array $guide): string {
+    if(!od_illustrated_ready($guide))return '';
     $items=$guide['items'];
     $first=$items[0];
     $id='odx-visual-guide-'.(string)$guide['key'];
