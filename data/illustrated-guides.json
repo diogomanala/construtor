@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_on": "2026-11-07",
+  "updated_on": "2026-11-08",
   "reference": {
     "document_id": 11,
     "pattern": "Foto de bancada com números clicáveis; painel com imagem isolada transparente, nome, finalidade e ponto de conferência; impressão legível; sem elementos decorativos artificiais.",
@@ -254,6 +254,338 @@
         "assets_original": "quatro PNGs originais de equipamentos gerados no projeto, 1254x1254",
         "checks": "WebP alpha 810x810 para cada item; cena AVIF original 1672x941; verificados sobre fundos branco e verde escuro, hashes SHA confirmados.",
         "note": "Aprovação visual explícita de cena e objetos. Não se trata de verificação técnica/RT ou de prova de conformidade. QA em sessão autenticada e impressão ainda pendentes."
+      }
+    },
+    {
+      "key": "instrumentais",
+      "title": "Instrumentais clínicos",
+      "eyebrow": "REFERÊNCIA VISUAL · CONSULTA",
+      "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+      "reference_only": true,
+      "document_ids": [],
+      "status": "aprovado_visualmente",
+      "scene": {
+        "asset": "assets/illustrations/instrumentais-scene-v1.webp",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Cena ilustrativa com instrumentais clínicos em bancada clínica"
+      },
+      "items": [
+        {
+          "key": "espelho_clinico",
+          "name": "Espelho clínico",
+          "kind": "Material de referência",
+          "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/instrumentais-detail/espelho_clinico-v1.webp",
+          "point": [
+            25,
+            45
+          ]
+        },
+        {
+          "key": "sonda_exploradora",
+          "name": "Sonda exploradora",
+          "kind": "Material de referência",
+          "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/instrumentais-detail/sonda_exploradora-v1.webp",
+          "point": [
+            38.4,
+            46
+          ]
+        },
+        {
+          "key": "pinca_clinica",
+          "name": "Pinça clínica",
+          "kind": "Material de referência",
+          "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/instrumentais-detail/pinca_clinica-v1.webp",
+          "point": [
+            50,
+            47
+          ]
+        },
+        {
+          "key": "sonda_periodontal",
+          "name": "Sonda periodontal",
+          "kind": "Material de referência",
+          "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/instrumentais-detail/sonda_periodontal-v1.webp",
+          "point": [
+            63.2,
+            46
+          ]
+        },
+        {
+          "key": "cureta_periodontal",
+          "name": "Cureta periodontal",
+          "kind": "Material de referência",
+          "description": "Referência de reconhecimento visual de instrumentos clínicos. Usar apenas os materiais disponíveis no serviço e revisar com profissional habilitado.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/instrumentais-detail/cureta_periodontal-v1.webp",
+          "point": [
+            75.6,
+            47
+          ]
+        }
+      ],
+      "visual_review": {
+        "date": "2026-11-08",
+        "status": "aprovado_visual_pelo_usuario",
+        "note": "Imagens separadas no pacote local; arquivos binários ainda não enviados ao GitHub/Hostinger. A função od_illustrated_ready exige todos os assets. Nomenclatura e aplicabilidade pendem de revisão profissional."
+      }
+    },
+    {
+      "key": "exodontia",
+      "title": "Instrumentais de exodontia",
+      "eyebrow": "REFERÊNCIA VISUAL · CONSULTA",
+      "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+      "reference_only": true,
+      "document_ids": [],
+      "status": "aprovado_visualmente",
+      "scene": {
+        "asset": "assets/illustrations/exodontia-scene-v1.webp",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Cena ilustrativa com instrumentais de exodontia em bancada clínica"
+      },
+      "items": [
+        {
+          "key": "forceps_dentario",
+          "name": "Fórceps dentário",
+          "kind": "Material de referência",
+          "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/exodontia-detail/forceps_dentario-v1.webp",
+          "point": [
+            24,
+            46
+          ]
+        },
+        {
+          "key": "elevador_dentario",
+          "name": "Elevador dentário",
+          "kind": "Material de referência",
+          "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/exodontia-detail/elevador_dentario-v1.webp",
+          "point": [
+            38.5,
+            47
+          ]
+        },
+        {
+          "key": "periotomo",
+          "name": "Periótomo ilustrativo",
+          "kind": "Material de referência",
+          "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/exodontia-detail/periotomo-v1.webp",
+          "point": [
+            50.8,
+            46
+          ]
+        },
+        {
+          "key": "tesoura_cirurgica",
+          "name": "Tesoura cirúrgica",
+          "kind": "Material de referência",
+          "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/exodontia-detail/tesoura_cirurgica-v1.webp",
+          "point": [
+            64.5,
+            49
+          ]
+        },
+        {
+          "key": "bisturi",
+          "name": "Cabo e lâmina de bisturi ilustrativos",
+          "kind": "Material de referência",
+          "description": "Referências de instrumentos cirúrgicos para identificação, sem instruções de uso ou indicação clínica.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/exodontia-detail/bisturi-v1.webp",
+          "point": [
+            80,
+            49
+          ]
+        }
+      ],
+      "visual_review": {
+        "date": "2026-11-08",
+        "status": "aprovado_visual_pelo_usuario",
+        "note": "Imagens separadas no pacote local; arquivos binários ainda não enviados ao GitHub/Hostinger. A função od_illustrated_ready exige todos os assets. Nomenclatura e aplicabilidade pendem de revisão profissional."
+      }
+    },
+    {
+      "key": "materiais",
+      "title": "Materiais e insumos",
+      "eyebrow": "REFERÊNCIA VISUAL · CONSULTA",
+      "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+      "reference_only": true,
+      "document_ids": [],
+      "status": "aprovado_visualmente",
+      "scene": {
+        "asset": "assets/illustrations/materiais-scene-v1.webp",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Cena ilustrativa com materiais e insumos em bancada clínica"
+      },
+      "items": [
+        {
+          "key": "seringa_carpule",
+          "name": "Seringa carpule ilustrativa",
+          "kind": "Material de referência",
+          "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/materiais-detail/seringa_carpule-v1.webp",
+          "point": [
+            21.9,
+            51
+          ]
+        },
+        {
+          "key": "tubete_anestesico",
+          "name": "Recipiente ilustrativo de anestésico",
+          "kind": "Material de referência",
+          "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/materiais-detail/tubete_anestesico-v1.webp",
+          "point": [
+            32.5,
+            49
+          ]
+        },
+        {
+          "key": "gaze",
+          "name": "Gaze",
+          "kind": "Material de referência",
+          "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/materiais-detail/gaze-v1.webp",
+          "point": [
+            46.1,
+            51
+          ]
+        },
+        {
+          "key": "rolete_algodao",
+          "name": "Rolete de algodão",
+          "kind": "Material de referência",
+          "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/materiais-detail/rolete_algodao-v1.webp",
+          "point": [
+            63.1,
+            51
+          ]
+        },
+        {
+          "key": "copo_dappen",
+          "name": "Copo Dappen",
+          "kind": "Material de referência",
+          "description": "Exemplos de materiais e recipientes usados em consultórios odontológicos. A aparência do produto real pode diferir.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/materiais-detail/copo_dappen-v1.webp",
+          "point": [
+            80,
+            52
+          ]
+        }
+      ],
+      "visual_review": {
+        "date": "2026-11-08",
+        "status": "aprovado_visual_pelo_usuario",
+        "note": "Imagens separadas no pacote local; arquivos binários ainda não enviados ao GitHub/Hostinger. A função od_illustrated_ready exige todos os assets. Nomenclatura e aplicabilidade pendem de revisão profissional."
+      }
+    },
+    {
+      "key": "profilaxia",
+      "title": "Instrumentos de profilaxia",
+      "eyebrow": "REFERÊNCIA VISUAL · CONSULTA",
+      "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+      "reference_only": true,
+      "document_ids": [],
+      "status": "aprovado_visualmente",
+      "scene": {
+        "asset": "assets/illustrations/profilaxia-scene-v1.webp",
+        "width": 1672,
+        "height": 941,
+        "numbers_in_image": false,
+        "alt": "Cena ilustrativa com instrumentos de profilaxia em bancada clínica"
+      },
+      "items": [
+        {
+          "key": "ponta_ultrassom",
+          "name": "Ponta de ultrassom ilustrativa",
+          "kind": "Material de referência",
+          "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/profilaxia-detail/ponta_ultrassom-v1.webp",
+          "point": [
+            21.5,
+            48
+          ]
+        },
+        {
+          "key": "escova_profilaxia",
+          "name": "Escova de profilaxia",
+          "kind": "Material de referência",
+          "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/profilaxia-detail/escova_profilaxia-v1.webp",
+          "point": [
+            34,
+            48
+          ]
+        },
+        {
+          "key": "taca_borracha",
+          "name": "Taça de borracha",
+          "kind": "Material de referência",
+          "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/profilaxia-detail/taca_borracha-v1.webp",
+          "point": [
+            46,
+            48
+          ]
+        },
+        {
+          "key": "disco_polimento",
+          "name": "Disco de polimento",
+          "kind": "Material de referência",
+          "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/profilaxia-detail/disco_polimento-v1.webp",
+          "point": [
+            59.3,
+            48
+          ]
+        },
+        {
+          "key": "pasta_profilatica",
+          "name": "Pasta profilática",
+          "kind": "Material de referência",
+          "description": "Identificação ilustrativa de acessórios de profilaxia; não representa orientação clínica sobre execução.",
+          "check": "Confirmar o nome, a finalidade e as características do item real com o responsável técnico e o fabricante.",
+          "asset": "assets/illustrations/profilaxia-detail/pasta_profilatica-v1.webp",
+          "point": [
+            78.7,
+            51
+          ]
+        }
+      ],
+      "visual_review": {
+        "date": "2026-11-08",
+        "status": "aprovado_visual_pelo_usuario",
+        "note": "Imagens separadas no pacote local; arquivos binários ainda não enviados ao GitHub/Hostinger. A função od_illustrated_ready exige todos os assets. Nomenclatura e aplicabilidade pendem de revisão profissional."
       }
     }
   ]
