@@ -1,0 +1,170 @@
+/* Autoinspeção 360 | Estética clínica editorial em verde institucional */
+.od360-page,.od360-locked{--od-forest:#164434;--od-green:#277c61;--od-ink:#193c2e;--od-line:#dce9df;--od-muted:#657d6d;--od-surface:#fff;--od-soft:#f2f7f3;font:inherit;max-width:1150px;margin:0 auto 80px;color:var(--od-ink)}
+.od360-page *,.od360-locked *{box-sizing:border-box}
+.od360-page h1,.od360-page h2,.od360-page h3,.od360-page p,.od360-locked h1,.od360-locked p{margin:0}
+.od360-kicker{font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:#518d6b;line-height:1.5;display:block}
+.od360-button,.od360-page button.od360-button,.od360-locked .od360-button{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:45px;padding:12px 19px;border:1px solid var(--od-green,#277c61);border-radius:11px;background:var(--od-green,#277c61);color:#fff;text-decoration:none;font-size:12px;font-weight:760;line-height:1.4;white-space:normal;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.od360-button:hover,.od360-page button.od360-button:hover{background:#1c684f;color:#fff;transform:translateY(-1px)}
+.od360-button:focus-visible,.od360-page a:focus-visible,.od360-page summary:focus-visible,.od360-page input:focus-visible,.od360-page select:focus-visible,.od360-page textarea:focus-visible{outline:3px solid #7bc1a1;outline-offset:2px}
+.od360-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:35px;border-radius:23px;background:radial-gradient(ellipse at 86% 15%,rgba(99,176,129,.26),transparent 54%),linear-gradient(120deg,#194837,#123629);padding:clamp(25px,5vw,48px);color:#fff;overflow:hidden;position:relative}
+.od360-hero .od360-kicker{color:#b0dcc1}.od360-hero-main{max-width:670px;position:relative;z-index:1}
+.od360-hero h1{font-size:clamp(32px,4.6vw,52px);letter-spacing:-.055em;line-height:1.1;color:#fff;margin:12px 0 13px}
+.od360-hero p{color:#c5dfcf;font-size:14px;line-height:1.78;max-width:560px}
+.od360-hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}
+.od360-page .od360-button-light{background:#fff;border-color:#fff;color:#194936}
+.od360-page .od360-button-light:hover{background:#e5f2e9;border-color:#e5f2e9;color:#194936}
+.od360-page .od360-button-ghost{background:transparent;border-color:#80a68b;color:#fff}
+.od360-page .od360-button-ghost:hover{background:#ffffff16;border-color:#a2cdb4}
+.od360-hero-num{flex:none;text-align:center;border:1px solid #ffffff3b;background:#ffffff0d;border-radius:18px;padding:24px 21px;min-width:155px;position:relative;z-index:1}
+.od360-hero-num strong{display:block;color:#fff;font-size:51px;letter-spacing:-.055em;line-height:1;font-variant-numeric:tabular-nums}
+.od360-hero-num em{font-size:20px;font-style:normal;color:#a6cdb8}
+.od360-hero-num span{display:block;font-size:11px;color:#c4e2d0;margin-top:8px}
+.od360-note{border-radius:12px;background:#f0f7f1;border:1px solid #d4e5d8;color:#57745f;padding:14px 19px;line-height:1.65;font-size:11.5px;margin:16px 0 24px}
+.od360-note strong{color:#315d41}
+.od360-overview{background:#fff;border:1px solid var(--od-line);border-radius:19px;padding:clamp(19px,3vw,28px)}
+.od360-progress-head{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.od360-progress-head h2{color:var(--od-ink);font-size:clamp(22px,3vw,27px);line-height:1.22;letter-spacing:-.04em;margin:6px 0}
+.od360-progress-head p{font-size:12px;color:#7c9081;line-height:1.6}
+.od360-progress-head>strong{color:var(--od-green);font-size:38px;letter-spacing:-.05em;font-variant-numeric:tabular-nums;flex:none}
+.od360-track{height:9px;background:#eaf0eb;border-radius:999px;margin-top:20px;overflow:hidden}
+.od360-track>span{display:block;height:100%;min-width:0;border-radius:inherit;background:linear-gradient(90deg,#2b8566,#68b88b);transition:width .4s}
+.od360-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:20px;border-top:1px solid #eaf0eb;padding-top:19px}
+.od360-metrics>div{padding:2px 20px;border-right:1px solid #eaf0eb}
+.od360-metrics>div:first-child{padding-left:0}.od360-metrics>div:last-child{border-right:0;padding-right:0}
+.od360-metrics b{display:block;color:#204b36;font-size:25px;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.od360-metrics span{display:block;color:#7d9483;font-size:11px;line-height:1.5;margin-top:3px}
+.od360-next{margin:16px 0 34px;display:flex;justify-content:space-between;gap:20px;align-items:center;background:#e8f3ea;border:1px solid #d0e5d4;border-radius:17px;padding:23px 25px}
+.od360-next h2{font-size:21px;letter-spacing:-.035em;margin:5px 0 5px}
+.od360-next p{font-size:12px;color:#577564;line-height:1.55;max-width:570px}
+.od360-next>.od360-button{flex:none}
+.od360-section-heading{margin:0 0 17px}
+.od360-section-heading h2{font-size:26px;line-height:1.2;letter-spacing:-.045em;margin-top:6px;color:#204b36}
+.od360-section-heading>p{font-size:12px;color:#789383;line-height:1.6;margin-top:7px}
+.od360-area-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:34px}
+.od360-area-chips a{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #dfebe0;background:#fff;border-radius:12px;padding:15px 16px;color:#30543f;text-decoration:none;transition:border-color .2s,background .2s}
+.od360-area-chips a:hover{border-color:#9acbad;background:#f7fbf7}
+.od360-area-chips strong{font-size:12px;font-weight:720}
+.od360-area-chips span{font-size:10px;color:#387957;background:#edf6ed;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.od360-toolbar{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(190px,.45fr);gap:12px;align-items:end;background:#f7faf7;border:1px solid #dfeadf;border-radius:15px;padding:17px 19px}
+.od360-page .od360-toolbar label{font-size:11px;color:#42654c;font-weight:700;margin:0}
+.od360-page .od360-toolbar input,.od360-page .od360-toolbar select{width:100%;margin-top:7px;background:#fff;border:1px solid #cfddcf;border-radius:9px;padding:12px 13px;font-size:13px;color:#274735;min-height:43px}
+.od360-results{font-size:11px;color:#718779;margin:14px 0 19px!important}
+.od360-empty{border:1px dashed #c4dbcb;background:#f8fbf8;padding:22px;text-align:center;border-radius:11px;color:#5e7967;font-size:13px}
+.od360-group{border:1px solid #dfe9e0;border-radius:16px;overflow:hidden;background:#fff;margin-bottom:13px;scroll-margin-top:20px}
+.od360-group>summary{display:flex;justify-content:space-between;align-items:center;gap:20px;cursor:pointer;list-style:none;background:#f8faf8;padding:21px 25px}
+.od360-group>summary::-webkit-details-marker{display:none}
+.od360-group>summary>span:first-child{display:grid;gap:5px}
+.od360-group>summary small{font-size:9px;font-weight:800;letter-spacing:.12em;color:#4b926b}
+.od360-group>summary strong{font-size:21px;letter-spacing:-.04em;line-height:1.3;color:#234b37}
+.od360-group>summary em{font-size:11px;font-weight:500;font-style:normal;color:#7c937e}
+.od360-summary-count{font-size:10px;color:#547f64;border:1px solid #d4e4d7;padding:8px 10px;border-radius:999px;white-space:nowrap}
+.od360-group[open]>summary{border-bottom:1px solid #e4eee5}
+.od360-group-body{padding:9px 18px 20px;display:grid;gap:12px}
+.od360-card{padding:22px;border:1px solid #e3ece3;border-radius:13px;background:#fff;scroll-margin-top:18px;box-shadow:0 3px 14px rgba(21,67,43,.035)}
+.od360-card:target{border-color:#62ac7f;box-shadow:0 0 0 3px #dbefdf,0 4px 16px #1b65421a}
+.od360-card-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.od360-card-id{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.od360-card-id>span:first-child{font-size:11px;font-weight:850;color:#366e4e;background:#eaf5ed;border-radius:6px;padding:6px 9px}
+.od360-card-id>span:last-child{border:1px solid #e0e8e1;color:#5f7867;background:#f8faf8;border-radius:6px;padding:6px 9px;font-size:10px;font-weight:730}
+.od360-card-id .od360-priority-high{color:#985b28!important;background:#fff6e9!important;border-color:#f3e2c6!important}
+.od360-current{font-size:10px;color:#5b7c64;background:#eef5ef;border-radius:7px;padding:7px 9px;font-weight:700;text-align:right}
+.od360-card[data-status=pendente] .od360-current{color:#965331;background:#fff2e9}
+.od360-card[data-status=em_andamento] .od360-current{color:#896023;background:#fff6db}
+.od360-card[data-status=nao_avaliado] .od360-current{background:#f1f3f1;color:#7d8d80}
+.od360-card h3{font-size:17px;line-height:1.4;letter-spacing:-.025em;margin:13px 0 4px;color:#183d2c}
+.od360-source{font-size:10.5px;color:#7b9280;line-height:1.65;margin:0 0 18px!important}
+.od360-page .od360-card label{font-size:12px;color:#42634e;font-weight:710;display:block;margin:0 0 13px}
+.od360-page .od360-card input,.od360-page .od360-card textarea,.od360-page .od360-card select{display:block;width:100%;margin:6px 0 0;min-height:43px;border:1px solid #d6e4d8;background:#fbfdfb;border-radius:9px;padding:10px 12px;color:#203f2e;font-size:13px;font-family:inherit;line-height:1.5}
+.od360-page .od360-card textarea{resize:vertical;min-height:74px}
+.od360-page .od360-card label small{display:block;color:#8da091;font-weight:480;font-size:10px;line-height:1.45;margin-top:4px}
+.od360-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.od360-card-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.od360-page .od360-button-muted{border-color:#cfe0d1;color:#39694b;background:#f4f8f3}
+.od360-page .od360-button-muted:hover{background:#e7f2e7;color:#214c32}
+.od360-bottom{background:#163e2f;border-radius:17px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:29px 31px;margin:29px 0 15px}
+.od360-bottom h2{font-size:23px;color:#fff;line-height:1.25;letter-spacing:-.035em}
+.od360-bottom p{font-size:12px;color:#bfd7c5;line-height:1.6;margin-top:7px;max-width:620px}
+.od360-bottom .od360-button{flex:none;background:#fff;color:#1b5339;border-color:#fff}
+.od360-locked{padding:40px;background:#fff;border:1px solid #d9e7db;border-radius:18px}
+.od360-locked h1{font-size:32px;margin:12px 0}.od360-locked p{font-size:14px;line-height:1.7;color:#64796a;margin-bottom:18px}
+@media(max-width:780px){
+ .od360-hero{align-items:flex-start;flex-direction:column;padding:27px 23px;gap:19px}
+ .od360-hero-num{padding:13px 17px;min-width:auto;display:flex;gap:12px;align-items:center}
+ .od360-hero-num strong{font-size:34px}.od360-hero-num em{font-size:17px}
+ .od360-hero-num span{margin:0}
+ .od360-areas .od360-area-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .od360-metrics{grid-template-columns:repeat(2,1fr);row-gap:14px}
+ .od360-metrics>div{padding:0 13px!important}
+ .od360-metrics>div:nth-child(odd){border-left:0;padding-left:0!important}
+ .od360-metrics>div:nth-child(2){border-right:0}
+ .od360-next,.od360-bottom{flex-direction:column;align-items:stretch;padding:21px}
+ .od360-next .od360-button,.od360-bottom .od360-button{width:100%}
+}
+@media(max-width:520px){
+ .od360-hero h1{font-size:35px}.od360-hero p{font-size:13px;line-height:1.7}
+ .od360-hero-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+ .od360-hero-actions .od360-button{font-size:11px;padding:10px 8px;min-height:43px}
+ .od360-overview{padding:19px 16px}.od360-progress-head>strong{font-size:30px}
+ .od360-areas .od360-area-chips{gap:7px}.od360-area-chips a{padding:12px;min-height:54px}
+ .od360-area-chips strong{font-size:11px}
+ .od360-toolbar{grid-template-columns:1fr;padding:15px}
+ .od360-group>summary{padding:17px}.od360-group>summary strong{font-size:18px}
+ .od360-summary-count{font-size:9px;padding:6px 7px}
+ .od360-group-body{padding:8px 8px 13px}
+ .od360-card{padding:17px 13px}
+ .od360-card-heading{align-items:flex-start;flex-wrap:wrap}.od360-current{margin-left:auto}
+ .od360-card h3{font-size:16px}
+ .od360-form-grid{grid-template-columns:1fr;gap:0}
+ .od360-card-actions{display:grid;grid-template-columns:1fr}
+ .od360-card-actions .od360-button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.od360-page *, .od360-page *::before, .od360-page *::after{transition:none!important;animation:none!important}}
+/* Impressão: A4, tabelas com cabeçalho repetido e blocos divididos com cuidado. */
+body.od360-print{background:#f1f5f1;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#1d3f2f}
+.od360-print-toolbar{display:flex;justify-content:space-between;gap:22px;align-items:center;padding:17px max(22px,calc((100% - 1080px)/2));background:#153f2f;color:#fff}
+.od360-print-toolbar strong{font-size:13px}.od360-print-toolbar>div{display:flex;align-items:center;gap:12px}
+.od360-print-toolbar button,.od360-print-toolbar a{display:inline-flex;align-items:center;justify-content:center;font-size:12px;padding:11px 15px;border-radius:8px;text-decoration:none;cursor:pointer;color:#17412e;background:#fff;border:1px solid #fff;font-weight:750}
+.od360-print-toolbar a{background:transparent;color:#fff;border-color:#7aa38b}
+.od360-report{max-width:990px;margin:28px auto 50px;padding:40px 48px;background:#fff;box-shadow:0 14px 50px #17392517;border-radius:8px;font-size:12px;line-height:1.55}
+.od360-report h1{font-size:34px;letter-spacing:-.05em;line-height:1.17;margin:9px 0 8px;color:#19412f}
+.od360-report h2{font-size:22px;letter-spacing:-.035em;color:#1d4932;margin:0 0 12px}
+.od360-report h3{font-size:14px;color:#285c40;margin:22px 0 7px}
+.od360-report-cover{border-bottom:2px solid #2c7050;padding-bottom:22px;margin-bottom:25px}
+.od360-report-cover>p{font-size:13px;color:#617d68;margin:0 0 21px}
+.od360-report-clinic{display:grid;grid-template-columns:1.3fr .7fr 1.3fr;gap:14px;border:1px solid #dfebdf;background:#f8fbf8;border-radius:8px;padding:18px}
+.od360-report-clinic small{display:block;font-size:8px;letter-spacing:.1em;font-weight:800;color:#659071}
+.od360-report-clinic strong{display:block;font-size:12px;margin-top:5px;overflow-wrap:anywhere}
+.od360-report-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:17px}
+.od360-report-metrics>div{background:#edf6ee;border-radius:7px;padding:15px}
+.od360-report-metrics b{display:block;font-size:26px;line-height:1.1;color:#1a6946}
+.od360-report-metrics span{font-size:10px;color:#598267}
+.od360-report-warning{margin:18px 0 0;padding:14px 16px;border-left:3px solid #b78c4e;background:#fbf7ef;font-size:10px;color:#6d5d3d;line-height:1.7}
+.od360-report-warning strong{display:block;color:#795623;letter-spacing:.12em;margin-bottom:3px}
+.od360-report-section{margin:25px 0}
+.od360-report-section>p{font-size:11px;color:#597b63;margin:0 0 14px}
+.od360-report table{border-collapse:collapse;width:100%;font-size:10px;line-height:1.5;table-layout:fixed}
+.od360-report th{background:#edf5ee;text-align:left;color:#29553b;border:1px solid #d9e6d9;padding:9px 9px;font-weight:800}
+.od360-report td{border:1px solid #dee8de;padding:10px 9px;vertical-align:top;overflow-wrap:anywhere}
+.od360-report td:first-child{width:44%}.od360-report th:nth-child(2){width:22%}
+.od360-report td strong{display:block;font-weight:750}.od360-report td small{display:block;margin-top:5px;font-size:9px;color:#77917d;line-height:1.5}
+.od360-report-sign{margin:30px 0;padding-top:12px;border-top:1px solid #deebdf}
+.od360-report-sign h2{font-size:18px}.od360-report-sign p{font-size:11px}
+.od360-report-sign>div{margin-top:40px;display:flex;gap:25px;flex-wrap:wrap;font-size:11px}
+.od360-report-footer{margin-top:25px;border-top:1px solid #deebdf;padding-top:12px;font-size:9px;color:#82988a}
+@media(max-width:700px){.od360-print-toolbar{flex-direction:column;align-items:flex-start;padding:16px}.od360-report{margin:10px;padding:22px 15px}.od360-report-clinic{grid-template-columns:1fr}.od360-report table{font-size:9px}}
+@page{size:A4 portrait;margin:14mm}
+@media print{
+ html,body.od360-print{background:white!important;margin:0!important;padding:0!important;color:#152f25;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .od360-print-toolbar{display:none!important}
+ .od360-report{max-width:none;margin:0;padding:0;border:0;box-shadow:none;font-size:10pt;border-radius:0}
+ .od360-report h1{font-size:25pt}.od360-report h2{font-size:15pt}.od360-report h3{font-size:11pt}
+ .od360-report table{font-size:8.5pt;line-height:1.4;page-break-inside:auto}
+ .od360-report thead{display:table-header-group}
+ .od360-report tbody tr{break-inside:avoid;page-break-inside:avoid}
+ .od360-report-section{break-before:auto;page-break-before:auto;margin-top:7mm}
+ .od360-report-section h2,.od360-report-section h3{break-after:avoid;page-break-after:avoid}
+ .od360-report-cover{page-break-after:avoid;break-after:avoid}
+ .od360-report-clinic{break-inside:avoid}
+ .od360-report-sign{break-inside:avoid}
+ .od360-report-footer{font-size:8pt}
+}

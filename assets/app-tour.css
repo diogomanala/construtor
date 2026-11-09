@@ -1,0 +1,55 @@
+/* Ajuda de primeiro acesso e orientação contextual, disponível no menu superior */
+.member-header .od-help-trigger{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:none;min-height:42px;padding:9px 12px;border-radius:10px;border:1px solid #cde4d5;background:#eff7f1;color:#285d42;font-size:12px;font-weight:770;white-space:nowrap;box-shadow:none;cursor:pointer;transition:background .2s}
+.member-header .od-help-trigger:hover{background:#dfeee4;color:#1c5236;transform:none}
+.member-header .od-help-trigger .od-help-icon{font-size:15px;font-weight:820;display:grid;place-items:center;border:1.5px solid currentColor;border-radius:50%;width:20px;height:20px;line-height:1}
+.member-header .od-help-trigger:focus-visible{outline:3px solid #7fc69f;outline-offset:3px}
+.od-tour-open{overflow:hidden}
+.od-tour-backdrop{position:fixed;inset:0;background:rgba(12,37,27,.62);backdrop-filter:blur(5px);z-index:2500;display:grid;place-items:center;padding:16px}
+.od-tour-welcome{width:min(100%,510px);max-height:min(90vh,680px);overflow:auto;background:#fff;color:#1f4731;border:1px solid #e4efe5;box-shadow:0 20px 90px #0c28184d;border-radius:22px;padding:clamp(22px,4vw,34px);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.od-tour-kicker{display:block;font-size:10px;font-weight:850;letter-spacing:.13em;color:#34815c;margin-bottom:10px}
+.od-tour-welcome h2{font-size:clamp(25px,4vw,35px);line-height:1.15;letter-spacing:-.04em;margin:0 0 11px;color:#1c5135}
+.od-tour-welcome>p:not(.od-tour-note){font-size:13px;line-height:1.7;margin:0;color:#617768}
+.od-tour-welcome-steps{margin:24px 0;display:grid;gap:10px}
+.od-tour-welcome-step{display:flex;gap:12px;align-items:flex-start;border:1px solid #e0ebe2;background:#f8fbf8;border-radius:11px;padding:14px}
+.od-tour-welcome-step>span{display:grid;place-items:center;background:#e5f3e8;border-radius:9px;color:#298351;font-size:11px;font-weight:850;min-width:35px;min-height:35px}
+.od-tour-welcome-step strong{display:block;color:#1e4931;font-size:13px}
+.od-tour-welcome-step small{display:block;color:#718674;line-height:1.55;font-size:11px;margin-top:4px}
+.od-tour-welcome-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.od-tour-welcome-actions button,.od-tour-guide button{cursor:pointer;border-radius:10px;min-height:42px;border:1px solid transparent;padding:11px 16px;font:750 12px/1.35 Inter,system-ui,sans-serif;transition:background .2s}
+.od-tour-primary,.od-tour-welcome .od-tour-primary{background:#267750;color:white}
+.od-tour-primary:hover{background:#145d3a}
+.od-tour-skip{background:#f1f6f2;color:#41694e;border-color:#d9e7dc!important}
+.od-tour-skip:hover{background:#e6f0e7}
+.od-tour-welcome .od-tour-note{font-size:10px;color:#819585;margin:17px 0 0;line-height:1.5}
+.od-tour-guide{position:fixed;right:clamp(12px,3vw,32px);bottom:clamp(12px,2vw,28px);z-index:2601;width:min(400px,calc(100vw - 24px));background:#fff;border:1px solid #d9e9dc;box-shadow:0 19px 65px rgba(13,50,29,.27);padding:20px 21px 19px;border-radius:17px;font-family:Inter,system-ui,sans-serif;color:#244d32}
+.od-tour-guide-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
+.od-tour-guide-top strong{font-size:13px;color:#1d5235}
+.od-tour-guide .od-tour-x{width:32px;height:32px;min-height:32px;display:grid;place-items:center;padding:0;background:#f2f7f3;color:#3f6750;font-size:22px;line-height:1}
+.od-tour-guide-counter{display:block;font-size:9px;font-weight:850;letter-spacing:.13em;color:#43885d;margin-bottom:7px}
+.od-tour-guide h2{font-size:21px;letter-spacing:-.035em;line-height:1.22;margin:0 0 8px;color:#19412e}
+.od-tour-guide>p{font-size:12px;color:#5d7563;line-height:1.65;margin:0 0 17px}
+.od-tour-guide-actions{display:flex;justify-content:space-between;gap:9px}
+.od-tour-guide-actions button{flex:1}
+.od-tour-guide .od-tour-prev{background:#f0f6f1;border-color:#d9e9dc;color:#467454}
+.od-tour-guide .od-tour-prev[disabled]{opacity:.46;cursor:default}
+.od-tour-guide .od-tour-primary{background:#277c61;color:#fff}
+.od-tour-guide button:focus-visible,.od-tour-welcome button:focus-visible{outline:3px solid #89cba2;outline-offset:3px}
+.od-tour-focus{outline:3px solid #3b9e6f!important;outline-offset:5px!important;box-shadow:0 0 0 9px #63ba8840!important;scroll-margin:95px 0 230px!important;border-radius:9px}
+@media(max-width:920px){.member-header .od-help-trigger{min-height:40px}}
+@media(max-width:520px){
+ .member-header .od-help-trigger{width:40px;min-width:40px;height:40px;padding:0}
+ .member-header .od-help-trigger .od-help-label{display:none}
+ .od-tour-guide{padding:17px;bottom:max(10px,env(safe-area-inset-bottom));right:10px;width:calc(100vw - 20px)}
+ .od-tour-guide h2{font-size:19px}
+ .od-tour-welcome{padding:22px;border-radius:17px}
+ .od-tour-welcome-steps{margin:16px 0}
+}
+@media(max-width:385px){
+ .member-header{padding-left:10px!important;padding-right:10px!important}
+ .member-header .member-header-actions{gap:5px}
+ .member-header .member-menu>summary{min-width:82px;padding:8px 10px}
+ .member-header .member-brand{gap:7px}
+ .member-header .member-brand-word{font-size:17px}
+ .member-header .member-brand-mark{width:30px;height:30px}
+}
+@media(prefers-reduced-motion:reduce){.od-tour-guide *, .od-tour-welcome *{transition:none!important;animation:none!important}}
