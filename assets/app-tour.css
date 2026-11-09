@@ -53,3 +53,27 @@
  .member-header .member-brand-mark{width:30px;height:30px}
 }
 @media(prefers-reduced-motion:reduce){.od-tour-guide *, .od-tour-welcome *{transition:none!important;animation:none!important}}
+
+/* Ajuste mobile: tutorial de primeira entrada sem ações cortadas ou cabeçalho apertado. */
+@media(max-width:520px){
+  .member-header .member-header-inner{min-width:0}
+  .member-header .member-brand{min-width:0;flex:1}
+  .member-header .member-brand-word{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .member-header .member-header-actions{gap:6px;flex:none}
+  .od-tour-backdrop{padding:10px;align-items:center;overflow:hidden}
+  .od-tour-welcome{width:100%;max-height:calc(100dvh - 20px);overflow-y:auto;overscroll-behavior:contain;padding:20px 18px;border-radius:16px}
+  .od-tour-welcome h2{font-size:25px}
+  .od-tour-welcome-steps{gap:7px}
+  .od-tour-welcome-step{padding:11px}
+  .od-tour-welcome-actions{position:sticky;bottom:-20px;background:linear-gradient(180deg,#ffffffd9,#fff 25%);padding:12px 0 3px;justify-content:stretch}
+  .od-tour-welcome-actions button{flex:1;white-space:normal;min-width:0}
+  .od-tour-guide{bottom:max(12px,env(safe-area-inset-bottom));max-height:min(48dvh,370px);overflow-y:auto;overscroll-behavior:contain;border-radius:15px}
+  .od-tour-guide-actions{position:sticky;bottom:-17px;padding-top:11px;background:linear-gradient(180deg,#ffffffc4,#fff 30%)}
+  .od-tour-focus{scroll-margin:90px 0 270px!important}
+}
+@media(max-width:360px){
+  .od-tour-welcome-step small{font-size:10px}
+  .od-tour-welcome-actions button{font-size:11px;padding:10px 8px}
+  .member-header .od-help-trigger{width:36px;min-width:36px;height:36px}
+  .member-header .member-menu>summary{min-height:36px;min-width:78px}
+}
