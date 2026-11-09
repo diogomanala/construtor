@@ -14,7 +14,7 @@ function od_360_allowed():bool{
 }
 function od_360_save():never{
     if(!od_360_allowed() || !($clinic=clinic())){http_response_code(403);exit('Módulo não incluído no seu plano.');}
-    $code=(string)($_POST['code']??'');$index=filter_var(substr($code,1),FILTER_VALIDATE_INT);
+    $code=(string)($_POST['code']??'');$index=preg_match('/^B(?:0[1-9]|[1-3][0-9]|4[0-5])$/',$code)?(int)substr($code,1):0;
     if(!preg_match('/^B\d{2}$/',$code)||!$index||!isset(od_360_items()[$index-1])){http_response_code(400);exit('Verificação desconhecida.');}
     $state=(string)($_POST['status']??'nao_avaliado');if(!in_array($state,['nao_avaliado','pendente','em_andamento','verificado','nao_aplicavel'],true))$state='nao_avaliado';
     od_360_schema()->prepare('INSERT INTO od_inspection360(clinic_id,code,status,evidence,owner,action) VALUES(?,?,?,?,?,?) ON CONFLICT(clinic_id,code) DO UPDATE SET status=excluded.status,evidence=excluded.evidence,owner=excluded.owner,action=excluded.action,updated_at=CURRENT_TIMESTAMP')->execute([$clinic['id'],$code,$state,mb_substr(trim((string)($_POST['evidence']??'')),0,500),mb_substr(trim((string)($_POST['owner']??'')),0,100),mb_substr(trim((string)($_POST['action_note']??'')),0,500)]);
