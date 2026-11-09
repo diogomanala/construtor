@@ -1,39 +1,110 @@
-/* Motor do hero: começa parado (estado estático), liga depois do load,
-   pausa fora da tela e respeita movimento reduzido. ~1 KB. */
-(function(){
-  var stage=document.querySelector('[data-od-motion] #odStage');
-  if(!stage) return;
-  var btn=document.querySelector('[data-od-motion] #odToggle');
-  var rm=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):{matches:false};
-  var inView=true,userPaused=false,started=false;
+/* Motion do hero do Odonto em Dia.
+   Inicializa assim que o DOM estiver pronto, sem aguardar window.load ou fontes externas.
+   Para fora da tela, respeita redução de movimento e permite reprodução manual. */
+(function () {
+  'use strict';
+  function init() {
+    var root = document.querySelector('[data-od-motion]');
+    if (!root || root.dataset.motionReady === '1') return;
+    var stage = root.querySelector('#odStage');
+    if (!stage) return;
+    root.dataset.motionReady = '1';
+    var btn = root.querySelector('#odToggle');
+    var rm = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : {matches:false};
+    var inView = true;
+    var userPaused = !!rm.matches;
+    var manualMotion = false;
+    var observer = null;
 
-  function measure(){
-    var t=stage.querySelector('.od-typed');
-    if(!t) return;
-    var fs=parseFloat(getComputedStyle(t).fontSize)||10;
-    t.style.setProperty('--tw',(t.scrollWidth/fs+.05).toFixed(3)+'em');
-  }
-  function sync(){
-    stage.classList.toggle('is-paused',userPaused||!inView||document.hidden);
-    if(btn){
-      btn.setAttribute('aria-pressed',userPaused?'true':'false');
-      btn.setAttribute('aria-label',userPaused?'Retomar animação':'Pausar animação');
+    function measure() {
+      var label = stage.querySelector('.od-typed');
+      if (!label) return;
+      var fs = parseFloat(getComputedStyle(label).fontSize) || 10;
+      var width = label.scrollWidth / fs + 0.05;
+      if (Number.isFinite(width) && width > 0) label.style.setProperty('--tw', width.toFixed(3) + 'em');
+    }
+
+    function sync() {
+      var paused = userPaused || !inView || document.hidden;
+      stage.classList.toggle('is-paused', paused);
+      var playing = stage.classList.contains('is-playing') && !paused;
+      if (btn) {
+        btn.setAttribute('aria-pressed', playing ? 'false' : 'true');
+        btn.setAttribute('aria-label', playing ? 'Pausar animação' : 'Reproduzir animação');
+        btn.title = playing ? 'Pausar animação' : 'Reproduzir animação';
+      }
+    }
+
+    function start() {
+      stage.classList.add('is-playing');
+      stage.classList.toggle('user-motion', manualMotion);
+      sync();
+    }
+
+    function setMotionPreference() {
+      if (rm.matches && !manualMotion) {
+        userPaused = true;
+        stage.classList.remove('is-playing', 'user-motion');
+      } else {
+        start();
+      }
+      sync();
+    }
+
+    // Primeira cena sempre visível: não depende de eventos externos de carregamento.
+    setMotionPreference();
+    measure();
+    if (window.requestAnimationFrame) requestAnimationFrame(measure);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(measure).catch(function () {});
+    }
+
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(function (entries) {
+        if (!entries.length) return;
+        inView = entries[0].isIntersecting;
+        sync();
+      }, {threshold:0.08});
+      observer.observe(stage);
+    }
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('pageshow', function () {
+      if (!rm.matches || manualMotion) start();
+      measure();
+      sync();
+    });
+    window.addEventListener('resize', measure, {passive:true});
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        if (rm.matches && !manualMotion) {
+          manualMotion = true;
+          userPaused = false;
+          start();
+        } else {
+          userPaused = !userPaused;
+          if (!userPaused && !stage.classList.contains('is-playing')) start();
+        }
+        sync();
+      });
+    }
+    if (rm.addEventListener) {
+      rm.addEventListener('change', function () {
+        manualMotion = false;
+        userPaused = !!rm.matches;
+        setMotionPreference();
+      });
+    } else if (rm.addListener) {
+      rm.addListener(function () {
+        manualMotion = false;
+        userPaused = !!rm.matches;
+        setMotionPreference();
+      });
     }
   }
-  function start(){
-    if(started||rm.matches) return;
-    started=true;
-    var ready=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
-    ready.then(function(){measure();stage.classList.add('is-playing');sync();});
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, {once:true});
+  } else {
+    init();
   }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(e){inView=e[0].isIntersecting;sync();},{threshold:.15}).observe(stage);
-  }
-  document.addEventListener('visibilitychange',sync);
-  if(btn) btn.addEventListener('click',function(){userPaused=!userPaused;sync();});
-  if(rm.addEventListener) rm.addEventListener('change',function(e){
-    if(e.matches){stage.classList.remove('is-playing');started=false;}else{start();}
-  });
-  if(document.readyState==='complete') setTimeout(start,350);
-  else window.addEventListener('load',function(){setTimeout(start,350);});
 })();
