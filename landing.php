@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/hero-motion-v1.css?v=20261109-loop3">
+<link rel="stylesheet" href="assets/hero-motion-v1.css?v=20261109-ray1">
 <link rel="stylesheet" href="assets/hero-mobile-v2.css?v=20261108b">
 </head>
 <body class="sales">
@@ -49,7 +49,7 @@
 </div>
 <div class="hero-media">
 <div class="od-visual od-motion" data-od-motion>
-<div aria-label="Ilustração da plataforma Odonto em Dia: biblioteca com 30 materiais, editor preenchendo o nome da clínica, versão salva, painel de acompanhamento e pasta documental impressa." class="od-stage" id="odStage" role="group">
+<div aria-label="Prévia ilustrativa da plataforma Odonto em Dia: biblioteca de documentos, editor personalizado, salvamento, conferência orientativa de preenchimento e referências normativas relacionadas, com revisão técnica pelo responsável técnico." class="od-stage" id="odStage" role="group">
 <div aria-hidden="true" class="od-s">
 <div class="od-glow"></div>
 <div class="od-rings"></div>
@@ -156,10 +156,23 @@
 <span class="od-l od-w95"></span><span class="od-l od-w88"></span><span class="od-l od-w70"></span>
 <span class="od-l od-w95"></span><span class="od-l od-w45"></span>
 <div class="od-pgtab"></div>
+<!-- Efeito Raio-X ilustrativo aplicado à minuta, sem avaliação jurídica automática -->
+<div class="od-ray-sweep" aria-hidden="true"></div>
 </div>
 </div>
 </section>
 <div class="od-toast"><i></i>Versão salva</div>
+<!-- Etapa: botão real do editor e confirmação ilustrativa de clique -->
+<div class="od-ray-trigger" aria-hidden="true"><span class="od-ray-trigger-icon">⌕</span><span>Conferir minha minuta</span><span class="od-ray-trigger-arrow">›</span><i class="od-ray-touch"></i></div>
+<div class="od-ray-scanning" aria-hidden="true"><span class="od-ray-scanning-dot"></span> Conferindo estrutura e campos...</div>
+<!-- Resultado inspirado no módulo real de conferência local; RT continua responsável -->
+<div class="od-ray-result" aria-hidden="true">
+  <div class="od-ray-top"><span class="od-ray-mark">⌕</span><div><span class="od-ray-kicker">RAIO-X DOCUMENTAL</span><strong>Conferência da minuta</strong></div></div>
+  <div class="od-ray-result-line"><span class="od-ray-symbol">✓</span><div><strong>Campos e estrutura</strong><small>Checagem de preenchimento</small></div></div>
+  <div class="od-ray-result-line"><span class="od-ray-symbol">↗</span><div><strong>Referências normativas</strong><small>RDC Anvisa nº 1.002/2025</small></div></div>
+  <div class="od-ray-result-line"><span class="od-ray-symbol od-ray-warn">!</span><div><strong>Revisão pelo RT</strong><small>Necessária antes do uso</small></div></div>
+  <p class="od-ray-disclaimer">Conferência orientativa · sem certificação sanitária</p>
+</div>
 </div>
 </div>
 </div>
