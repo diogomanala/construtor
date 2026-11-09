@@ -245,6 +245,7 @@
         <p>Organize os materiais antes da revisão do responsável técnico.</p>
       </div>
     </div>
+    <p class="od-rdc-mobile-hint">Deslize para conhecer os 5 assuntos <?=si('arrow')?></p>
     <div class="od-rdc-card-grid" aria-label="Assuntos para conferir na documentação">
       <article class="od-rdc-card">
         <div class="od-rdc-card-icon"><?=si('file')?></div>
