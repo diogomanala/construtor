@@ -263,6 +263,6 @@
 </main>
 <footer class="site-footer"><div class="wrap footer-flex"><div><a href="?page=inicio" class="footer-brand"><img class="footer-mark" src="assets/favicon.svg?v=9" width="26" height="26" alt=""> odonto<span>emdia</span></a><p>Ferramenta auxiliar de organização documental odontológica.<br>Sem vínculo, endosso ou certificação da Anvisa, CRO ou órgãos fiscalizadores.</p></div><div class="footer-links"><a href="#entrega">Ver materiais</a><a href="?page=entrar">Entrar</a><a href="#base-legal">Base normativa</a><a href="?page=termos">Termos de uso</a><a href="?page=politica-privacidade">Privacidade</a><span>© 2026 Odonto em Dia</span></div></div></footer>
 <div class="mobile-sticky"><span><small>Kit principal</small><b>R$ 67</b></span><a href="?page=checkout" class="btn">Conferir compra <?=si('arrow')?></a></div>
-<script src="assets/hero-motion-v1.js?v=20261109-loop3" defer></script>
+<script src="assets/hero-motion-v1.js?v=20261109-ray1" defer></script>
 </body>
 </html>
