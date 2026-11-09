@@ -270,12 +270,21 @@
 @keyframes od-float-s{from{translate:0 0}to{translate:0 -.3em}}
 @keyframes od-breathe{from{opacity:.7;scale:1}to{opacity:1;scale:1.05}}
 @keyframes od-breathe2{from{opacity:.75;scale:1}to{opacity:1;scale:1.025}}
-@media  (prefers-reduced-motion: reduce){.hero-media .od-motion .od-stage *,.hero-media .od-motion .od-stage *::before,.hero-media .od-motion .od-stage *::after{animation:none !important}
-.hero-media .od-motion .od-scr-lib{opacity:0}
-.hero-media .od-motion .od-scr-ed{opacity:1;translate:0 0}
-.hero-media .od-motion .od-typed{width:auto}
-.hero-media .od-motion .od-pgph,.hero-media .od-motion .od-pglogo .od-a{opacity:0}
-.hero-media .od-motion .od-pgreal,.hero-media .od-motion .od-pglogo .od-b{opacity:1;translate:0 0}
-.hero-media .od-motion .od-toggle{display:none}}
+/* Redução de movimento: cena estática por padrão, mas o usuário pode apertar Play. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-media .od-motion .od-stage:not(.user-motion) *,
+  .hero-media .od-motion .od-stage:not(.user-motion) *::before,
+  .hero-media .od-motion .od-stage:not(.user-motion) *::after {animation:none !important}
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-scr-lib {opacity:0}
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-scr-ed {opacity:1;translate:0 0}
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-typed {width:auto}
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-pgph,
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-pglogo .od-a {opacity:0}
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-pgreal,
+  .hero-media .od-motion .od-stage:not(.user-motion) .od-pglogo .od-b {opacity:1;translate:0 0}
+  .hero-media .od-motion .od-toggle {display:grid}
+}
+/* Identidade da marca unificada, inclusive no tablet de demonstração. */
+.hero-media .od-motion .od-sbrand>span{white-space:nowrap;letter-spacing:-.04em;font-size:.91em}
 /* Informação discreta sobre o caráter demonstrativo da cena */
 .hero-media .od-motion .od-motion-caption { margin:2px 0 0;text-align:center;color:#647b6e;font:500 10px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.025em }
