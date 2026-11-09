@@ -1,5 +1,5 @@
 /* Odonto em Dia | hero motion fornecido pelo usuário, estilos isolados */
-.hero-media .od-motion {--g900:#164434;--g700:#277C61;--g50:#EBF2ED;--paper:#F6F4EE;--ink:#13261F;--mute:#56665F;--line:#E1E5DF;--font-display:"Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--font-body:"Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--od-dur:10s;
+.hero-media .od-motion {--g900:#164434;--g700:#277C61;--g50:#EBF2ED;--paper:#F6F4EE;--ink:#13261F;--mute:#56665F;--line:#E1E5DF;--font-display:"Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--font-body:"Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--od-dur:15s;
  color-scheme:light;isolation:isolate;width:100%;max-width:100%;font-family:var(--font-body); color:var(--ink);
 }
 .hero-media .od-motion *, .hero-media .od-motion *::before, .hero-media .od-motion *::after {box-sizing:border-box}
@@ -243,8 +243,8 @@
 @keyframes od-cam{0%,16%{scale:1;animation-timing-function:cubic-bezier(.65,0,.35,1)}32%{scale:1.045}62%{scale:1.045;animation-timing-function:cubic-bezier(.65,0,.35,1)}76%,100%{scale:1}}
 @keyframes od-dim{0%,18%{opacity:1;animation-timing-function:cubic-bezier(.45,0,.55,1)}30%{opacity:.62}62%{opacity:.62;animation-timing-function:cubic-bezier(.45,0,.55,1)}74%,100%{opacity:1}}
 @keyframes od-dimp{0%,18%{opacity:1;animation-timing-function:cubic-bezier(.45,0,.55,1)}30%{opacity:.6}58%{opacity:.6;animation-timing-function:cubic-bezier(.45,0,.55,1)}66%,100%{opacity:1}}
-@keyframes od-lib{0%,27%{opacity:1;translate:0 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}33%{opacity:0;translate:-1.6em 0}86%{opacity:0;translate:-1.6em 0;animation-timing-function:cubic-bezier(.22,1,.36,1)}92%,100%{opacity:1;translate:0 0}}
-@keyframes od-ed{0%,27%{opacity:0;translate:1.6em 0;animation-timing-function:cubic-bezier(.22,1,.36,1)}33.5%{opacity:1;translate:0 0}86%{opacity:1;translate:0 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}92%,100%{opacity:0;translate:1.6em 0}}
+@keyframes od-lib{0%,27%{opacity:1;translate:0 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}33%{opacity:0;translate:-1.6em 0}95%{opacity:0;translate:-1.6em 0;animation-timing-function:cubic-bezier(.22,1,.36,1)}99%,100%{opacity:1;translate:0 0}}
+@keyframes od-ed{0%,27%{opacity:0;translate:1.6em 0;animation-timing-function:cubic-bezier(.22,1,.36,1)}33.5%{opacity:1;translate:0 0}95%{opacity:1;translate:0 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}99%,100%{opacity:0;translate:1.6em 0}}
 @keyframes od-tap1{0%,18.5%{opacity:0;scale:.5;animation-timing-function:cubic-bezier(.22,1,.36,1)}21%{opacity:1;scale:1}22.5%{scale:.8}24%{opacity:.85;scale:1.08}27%,100%{opacity:0;scale:1.3}}
 @keyframes od-tap2{0%,35.5%{opacity:0;scale:.5;animation-timing-function:cubic-bezier(.22,1,.36,1)}38%{opacity:1;scale:1}39.5%{scale:.8}41%{opacity:.85;scale:1.08}44%,100%{opacity:0;scale:1.3}}
 @keyframes od-press{0%,21%{scale:1}22.5%{scale:.965}24.5%,100%{scale:1}}
@@ -256,7 +256,7 @@
 @keyframes od-hph{0%,53%{opacity:1}56%{opacity:0}92.9%{opacity:0}93%,100%{opacity:1}}
 @keyframes od-hreal{0%,53.5%{opacity:0;translate:0 .35em;animation-timing-function:cubic-bezier(.22,1,.36,1)}57.5%{opacity:1;translate:0 0}92.9%{opacity:1;translate:0 0}93%,100%{opacity:0;translate:0 .35em}}
 @keyframes od-wash{0%,54%{opacity:0}57%{opacity:1}66%,100%{opacity:0}}
-@keyframes od-toast{0%,58%{opacity:0;translate:-50% 1em;animation-timing-function:cubic-bezier(.22,1,.36,1)}62%{opacity:1;translate:-50% 0}77%{opacity:1;translate:-50% 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}81%,100%{opacity:0;translate:-50% .6em}}
+@keyframes od-toast{0%,58%{opacity:0;translate:-50% 1em;animation-timing-function:cubic-bezier(.22,1,.36,1)}62%{opacity:1;translate:-50% 0}65%{opacity:1;translate:-50% 0;animation-timing-function:cubic-bezier(.7,0,.84,0)}67%,100%{opacity:0;translate:-50% .6em}}
 @keyframes od-v3{0%,59%{opacity:1}61%{opacity:0}92.9%{opacity:0}93%,100%{opacity:1}}
 @keyframes od-v4{0%,59.5%{opacity:0}61.5%{opacity:1}92.9%{opacity:1}93%,100%{opacity:0}}
 @keyframes od-check{0%,69%{scale:0;opacity:0;animation-timing-function:cubic-bezier(.34,1.56,.64,1)}72.5%{scale:1;opacity:1}92.4%{scale:1;opacity:1}92.5%,100%{scale:0;opacity:0}}
@@ -284,3 +284,121 @@
 .hero-media .od-motion .od-sbrand>span{white-space:nowrap;letter-spacing:-.04em;font-size:.91em}
 /* Informação discreta sobre o caráter demonstrativo da cena */
 .hero-media .od-motion .od-motion-caption { margin:2px 0 0;text-align:center;color:#647b6e;font:500 10px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.025em }
+
+/* ================================
+   Etapa final: Raio-X da minuta
+   O botão é uma demonstração do comando real "Conferir minha minuta".
+   Checagem visual de estrutura e referências normativas, sem certificação.
+   Timeline partilhada do hero: 15 s em repetição infinita.
+   ================================ */
+.hero-media .od-motion .od-ray-trigger {
+  position:absolute;z-index:8;right:1.2em;bottom:1.35em;
+  display:flex;align-items:center;justify-content:center;gap:.6em;
+  min-width:16.5em;min-height:3.15em;padding:.65em .95em;
+  border-radius:.65em;color:#fff;background:linear-gradient(140deg,#277C61,#164434);
+  border:1px solid rgba(255,255,255,.18);box-shadow:0 .8em 2.1em -.6em rgba(15,61,44,.44);
+  font-size:1.05em;font-weight:800;letter-spacing:-.015em;white-space:nowrap;
+  opacity:0;transform:translateY(.7em) scale(.96);pointer-events:none;
+}
+.hero-media .od-motion .od-ray-trigger-icon{display:grid;place-items:center;width:1.4em;height:1.4em;border:1px solid rgba(255,255,255,.35);border-radius:50%;font-size:1.12em;line-height:1}
+.hero-media .od-motion .od-ray-trigger-arrow{font-size:1.3em;line-height:1;margin-left:.3em}
+.hero-media .od-motion .od-ray-touch{position:absolute;right:1.2em;top:50%;width:2.8em;height:2.8em;margin-top:-1.4em;border:2px solid rgba(21,141,104,.48);border-radius:50%;background:rgba(184,245,209,.3);opacity:0;pointer-events:none}
+.hero-media .od-motion .od-ray-sweep{position:absolute;left:0;top:0;width:100%;height:6em;z-index:4;
+ background:linear-gradient(to bottom,transparent,rgba(70,210,162,.11) 50%,rgba(35,186,139,.29) 95%);
+ border-bottom:.2em solid #20af8a;box-shadow:0 .55em 1.7em rgba(40,173,131,.25);
+ opacity:0;transform:translateY(-120%);pointer-events:none}
+.hero-media .od-motion .od-ray-scanning {
+ position:absolute;z-index:8;left:1.4em;top:1.25em;padding:.72em .95em;
+ background:rgba(14,61,46,.95);color:#fff;border:1px solid rgba(255,255,255,.12);
+ border-radius:999px;font-size:.85em;font-weight:760;white-space:nowrap;letter-spacing:.005em;
+ opacity:0;transform:translateY(-.6em);pointer-events:none;box-shadow:0 .7em 1.6em rgba(14,52,38,.17)
+}
+.hero-media .od-motion .od-ray-scanning-dot{display:inline-block;width:.65em;height:.65em;background:#8bf0bc;border-radius:50%;margin-right:.5em;box-shadow:0 0 0 .3em rgba(93,214,167,.19)}
+.hero-media .od-motion .od-ray-result {
+ position:absolute;inset:1em 1.05em;z-index:9;display:flex;flex-direction:column;gap:.85em;
+ padding:1.45em 1.45em 1em;
+ background:linear-gradient(160deg,#fcfffd 0%,#f0f7f2 100%);
+ border:1px solid #d6e7dc;border-radius:1.2em;
+ box-shadow:0 1.2em 3em -1em rgba(14,34,27,.18);
+ opacity:0;transform:translateY(.85em) scale(.965);pointer-events:none;overflow:hidden}
+.hero-media .od-motion .od-ray-result::after {
+ content:"";position:absolute;right:-7em;top:-9em;width:20em;height:20em;border-radius:50%;
+ background:radial-gradient(circle,rgba(71,182,135,.13),transparent 70%);pointer-events:none}
+.hero-media .od-motion .od-ray-top{display:flex;gap:.95em;align-items:center;padding-bottom:1.05em;border-bottom:1px solid #d7e6db}
+.hero-media .od-motion .od-ray-mark{display:grid;place-items:center;width:3.4em;height:3.4em;background:var(--g900);color:#c3ffe1;border-radius:.8em;font-size:1em;flex:none}
+.hero-media .od-motion .od-ray-top>div{min-width:0;display:flex;flex-direction:column;gap:.35em}
+.hero-media .od-motion .od-ray-kicker{font-size:.73em;font-weight:800;letter-spacing:.15em;color:var(--g700)}
+.hero-media .od-motion .od-ray-top strong{font-size:1.52em;line-height:1.12;letter-spacing:-.025em;color:var(--ink)}
+.hero-media .od-motion .od-ray-result-line{display:flex;align-items:center;gap:.9em;padding:.68em .72em;background:#fff;border:1px solid #e1ebe4;border-radius:.68em;opacity:0;transform:translateY(.6em)}
+.hero-media .od-motion .od-ray-symbol{display:grid;place-items:center;flex:none;width:2.15em;height:2.15em;border-radius:.55em;background:#dff4e9;color:#187257;font-size:1em;font-weight:850}
+.hero-media .od-motion .od-ray-symbol.od-ray-warn{background:#f5edda;color:#946c25}
+.hero-media .od-motion .od-ray-result-line>div{min-width:0;display:flex;flex-direction:column;gap:.15em}
+.hero-media .od-motion .od-ray-result-line strong{font-size:1.02em;line-height:1.16;letter-spacing:-.015em;color:#173c31}
+.hero-media .od-motion .od-ray-result-line small{font-size:.78em;color:#657e71;font-weight:620;line-height:1.25}
+.hero-media .od-motion .od-ray-disclaimer{font-size:.73em!important;line-height:1.4!important;color:#678073;text-align:center;margin:auto 0 0!important}
+.hero-media .od-motion .od-stage.is-playing .od-ray-trigger{animation:od-ray-cta var(--od-dur) linear infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-touch{animation:od-ray-click var(--od-dur) linear infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-sweep{animation:od-ray-beam var(--od-dur) ease-in-out infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-scanning{animation:od-ray-label var(--od-dur) ease-in-out infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-result{animation:od-ray-final var(--od-dur) ease-in-out infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-result-line:nth-of-type(2){animation:od-ray-row1 var(--od-dur) ease-in-out infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-result-line:nth-of-type(3){animation:od-ray-row2 var(--od-dur) ease-in-out infinite}
+.hero-media .od-motion .od-stage.is-playing .od-ray-result-line:nth-of-type(4){animation:od-ray-row3 var(--od-dur) ease-in-out infinite}
+@keyframes od-ray-cta{
+  0%,66%{opacity:0;transform:translateY(.7em) scale(.96)}
+  68%,70%{opacity:1;transform:translateY(0) scale(1)}
+  71%{opacity:1;transform:translateY(0) scale(.95)}
+  72%{opacity:1;transform:translateY(0) scale(1)}
+  74%,100%{opacity:0;transform:translateY(-.3em) scale(.99)}
+}
+@keyframes od-ray-click{
+  0%,69.5%{opacity:0;transform:scale(.2)}
+  70.5%{opacity:1;transform:scale(.7)}
+  72%{opacity:.8;transform:scale(1.25)}
+  73%,100%{opacity:0;transform:scale(1.8)}
+}
+@keyframes od-ray-beam{
+  0%,73%{opacity:0;transform:translateY(-120%)}
+  74%{opacity:1;transform:translateY(-70%)}
+  82%{opacity:1;transform:translateY(430%)}
+  84%,100%{opacity:0;transform:translateY(500%)}
+}
+@keyframes od-ray-label{
+  0%,73%{opacity:0;transform:translateY(-.6em)}
+  75%,82%{opacity:1;transform:translateY(0)}
+  84%,100%{opacity:0;transform:translateY(.2em)}
+}
+@keyframes od-ray-final{
+  0%,83%{opacity:0;transform:translateY(.85em) scale(.965)}
+  86%,95%{opacity:1;transform:translateY(0) scale(1)}
+  98%,100%{opacity:0;transform:translateY(-.2em) scale(.99)}
+}
+@keyframes od-ray-row1{
+  0%,84%{opacity:0;transform:translateY(.6em)}
+  87%,95%{opacity:1;transform:translateY(0)}
+  98%,100%{opacity:0;transform:translateY(0)}
+}
+@keyframes od-ray-row2{
+  0%,86%{opacity:0;transform:translateY(.6em)}
+  89%,95%{opacity:1;transform:translateY(0)}
+  98%,100%{opacity:0;transform:translateY(0)}
+}
+@keyframes od-ray-row3{
+  0%,88%{opacity:0;transform:translateY(.6em)}
+  91%,95%{opacity:1;transform:translateY(0)}
+  98%,100%{opacity:0;transform:translateY(0)}
+}
+@media (max-width:820px){
+  .hero-media .od-motion .od-ray-trigger{right:1em;bottom:1em;min-width:0;max-width:calc(100% - 2em);font-size:.87em;gap:.3em;padding:.55em .72em}
+  .hero-media .od-motion .od-ray-scanning{left:.8em;top:.8em;font-size:.74em;max-width:calc(100% - 1.6em)}
+  .hero-media .od-motion .od-ray-result{inset:.65em;padding:.95em;gap:.6em;border-radius:1em}
+  .hero-media .od-motion .od-ray-top{gap:.55em;padding-bottom:.72em}
+  .hero-media .od-motion .od-ray-mark{width:2.8em;height:2.8em}
+  .hero-media .od-motion .od-ray-top strong{font-size:1.3em}
+  .hero-media .od-motion .od-ray-kicker{font-size:.63em}
+  .hero-media .od-motion .od-ray-result-line{gap:.5em;padding:.62em .5em;border-radius:.55em}
+  .hero-media .od-motion .od-ray-symbol{width:1.95em;height:1.95em}
+  .hero-media .od-motion .od-ray-result-line strong{font-size:.9em}
+  .hero-media .od-motion .od-ray-result-line small{font-size:.68em}
+  .hero-media .od-motion .od-ray-disclaimer{font-size:.6em!important}
+}
