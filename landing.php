@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0c2e35">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
-<link rel="stylesheet" href="sales.css?v=preparacao-20261109">
+<link rel="stylesheet" href="sales.css?v=editorial-rdc-20261109">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -230,14 +230,78 @@
     <p class="pack-gallery-note">Mockups ilustrativos. Documentos são minutas para adaptação e revisão do responsável técnico.</p>
   </div>
 </section>
-<section class="space normative" id="base-legal"><div class="wrap"><div class="section-heading split"><div><span class="sec-label">Referências normativas</span><h2>Referências normativas <em>para consulta direta.</em></h2></div><p>A plataforma usa documentos de referência para apoiar a organização. Não é um produto da Anvisa nem possui certificação ou chancela de órgãos públicos.</p></div><div class="norm-grid"><a href="https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&amp;cod_menu=8499&amp;cod_modulo=293&amp;link=S&amp;numeroAto=00001002&amp;orgao=RDC%2FDC%2FANVISA%2FMS&amp;seqAto=000&amp;tipo=RDC&amp;valorAno=2025" target="_blank" rel="noopener noreferrer" class="norm-card"><span class="icon-box"><?=si('file')?></span><strong>RDC Anvisa 1.002/2025</strong><small>Boas práticas de funcionamento dos serviços odontológicos</small><span class="norm-foot">Consultar texto da norma <?=si('arrow')?></span></a><a href="https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/projeto-de-melhoria-do-processo-de-inspecao-sanitaria-em-servicos-de-saude-e-de-interesse-para-a-saude/harmonizacao-de-roteiros-objetivos-de-inspecao-roi/confira-os-materiais-disponibilizados-roi-planilhas-sintese-e-links-de-limesurvey" target="_blank" rel="noopener noreferrer" class="norm-card"><span class="icon-box"><?=si('clipboard')?></span><strong>Roteiro de Inspeção Odontológica</strong><small>Referência pública da Anvisa, versão 1.2, agosto/2026</small><span class="norm-foot">Consultar material oficial <?=si('arrow')?></span></a><div class="norm-note"><?=si('shield')?><span><b>Importante:</b> “Alinhado à norma” não significa “certificado pela Anvisa”. A implementação e a avaliação da conformidade são atividades distintas da entrega de modelos.</span></div></div></div></section>
-<section class="space trust-gallery" aria-label="Exemplos de conversas sobre a experiência">
-<div class="wrap"><div class="section-heading centered"><span class="sec-label">Exemplos de mensagens</span><h2>Uma forma simples de <em>organizar a rotina.</em></h2><p>Conversas ilustrativas criadas como simulações, não avaliações recebidas de compradores.</p></div>
-<div class="trust-gallery-grid">
-<figure class="trust-gallery-card"><img src="/uploads/depoimento1.webp" loading="lazy" decoding="async" alt="Primeira conversa ilustrativa de WhatsApp sobre o kit odontológico"></figure>
-<figure class="trust-gallery-card"><img src="/uploads/depoimento2.webp" loading="lazy" decoding="async" alt="Segunda conversa ilustrativa de WhatsApp sobre organização documental"></figure>
-<figure class="trust-gallery-card"><img src="/uploads/depoimento3.webp" loading="lazy" decoding="async" alt="Terceira conversa ilustrativa de WhatsApp sobre o kit digital"></figure>
-</div></div></section>
+<section class="space normative" id="base-legal"><div class="wrap"><div class="section-heading split"><div><span class="sec-label">Legislação sanitária odontológica</span><h2>RDC 1.002/2025: <em>consulte a norma e organize suas rotinas.</em></h2></div><p>A plataforma usa documentos de referência para apoiar a organização. Não é um produto da Anvisa nem possui certificação ou chancela de órgãos públicos.</p></div><div class="norm-grid"><a href="https://anvisalegis.datalegis.net/action/ActionDatalegis.php?acao=abrirTextoAto&amp;cod_menu=8499&amp;cod_modulo=293&amp;link=S&amp;numeroAto=00001002&amp;orgao=RDC%2FDC%2FANVISA%2FMS&amp;seqAto=000&amp;tipo=RDC&amp;valorAno=2025" target="_blank" rel="noopener noreferrer" class="norm-card"><span class="icon-box"><?=si('file')?></span><strong>RDC Anvisa 1.002/2025</strong><small>Boas práticas de funcionamento dos serviços odontológicos</small><span class="norm-foot">Consultar texto da norma <?=si('arrow')?></span></a><a href="https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/projeto-de-melhoria-do-processo-de-inspecao-sanitaria-em-servicos-de-saude-e-de-interesse-para-a-saude/harmonizacao-de-roteiros-objetivos-de-inspecao-roi/confira-os-materiais-disponibilizados-roi-planilhas-sintese-e-links-de-limesurvey" target="_blank" rel="noopener noreferrer" class="norm-card"><span class="icon-box"><?=si('clipboard')?></span><strong>Roteiro de Inspeção Odontológica</strong><small>Referência pública da Anvisa, versão 1.2, agosto/2026</small><span class="norm-foot">Consultar material oficial <?=si('arrow')?></span></a><div class="norm-note"><?=si('shield')?><span><b>Importante:</b> “Alinhado à norma” não significa “certificado pela Anvisa”. A implementação e a avaliação da conformidade são atividades distintas da entrega de modelos.</span></div></div></div></section>
+<section class="space od-rdc-editorial" id="orientacao-rdc" aria-labelledby="od-rdc-title">
+  <div class="wrap">
+    <div class="od-rdc-heading">
+      <div class="od-rdc-heading-copy">
+        <span class="sec-label">RDC Anvisa nº 1.002/2025 · Organização documental</span>
+        <h2 id="od-rdc-title">Se pedirem os documentos da clínica hoje, <em>o que você já consegue apresentar?</em></h2>
+        <p>POPs, registros, planos e responsabilidades precisam refletir a rotina real do consultório. A trilha do Odonto em Dia ajuda a localizar modelos, preparar minutas e acompanhar pontos que ainda precisam de atenção.</p>
+      </div>
+      <div class="od-rdc-heading-aside">
+        <span class="od-rdc-aside-icon"><?=si('list')?></span>
+        <strong>Comece pelo que precisa conferir.</strong>
+        <p>Organize os materiais antes da revisão do responsável técnico.</p>
+      </div>
+    </div>
+    <div class="od-rdc-card-grid" aria-label="Assuntos para conferir na documentação">
+      <article class="od-rdc-card">
+        <div class="od-rdc-card-icon"><?=si('file')?></div>
+        <span class="od-rdc-card-number">01</span>
+        <h3>Documentos do estabelecimento</h3>
+        <p>Confira dados cadastrais, documentação do serviço e situação da licença sanitária, conforme o caso.</p>
+      </article>
+      <article class="od-rdc-card">
+        <div class="od-rdc-card-icon"><?=si('clipboard')?></div>
+        <span class="od-rdc-card-number">02</span>
+        <h3>POPs e biossegurança</h3>
+        <p>Prepare procedimentos escritos coerentes com as rotinas e os riscos da sua equipe.</p>
+      </article>
+      <article class="od-rdc-card">
+        <div class="od-rdc-card-icon"><?=si('list')?></div>
+        <span class="od-rdc-card-number">03</span>
+        <h3>Registros das rotinas</h3>
+        <p>Organize evidências de esterilização, limpeza e manutenção das atividades realizadas.</p>
+      </article>
+      <article class="od-rdc-card">
+        <div class="od-rdc-card-icon"><?=si('shield')?></div>
+        <span class="od-rdc-card-number">04</span>
+        <h3>Resíduos e PGRSS</h3>
+        <p>Reúna o plano e os registros relacionados ao gerenciamento de resíduos do serviço.</p>
+      </article>
+      <article class="od-rdc-card">
+        <div class="od-rdc-card-icon"><?=si('user')?></div>
+        <span class="od-rdc-card-number">05</span>
+        <h3>Revisão do responsável técnico</h3>
+        <p>Identifique minutas ainda pendentes de conferência, validação profissional e formalização.</p>
+      </article>
+    </div>
+    <div class="od-rdc-checklist">
+      <div class="od-rdc-checklist-title">
+        <span class="od-rdc-checklist-icon"><?=si('clipboard')?></span>
+        <div>
+          <span class="sec-label">Roteiro inicial</span>
+          <h3>Por onde começar a organização?</h3>
+          <p>Exemplos de frentes documentais a avaliar. A aplicabilidade depende dos serviços prestados e das normas pertinentes.</p>
+        </div>
+      </div>
+      <ul class="od-rdc-checklist-items" aria-label="Exemplos de frentes a conferir">
+        <li><?=si('check')?> Dados e licença do estabelecimento</li>
+        <li><?=si('check')?> POPs utilizados pela equipe</li>
+        <li><?=si('check')?> Registros de esterilização</li>
+        <li><?=si('check')?> PGRSS e resíduos</li>
+        <li><?=si('check')?> Limpeza e manutenção</li>
+        <li><?=si('check')?> Revisão técnica das minutas</li>
+      </ul>
+      <div class="od-rdc-checklist-action">
+        <a class="btn btn-large" href="#oferta">Conhecer a trilha guiada <?=si('arrow')?></a>
+        <span>Na plataforma, você acompanha documentos e pendências no mesmo acesso.</span>
+      </div>
+    </div>
+    <p class="od-rdc-technical-note"><?=si('shield')?> A plataforma organiza modelos e permite conferência de preenchimento. Não emite licença, certificado ou parecer de conformidade. A aplicação das normas e a revisão dos documentos dependem do responsável técnico e da realidade da clínica.</p>
+  </div>
+</section>
 <section class="space included"><div class="wrap"><div class="section-heading centered"><span class="sec-label">Sem letras miúdas</span><h2>Saiba exatamente o que entra nos R$ 67.</h2></div><div class="included-grid"><article class="included-card yes"><h3><?=si('check')?> Faz parte do kit principal</h3><ul><li>Plataforma online com login</li><li>Onboarding de configuração da clínica</li><li>Painel de 17 frentes documentais</li><li>Biblioteca de 30 materiais de referência</li><li>Editor assistido, histórico de versões e prévia documental premium</li><li>Autoavaliação inicial de 15 pontos</li><li>Registro de responsáveis, prazos e observações</li></ul></article><article class="included-card no"><h3><?=si('close')?> Vendido à parte ou não fornecido</h3><ul><li>Autoinspeção 360 ampliada: produto complementar</li><li>Consultoria técnica individualizada</li><li>Documentos assinados ou aprovados pelo RT</li><li>Projetos arquitetônicos, laudos e licenças</li><li>Certificação, chancela ou selo da Anvisa</li><li>Garantia de aprovação em fiscalização</li><li>Serviços profissionais não descritos no kit</li></ul></article></div></div></section>
 <section class="space portrait-story" aria-label="Apresentação visual do kit digital">
   <div class="wrap portrait-story-layout">
