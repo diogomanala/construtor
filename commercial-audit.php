@@ -3,7 +3,7 @@ declare(strict_types=1);
 /** Auditoria comercial somente do proprietário. Não expõe segredos nem PII. */
 function od_commercial_audit_page(): never {
   if(!user()){redirect('?page=entrar');}
-  if((int)user()!==1){http_response_code(403);exit('Acesso restrito.');}
+  if((int)user()!==1 || !od_is_pilot((int)user())){http_response_code(403);exit('Acesso restrito.');}
   $cfg=od_mp_config();
   $mp=od_mp_ready();
   $secretConfigured=!empty($cfg['webhook_secret']);
