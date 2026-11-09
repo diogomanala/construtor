@@ -168,7 +168,7 @@
 <!-- Resultado inspirado no módulo real de conferência local; RT continua responsável -->
 <div class="od-ray-result" aria-hidden="true">
   <div class="od-ray-top"><span class="od-ray-mark">⌕</span><div><span class="od-ray-kicker">RAIO-X DOCUMENTAL</span><strong>Conferência da minuta</strong></div></div>
-  <div class="od-ray-result-line"><span class="od-ray-symbol">✓</span><div><strong>Campos e estrutura</strong><small>Checagem de preenchimento</small></div></div>
+  <div class="od-ray-result-line"><span class="od-ray-symbol">≡</span><div><strong>Campos e estrutura</strong><small>Pontos a conferir na minuta</small></div></div>
   <div class="od-ray-result-line"><span class="od-ray-symbol">↗</span><div><strong>Referências normativas</strong><small>RDC Anvisa nº 1.002/2025</small></div></div>
   <div class="od-ray-result-line"><span class="od-ray-symbol od-ray-warn">!</span><div><strong>Revisão pelo RT</strong><small>Necessária antes do uso</small></div></div>
   <p class="od-ray-disclaimer">Conferência orientativa · sem certificação sanitária</p>
