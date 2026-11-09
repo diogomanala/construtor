@@ -34,6 +34,7 @@ function h(string $page,bool $showHeading=true):void {
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['sair'=>'Sair']
  ];
+ if((int)(user()??0)===1)$menu['GESTÃO']=['auditoria-comercial'=>'Auditoria comercial'];
  echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
@@ -53,6 +54,7 @@ function h(string $page,bool $showHeading=true):void {
 function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/site-legal.php';
+require_once __DIR__.'/commercial-audit.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
 require_once __DIR__.'/visual-library.php';
@@ -146,6 +148,7 @@ $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='logo-clinica')od_brand_logo();
  if($page==='identidade')od_brand_page();
  if($page==='painel')od_guided_dashboard_page();
+if($page==='auditoria-comercial')od_commercial_audit_page();
  if($page==='trilha')od_guided_trail_page();
  if($page==='acervo-visual')od_reference_gallery_page();
   if($page==='kits-bancada'){flash('As bancadas ilustradas estão em revisão de qualidade visual.');redirect('?page=documentos');}
