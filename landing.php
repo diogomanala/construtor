@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0c2e35">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
-<link rel="stylesheet" href="sales.css?v=editorial-rdc-20261109">
+<link rel="stylesheet" href="sales.css?v=sticky-clinica-20261109">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -304,23 +304,47 @@
   </div>
 </section>
 <section class="space included"><div class="wrap"><div class="section-heading centered"><span class="sec-label">Sem letras miúdas</span><h2>Saiba exatamente o que entra nos R$ 67.</h2></div><div class="included-grid"><article class="included-card yes"><h3><?=si('check')?> Faz parte do kit principal</h3><ul><li>Plataforma online com login</li><li>Onboarding de configuração da clínica</li><li>Painel de 17 frentes documentais</li><li>Biblioteca de 30 materiais de referência</li><li>Editor assistido, histórico de versões e prévia documental premium</li><li>Autoavaliação inicial de 15 pontos</li><li>Registro de responsáveis, prazos e observações</li></ul></article><article class="included-card no"><h3><?=si('close')?> Vendido à parte ou não fornecido</h3><ul><li>Autoinspeção 360 ampliada: produto complementar</li><li>Consultoria técnica individualizada</li><li>Documentos assinados ou aprovados pelo RT</li><li>Projetos arquitetônicos, laudos e licenças</li><li>Certificação, chancela ou selo da Anvisa</li><li>Garantia de aprovação em fiscalização</li><li>Serviços profissionais não descritos no kit</li></ul></article></div></div></section>
-<section class="space portrait-story" aria-label="Apresentação visual do kit digital">
-  <div class="wrap portrait-story-layout">
-    <div class="portrait-story-copy">
-      <span class="sec-label">Seu material, sempre à mão</span>
-      <h2>Um kit organizado para <em>o dia a dia do consultório.</em></h2>
-      <p>Abra os modelos pela plataforma, personalize os dados da clínica e mantenha as versões preparadas para a revisão do responsável técnico.</p>
-      <ul class="portrait-story-benefits">
-        <li><?=si('check')?> <span>30 materiais de referência organizados por categoria</span></li>
-        <li><?=si('check')?> <span>Editor online com salvamento das versões</span></li>
-        <li><?=si('check')?> <span>Documentos organizados para revisar com o RT</span></li>
-      </ul>
-      <a class="btn btn-large" href="#oferta">Ver o kit completo por R$ 67 <?=si('arrow')?></a>
+<section class="od-showcase space" aria-labelledby="od-showcase-heading">
+  <div class="wrap">
+    <div class="od-showcase-heading">
+      <span class="sec-label">Do editor online à pasta impressa</span>
+      <h2 id="od-showcase-heading">Sua documentação organizada para <em>sair da tela e fazer parte da rotina.</em></h2>
+      <p>Uma plataforma para preparar os documentos da clínica, acompanhar o que falta e reunir as versões para revisão técnica e impressão.</p>
     </div>
-    <figure class="portrait-story-visual">
-      <img src="assets/dentista-book-kit.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Imagem ilustrativa de uma profissional com um book representando a biblioteca digital de documentação odontológica">
-      <figcaption>Imagem de apresentação do kit digital. Não há envio de material impresso nem endosso profissional.</figcaption>
-    </figure>
+    <div class="od-showcase-layout">
+      <figure class="od-showcase-media">
+        <div class="od-showcase-photo">
+          <img src="assets/odonto-clinica-plataforma-pasta-editorial.webp?v=1" width="1672" height="941" loading="lazy" decoding="async" alt="Cena ilustrativa: dentista satisfeito em consultório moderno, tablet com biblioteca documental e pasta A4 impressa em verde institucional.">
+          <span class="od-showcase-photo-tag"><?=si('check')?> Plataforma + pasta A4</span>
+        </div>
+        <figcaption>Composição publicitária ilustrativa, não uma captura real da tela. Produto 100% digital: a impressão é feita pelo usuário. Os documentos requerem revisão do RT.</figcaption>
+      </figure>
+      <div class="od-showcase-story">
+        <article class="od-showcase-step">
+          <span class="od-showcase-step-label"><b>01</b> Prepare no editor</span>
+          <h3>Personalize sem começar tudo do zero.</h3>
+          <p>Escolha entre 30 materiais de referência, preencha os dados da clínica e adapte as minutas às rotinas que realmente são executadas.</p>
+          <span class="od-showcase-step-foot"><?=si('file')?> Biblioteca e versões salvas</span>
+        </article>
+        <article class="od-showcase-step">
+          <span class="od-showcase-step-label"><b>02</b> Confira o que falta</span>
+          <h3>Tenha clareza antes da revisão técnica.</h3>
+          <p>Acompanhe pendências, consulte referências normativas relacionadas e use a conferência de preenchimento para localizar pontos que precisam de atenção.</p>
+          <span class="od-showcase-step-foot"><?=si('clipboard')?> Trilha guiada e acompanhamento</span>
+        </article>
+        <article class="od-showcase-step">
+          <span class="od-showcase-step-label"><b>03</b> Monte a pasta A4</span>
+          <h3>Prepare a versão para impressão.</h3>
+          <p>Reúna os modelos selecionados com capa, índice e divisórias. Depois da revisão e formalização pertinentes, imprima ou salve o conjunto em PDF.</p>
+          <span class="od-showcase-step-foot"><?=si('book')?> Pasta digital pronta para montar</span>
+        </article>
+        <div class="od-showcase-end">
+          <strong>Tudo isso dentro da plataforma Odonto em Dia.</strong>
+          <p>Sem envio de pasta física. A revisão e a aplicação das normas são de responsabilidade da clínica e de seu RT.</p>
+          <a class="btn btn-large" href="#oferta">Conhecer a plataforma por R$ 67 <?=si('arrow')?></a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section class="offer-section" id="oferta"><div class="wrap"><div class="offer-layout"><div class="offer-copy"><span class="sec-label light-label">Sua área de trabalho documental</span><h2>Kit digital com editor, versões salvas e acompanhamento por R$ 67.</h2><p>Você recebe 30 materiais de referência organizados numa plataforma onde pode editar, salvar versões, acompanhar pendências e retomar o trabalho no mesmo acesso. Sem pagar por um sistema separado. A revisão técnica continua sob responsabilidade do RT.</p>
