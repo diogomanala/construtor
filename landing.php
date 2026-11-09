@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0c2e35">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
-<link rel="stylesheet" href="sales.css?v=docsys1-20261106">
+<link rel="stylesheet" href="sales.css?v=preparacao-20261109">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
