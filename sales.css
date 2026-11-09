@@ -268,3 +268,72 @@
   .offer-section .od-preparation-seal-copy>p{font-size:10px;line-height:1.48;margin-top:5px}
 }
 @media(max-width:350px){.offer-section .od-preparation-seal>img{width:66px}.offer-section .od-preparation-seal{gap:8px}}
+
+
+/* Editorial RDC: arquitetura do conteúdo inspirada em cards e checklist, sem aparência de chancela oficial. */
+.od-rdc-editorial{background:#fff;overflow:hidden}
+.od-rdc-editorial .od-rdc-heading{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(225px,.6fr);gap:clamp(30px,5vw,75px);align-items:center;margin-bottom:30px}
+.od-rdc-editorial .od-rdc-heading-copy{max-width:790px}
+.od-rdc-editorial .od-rdc-heading-copy h2{max-width:810px;margin:14px 0 17px;letter-spacing:-.055em;line-height:1.13;font-size:clamp(30px,3.7vw,48px)}
+.od-rdc-editorial .od-rdc-heading-copy h2 em{font-style:normal;color:#148577}
+.od-rdc-editorial .od-rdc-heading-copy>p{margin:0;color:#607b75;font-size:14px;line-height:1.78;max-width:700px}
+.od-rdc-editorial .od-rdc-heading-aside{border-left:2px solid #badfcf;padding:6px 0 5px 19px}
+.od-rdc-editorial .od-rdc-aside-icon{display:grid;place-items:center;width:43px;height:43px;margin-bottom:12px;border:1px solid #d2e8dd;background:#ecf8f2;color:#137e68;border-radius:12px}
+.od-rdc-editorial .od-rdc-aside-icon svg{width:23px;height:23px}
+.od-rdc-editorial .od-rdc-heading-aside strong{display:block;font-size:15px;line-height:1.4;letter-spacing:-.02em;color:#143c36}
+.od-rdc-editorial .od-rdc-heading-aside p{margin:7px 0 0;font-size:12px;line-height:1.6;color:#77908a}
+.od-rdc-editorial .od-rdc-mobile-hint{display:none}
+.od-rdc-editorial .od-rdc-card-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.od-rdc-editorial .od-rdc-card{min-width:0;min-height:254px;position:relative;padding:20px 17px 19px;background:linear-gradient(180deg,#f8fbf9,#f2f8f5);border:1px solid #e3eee7;border-radius:17px}
+.od-rdc-editorial .od-rdc-card-icon{display:grid;place-items:center;width:51px;height:51px;margin-bottom:27px;border:1px solid #d4e9dd;border-radius:13px;background:#e6f5ec;color:#167b69}
+.od-rdc-editorial .od-rdc-card-icon svg{width:24px;height:24px}
+.od-rdc-editorial .od-rdc-card-number{position:absolute;top:24px;right:19px;font-size:10px;letter-spacing:1px;font-weight:850;color:#a5c0b3;font-variant-numeric:tabular-nums}
+.od-rdc-editorial .od-rdc-card h3{margin:0 0 10px;font-size:15px;line-height:1.34;letter-spacing:-.027em;font-weight:800;color:#163c35}
+.od-rdc-editorial .od-rdc-card p{font-size:11.5px;line-height:1.64;margin:0;color:#66827a}
+.od-rdc-editorial .od-rdc-checklist{display:grid;grid-template-columns:minmax(220px,.78fr) minmax(0,1.22fr);gap:22px 32px;align-items:start;background:linear-gradient(115deg,#eaf6f0 0%,#f5faf7 55%,#f8fbfa 100%);border:1px solid #d9ece2;border-radius:20px;margin-top:20px;padding:clamp(22px,3.1vw,35px)}
+.od-rdc-editorial .od-rdc-checklist-title{display:flex;align-items:flex-start;gap:13px}
+.od-rdc-editorial .od-rdc-checklist-title>div{min-width:0}
+.od-rdc-editorial .od-rdc-checklist-icon{display:grid;place-items:center;width:46px;height:46px;flex:none;background:#d8f0e3;color:#127d68;border-radius:12px}
+.od-rdc-editorial .od-rdc-checklist-icon svg{width:24px;height:24px}
+.od-rdc-editorial .od-rdc-checklist-title .sec-label{font-size:10px;letter-spacing:1.4px}
+.od-rdc-editorial .od-rdc-checklist-title h3{font-size:21px;line-height:1.23;letter-spacing:-.04em;color:#123d36;margin:7px 0 8px}
+.od-rdc-editorial .od-rdc-checklist-title p{margin:0;color:#6e8880;font-size:11.7px;line-height:1.63}
+.od-rdc-editorial .od-rdc-checklist-items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 15px}
+.od-rdc-editorial .od-rdc-checklist-items li{display:flex;align-items:flex-start;gap:9px;min-width:0;padding:10px 0;border-bottom:1px solid #dcebe3;color:#386459;font-size:11.8px;line-height:1.5;font-weight:650}
+.od-rdc-editorial .od-rdc-checklist-items li svg{width:16px;height:16px;flex:none;color:#168e73;margin-top:1px}
+.od-rdc-editorial .od-rdc-checklist-action{grid-column:1/-1;border-top:1px solid #d6e8de;padding-top:17px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.od-rdc-editorial .od-rdc-checklist-action .btn{flex:none}
+.od-rdc-editorial .od-rdc-checklist-action>span{max-width:420px;color:#65867b;font-size:11.8px;line-height:1.55}
+.od-rdc-editorial .od-rdc-technical-note{display:flex;align-items:flex-start;gap:8px;margin:18px 2px 0;font-size:10.8px;color:#81978e;line-height:1.65}
+.od-rdc-editorial .od-rdc-technical-note svg{width:17px;height:17px;flex:none;color:#489a7f}
+@media(max-width:1000px){
+ .od-rdc-editorial .od-rdc-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .od-rdc-editorial .od-rdc-card{min-height:215px}
+ .od-rdc-editorial .od-rdc-heading{grid-template-columns:minmax(0,1.5fr) minmax(200px,.75fr);gap:24px}
+}
+@media(max-width:640px){
+ .od-rdc-editorial .od-rdc-heading{display:block;margin-bottom:20px}
+ .od-rdc-editorial .od-rdc-heading-copy h2{font-size:32px;line-height:1.13;margin:11px 0 14px}
+ .od-rdc-editorial .od-rdc-heading-copy>p{font-size:12px;line-height:1.72}
+ .od-rdc-editorial .od-rdc-heading-aside{display:none}
+ .od-rdc-editorial .od-rdc-mobile-hint{display:block;color:#668a7b;font-weight:700;font-size:10px;margin:0 0 10px}
+ .od-rdc-editorial .od-rdc-card-grid{grid-template-columns:none;grid-auto-columns:min(295px,79vw);grid-auto-flow:column;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;overscroll-behavior-inline:contain;padding:0 1px 10px;scrollbar-width:thin;scrollbar-color:#bbd8c9 transparent}
+ .od-rdc-editorial .od-rdc-card{scroll-snap-align:start;min-height:217px;padding:17px}
+ .od-rdc-editorial .od-rdc-card-icon{width:46px;height:46px;margin-bottom:23px}
+ .od-rdc-editorial .od-rdc-card h3{font-size:15px}
+ .od-rdc-editorial .od-rdc-card p{font-size:11.5px}
+ .od-rdc-editorial .od-rdc-checklist{display:block;padding:20px 16px;border-radius:16px;margin-top:15px}
+ .od-rdc-editorial .od-rdc-checklist-title h3{font-size:19px}
+ .od-rdc-editorial .od-rdc-checklist-items{margin-top:16px;gap:6px 12px}
+ .od-rdc-editorial .od-rdc-checklist-items li{font-size:10.6px;padding:9px 0}
+ .od-rdc-editorial .od-rdc-checklist-items li svg{width:15px;height:15px}
+ .od-rdc-editorial .od-rdc-checklist-action{display:flex;align-items:stretch;flex-direction:column;padding-top:16px;margin-top:17px;gap:9px}
+ .od-rdc-editorial .od-rdc-checklist-action .btn{width:100%;font-size:12px;min-height:46px}
+ .od-rdc-editorial .od-rdc-checklist-action>span{font-size:10.6px}
+ .od-rdc-editorial .od-rdc-technical-note{font-size:10px}
+}
+@media(max-width:390px){
+ .od-rdc-editorial .od-rdc-checklist-items{grid-template-columns:1fr;gap:0}
+ .od-rdc-editorial .od-rdc-checklist-title{gap:9px}
+ .od-rdc-editorial .od-rdc-checklist-icon{width:39px;height:39px}
+}
