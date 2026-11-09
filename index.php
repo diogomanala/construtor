@@ -34,12 +34,12 @@ function h(string $page,bool $showHeading=true):void {
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','diagnostico'=>'Dados da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['sair'=>'Sair']
  ];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=8"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=5"><link rel="stylesheet" href="member-shell.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=1"><link rel="stylesheet" href="guided-ux.css?v=2"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>em dia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
   foreach($primary as $route=>$label)echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').'>'.esc($label).'</a>';
-  echo '</nav><details class="member-menu"><summary>Menu</summary><div class="member-menu-panel"><nav aria-label="Todas as áreas">';
+  echo '</nav><button type="button" class="od-help-trigger" data-od-help-open title="Como usar esta tela" aria-label="Como usar esta tela"><span class="od-help-icon" aria-hidden="true">?</span><span class="od-help-label">Como usar</span></button><details class="member-menu"><summary>Menu</summary><div class="member-menu-panel"><nav aria-label="Todas as áreas">';
   foreach($menu as $section=>$items){
    echo '<span class="member-menu-heading">'.esc($section).'</span>';
    foreach($items as $route=>$label){if($route==='acervo-visual'&&!od_reference_gallery_available())continue;echo '<a href="?page='.esc($route).'"'.($active===$route?' aria-current="page"':'').($route==='sair'?' class="member-logout"':'').'>'.esc($label).'</a>'; }
@@ -50,7 +50,7 @@ function h(string $page,bool $showHeading=true):void {
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
  if($showHeading)echo '<h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.</footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/editor.php';
 require_once __DIR__.'/clinic-branding.php';
@@ -67,6 +67,7 @@ require_once __DIR__.'/reference-gallery.php';
 require_once __DIR__.'/pasta-documental.php';
 require_once __DIR__.'/operational-records.php';
 require_once __DIR__.'/auto360.php';
+require_once __DIR__.'/auto360-premium.php';
 require_once __DIR__.'/downloads.php';
 if($_SERVER['REQUEST_METHOD']==='POST'){
  if(!hash_equals(csrf(),(string)($_POST['csrf']??''))){http_response_code(403);exit('Sessão expirada. Recarregue a página.');}
@@ -124,7 +125,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   if($act==='cleaning_record')odx_cleaning_post();
   if($act==='op_record')odx_ops_post();
   if($act==='editor_save')od_editor_post();
-  if($act==='auto360_save')od_360_save();
+  if($act==='auto360_save'||$act==='auto360_premium_save')od360_save();
  if($act==='clinic'){$name=mb_substr(trim((string)($_POST['name']??'')),0,180);if(!$name){flash('Informe o nome da clínica.');redirect('?page=diagnostico');} $vals=[$name,mb_substr(trim((string)($_POST['cnpj']??'')),0,18),mb_substr(trim((string)($_POST['city']??'')),0,120),mb_substr(trim((string)($_POST['state']??'')),0,2),mb_substr(trim((string)($_POST['rt_name']??'')),0,150),mb_substr(trim((string)($_POST['rt_cro']??'')),0,45),max(1,min(200,(int)($_POST['chairs']??1))),isset($_POST['has_xray'])?1:0,isset($_POST['has_sedation'])?1:0,in_array(($_POST['sterilization']??''),['interna','terceirizada','mista'],true)?$_POST['sterilization']:'interna'];$c=clinic();$isNewClinic=($c===null);if($c){$s=db()->prepare('UPDATE clinics SET name=?,cnpj=?,city=?,state=?,rt_name=?,rt_cro=?,chairs=?,has_xray=?,has_sedation=?,sterilization=? WHERE id=? AND user_id=?');$s->execute([...$vals,$c['id'],user()]);}else{$s=db()->prepare('INSERT INTO clinics(name,cnpj,city,state,rt_name,rt_cro,chairs,has_xray,has_sedation,sterilization,user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)');$s->execute([...$vals,user()]);}flash('Dados salvos. Revise os requisitos com o responsável técnico.');redirect($isNewClinic?'?page=boas-vindas':'?page=painel');}
  $c=clinic();if(!$c){redirect('?page=diagnostico');}
  if($act==='task'){$n=(int)($_POST['number']??0);$status=(string)($_POST['status']??'pendente');if(!isset(groups()[$n])||!in_array($status,['pendente','em_andamento','revisao_rt','concluido'],true))exit('Dados inválidos');$s=db()->prepare('INSERT INTO tasks(clinic_id,group_no,status,responsible,due_date,notes) VALUES(?,?,?,?,?,?) ON CONFLICT(clinic_id,group_no) DO UPDATE SET status=excluded.status,responsible=excluded.responsible,due_date=excluded.due_date,notes=excluded.notes,updated_at=CURRENT_TIMESTAMP');$due=(string)($_POST['due_date']??'');if($due&&!preg_match('/^\d{4}-\d{2}-\d{2}$/',$due))$due='';$s->execute([$c['id'],$n,$status,mb_substr(trim((string)($_POST['responsible']??'')),0,120),$due,mb_substr(trim((string)($_POST['notes']??'')),0,1000)]);flash('Acompanhamento atualizado.');redirect('?page=painel');}
@@ -162,7 +163,8 @@ if($page==='registros-epi')odx_ops_page('epi');
 if($page==='meus-documentos')odx_saved();
 if(in_array($page,['baixar-docx','imprimir'],true)){redirect('?page=editar&id='.(int)($_GET['id']??0));}
 if(in_array($page,['modelo','exportar'],true)){redirect('?page=documentos');}
-if($page==='auto360')od_360_page();
+if($page==='auto360')od360_premium_page();
+if($page==='auto360-relatorio')od360_premium_report();
 if($page==='baixar-kit')redirect('?page=documentos');
 if($page==='baixar-auto360')redirect('?page=auto360');
 if($page==='diagnostico'){require __DIR__.'/onboarding.php';exit;}
