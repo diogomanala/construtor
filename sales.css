@@ -337,3 +337,69 @@
  .od-rdc-editorial .od-rdc-checklist-title{gap:9px}
  .od-rdc-editorial .od-rdc-checklist-icon{width:39px;height:39px}
 }
+
+
+/* Odonto showcase sticky: imagem publicitária fixa durante a leitura das etapas.
+   Somente no desktop: respeita espaço útil e deixa o mobile sem sticky. */
+.od-showcase.space{padding:clamp(72px,8vw,112px) 0 94px;background:linear-gradient(180deg,#f7fbf8 0%,#fff 100%);position:relative}
+.od-showcase .od-showcase-heading{max-width:920px;margin:0 auto 44px;text-align:center}
+.od-showcase .od-showcase-heading h2{font-size:clamp(33px,4.35vw,58px);letter-spacing:-.055em;line-height:1.11;margin:14px auto 17px;font-weight:800;color:#102f35}
+.od-showcase .od-showcase-heading h2 em{font-style:normal;color:#138474}
+.od-showcase .od-showcase-heading>p{max-width:690px;margin:0 auto;color:#57726c;font-size:15px;line-height:1.75}
+.od-showcase .od-showcase-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start;gap:clamp(30px,4.9vw,68px)}
+.od-showcase .od-showcase-media{position:sticky;top:105px;align-self:start;min-width:0;margin:0;z-index:1}
+.od-showcase .od-showcase-photo{position:relative;border-radius:24px;overflow:hidden;background:#e8f2ec;border:1px solid #dcebe3;box-shadow:0 25px 55px rgba(12,48,41,.12)}
+.od-showcase .od-showcase-photo::after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(180deg,transparent,rgba(7,40,31,.23));pointer-events:none}
+.od-showcase .od-showcase-photo img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:cover;object-position:center}
+.od-showcase .od-showcase-photo-tag{position:absolute;z-index:2;left:18px;bottom:18px;display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(14,75,61,.88);color:#fff;font-size:12px;font-weight:770;letter-spacing:-.015em;box-shadow:0 6px 20px rgba(9,35,28,.2);backdrop-filter:blur(7px)}
+.od-showcase .od-showcase-photo-tag svg{width:15px;height:15px;color:#b0f0d5}
+.od-showcase .od-showcase-media figcaption{max-width:620px;margin:14px 2px 0;color:#748b82;font-size:11px;line-height:1.65}
+.od-showcase .od-showcase-story{min-width:0;position:relative}
+.od-showcase .od-showcase-story::before{content:"";position:absolute;left:16px;top:21px;bottom:210px;width:1px;background:linear-gradient(180deg,#c8e0d3 0%,#dcebe3 60%,transparent)}
+.od-showcase .od-showcase-step{position:relative;min-height:237px;padding:8px 0 43px 47px}
+.od-showcase .od-showcase-step-label{position:relative;display:flex;align-items:center;gap:13px;color:#26806a;font-size:11px;font-weight:790;letter-spacing:.1em;text-transform:uppercase}
+.od-showcase .od-showcase-step-label b{position:absolute;left:-47px;top:-5px;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#e4f3e9;border:1px solid #c7e3d3;color:#116c56;font-size:11px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.od-showcase .od-showcase-step h3{font-size:clamp(23px,2.45vw,32px);line-height:1.19;letter-spacing:-.045em;margin:19px 0 12px;color:#123a32;max-width:435px}
+.od-showcase .od-showcase-step>p{font-size:14px;line-height:1.78;color:#5b7770;margin:0;max-width:450px}
+.od-showcase .od-showcase-step-foot{display:inline-flex;align-items:center;gap:7px;margin-top:16px;padding:8px 10px;border-radius:8px;background:#eaf6f0;color:#1b765c;font-size:11px;font-weight:750}
+.od-showcase .od-showcase-step-foot svg{width:14px;height:14px}
+.od-showcase .od-showcase-end{margin:0 0 0 47px;padding:23px 22px;background:#fff;border:1px solid #deebe3;border-radius:17px;box-shadow:0 14px 30px rgba(13,50,38,.055)}
+.od-showcase .od-showcase-end strong{display:block;font-size:16px;color:#103e32;line-height:1.42}
+.od-showcase .od-showcase-end p{color:#6a8278;margin:8px 0 18px;font-size:11px;line-height:1.65}
+.od-showcase .od-showcase-end .btn{display:inline-flex;max-width:100%;justify-content:center}
+@media(max-width:1000px){
+ .od-showcase .od-showcase-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+ .od-showcase .od-showcase-media{top:90px}
+ .od-showcase .od-showcase-step{min-height:258px}
+}
+@media(max-width:820px){
+ .od-showcase.space{padding:65px 0 69px}
+ .od-showcase .od-showcase-heading{margin-bottom:25px;text-align:left}
+ .od-showcase .od-showcase-heading h2{font-size:clamp(31px,6.3vw,42px);line-height:1.13;margin:12px 0 15px}
+ .od-showcase .od-showcase-heading>p{font-size:13px;margin:0;max-width:640px}
+ .od-showcase .od-showcase-layout{display:flex;flex-direction:column;gap:28px}
+ .od-showcase .od-showcase-media{position:relative;top:auto;z-index:auto;width:100%}
+ .od-showcase .od-showcase-photo{border-radius:19px}
+ .od-showcase .od-showcase-story{width:100%}
+ .od-showcase .od-showcase-story::before{left:15px;bottom:177px}
+ .od-showcase .od-showcase-step{min-height:0;padding:5px 0 34px 45px}
+ .od-showcase .od-showcase-step-label b{left:-45px}
+ .od-showcase .od-showcase-step h3{font-size:clamp(23px,4.5vw,29px);margin:13px 0 9px}
+ .od-showcase .od-showcase-step>p{font-size:13px}
+ .od-showcase .od-showcase-end{margin-left:45px}
+ .od-showcase .od-showcase-media figcaption{font-size:10px}
+}
+@media(max-width:480px){
+ .od-showcase.space{padding:54px 0 62px}
+ .od-showcase .od-showcase-heading h2{font-size:31px}
+ .od-showcase .od-showcase-photo{border-radius:15px}
+ .od-showcase .od-showcase-photo-tag{left:10px;bottom:10px;padding:7px 9px;font-size:10px;gap:5px}
+ .od-showcase .od-showcase-photo-tag svg{width:12px;height:12px}
+ .od-showcase .od-showcase-media figcaption{font-size:10px;margin:9px 0 0}
+ .od-showcase .od-showcase-step h3{font-size:23px}
+ .od-showcase .od-showcase-step>p{font-size:12.5px;line-height:1.71}
+ .od-showcase .od-showcase-step-foot{font-size:10px}
+ .od-showcase .od-showcase-end{padding:18px 16px}
+ .od-showcase .od-showcase-end strong{font-size:14px}
+ .od-showcase .od-showcase-end .btn{width:100%;font-size:12px}
+}
