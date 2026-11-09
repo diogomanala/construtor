@@ -1,4 +1,4 @@
-/* Odonto em Dia: motion hero em autoplay contínuo (loop de 10 segundos).
+/* Odonto em Dia: motion hero em autoplay contínuo (duração definida no CSS).
    Só pausa pelo controle visível ou quando a aba fica em segundo plano.
    Não depende do load total, fontes, IntersectionObserver ou configuração do SO. */
 (function () {
