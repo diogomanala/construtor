@@ -117,10 +117,15 @@ function od_profile_apply_document(string $html,array $ctx,array $fields=[]):str
     ];
     foreach($bound as $key=>$label) {
         $value=trim((string)($fields[$key]??''));
-        if($value==='')continue;
-        $safe=esc($value);
-        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*\[(?:PREENCHER|DEFINIR)\]~iu';
-        $html=preg_replace_callback($pattern,static fn($m)=>$m[1].'<span class="odx-auto-value" data-odx-bind="'.$key.'">'.$safe.'</span>',$html)??$html;
+        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*(\[(?:PREENCHER|DEFINIR)\]|[^<]*?)(\s*</td>)~iu';
+        $html=preg_replace_callback($pattern,static function($m)use($key,$value){
+            $old=trim(html_entity_decode($m[2],ENT_QUOTES,'UTF-8'));
+            $placeholder=(bool)preg_match('/^\[(?:PREENCHER|DEFINIR)\]$/iu',$old);
+            // Não sobrescreva valores que foram alterados manualmente na minuta.
+            if(!$placeholder && ($value==='' || $old!==$value))return $m[0];
+            $text=$value!==''?esc($value):$m[2];
+            return $m[1].'<span class="odx-auto-value" data-odx-bind="'.$key.'">'.$text.'</span>'.$m[3];
+        },$html)??$html;
     }
     return $html;
 }
