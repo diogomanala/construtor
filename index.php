@@ -54,6 +54,7 @@ function h(string $page,bool $showHeading=true):void {
 function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=2" defer></script><script src="clinic-branding.js?v=1" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/support.php';
+require_once __DIR__.'/clinic-profile.php';
 require_once __DIR__.'/site-legal.php';
 require_once __DIR__.'/commercial-audit.php';
 require_once __DIR__.'/editor.php';
