@@ -137,7 +137,8 @@ function od_guided_clinic_page(): never {
   h('Minha clínica',false);
   echo '<div class="od-ui-page"><header class="od-ui-simple-head"><span class="od-ui-kicker">CONFIGURAÇÕES DA UNIDADE</span><h1>Sua clínica, seus documentos.</h1><p>Os dados e a identidade visual são reaproveitados nas minutas. Configure uma vez e edite quando necessário.</p></header><div class="od-ui-shortcuts od-ui-settings">';
   foreach([
-    ['diagnostico','building','Dados e responsável técnico','Nome, CNPJ, endereço básico, equipe técnica e perfil da unidade.'],
+    ['dados-compartilhados','building','Dados para todos os documentos','Razão social, CNPJ, endereço, licença e responsáveis. Preencha uma vez e reaproveite.'],
+    ['diagnostico','building','Perfil operacional','Consultórios, radiologia, sedação e processamento da unidade.'],
     ['identidade','palette','Logo e identidade visual','Nome exibido, logotipo, cores e prévia dos documentos.'],
     ['boas-vindas','list','Mapa da unidade','Pontos de atenção com base nos serviços informados.']
   ] as [$route,$ico,$title,$desc])echo '<a href="?page='.$route.'" class="od-ui-shortcut"><span class="od-ui-shortcut-icon">'.od_ui_icon($ico).'</span><strong>'.esc($title).'</strong><small>'.esc($desc).'</small><span class="od-ui-shortcut-go">'.od_ui_icon('arrow').'</span></a>';
