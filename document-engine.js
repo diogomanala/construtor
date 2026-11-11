@@ -27,12 +27,22 @@
   const outlineList = root.querySelector('[data-odx-outline]');
   const progressBar = root.querySelector('[data-odx-progress]');
   const progressLabel = root.querySelector('[data-odx-progress-label]');
+  const pendingNote = root.querySelector('[data-odx-pending-note]');
   let dirty = false;
+  const updatePending = () => {
+    if (!pendingNote || !documentBody) return;
+    const pending = (documentBody.textContent || '').match(/\[[^\]\n]{0,75}\]/g) || [];
+    pendingNote.hidden = pending.length === 0;
+    if (pending.length) pendingNote.textContent = `${pending.length} campo(s) ou marcação(ões) ainda precisam de conferência no texto. Revise antes de imprimir ou finalizar.`;
+  };
   const sync = () => {
     let filled = 0;
     fields.forEach(input => {
       const value = input.value.trim();
       if (value) filled++;
+      documentBody?.querySelectorAll('[data-odx-bind]').forEach(target => {
+        if (target.dataset.odxBind === input.dataset.odxField) target.textContent = value || '[ ]';
+      });
       root.querySelectorAll('[data-odx-display]').forEach(display => {
         if (display.dataset.odxDisplay !== input.dataset.odxField) return;
         display.textContent = value || 'A preencher';
@@ -41,6 +51,7 @@
     });
     if (progressBar) progressBar.style.width = Math.round(filled / (fields.length || 1) * 100) + '%';
     if (progressLabel) progressLabel.textContent = filled + ' de ' + fields.length;
+    updatePending();
   };
   fields.forEach(input => input.addEventListener('input', () => { dirty = true; sync(); }));
   sync();
@@ -53,7 +64,7 @@
       toggle.textContent = next ? 'Concluir edição' : 'Editar texto';
       if (next) documentBody.focus();
     });
-    documentBody.addEventListener('input', () => { dirty = true; });
+    documentBody.addEventListener('input', () => { dirty = true; updatePending(); });
   }
   const headings = documentBody ? [...documentBody.querySelectorAll('h2,h3')] : [];
   headings.forEach((heading, i) => {
