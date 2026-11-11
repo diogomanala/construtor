@@ -30,3 +30,48 @@
 @media(max-width:520px){.member-header{padding:0 14px;min-height:68px}.member-header .member-header-inner{min-height:68px}.member-header .member-brand-mark{width:33px;height:33px}.member-header .member-brand-word{font-size:19px}.member-header .member-menu>summary{min-width:92px;min-height:40px}}
 @media(max-width:350px){.member-header .member-brand-word small{display:none}.member-header .member-brand{gap:7px}}
 @media(prefers-reduced-motion:reduce){.member-header *{transition-duration:.01ms!important}}
+
+
+/* Central de suporte para clientes autenticados */
+.member-header .member-support-link{display:inline-flex;align-items:center;justify-content:center;min-height:41px;padding:10px 13px;border:1px solid #cfe5dc;border-radius:10px;background:#f1f8f4;color:#126d60;text-decoration:none;font-size:12px;font-weight:750;white-space:nowrap;transition:background .15s,border-color .15s}
+.member-header .member-support-link:hover,.member-header .member-support-link[aria-current="page"]{background:#e1f2ea;border-color:#9dcfbe}
+.od-support-page{max-width:1080px;margin:20px auto 72px;padding:0 24px;color:#153a36}
+.od-support-head{margin:0 0 26px}
+.od-support-eyebrow,.od-support-aside-kicker{display:block;margin-bottom:12px;font-size:10px;font-weight:800;letter-spacing:1.5px;color:#158271}
+.od-support-head h1{margin:0 0 10px;color:#123a36;font-size:clamp(28px,4vw,40px);letter-spacing:-1.2px;line-height:1.14}
+.od-support-head p{max-width:700px;margin:0;color:#617771;font-size:15px;line-height:1.7}
+.od-support-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(245px,.85fr);gap:20px;align-items:start}
+.od-support-card,.od-support-aside-card,.od-support-history{background:#fff;border:1px solid #dce9e3;border-radius:18px;box-shadow:0 10px 32px #123e3310}
+.od-support-card{padding:28px}
+.od-support-card-heading h2,.od-support-aside-card h2,.od-support-history h2{margin:0 0 7px;color:#173d36;font-size:20px;letter-spacing:-.45px}
+.od-support-card-heading p,.od-support-aside-card p{margin:0 0 20px;color:#71867d;font-size:13px;line-height:1.6}
+.od-support-form{display:flex;flex-direction:column;gap:10px}
+.od-support-form label{margin:7px 0 0;color:#284e46;font-weight:700;font-size:13px}
+.od-support-form input,.od-support-form select,.od-support-form textarea{display:block;width:100%;min-width:0;padding:12px 14px;border:1px solid #cbddd4;border-radius:10px;background:#fff;color:#1a3c35;font:inherit;font-size:14px;line-height:1.45;box-sizing:border-box}
+.od-support-form textarea{min-height:172px;resize:vertical}
+.od-support-form input:focus,.od-support-form select:focus,.od-support-form textarea:focus{outline:3px solid #bde9db;outline-offset:1px;border-color:#158271}
+.od-support-form input::placeholder,.od-support-form textarea::placeholder{color:#8d9d96}
+.od-support-privacy{margin:2px 0 7px;color:#6a8178;font-size:12px;line-height:1.5}
+.od-support-form .od-support-submit{align-self:flex-start;min-height:46px;border:0;border-radius:10px;padding:11px 22px;background:#127966;color:#fff;font-size:14px;font-weight:760;cursor:pointer;transition:background .15s}
+.od-support-form .od-support-submit:hover{background:#0c6255}
+.od-support-form .od-support-submit:focus-visible{outline:3px solid #66c8ad;outline-offset:3px}
+.od-support-honeypot{position:absolute!important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.od-support-aside{display:flex;flex-direction:column;gap:16px}
+.od-support-aside-card{padding:24px}
+.od-support-aside-card h2{font-size:17px}
+.od-support-aside-card p{margin:0 0 15px}
+.od-support-email{display:inline-block;color:#097363;font-size:14px;font-weight:750;overflow-wrap:anywhere;text-underline-offset:3px}
+.od-support-tip{background:#f6faf7}
+.od-support-tip p{margin:0}
+.od-support-history{margin-top:22px;padding:24px}
+.od-support-history h2{font-size:18px;margin-bottom:15px}
+.od-support-history-list{display:grid;gap:0}
+.od-support-ticket{display:grid;grid-template-columns:50px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-top:1px solid #eaf0ed}
+.od-support-ticket-number{color:#12816e;font-size:13px;font-weight:800}
+.od-support-ticket strong{display:block;color:#27493e;font-size:13px;overflow-wrap:anywhere}
+.od-support-ticket small{display:block;color:#899b92;margin-top:4px;font-size:11px}
+.od-support-status{padding:5px 9px;border-radius:99px;font-size:10px;font-weight:750;text-align:center}
+.od-support-status.is-queued{background:#eaf6f0;color:#26745d}
+.od-support-status.is-failed{background:#fff0e8;color:#a65b3b}
+@media(max-width:920px){.member-header .member-support-link{display:none}}
+@media(max-width:700px){.od-support-page{padding:0 16px;margin:22px auto 50px}.od-support-grid{grid-template-columns:1fr}.od-support-card,.od-support-aside-card,.od-support-history{padding:20px}.od-support-head h1{letter-spacing:-.7px}.od-support-ticket{grid-template-columns:46px minmax(0,1fr);gap:8px}.od-support-status{grid-column:2;justify-self:start}.od-support-form .od-support-submit{width:100%}}
