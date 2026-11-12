@@ -59,7 +59,7 @@ function od_support_post():never {
     $limit=$db->prepare("SELECT COUNT(*) FROM od_support_tickets WHERE user_id=? AND created_at >= datetime('now','-1 hour')");
     $limit->execute([$uid]);
     if((int)$limit->fetchColumn()>=3){
-        flash('Você já abriu três solicitações na última hora. Para urgências, use o e-mail de contato direto.');
+        flash('Você já abriu três solicitações na última hora. Aguarde um pouco antes de enviar outra.');
         redirect('?page=suporte');
     }
 
@@ -99,7 +99,7 @@ function od_support_post():never {
     $db->prepare('UPDATE od_support_tickets SET email_status=? WHERE id=?')->execute([$queued?'queued':'failed',$id]);
     flash($queued
         ?'Solicitação #'.$id.' registrada. O envio do e-mail de suporte foi iniciado.'
-        :'Solicitação #'.$id.' registrada, mas o envio do e-mail falhou. Use o contato direto exibido nesta página.');
+        :'Solicitação #'.$id.' registrada, mas não foi possível notificar a equipe. Tente novamente mais tarde.');
     redirect('?page=suporte');
 }
 
@@ -118,7 +118,7 @@ function od_support_page():never {
     echo '</select><label for="od-support-subject">Título da solicitação</label><input id="od-support-subject" type="text" name="subject" required minlength="5" maxlength="120" placeholder="Ex.: Não consigo editar um POP">';
     echo '<label for="od-support-message">Conte o que aconteceu</label><textarea id="od-support-message" name="message" required minlength="20" maxlength="3000" rows="7" placeholder="Explique sua dúvida, informe em qual tela está e o que tentou fazer."></textarea>';
     echo '<p class="od-support-privacy">Não envie nomes, prontuários, fotos ou informações pessoais de pacientes.</p><button type="submit" class="od-support-submit">Enviar solicitação</button></form></section>';
-    echo '<aside class="od-support-aside"><section class="od-support-aside-card"><span class="od-support-aside-kicker">CONTATO DIRETO</span><h2>Prefere enviar um e-mail?</h2><p>Você também pode falar com o suporte usando seu aplicativo de e-mail.</p><a href="mailto:titecweb@gmail.com?subject=Suporte%20Odonto%20em%20Dia" class="od-support-email">titecweb@gmail.com</a></section>';
+    echo '<aside class="od-support-aside"><section class="od-support-aside-card"><span class="od-support-aside-kicker">COMO FUNCIONA</span><h2>Atendimento pelo painel</h2><p>Envie sua solicitação pelo formulário. Nossa equipe recebe os detalhes e pode responder no e-mail cadastrado na sua conta.</p></section>';
     echo '<section class="od-support-aside-card od-support-tip"><h2>Para agilizar o atendimento</h2><p>Informe qual documento ou funcionalidade está usando e descreva o erro exibido. Evite compartilhar dados de pacientes.</p></section></aside></div>';
     if($tickets){
         echo '<section class="od-support-history"><h2>Suas últimas solicitações</h2><div class="od-support-history-list">';
