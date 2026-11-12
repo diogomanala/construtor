@@ -102,3 +102,12 @@ body:has(.odx-workspace) main>h1,body:has(.odx-lib-header) main>h1{display:none}
   .od-profile-grid{grid-template-columns:1fr}
   .od-profile-actions button{width:100%}
 }
+
+
+/* Ações reunidas: cadastro e identidade no mesmo lugar, sem botões duplicados */
+.odx-shared-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap;flex:none}
+.odx-shared-actions a{white-space:nowrap}
+.odx-shared-actions a:first-child{background:#196d55;color:#fff;border-color:#196d55}
+.odx-shared-actions a:first-child:hover{background:#105640;color:#fff;border-color:#105640}
+@media(max-width:1040px){.odx-shared-actions{flex:1 1 220px;justify-content:flex-start}}
+@media(max-width:760px){.odx-shared-actions{width:100%;gap:8px}.odx-shared-actions a{flex:1 1 auto;white-space:normal;text-align:center}}
