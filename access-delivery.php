@@ -21,6 +21,11 @@ function od_access_db():PDO{
       sent_at TEXT,
       last_error TEXT DEFAULT ''
     )");
+    $db->exec("CREATE TABLE IF NOT EXISTS od_access_preferences (
+      user_id INTEGER PRIMARY KEY,
+      temp_password INTEGER NOT NULL DEFAULT 0,
+      updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )");
     return $db;
 }
 function od_access_config():array{
@@ -28,7 +33,7 @@ function od_access_config():array{
     od_mp_config();
     return [
       'resend_key'=>defined('OD_RESEND_API_KEY')?(string)OD_RESEND_API_KEY:(string)(getenv('OD_RESEND_API_KEY')?:''),
-      'from'=>defined('OD_ACCESS_FROM')?(string)OD_ACCESS_FROM:(string)(getenv('OD_ACCESS_FROM')?:'acesso@odontonegocios.com'),
+      'from'=>defined('OD_ACCESS_FROM')?(string)OD_ACCESS_FROM:(string)(getenv('OD_ACCESS_FROM')?:'acesso@notificacoes.odontonegocios.com'),
       'mail_fallback'=>defined('OD_ACCESS_MAIL_FALLBACK')?(bool)OD_ACCESS_MAIL_FALLBACK:true
     ];
 }
@@ -37,7 +42,7 @@ function od_access_send(string $recipient,string $subject,string $body):bool{
     if(!filter_var($recipient,FILTER_VALIDATE_EMAIL))return false;
     if(strlen($cfg['resend_key'])>20 && function_exists('curl_init')){
         $payload=['from'=>'Odonto em Dia <acesso@notificacoes.odontonegocios.com>','to'=>[$recipient],
-                  'subject'=>$subject,'text'=>$body,'reply_to'=>'suporte@odontonegocios.com'];
+                  'subject'=>$subject,'text'=>$body];
         $ch=curl_init('https://api.resend.com/emails');
         curl_setopt_array($ch,[CURLOPT_POST=>true,CURLOPT_POSTFIELDS=>json_encode($payload,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR),
           CURLOPT_HTTPHEADER=>['Authorization: Bearer '.$cfg['resend_key'],'Content-Type: application/json'],
@@ -47,7 +52,7 @@ function od_access_send(string $recipient,string $subject,string $body):bool{
         error_log('[Odonto] Resend delivery rejected (HTTP '.$status.')');
     }
     if(!$cfg['mail_fallback'])return false;
-    $safeFrom=filter_var($cfg['from'],FILTER_VALIDATE_EMAIL)?$cfg['from']:'acesso@odontonegocios.com';
+    $safeFrom=filter_var($cfg['from'],FILTER_VALIDATE_EMAIL)?$cfg['from']:'acesso@notificacoes.odontonegocios.com';
     $headers=['MIME-Version'=>'1.0','Content-Type'=>'text/plain; charset=UTF-8',
         'From'=>'Odonto em Dia <'.$safeFrom.'>'];
     try{return @mail($recipient,mb_encode_mimeheader($subject,'UTF-8','B',"\r\n"),$body,$headers);}
@@ -55,7 +60,7 @@ function od_access_send(string $recipient,string $subject,string $body):bool{
 }
 /**
  * Reserva um unico envio por pedido. Reenvios somente apos 15 minutos, no maximo
- * cinco tentativas automaticas. A senha NUNCA trafega por email.
+ * cinco tentativas automaticas. Senha temporaria individual apenas para contas novas.
  */
 function od_access_deliver(array $order,bool $manual=false):bool{
     if(($order['status']??'')!=='paid'||empty($order['id'])||!filter_var($order['buyer_email']??'',FILTER_VALIDATE_EMAIL))return false;
@@ -71,6 +76,28 @@ function od_access_deliver(array $order,bool $manual=false):bool{
             $db->commit();return $delivery['status']==='sent';
         }
         $db->prepare("UPDATE od_access_delivery SET attempts=attempts+1,status='processing',last_attempt_at=CURRENT_TIMESTAMP WHERE order_id=?")->execute([$id]);
+        // Para compras novas, cria um acesso imediato com senha individual aleatoria.
+        // Compradores existentes preservam suas senhas; recebem apenas link de acesso.
+        $q=$db->prepare('SELECT id FROM users WHERE email=?');
+        $q->execute([(string)$order['buyer_email']]);
+        $existing=$q->fetchColumn();
+        $temporaryPassword=null;
+        if(!$existing){
+            $alphabet='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            $temporaryPassword='';
+            for($i=0;$i<16;$i++)$temporaryPassword.=$alphabet[random_int(0,strlen($alphabet)-1)];
+            $db->prepare('INSERT INTO users(email,password) VALUES(?,?)')->execute([
+                (string)$order['buyer_email'],password_hash($temporaryPassword,PASSWORD_DEFAULT)
+            ]);
+            $uid=(int)$db->lastInsertId();
+            $db->prepare("INSERT INTO od_access_preferences(user_id,temp_password) VALUES(?,1)")->execute([$uid]);
+        }else{$uid=(int)$existing;}
+        $db->prepare("INSERT INTO od_entitlements(user_id,order_id,addon,status,expires_at)
+            VALUES(?,?,?,'active',datetime('now','+365 days'))
+            ON CONFLICT(user_id) DO UPDATE SET order_id=excluded.order_id,
+            addon=MAX(od_entitlements.addon,excluded.addon),status='active',expires_at=excluded.expires_at")
+            ->execute([$uid,$id,(int)$order['addon']]);
+        $db->prepare('UPDATE od_orders SET activated_user_id=? WHERE id=?')->execute([$uid,$id]);
         $raw=bin2hex(random_bytes(32));$hash=hash('sha256',$raw);
         $db->prepare('DELETE FROM od_access_tokens WHERE order_id=? AND consumed_at IS NULL')->execute([$id]);
         $db->prepare("INSERT INTO od_access_tokens(order_id,token_hash,expires_at) VALUES(?,?,datetime('now','+48 hours'))")->execute([$id,$hash]);
@@ -78,12 +105,19 @@ function od_access_deliver(array $order,bool $manual=false):bool{
         $link=OD_ACCESS_URL.'?page=ativar-acesso&token='.$raw;
         $email=(string)$order['buyer_email'];
         $subject='Seu acesso ao Odonto em Dia';
-        $body="Olá!\r\n\r\nSeu pagamento do Odonto em Dia foi confirmado.\r\n"
-             ."Para criar sua senha e entrar na plataforma, abra este link pessoal:\r\n".$link."\r\n\r\n"
-             ."O link é válido por 48 horas e pode ser usado uma vez.\r\n"
-             ."Se você já tem uma conta, também poderá atualizar sua senha.\r\n\r\n"
-             ."Acesso à plataforma: ".OD_ACCESS_URL."?page=entrar\r\n"
-             ."Se não reconhece esta compra, ignore a mensagem.\r\n\r\nEquipe Odonto em Dia";
+        $body="Olá!\r\n\r\nSeu pagamento do Odonto em Dia foi confirmado. Seu acesso já está liberado.\r\n\r\n"
+             ."ACESSAR EM UM CLIQUE (sem digitar senha):\r\n".$link."\r\n\r\n"
+             ."Esse link é individual, válido por 48 horas e de uso único.\r\n";
+        if($temporaryPassword!==null){
+            $body.="Se preferir entrar com e-mail e senha:\r\n"
+                  ."E-mail: ".$email."\r\n"
+                  ."Senha provisória: ".$temporaryPassword."\r\n\r\n"
+                  ."Depois de entrar, você pode trocar a senha em Minha conta.\r\n";
+        }else{
+            $body.="Sua senha já cadastrada continua válida. Caso não lembre, use o link de acesso acima.\r\n";
+        }
+        $body.="\r\nÁrea de membros: ".OD_ACCESS_URL."?page=entrar\r\n"
+             ."Se não reconhece esta compra, entre em contato pelo suporte oficial.\r\n\r\nEquipe Odonto em Dia";
         $ok=od_access_send($email,$subject,$body);
         $db->prepare("UPDATE od_access_delivery SET status=?,sent_at=CASE WHEN ?=1 THEN CURRENT_TIMESTAMP ELSE sent_at END,last_error=? WHERE order_id=?")
             ->execute([$ok?'sent':'failed',$ok?1:0,$ok?'':'send_failed',$id]);
@@ -130,6 +164,8 @@ function od_access_activate():never{
           ON CONFLICT(user_id) DO UPDATE SET order_id=excluded.order_id,addon=MAX(od_entitlements.addon,excluded.addon),status='active',expires_at=excluded.expires_at")
           ->execute([$uid,$order['id'],(int)$order['addon']]);
         $db->prepare('UPDATE od_orders SET activated_user_id=? WHERE id=?')->execute([$uid,$order['id']]);
+        $db->prepare("INSERT INTO od_access_preferences(user_id,temp_password) VALUES(?,0)
+            ON CONFLICT(user_id) DO UPDATE SET temp_password=0,updated_at=CURRENT_TIMESTAMP")->execute([$uid]);
         $db->prepare('UPDATE od_access_tokens SET consumed_at=CURRENT_TIMESTAMP WHERE order_id=? AND consumed_at IS NULL')->execute([$order['id']]);
         $db->commit();
         session_regenerate_id(true);$_SESSION['uid']=$uid;
@@ -166,4 +202,40 @@ function od_access_recovery_page():never{
         .'<form method="post">'.token().'<input type="hidden" name="act" value="access_resend">'
         .'<label>E-mail da compra<input type="email" name="email" required autocomplete="email" maxlength="180"></label>'
         .'<button type="submit">Enviar link de acesso</button></form><p><a href="?page=entrar">Voltar ao login</a></p></div>';foot();exit;
+}
+
+function od_access_has_temp_password(int $userId):bool{
+    $q=od_access_db()->prepare('SELECT temp_password FROM od_access_preferences WHERE user_id=?');
+    $q->execute([$userId]);return (bool)$q->fetchColumn();
+}
+function od_access_change_password():never{
+    $uid=(int)(user()??0);
+    if(!$uid){http_response_code(401);exit('Faça login.');}
+    $current=(string)($_POST['current_password']??'');
+    $new=(string)($_POST['new_password']??'');
+    $q=od_access_db()->prepare('SELECT password FROM users WHERE id=?');$q->execute([$uid]);
+    $saved=$q->fetchColumn();
+    if(!$saved || !password_verify($current,(string)$saved)){
+        flash('A senha atual não confere.');redirect('?page=minha-senha');
+    }
+    if(strlen($new)<12||strlen($new)>256||hash_equals($current,$new)){
+        flash('Escolha uma senha diferente da atual, com pelo menos 12 caracteres.');redirect('?page=minha-senha');
+    }
+    od_access_db()->prepare('UPDATE users SET password=? WHERE id=?')->execute([password_hash($new,PASSWORD_DEFAULT),$uid]);
+    od_access_db()->prepare("INSERT INTO od_access_preferences(user_id,temp_password) VALUES(?,0)
+        ON CONFLICT(user_id) DO UPDATE SET temp_password=0,updated_at=CURRENT_TIMESTAMP")->execute([$uid]);
+    flash('Senha alterada. Utilize a nova senha nos próximos acessos.');
+    redirect('?page=painel');
+}
+function od_access_password_page():never{
+    if(!user()){redirect('?page=entrar');}
+    h('Alterar minha senha',false);
+    echo '<div class="card" style="max-width:540px;margin:32px auto;padding:27px"><h2>Alterar minha senha</h2>'
+       .'<p>Você pode trocar sua senha provisória por uma de sua preferência, sem perder os documentos.</p>'
+       .'<form method="post">'.token().'<input type="hidden" name="act" value="access_change_password">'
+       .'<label>Senha atual<input type="password" name="current_password" autocomplete="current-password" required></label>'
+       .'<label>Nova senha (mínimo 12 caracteres)<input type="password" name="new_password" autocomplete="new-password" minlength="12" maxlength="256" required></label>'
+       .'<button type="submit">Salvar nova senha</button></form>'
+       .'<p><a href="?page=painel">Voltar ao painel</a></p></div>';
+    foot();exit;
 }
