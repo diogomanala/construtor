@@ -23,7 +23,17 @@ function od_safe_document(string $html): string {
         if ($node->nodeType===XML_ELEMENT_NODE) {
             $name=strtolower($node->nodeName);
             if (isset($danger[$name])){$node->parentNode?->removeChild($node);return;}
+            // Preserva apenas os vínculos internos seguros para edição dos campos.
+            // Qualquer outro atributo recebido no HTML continua sendo removido.
+            $guidedBind=null;$inlineMark=null;
+            if($name==='span'){
+                $candidate=$node->getAttribute('data-odx-bind');
+                if(in_array($candidate,['setor','executor','frequencia','equipamentos_insumos'],true))$guidedBind=$candidate;
+                if($node->getAttribute('data-odx-inline')==='1')$inlineMark='1';
+            }
             if($node->hasAttributes())while($node->attributes->length)$node->removeAttributeNode($node->attributes->item(0));
+            if($guidedBind!==null)$node->setAttribute('data-odx-bind',$guidedBind);
+            elseif($inlineMark!==null)$node->setAttribute('data-odx-inline','1');
             foreach(iterator_to_array($node->childNodes) as $child)$walk($child);
             if(!isset($allowed[$name])){
                 $p=$node->parentNode;if(!$p)return;
