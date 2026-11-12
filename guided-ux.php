@@ -56,7 +56,7 @@ function od_journey_data(array $c): array {
     if((int)$q->fetchColumn()>0){$records=true;break;}
   }
   return [
-    ['title'=>'Confira os dados da clínica','description'=>'Informe nome, dados da unidade e responsável técnico. Essas informações entram automaticamente no cabeçalho dos documentos.','route'=>'diagnostico','cta'=>'Completar perfil','done'=>$profile,'icon'=>'building'],
+    ['title'=>'Confira os dados da clínica','description'=>'Informe nome, dados da unidade e responsável técnico. Essas informações entram automaticamente no cabeçalho dos documentos.','route'=>'dados-compartilhados','cta'=>'Completar perfil','done'=>$profile,'icon'=>'building'],
     ['title'=>'Personalize seus documentos','description'=>'Escolha logo e cores uma única vez. A identidade aparecerá nas novas minutas sem precisar refazer o trabalho.','route'=>'identidade','cta'=>'Definir identidade','done'=>$brand,'icon'=>'palette'],
     ['title'=>'Prepare seu primeiro documento','description'=>'Comece pelo Manual de Boas Práticas. O conteúdo de referência já está no editor para adaptar à sua realidade.','route'=>'editar&id=3','cta'=>'Abrir o manual','done'=>$docs>0,'icon'=>'file'],
     ['title'=>'Registre uma atividade real','description'=>'Use um controle digital quando a atividade tiver sido executada. Exemplo: limpeza de um ambiente.','route'=>'registros-limpeza','cta'=>'Ver registro de limpeza','done'=>$records,'icon'=>'clipboard'],
@@ -138,7 +138,7 @@ function od_guided_clinic_page(): never {
   echo '<div class="od-ui-page"><header class="od-ui-simple-head"><span class="od-ui-kicker">CONFIGURAÇÕES DA UNIDADE</span><h1>Sua clínica, seus documentos.</h1><p>Os dados e a identidade visual são reaproveitados nas minutas. Configure uma vez e edite quando necessário.</p></header><div class="od-ui-shortcuts od-ui-settings">';
   foreach([
     ['dados-compartilhados','building','Dados para todos os documentos','Razão social, CNPJ, endereço, licença e responsáveis. Preencha uma vez e reaproveite.'],
-    ['diagnostico','building','Atividades da unidade','Consultórios, radiologia, sedação e processamento dos materiais.'],
+    ['perfil-operacional','building','Atividades da unidade','Consultórios, radiologia, sedação e processamento dos materiais.'],
     ['identidade','palette','Identidade visual','Envie o logo e escolha a cor usada nas minutas.'],
     ['boas-vindas','list','Mapa da unidade','Pontos de atenção com base nos serviços informados.']
   ] as [$route,$ico,$title,$desc])echo '<a href="?page='.$route.'" class="od-ui-shortcut"><span class="od-ui-shortcut-icon">'.od_ui_icon($ico).'</span><strong>'.esc($title).'</strong><small>'.esc($desc).'</small><span class="od-ui-shortcut-go">'.od_ui_icon('arrow').'</span></a>';
