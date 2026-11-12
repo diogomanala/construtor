@@ -48,3 +48,13 @@
 @media(max-width:880px){.od-brand-grid{grid-template-columns:1fr}.od-brand-preview{position:static;max-width:640px}.od-brand-palettes{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:520px){.od-brand-grid{gap:14px}.od-brand-card{padding:19px}.od-brand-preview{padding:14px}.od-brand-palettes{grid-template-columns:repeat(2,minmax(0,1fr))}.od-brand-preview-cover{min-height:220px;padding:30px 24px}.odx-paper.odx-branded .odx-brand-logo{max-width:85px;max-height:38px}.od-brand-preview-head{padding:18px}}
 @media(prefers-reduced-motion:reduce){.od-brand-submit{transition:none}}
+
+/* Fluxo de marca simplificado: dados cadastrais ficam no perfil compartilhado */
+.od-brand-clinic-ref{display:grid;gap:6px;margin-bottom:20px;padding:15px 17px;border:1px solid #d9e9df;border-radius:12px;background:#f5faf6}
+.od-brand-clinic-ref span{font-size:10px;font-weight:800;letter-spacing:.1em;color:#5a8a73}
+.od-brand-clinic-ref strong{font-size:15px;line-height:1.4;color:#1d4b3a}
+.od-brand-clinic-ref a{justify-self:start;color:#14785e;font-weight:700;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.od-brand-file-error,.od-brand-save-feedback{margin:8px 0 10px;font-size:12px;font-weight:700;line-height:1.6;border-radius:9px;padding:11px 13px;color:#974032;background:#fff4f0;border:1px solid #f1d4c9}
+.od-brand-file-error[hidden],.od-brand-save-feedback[hidden]{display:none!important}
+.od-brand-saved-state{margin:18px 0 -7px;font-size:11px;color:#668777;line-height:1.6}
+.od-brand-submit:disabled{opacity:.7;cursor:wait}
