@@ -31,6 +31,8 @@ function od_access_db():PDO{
 function od_access_config():array{
     // Segredos devem ficar fora do document root ou nas variaveis do servidor.
     od_mp_config();
+    $privateMail=dirname(__DIR__,2).'/odonto-mail-env.php';
+    if(is_file($privateMail))require_once $privateMail;
     return [
       'resend_key'=>defined('OD_RESEND_API_KEY')?(string)OD_RESEND_API_KEY:(string)(getenv('OD_RESEND_API_KEY')?:''),
       'from'=>defined('OD_ACCESS_FROM')?(string)OD_ACCESS_FROM:(string)(getenv('OD_ACCESS_FROM')?:'contato@odontonegocios.com'),
