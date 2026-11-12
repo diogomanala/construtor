@@ -10,6 +10,7 @@ function db():PDO{
     $db->exec('PRAGMA busy_timeout=5000');return $db;
 }
 require_once __DIR__.'/payments.php';
+require_once __DIR__.'/access-delivery.php';
 if(!od_mp_ready()){http_response_code(503);exit('Integração indisponível.');}
 $body=file_get_contents('php://input');$msg=json_decode((string)$body,true);
 $event=(string)($_GET['type']??($msg['type']??''));
