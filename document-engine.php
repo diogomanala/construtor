@@ -53,6 +53,7 @@ function odx_fields(int $templateId): array {
         ['key'=>'aplicabilidade','label'=>'Aplicabilidade já informada','hint'=>'Informações do modelo original, se já preenchido','type'=>'textarea'],
         ['key'=>'evidencias','label'=>'Evidências já informadas','hint'=>'Registros do modelo anterior, se já preenchidos','type'=>'textarea']
     ];
+    if($templateId===5)$common[]=['key'=>'equipamentos_insumos','label'=>'Equipamentos e insumos utilizados','hint'=>'Confirme apenas os insumos realmente disponíveis na unidade','type'=>'textarea'];
     $plan = odx_document_configs()[$templateId] ?? null;
     $result=$plan!==null ? array_merge($common,$plan['fields'],$legacy) : array_merge($common,$special[$templateId] ?? [
         ['key'=>'aplicabilidade','label'=>'Como se aplica à sua clínica','hint'=>'Descreva o uso real do documento neste estabelecimento','type'=>'textarea'],
@@ -63,6 +64,49 @@ function odx_fields(int $templateId): array {
     foreach($result as $field){$key=(string)$field['key'];if(!isset($byKey[$key]))$byKey[$key]=$field;}
     return array_values($byKey);
 }
+/**
+ * Textos administrativos reutilizáveis: sempre sujeitos à conferência.
+ * Não são fatos sobre o estabelecimento nem substituem orientações técnicas.
+ * Começamos por POPs com sugestões que não presumem equipamentos ou parâmetros.
+ */
+function odx_suggested_values(int $templateId):array {
+    $base=[
+        'setor'=>'Ambientes nos quais este procedimento é realizado. Conferir os setores existentes na unidade.',
+        'executor'=>'Equipe designada para executar este procedimento, conforme atribuições definidas pela clínica.',
+    ];
+    $custom=[
+        4=>[
+            'setor'=>'Consultórios e demais locais de atendimento onde a identificação do paciente é realizada.',
+            'executor'=>'Profissionais responsáveis pelo atendimento e pela confirmação da identidade do paciente.',
+        ],
+        5=>[
+            'setor'=>'Consultórios odontológicos e outros pontos de higienização das mãos existentes na unidade.',
+            'executor'=>'Profissionais da equipe assistencial e demais pessoas que realizam atividades no serviço.',
+            'frequencia'=>'Nos momentos de higienização previstos no protocolo adotado pelo serviço.',
+            'equipamentos_insumos'=>'Sabonete líquido, papel-toalha e preparação alcoólica, conforme os itens efetivamente utilizados na unidade.',
+        ],
+        6=>[
+            'setor'=>'Ambientes onde os equipamentos de proteção individual são necessários, conforme a avaliação de riscos.',
+            'executor'=>'Profissionais que utilizam, conferem ou distribuem EPIs, conforme suas atribuições.',
+        ],
+        7=>[
+            'setor'=>'Consultórios e demais ambientes incluídos no plano de limpeza da unidade.',
+            'executor'=>'Profissionais responsáveis pela limpeza dos ambientes, conforme atribuições definidas.',
+        ],
+        11=>[
+            'setor'=>'Área de processamento de produtos para saúde existente no estabelecimento, quando aplicável.',
+            'executor'=>'Profissionais designados e capacitados para o processamento, conforme organização do serviço.',
+        ],
+    ];
+    if(isset($custom[$templateId]))return $custom[$templateId];
+    // Para outros POPs, só sugerimos o que pode ser adaptado sem prescrever condutas.
+    if($templateId>=4 && $templateId<=20)return $base;
+    return [];
+}
+function odx_suggestion_reviewed(array $data,string $key):bool {
+    return !empty($data['_reviewed']) && is_array($data['_reviewed']) && !empty($data['_reviewed'][$key]);
+}
+
 function odx_spec(int $id, string $category): array {
     $all = [
         3 => ['name'=>'Manual de Boas Práticas','eyebrow'=>'Governança e organização documental','number'=>'SDBPF / 01','flow'=>['Identificar','Definir responsabilidades','Organizar evidências','Revisar com RT'],'accent'=>'jade'],
@@ -102,6 +146,13 @@ function odx_post(): never {
         if(mb_strlen($v,'UTF-8')>1500){flash('Um campo ultrapassou o limite de 1500 caracteres.');redirect('?page=editar&id='.$id);}
         $data[$key]=$v;
     }
+    $reviewPost=$_POST['reviewed']??[];
+    if(!is_array($reviewPost))$reviewPost=[];
+    $reviewed=[];
+    foreach(odx_suggested_values((int)$id) as $key=>$suggestion){
+        if(isset($data[$key]) && $data[$key]!=='' && ($reviewPost[$key]??null)==='1')$reviewed[$key]=1;
+    }
+    $data['_reviewed']=$reviewed;
     $body=(string)($_POST['body_html']??'');
     $html=od_safe_document($body);
     if(strlen($html)<50){flash('O documento precisa ter conteúdo.');redirect('?page=editar&id='.$id);}
@@ -156,9 +207,14 @@ function odx_page():never {
         $q->execute([(int)$c['id'],(int)$id,$requestedVersion]);
         $snapshot=$q->fetchColumn();$data=is_string($snapshot)?(json_decode($snapshot,true)?:[]):[];
     }
+    $suggestions=odx_suggested_values((int)$id);
+    $displayData=$data;
+    if(!$historical)foreach($suggestions as $key=>$suggestion){
+        if(trim((string)($displayData[$key]??''))==='')$displayData[$key]=$suggestion;
+    }
     $profileExtra=od_profile_current($c);
     $profileContext=od_profile_context($c,$profileExtra);
-    if(!$historical)$html=od_profile_apply_document($html,$profileContext,$data);
+    if(!$historical)$html=od_profile_apply_document($html,$profileContext,$displayData);
     $brand=od_brand_current($c);
     $paperClinic=$c;
     $brandLogoUrl='?page=logo-clinica';
@@ -177,6 +233,10 @@ function odx_page():never {
         : ($saved ? od_visual_historical((int)$c['id'],(int)$id,(int)$saved['version']) : od_visual_current((int)$id));
     $fields=odx_fields((int)$id);$meta=odx_spec((int)$id,(string)$doc['category']);
     [$done,$total]=odx_count($data,$fields);
+    $suggestedPending=0;
+    if(!$historical)foreach($suggestions as $key=>$value){
+        if(!odx_suggestion_reviewed($data,$key) && array_key_exists($key,array_column($fields,null,'key')))$suggestedPending++;
+    }
     h('Documento da clínica',false);
     echo '<div class="odx-topline"><a href="?page=documentos">← Biblioteca</a><span> / </span><span>'.esc($doc['category']).'</span><span> / </span><strong>'.esc($meta['number']).'</strong></div>';
     echo '<div class="odx-page-title"><div><span class="odx-eyebrow">DOCSYSTEM / DOCUMENTAÇÃO DA CLÍNICA</span><h2>'.esc($doc['title']).'</h2><p>Preencha somente os detalhes deste documento. Os dados da clínica já cadastrados são aproveitados automaticamente. Revise com o responsável técnico.</p></div><span class="odx-version">'.($saved?'Versão '.(int)$saved['version']:'Novo documento').'</span></div>';
@@ -184,14 +244,18 @@ function odx_page():never {
     if(!$historical)echo '<div class="odx-shared-banner"><div><span>DADOS REUTILIZADOS</span><strong>'.(int)$profileDone.' de '.(int)$profileTotal.' dados cadastrais informados</strong><p>As informações salvas são inseridas nos campos correspondentes. Dados editados manualmente não são substituídos.</p></div><div class="odx-shared-actions"><a href="?page=dados-compartilhados&amp;return_id='.(int)$id.'">Completar cadastro ↗</a><a href="?page=identidade&amp;return_id='.(int)$id.'">Logo e cores ↗</a></div></div>';
     if($historical)echo '<div class="odx-history-banner"><strong>Visualizando versão '.(int)$historical['version'].'.</strong> Arquivo histórico somente para leitura. <a href="?page=editar&id='.(int)$id.'">Voltar à versão atual</a></div>';
     echo '<form method="post" class="odx-workspace" id="odx-form"'.($historical?' data-odx-readonly="true"':'').'>'.token().'<input type="hidden" name="act" value="premium_save"><input type="hidden" name="id" value="'.(int)$id.'"><textarea hidden name="body_html" id="odx-body-html"></textarea>';
-    echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO DO DOCUMENTO</span><h3>Detalhes desta minuta</h3><p>Informe apenas o que é específico deste material. Nome, CNPJ e demais dados da unidade vêm do cadastro compartilhado.</p></div><div class="odx-completion"><div><span>Informações fornecidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
-    foreach($fields as $i=>$f){$key=$f['key'];$value=(string)($data[$key]??'');$tag=$f['type']??'text';$idAttr='odx-f-'.$key;
-        echo '<label class="odx-field" for="'.esc($idAttr).'"><span><em>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</em>'.esc($f['label']).'</span>';
+    echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO DO DOCUMENTO</span><h3>Confira só o necessário</h3><p>Os campos sugeridos já vêm com uma base editável. Confirme apenas o que representa a rotina real da clínica.</p></div><div class="odx-completion"><div><span>Informações fornecidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
+    foreach($fields as $i=>$f){$key=$f['key'];$value=(string)($displayData[$key]??'');$tag=$f['type']??'text';$idAttr='odx-f-'.$key;
+        $isSuggestion=!$historical && isset($suggestions[$key]) &&
+            (trim((string)($data[$key]??''))==='' || trim((string)($data[$key]??''))===$suggestions[$key] || odx_suggestion_reviewed($data,$key));
+        $reviewed=odx_suggestion_reviewed($data,$key);
+        echo '<label class="odx-field'.($isSuggestion?' odx-field-suggested':'').'" for="'.esc($idAttr).'"><span><em>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</em>'.esc($f['label']).'</span>'.($isSuggestion?'<small class="odx-field-source" data-odx-status="'.esc($key).'">'.($reviewed?'Conferido':'Sugestão. Confira e ajuste').'</small>':'');
         if($tag==='textarea')echo '<textarea id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" rows="3" placeholder="'.esc($f['hint']).'">'.esc($value).'</textarea>';
         else echo '<input id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" value="'.esc($value).'" placeholder="'.esc($f['hint']).'">';
         echo '</label>';
+        if($isSuggestion)echo '<label class="odx-field-confirm"><input type="checkbox" name="reviewed['.esc($key).']" value="1" data-odx-confirm="'.esc($key).'"'.($reviewed?' checked':'').'> Conferi e confirmei esta informação</label>';
         $suggestion=od_guided_field_suggestion($f,$c);
-        if(!$historical && $value==='' && $suggestion!=='')echo '<div class="odx-suggestion-control"><button type="button" data-odx-suggest="'.esc($idAttr).'" data-suggestion="'.esc($suggestion).'">Usar sugestão de texto</button><small>Rascunho administrativo. Confirme com o RT.</small></div>';
+        if(!$historical && $value==='' && !$isSuggestion && $suggestion!=='')echo '<div class="odx-suggestion-control"><button type="button" data-odx-suggest="'.esc($idAttr).'" data-suggestion="'.esc($suggestion).'">Usar sugestão de texto</button><small>Rascunho administrativo. Confirme com o RT.</small></div>';
     }
     $histQ=odx_schema()->prepare('SELECT version,stage,created_at FROM od_document_history WHERE clinic_id=? AND template_id=? ORDER BY version DESC LIMIT 5');
     $histQ->execute([(int)$c['id'],(int)$id]);
