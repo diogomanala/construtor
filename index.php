@@ -6,7 +6,7 @@ header('X-Content-Type-Options: nosniff');
 header('Cache-Control: private, no-store');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('X-Frame-Options: DENY');
-header('Content-Security-Policy: default-src \'self\'; style-src \'self\' \'unsafe-inline\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data: blob: https://images.unsplash.com; base-uri \'self\'; form-action \'self\'');
+header('Content-Security-Policy: default-src \'self\'; style-src \'self\' \'unsafe-inline\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data: blob: https://images.unsplash.com; frame-src https://www.youtube-nocookie.com; base-uri \'self\'; form-action \'self\'');
 $secure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 ini_set('session.use_strict_mode','1');
 session_set_cookie_params(['httponly'=>true,'secure'=>$secure,'samesite'=>'Lax','path'=>'/rdc']);
@@ -27,7 +27,7 @@ function h(string $page,bool $showHeading=true):void {
  $authenticated=user()!==null;
  $primary=['painel'=>'Início','documentos'=>'Documentos','rotinas'=>'Rotinas','clinica'=>'Minha clínica'];
  $menu=[
-  'COMECE AQUI'=>['painel'=>'Início','trilha'=>'Trilha de primeiros passos'],
+  'COMECE AQUI'=>['painel'=>'Início','treinamento'=>'Treinamento em vídeo','trilha'=>'Trilha de primeiros passos'],
   'DOCUMENTOS'=>['documentos'=>'Biblioteca completa','meus-documentos'=>'Minhas versões','pasta-documental'=>'Pasta para impressão','acervo-visual'=>'Materiais ilustrados'],
   'ROTINAS'=>['registros-limpeza'=>'Limpeza','registros-esterilizacao'=>'Esterilização','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
   'ACOMPANHAMENTO'=>['acompanhamento'=>'Temas e pendências','inspecao'=>'Autoavaliação','auto360'=>'Autoinspeção 360'],
@@ -35,7 +35,7 @@ function h(string $page,bool $showHeading=true):void {
   'CONTA'=>['minha-senha'=>'Minha senha','suporte'=>'Suporte','sair'=>'Sair']
  ];
  if((int)(user()??0)===1 && od_is_pilot((int)user()))$menu['GESTÃO']=['auditoria-comercial'=>'Auditoria comercial'];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=10"><link rel="stylesheet" href="member-shell.css?v=2"><link rel="stylesheet" href="clinic-branding.css?v=2"><link rel="stylesheet" href="guided-ux.css?v=3"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=10"><link rel="stylesheet" href="member-shell.css?v=2"><link rel="stylesheet" href="member-training.css?v=1"><link rel="stylesheet" href="clinic-branding.css?v=2"><link rel="stylesheet" href="guided-ux.css?v=3"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg?v=9" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>emdia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
@@ -51,7 +51,7 @@ function h(string $page,bool $showHeading=true):void {
  if(!empty($_SESSION['flash'])){echo '<div class="notice" role="status">'.esc($_SESSION['flash']).'</div>';unset($_SESSION['flash']);}
  if($showHeading)echo '<h1>'.esc($page).'</h1>';
 }
-function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=6" defer></script><script src="clinic-branding.js?v=2" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script></body></html>';}
+function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=6" defer></script><script src="clinic-branding.js?v=2" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script><script src="assets/member-training.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
 require_once __DIR__.'/access-delivery.php';
 require_once __DIR__.'/support.php';
@@ -64,6 +64,7 @@ require_once __DIR__.'/visual-library.php';
 require_once __DIR__.'/material-library.php';
  require_once __DIR__.'/kit-bancadas.php';
 require_once __DIR__.'/guided-ux.php';
+require_once __DIR__.'/member-training.php';
 require_once __DIR__.'/legal-review.php';
 require_once __DIR__.'/document-engine.php';
 require_once __DIR__.'/steril-visual.php';
@@ -156,7 +157,8 @@ if($page==='amostra'){require __DIR__.'/amostra.php';exit;}
 if($page==='sair'){$_SESSION=[];session_destroy();redirect('?page=entrar');}
 if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two" style="max-width:540px;display:block;margin:20px auto"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form><p style="margin-top:14px"><a href="?page=recuperar-acesso">Esqueci minha senha ou não recebi meu acesso</a></p></section></div>';foot();exit;}
 if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não ativo');echo '<p class="lead">Este acesso está inativo ou expirado. Se concluiu uma compra, use o link de confirmação do pedido.</p><a class="btn" href="?page=checkout">Conhecer as opções</a>';foot();exit;}
-$c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
+$c=clinic();if(!$c&&!in_array($page,['diagnostico','treinamento'],true))redirect('?page=diagnostico');
+if($page==='treinamento')od_training_page();
 if($page==='minha-senha')od_access_password_page();
 if($page==='suporte')od_support_page();
 if($page==='dados-compartilhados')od_profile_page();
