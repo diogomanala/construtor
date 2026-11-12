@@ -6,7 +6,7 @@ header('X-Content-Type-Options: nosniff');
 header('Cache-Control: private, no-store');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header('X-Frame-Options: DENY');
-header('Content-Security-Policy: default-src \'self\'; style-src \'self\' \'unsafe-inline\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https://images.unsplash.com; base-uri \'self\'; form-action \'self\'');
+header('Content-Security-Policy: default-src \'self\'; style-src \'self\' \'unsafe-inline\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' data: blob: https://images.unsplash.com; base-uri \'self\'; form-action \'self\'');
 $secure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 ini_set('session.use_strict_mode','1');
 session_set_cookie_params(['httponly'=>true,'secure'=>$secure,'samesite'=>'Lax','path'=>'/rdc']);
@@ -35,7 +35,7 @@ function h(string $page,bool $showHeading=true):void {
   'CONTA'=>['suporte'=>'Suporte','sair'=>'Sair']
  ];
  if((int)(user()??0)===1 && od_is_pilot((int)user()))$menu['GESTÃO']=['auditoria-comercial'=>'Auditoria comercial'];
- echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=7"><link rel="stylesheet" href="member-shell.css?v=2"><link rel="stylesheet" href="clinic-branding.css?v=2"><link rel="stylesheet" href="guided-ux.css?v=3"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
+ echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=8"><link rel="stylesheet" href="member-shell.css?v=2"><link rel="stylesheet" href="clinic-branding.css?v=2"><link rel="stylesheet" href="guided-ux.css?v=3"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
  echo '<header class="top member-header"><div class="member-header-inner"><a class="brand member-brand" href="?page='.($authenticated?'painel':'inicio').'" aria-label="Odonto em Dia, '.($authenticated?'painel':'início').'"><img class="member-brand-mark" src="assets/favicon.svg?v=9" width="38" height="38" alt=""><span class="member-brand-word">odonto<span>emdia</span><small>GESTÃO DOCUMENTAL</small></span></a>';
  if($authenticated){
   echo '<div class="member-header-actions"><nav class="member-primary" aria-label="Acesso rápido">';
