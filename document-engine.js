@@ -36,6 +36,11 @@
   const quickProfile=document.getElementById('odx-quick-profile');
   const quickApply=quick?.querySelector('[data-odx-quick-apply]');
   let dirty=false;
+  const saveBar=document.getElementById('odx-dirty-save');
+  function markDirty(){
+    dirty=true;
+    if(saveBar&&!readOnlyHistory)saveBar.hidden=false;
+  }
   let activeTarget=null;
   let activeField=null;
 
@@ -158,7 +163,7 @@
   }
 
   fields.forEach(input=>input.addEventListener('input',()=>{
-    dirty=true;
+    markDirty();
     const confirm=confirmByKey.get(input.dataset.odxField);
     if(confirm)confirm.checked=false;
     sync();
@@ -170,7 +175,7 @@
       input?.focus();
       return;
     }
-    dirty=true;
+    markDirty();
     sync();
   }));
 
@@ -244,7 +249,7 @@
       activeTarget.classList.remove('odx-review-pending');
       activeTarget.classList.add('odx-inline-complete');
     }
-    dirty=true;
+    markDirty();
     sync();
     closeQuick(true);
     if(guide)guide.innerHTML='<strong>Alteração aplicada na prévia.</strong> Use “Salvar versão da minuta” para guardar as mudanças.';
@@ -300,7 +305,7 @@
       else{decorateMarkers();sync();}
     });
     body.addEventListener('input',()=>{
-      dirty=true;
+      markDirty();
       updatePending();
     });
   }
@@ -336,6 +341,7 @@
     }
     hiddenHtml.value=body.innerHTML;
     dirty=false;
+    if(saveBar)saveBar.hidden=true;
   });
   window.addEventListener('beforeunload',event=>{
     if(!dirty)return;
