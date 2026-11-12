@@ -45,7 +45,12 @@ function od_order_sync(array $order):array{
        $db->prepare('UPDATE od_orders SET status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')->execute([$status,$order['id']]);
        if($status==='canceled' && $order['activated_user_id'])$db->prepare('UPDATE od_entitlements SET status=\'revoked\' WHERE user_id=? AND order_id=?')->execute([$order['activated_user_id'],$order['id']]);
     }
-    $order['status']=$status;return $order;
+    $order['status']=$status;
+    // Somente a consulta autenticada a API de pagamentos libera entrega.
+    if($status==='paid' && function_exists('od_access_deliver') && empty($order['activated_user_id'])){
+        od_access_deliver($order);
+    }
+    return $order;
 }
 function od_mp_start():never{
     if(!od_mp_ready()){flash('O pagamento ainda está em configuração. Nenhuma cobrança foi iniciada.');redirect('?page=checkout');}
@@ -69,24 +74,9 @@ function od_mp_start():never{
     header('Location: '.$url,true,303);exit;
 }
 function od_mp_activate():never{
-    $order=od_order_by_code((string)($_POST['code']??''));if(!$order){http_response_code(404);exit('Pedido não encontrado.');}
-    $order=od_order_sync($order);
-    if($order['status']!=='paid'){flash('O pagamento ainda não foi confirmado.');redirect('?page=pedido&code='.$order['public_code']);}
-    $password=(string)($_POST['password']??'');if(strlen($password)<12||strlen($password)>256){flash('Use uma senha de pelo menos 12 caracteres.');redirect('?page=pedido&code='.$order['public_code']);}
-    $db=od_orders_db();$db->beginTransaction();
-    try{
-       $s=$db->prepare('SELECT id FROM users WHERE email=?');$s->execute([$order['buyer_email']]);$existing=$s->fetchColumn();
-       if($existing){
-           $db->prepare('INSERT INTO od_entitlements(user_id,order_id,addon,status,expires_at) VALUES(?,?,?,\'active\',datetime(\'now\',\'+365 days\')) ON CONFLICT(user_id) DO UPDATE SET order_id=excluded.order_id,addon=MAX(od_entitlements.addon,excluded.addon),status=\'active\',expires_at=excluded.expires_at')->execute([(int)$existing,$order['id'],(int)$order['addon']]);
-           $db->prepare('UPDATE od_orders SET activated_user_id=? WHERE id=?')->execute([(int)$existing,$order['id']]);$db->commit();
-           flash('Pagamento confirmado. Use a senha da conta existente para acessar.');redirect('?page=entrar');
-       }
-       $db->prepare('INSERT INTO users(email,password) VALUES(?,?)')->execute([$order['buyer_email'],password_hash($password,PASSWORD_DEFAULT)]);
-       $uid=(int)$db->lastInsertId();
-       $db->prepare('INSERT INTO od_entitlements(user_id,order_id,addon,status,expires_at) VALUES(?,?,?,\'active\',datetime(\'now\',\'+365 days\'))')->execute([$uid,$order['id'],(int)$order['addon']]);
-       $db->prepare('UPDATE od_orders SET activated_user_id=? WHERE id=?')->execute([$uid,$order['id']]);$db->commit();
-    }catch(Throwable $e){if($db->inTransaction())$db->rollBack();error_log('[Odonto] Erro na ativacao');flash('Não foi possível ativar este cadastro.');redirect('?page=pedido&code='.$order['public_code']);}
-    session_regenerate_id(true);$_SESSION['uid']=$uid;redirect('?page=diagnostico');
+    // Compatibilidade de rota: código público do pedido não cria mais contas.
+    flash('Use o link de ativação enviado para seu e-mail.');
+    redirect('?page=recuperar-acesso');
 }
 function od_is_pilot(int $userId):bool {
     if($userId!==1)return false;
@@ -110,8 +100,8 @@ function od_mp_order_page():never{
     h('Acompanhar meu pedido');
     echo '<div class="card" style="max-width:670px;margin:25px auto;padding:26px"><p>Pedido <b>'.esc($order['id']).'</b> • '.esc($order['buyer_email']).'</p>';
     if($order['status']==='paid'){
-        if($order['activated_user_id'])echo '<h2>Pagamento confirmado</h2><p>O acesso desta compra já foi ativado. Entre com seu e-mail e senha.</p><a class="btn" href="?page=entrar">Entrar na plataforma</a>';
-        else echo '<h2>Pagamento confirmado!</h2><p>Crie a senha do seu acesso. Os documentos permanecem como minutas para revisão pelo RT.</p><form method="post">'.token().'<input type="hidden" name="act" value="order_activate"><input type="hidden" name="code" value="'.esc($order['public_code']).'"><label>Crie sua senha (mínimo de 12 caracteres)<input type="password" name="password" required minlength="12" autocomplete="new-password"></label><button>Ativar meu acesso</button></form>';
+        if($order['activated_user_id'])echo '<h2>Pagamento confirmado</h2><p>Seu acesso já foi ativado. Entre com seu e-mail e senha.</p><a class="btn" href="?page=entrar">Entrar na plataforma</a>';
+        else echo '<h2>Pagamento confirmado!</h2><p>Enviamos as instruções para o e-mail informado na compra. Use o link para criar sua senha e começar.</p><p>Se não receber, confira o spam ou solicite outro link.</p><a class="btn" href="?page=recuperar-acesso">Receber link de acesso</a>';
     } elseif($order['status']==='canceled')echo '<h2>Pagamento não concluído</h2><p>Este pedido foi cancelado ou estornado. Se necessário, inicie uma nova compra.</p><a class="btn" href="?page=checkout">Voltar ao checkout</a>';
     else echo '<h2>Aguardando confirmação do pagamento</h2><p>No Pix, a confirmação pode ocorrer depois do retorno ao site. Atualize esta página para verificar novamente.</p><a class="btn" href="?page=pedido&amp;code='.esc($order['public_code']).'">Verificar novamente</a>';
     echo '</div>';foot();exit;
