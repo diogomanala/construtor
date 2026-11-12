@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0c2e35">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9">
 <title>Odonto em Dia | RDC 1.002/2025 | Kit e painel online por R$ 67</title>
-<link rel="stylesheet" href="sales.css?v=sticky-clinica-20261109">
+<link rel="stylesheet" href="sales.css?v=od-pasta-photo-20261112">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -202,6 +202,10 @@
 </div>
 </div>
 </div></section>
+<section class="od-pasta-banner" aria-label="Imagem ilustrativa da pasta documental Odonto em Dia">
+  <img src="/uploads/odonto-pasta-hero.webp" width="1672" height="941" alt="Pasta documental odontológica do Odonto em Dia sobre mesa de consultório, com capa verde e laranja, espiral metálica e referência à RDC 1.002/2025." loading="lazy" decoding="async">
+  <span class="od-pasta-banner-note">Imagem ilustrativa. Kit digital para personalizar e imprimir.</span>
+</section>
 <section class="kit-clarity" aria-label="Entenda exatamente o produto"><div class="wrap"><div class="kit-clarity-head"><span class="sec-label">Trilha Documental Guiada</span><h2>Saiba por onde começar. <em>Prepare e acompanhe cada etapa.</em></h2><p>Uma sequência de uso com autoavaliação, modelos editáveis e acompanhamento. Prepare os documentos na plataforma, consulte as referências oficiais e reúna uma pasta A4 organizada para imprimir após a revisão do responsável técnico.</p></div><div class="kit-clarity-grid">
 <article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('book')?></div><div><h3>1. Veja por onde começar</h3><p>Faça a <strong>autoavaliação inicial de 15 pontos</strong> e siga a trilha de primeiros passos para organizar a documentação da clínica.</p></div></article>
 <article class="kit-clarity-card"><div class="kit-clarity-icon"><?=si('file')?></div><div><h3>2. Edite dentro da plataforma</h3><p>Escolha entre <strong>30 materiais de referência</strong>, preencha os dados guiados e salve versões para revisão técnica.</p></div></article>
