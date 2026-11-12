@@ -71,6 +71,7 @@ function od_mp_start():never{
        error_log('[Odonto] Checkout Orders indisponível HTTP '.($result['status']??0));flash('Não foi possível abrir o Mercado Pago agora. Nenhuma cobrança foi concluída.');redirect('?page=checkout');
     }
     $p->prepare('UPDATE od_orders SET provider_order_id=?,checkout_url=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')->execute([(string)$d['id'],$url,$id]);
+    $_SESSION['od_checkout_proof']=$code;
     header('Location: '.$url,true,303);exit;
 }
 function od_mp_activate():never{
@@ -97,6 +98,20 @@ function od_mp_checkout_page():never{
 function od_mp_order_page():never{
     $order=od_order_by_code((string)($_GET['code']??''));if(!$order){http_response_code(404);exit('Pedido não encontrado.');}
     $order=od_order_sync($order);
+    // Reconhece somente o mesmo navegador que iniciou a compra; o codigo do pedido
+    // sozinho nunca permite acessar a conta de outra pessoa.
+    $proof=(string)($_SESSION['od_checkout_proof']??'');
+    if($order['status']==='paid' && $proof!=='' && hash_equals((string)$order['public_code'],$proof)){
+        $fresh=od_order_by_code((string)$order['public_code']);
+        $uid=(int)($fresh['activated_user_id']??0);
+        if($uid>0 && od_mp_entitlement($uid)){
+            unset($_SESSION['od_checkout_proof']);
+            session_regenerate_id(true);
+            $_SESSION['uid']=$uid;
+            flash('Pagamento confirmado. Seu acesso foi liberado!');
+            redirect(clinic()?'?page=painel':'?page=diagnostico');
+        }
+    }
     h('Acompanhar meu pedido');
     echo '<div class="card" style="max-width:670px;margin:25px auto;padding:26px"><p>Pedido <b>'.esc($order['id']).'</b> • '.esc($order['buyer_email']).'</p>';
     if($order['status']==='paid'){
