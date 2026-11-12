@@ -53,6 +53,7 @@ function h(string $page,bool $showHeading=true):void {
 }
 function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=6" defer></script><script src="clinic-branding.js?v=2" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
+require_once __DIR__.'/access-delivery.php';
 require_once __DIR__.'/support.php';
 require_once __DIR__.'/clinic-profile.php';
 require_once __DIR__.'/site-legal.php';
@@ -79,6 +80,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  $act=(string)($_POST['act']??'');
  if($act==='checkout_start')od_mp_start();
   if($act==='order_activate')od_mp_activate();
+  if($act==='access_activate')od_access_activate();
+  if($act==='access_resend')od_access_resend();
   if($act==='register'){
   $invite=$_POST['invite']??null;
   if(!is_string($invite)||!hash_equals('c3a6589f57181a1c5f74395272b1a7eb150cddbd20f8cff4d254baef4084003a',hash('sha256',trim($invite)))){
@@ -143,11 +146,13 @@ $page=(string)($_GET['page']??'inicio');
 if(in_array($page,['termos','privacidade','politica-privacidade'],true))od_public_legal_page($page);
 if($page==='checkout')od_mp_checkout_page();
 if($page==='pedido')od_mp_order_page();
+if($page==='ativar-acesso')od_access_page();
+if($page==='recuperar-acesso')od_access_recovery_page();
 if($page==='inicio'){require __DIR__.'/landing.php';exit;}
 if($page==='demo'){require __DIR__.'/demo.php';exit;}
 if($page==='amostra'){require __DIR__.'/amostra.php';exit;}
 if($page==='sair'){$_SESSION=[];session_destroy();redirect('?page=entrar');}
-if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two" style="max-width:540px;display:block;margin:20px auto"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form></section></div>';foot();exit;}
+if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two" style="max-width:540px;display:block;margin:20px auto"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form><p style="margin-top:14px"><a href="?page=recuperar-acesso">Esqueci minha senha ou não recebi meu acesso</a></p></section></div>';foot();exit;}
 if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não ativo');echo '<p class="lead">Este acesso está inativo ou expirado. Se concluiu uma compra, use o link de confirmação do pedido.</p><a class="btn" href="?page=checkout">Conhecer as opções</a>';foot();exit;}
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='suporte')od_support_page();
