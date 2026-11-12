@@ -47,7 +47,7 @@ function od_order_sync(array $order):array{
     }
     $order['status']=$status;
     // Somente a consulta autenticada a API de pagamentos libera entrega.
-    if($status==='paid' && function_exists('od_access_deliver') && empty($order['activated_user_id'])){
+    if($status==='paid' && function_exists('od_access_deliver')){
         od_access_deliver($order);
     }
     return $order;
