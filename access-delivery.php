@@ -196,6 +196,8 @@ function od_access_login():never{
     $token=(string)($_POST['access_token']??'');
     $order=od_access_token_order($token);
     if(!$order){flash('O link expirou ou já foi usado. Solicite outro.');redirect('?page=recuperar-acesso');}
+    $order=od_order_sync($order);
+    if($order['status']!=='paid'){flash('O pagamento não está confirmado.');redirect('?page=entrar');}
     $db=od_access_db();$db->exec('BEGIN IMMEDIATE');
     try{
         $q=$db->prepare("SELECT id FROM od_access_tokens WHERE order_id=? AND token_hash=?
