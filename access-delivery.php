@@ -179,11 +179,44 @@ function od_access_activate():never{
 function od_access_page():never{
     $token=(string)($_GET['token']??'');
     $order=od_access_token_order($token);
-    h('Ativar meu acesso',false);
+    header('Referrer-Policy: no-referrer');
+    h('Acessar Odonto em Dia',false);
     echo '<div class="card" style="max-width:540px;margin:35px auto;padding:26px">';
-    if(!$order)echo '<h2>Link inválido ou expirado</h2><p>Se você já comprou, solicite outro link usando o e-mail da compra.</p><a class="btn" href="?page=recuperar-acesso">Recuperar acesso</a>';
-    else echo '<h2>Crie sua senha</h2><p>Compra confirmada. Defina uma senha para entrar na área de membros. O link será invalidado depois do uso.</p><form method="post">'.token().'<input type="hidden" name="act" value="access_activate"><input type="hidden" name="access_token" value="'.esc($token).'"><label>Nova senha (mínimo 12 caracteres)<input type="password" name="password" required minlength="12" maxlength="256" autocomplete="new-password"></label><button type="submit">Criar senha e acessar</button></form>';
+    if(!$order){
+        echo '<h2>Link inválido ou expirado</h2><p>Você pode solicitar um novo link usando o e-mail da compra.</p><a class="btn" href="?page=recuperar-acesso">Recuperar acesso</a>';
+    }else{
+        echo '<h2>Seu acesso está liberado!</h2><p>Pagamento confirmado. Clique abaixo para entrar sem precisar digitar uma senha.</p>'
+          .'<form method="post">'.token().'<input type="hidden" name="act" value="access_login">'
+          .'<input type="hidden" name="access_token" value="'.esc($token).'"><button type="submit">Entrar na minha plataforma</button></form>'
+          .'<p style="font-size:12px;color:#648071;margin-top:15px">Você poderá trocar sua senha provisória depois de entrar. Este link é individual e válido por 48 horas.</p>';
+    }
     echo '</div>';foot();exit;
+}
+function od_access_login():never{
+    $token=(string)($_POST['access_token']??'');
+    $order=od_access_token_order($token);
+    if(!$order){flash('O link expirou ou já foi usado. Solicite outro.');redirect('?page=recuperar-acesso');}
+    $db=od_access_db();$db->exec('BEGIN IMMEDIATE');
+    try{
+        $q=$db->prepare("SELECT id FROM od_access_tokens WHERE order_id=? AND token_hash=?
+          AND consumed_at IS NULL AND expires_at>CURRENT_TIMESTAMP");
+        $q->execute([$order['id'],hash('sha256',$token)]);
+        if(!$q->fetchColumn()){ $db->rollBack();redirect('?page=recuperar-acesso');}
+        $uid=(int)($order['activated_user_id']??0);
+        if(!$uid){$db->rollBack();redirect('?page=recuperar-acesso');}
+        $q=$db->prepare('SELECT 1 FROM od_entitlements WHERE user_id=? AND status=? AND expires_at>=CURRENT_TIMESTAMP');
+        $q->execute([$uid,'active']);
+        if(!$q->fetchColumn()){ $db->rollBack();redirect('?page=recuperar-acesso');}
+        $db->prepare('UPDATE od_access_tokens SET consumed_at=CURRENT_TIMESTAMP WHERE id=?')->execute([(int)$order['access_token_id']]);
+        $db->commit();
+        session_regenerate_id(true);$_SESSION['uid']=$uid;
+        flash('Bem-vindo! Seu acesso está ativo.'.(od_access_has_temp_password($uid)?' Você pode trocar a senha provisória em Minha senha.':''));
+        redirect(clinic()?'?page=painel':'?page=diagnostico');
+    }catch(Throwable $e){
+        if($db->inTransaction())$db->rollBack();
+        error_log('[Odonto] Login por link falhou');
+        flash('Não foi possível acessar pelo link. Solicite um novo.');redirect('?page=recuperar-acesso');
+    }
 }
 function od_access_resend():never{
     $email=strtolower(trim((string)($_POST['email']??'')));
