@@ -280,6 +280,8 @@
   document.addEventListener('pointerdown',event=>{
     if(!quick||quick.hidden)return;
     if(quick.contains(event.target))return;
+    // O usuário deve aplicar a edição rápida antes de enviar a versão inteira.
+    if(event.target.closest?.('button[type="submit"],input[type="submit"]'))return;
     const editTarget=event.target.closest?.('[data-odx-bind],[data-odx-inline],[data-odx-display]');
     if(!editTarget)closeQuick(false);
   });
