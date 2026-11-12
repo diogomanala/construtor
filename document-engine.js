@@ -104,6 +104,7 @@
 
   function updatePending(){
     if(!pendingNote||!body)return;
+    if(readOnlyHistory){pendingNote.hidden=true;return;}
     const text=body.textContent||'';
     const placeholders=text.match(markerRE)||[];
     const unreviewed=confirms.filter(check=>!check.checked).length;
