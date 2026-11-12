@@ -108,7 +108,7 @@ function od_access_deliver(array $order,bool $manual=false):bool{
         $email=(string)$order['buyer_email'];
         $subject='Seu acesso ao Odonto em Dia';
         $body="Olá!\r\n\r\nSeu pagamento do Odonto em Dia foi confirmado. Seu acesso já está liberado.\r\n\r\n"
-             ."ACESSAR EM UM CLIQUE (sem digitar senha):\r\n".$link."\r\n\r\n"
+             ."ACESSAR SEM DIGITAR SENHA:\r\n".$link."\r\n\r\n"
              ."Esse link é individual, válido por 48 horas e de uso único.\r\n";
         if($temporaryPassword!==null){
             $body.="Se preferir entrar com e-mail e senha:\r\n"
@@ -235,7 +235,7 @@ function od_access_resend():never{
 function od_access_recovery_page():never{
     h('Recuperar acesso',false);
     echo '<div class="card" style="max-width:550px;margin:35px auto;padding:27px"><h2>Receber link de acesso</h2>'
-        .'<p>Informe o e-mail utilizado na compra. Se o pagamento foi confirmado, enviaremos um link para criar ou atualizar sua senha.</p>'
+        .'<p>Informe o e-mail utilizado na compra. Se o pagamento foi confirmado, enviaremos um link para entrar sem precisar digitar senha.</p>'
         .'<form method="post">'.token().'<input type="hidden" name="act" value="access_resend">'
         .'<label>E-mail da compra<input type="email" name="email" required autocomplete="email" maxlength="180"></label>'
         .'<button type="submit">Enviar link de acesso</button></form><p><a href="?page=entrar">Voltar ao login</a></p></div>';foot();exit;
