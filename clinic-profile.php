@@ -222,7 +222,44 @@ function od_profile_page():never {
         [$key,$label,$hint,$max]=$f;$value=(string)($extra[$key]??'');
         echo '<label class="od-profile-field"><span>'.esc($label).'</span><input name="'.esc($key).'" maxlength="'.$max.'" value="'.esc($value).'" placeholder="'.esc($hint).'"></label>';
     }
-    echo '</div><p class="od-profile-note">Quantidade de consultórios, radiologia, sedação e processamento continuam em <a href="?page=diagnostico">Perfil operacional da clínica</a> e também são reaproveitados.</p></section>';
+    echo '</div><p class="od-profile-note">Quantidade de consultórios, radiologia, sedação e processamento continuam em <a href="?page=perfil-operacional">Perfil operacional da clínica</a> e também são reaproveitados.</p></section>';
     echo '<div class="od-profile-actions"><button type="submit">Salvar dados compartilhados</button><span>As versões antigas dos documentos continuam preservadas.</span></div></form></div>';
+    foot();exit;
+}
+
+
+/* Edição operacional sem solicitar novamente nome, CNPJ, endereço ou RT. */
+function od_profile_operational_post():never {
+    $c=clinic();
+    if(!$c||!user()){http_response_code(403);exit('Faça login.');}
+    $chairs=filter_var($_POST['chairs']??null,FILTER_VALIDATE_INT);
+    $ster=$_POST['sterilization']??null;
+    if($chairs===false||$chairs<1||$chairs>200||!is_string($ster)||!in_array($ster,['interna','terceirizada','mista'],true)){
+        flash('Confira a quantidade de consultórios e a forma de processamento.');redirect('?page=perfil-operacional');
+    }
+    $xray=isset($_POST['has_xray'])?1:0;
+    $sedation=isset($_POST['has_sedation'])?1:0;
+    $q=db()->prepare('UPDATE clinics SET chairs=?,sterilization=?,has_xray=?,has_sedation=? WHERE id=? AND user_id=?');
+    $q->execute([$chairs,$ster,$xray,$sedation,(int)$c['id'],(int)user()]);
+    flash('Atividades da clínica salvas. Os documentos passam a usar os novos dados de perfil.');
+    redirect('?page=perfil-operacional');
+}
+
+function od_profile_operational_page():never {
+    $c=clinic();
+    if(!$c){http_response_code(403);exit('Acesso necessário.');}
+    h('Atividades da clínica',false);
+    echo '<div class="od-profile-page"><div class="od-profile-intro"><a href="?page=clinica" class="od-profile-back">← Minha clínica</a><span class="odx-eyebrow">PERFIL OPERACIONAL</span><h1>Como funciona sua clínica?</h1><p>Atualize apenas as características da unidade. Nome, CNPJ e responsáveis continuam no <a href="?page=dados-compartilhados">cadastro da clínica</a>.</p></div>';
+    echo '<form class="od-profile-form" method="post">'.token().'<input type="hidden" name="act" value="profile_operational_save"><section class="od-profile-panel"><div class="od-profile-section-head"><h2>Estrutura e serviços</h2><p>Os dados abaixo ajudam a indicar quais minutas podem exigir adaptação. Não determinam aprovação sanitária.</p></div>';
+    echo '<div class="od-profile-grid"><label class="od-profile-field"><span>Consultórios individuais</span><input type="number" name="chairs" min="1" max="200" required value="'.(int)$c['chairs'].'"></label>';
+    echo '<label class="od-profile-field"><span>Processamento de materiais</span><select name="sterilization" required>';
+    foreach(['interna'=>'Na própria clínica','terceirizada'=>'Terceirizado','mista'=>'Na clínica e terceirizado'] as $key=>$label){
+        echo '<option value="'.esc($key).'"'.($c['sterilization']===$key?' selected':'').'>'.esc($label).'</option>';
+    }
+    echo '</select></label></div><div class="od-profile-checks">';
+    echo '<label><input type="checkbox" name="has_xray" value="1"'.(!empty($c['has_xray'])?' checked':'').'><span>Realiza radiologia odontológica</span></label>';
+    echo '<label><input type="checkbox" name="has_sedation" value="1"'.(!empty($c['has_sedation'])?' checked':'').'><span>Realiza procedimentos com sedação</span></label>';
+    echo '</div><p class="od-profile-note">Confirme o enquadramento e os requisitos específicos com o responsável técnico.</p></section>';
+    echo '<div class="od-profile-actions"><button type="submit">Salvar atividades</button><span>Os dados cadastrais e as versões anteriores das minutas não serão alterados.</span></div></form></div>';
     foot();exit;
 }
