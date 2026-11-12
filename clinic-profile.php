@@ -119,10 +119,10 @@ function od_profile_apply_document(string $html,array $ctx,array $fields=[]):str
     foreach($bound as $key=>$label) {
         $value=trim((string)($fields[$key]??''));
         $reviewed=!empty($fields['_reviewed'][$key]);
-        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*(\[(?:PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]|[^<]*?)(\s*</td>)~iu';
+        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*(\[(?:\s*|PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]|[^<]*?)(\s*</td>)~iu';
         $html=preg_replace_callback($pattern,static function($m)use($key,$value,$reviewed){
             $old=trim(html_entity_decode($m[2],ENT_QUOTES,'UTF-8'));
-            $placeholder=(bool)preg_match('/^\[(?:PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]$/iu',$old);
+            $placeholder=(bool)preg_match('/^\[(?:\s*|PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]$/iu',$old);
             // Nunca substitui uma descrição já editada diretamente no texto técnico.
             if(!$placeholder && ($value==='' || $old!==$value))return $m[0];
             $text=$value!==''?esc($value):$m[2];
