@@ -28,32 +28,88 @@
   const progressBar = root.querySelector('[data-odx-progress]');
   const progressLabel = root.querySelector('[data-odx-progress-label]');
   const pendingNote = root.querySelector('[data-odx-pending-note]');
+  const confirms = [...root.querySelectorAll('[data-odx-confirm]')];
+  const confirmByKey = new Map(confirms.map(input => [input.dataset.odxConfirm, input]));
   let dirty = false;
   const updatePending = () => {
     if (!pendingNote || !documentBody) return;
-    const pending = (documentBody.textContent || '').match(/\[[^\]\n]{0,75}\]/g) || [];
-    pendingNote.hidden = pending.length === 0;
-    if (pending.length) pendingNote.textContent = `${pending.length} campo(s) ou marcação(ões) ainda precisam de conferência no texto. Revise antes de imprimir ou finalizar.`;
+    const placeholders=(documentBody.textContent||'').match(/\[[^\]\n]{0,75}\]/g)||[];
+    const unreviewed=confirms.filter(input=>!input.checked).length;
+    pendingNote.hidden=placeholders.length+unreviewed===0;
+    if(!pendingNote.hidden){
+      const parts=[];
+      if(unreviewed)parts.push(unreviewed+' sugestão(ões) para conferir na lateral');
+      if(placeholders.length)parts.push(placeholders.length+' campo(s) com marcação pendente no texto');
+      pendingNote.textContent=parts.join(' e ')+'. Você pode salvar como rascunho, mas confira esses itens antes de finalizar.';
+    }
   };
-  const sync = () => {
-    let filled = 0;
-    fields.forEach(input => {
-      const value = input.value.trim();
-      if (value) filled++;
-      documentBody?.querySelectorAll('[data-odx-bind]').forEach(target => {
-        if (target.dataset.odxBind === input.dataset.odxField) target.textContent = value || '[ ]';
+  const sync=()=>{
+    let completed=0;
+    const displays=[...root.querySelectorAll('[data-odx-display]')];
+    const spans=[...(documentBody?.querySelectorAll('[data-odx-bind]')||[])];
+    const statuses=[...root.querySelectorAll('[data-odx-status]')];
+    fields.forEach(input=>{
+      const value=input.value.trim();
+      const key=input.dataset.odxField;
+      const check=confirmByKey.get(key);
+      const confirmed=!check||check.checked;
+      if(value && confirmed)completed++;
+      spans.forEach(target=>{
+        if(target.dataset.odxBind!==key)return;
+        target.textContent=value||'[ ]';
+        target.classList.toggle('odx-review-pending',!confirmed||!value);
+        target.classList.toggle('odx-reviewed-value',confirmed&&!!value);
+        target.title=!confirmed?'Sugestão pendente. Clique para conferir no formulário.':'Informação conferida';
+        target.tabIndex=0;
+        target.setAttribute('role','button');
+        target.setAttribute('aria-label','Conferir campo no formulário');
       });
-      root.querySelectorAll('[data-odx-display]').forEach(display => {
-        if (display.dataset.odxDisplay !== input.dataset.odxField) return;
-        display.textContent = value || 'A preencher';
-        display.classList.toggle('odx-empty', !value);
+      displays.forEach(display=>{
+        if(display.dataset.odxDisplay!==key)return;
+        display.textContent=value||'A preencher';
+        display.classList.toggle('odx-empty',!value);
+        display.classList.toggle('odx-review-pending',!confirmed);
+      });
+      statuses.forEach(status=>{
+        if(status.dataset.odxStatus!==key)return;
+        status.textContent=confirmed?'Conferido':'Sugestão. Confira e ajuste';
+        status.classList.toggle('is-confirmed',confirmed);
       });
     });
-    if (progressBar) progressBar.style.width = Math.round(filled / (fields.length || 1) * 100) + '%';
-    if (progressLabel) progressLabel.textContent = filled + ' de ' + fields.length;
+    if(progressBar)progressBar.style.width=Math.round(completed/(fields.length||1)*100)+'%';
+    if(progressLabel)progressLabel.textContent=completed+' de '+fields.length;
     updatePending();
   };
-  fields.forEach(input => input.addEventListener('input', () => { dirty = true; sync(); }));
+  fields.forEach(input=>input.addEventListener('input',()=>{
+    dirty=true;
+    const check=confirmByKey.get(input.dataset.odxField);
+    if(check)check.checked=false;
+    sync();
+  }));
+  confirms.forEach(check=>check.addEventListener('change',()=>{
+    const input=fields.find(f=>f.dataset.odxField===check.dataset.odxConfirm);
+    if(check.checked && (!input||!input.value.trim())){
+      check.checked=false;
+      input?.focus();
+      return;
+    }
+    dirty=true;sync();
+  }));
+  documentBody?.addEventListener('click',event=>{
+    if(documentBody.isContentEditable)return;
+    const span=event.target.closest?.('[data-odx-bind]');
+    if(!span)return;
+    const input=fields.find(f=>f.dataset.odxField===span.dataset.odxBind);
+    if(input){input.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});}
+  });
+  documentBody?.addEventListener('keydown',event=>{
+    if(event.key!=='Enter'&&event.key!==' ')return;
+    const span=event.target.closest?.('[data-odx-bind]');
+    if(!span)return;
+    event.preventDefault();
+    const input=fields.find(f=>f.dataset.odxField===span.dataset.odxBind);
+    if(input){input.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});}
+  });
   sync();
   if (toggle && documentBody) {
     toggle.addEventListener('click', () => {
