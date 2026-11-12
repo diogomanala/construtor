@@ -191,3 +191,28 @@ body:has(.odx-workspace) main>h1,body:has(.odx-lib-header) main>h1{display:none}
   .odx-quick-edit,.odx-inline-guide{display:none!important}
   .odx-document-body [data-odx-inline],.odx-document-body [data-odx-bind]{color:inherit;outline:0!important;border-bottom:0!important}
 }
+
+
+/* Botão de salvamento de alterações não gravadas */
+.odx-dirty-save[hidden]{display:none!important}
+.odx-dirty-save{
+  position:fixed;bottom:20px;right:22px;z-index:9990;
+  display:flex;align-items:center;gap:22px;
+  box-sizing:border-box;min-width:320px;max-width:calc(100vw - 28px);
+  border:1px solid #c7e1d2;border-radius:16px;background:#fff;
+  padding:12px 14px 12px 18px;
+  box-shadow:0 18px 52px rgba(21,62,46,.2);
+}
+.odx-dirty-save>div{display:flex;flex:1;flex-direction:column;gap:3px}
+.odx-dirty-save strong{font-size:12px;font-weight:800;color:#225342}
+.odx-dirty-save small{font-size:10px;color:#789184;line-height:1.4}
+.odx-dirty-save button{cursor:pointer;background:#14745a;border:1px solid #14745a;color:#fff;border-radius:10px;padding:11px 15px;min-height:40px;font-size:12px;font-weight:800;white-space:nowrap}
+.odx-dirty-save button:hover{background:#0e624d}
+.odx-dirty-save button:focus-visible{outline:3px solid #94d7b6;outline-offset:2px}
+@media(max-width:680px){
+  .odx-dirty-save{left:12px;right:12px;bottom:12px;max-width:none;min-width:0;gap:8px;padding:11px 12px}
+  .odx-dirty-save button{padding:10px 12px}
+  .odx-dirty-save small{font-size:9px}
+  .odx-quick-edit:not([hidden])~.odx-dirty-save{display:none}
+}
+@media print{.odx-dirty-save{display:none!important}}
