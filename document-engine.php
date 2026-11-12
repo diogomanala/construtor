@@ -292,7 +292,7 @@ function odx_page():never {
     echo '<div class="odx-approval"><div><span>CONTROLE E REVISÃO</span><h3>Revisão e formalização</h3><p>Esta minuta não recebe aprovação automática. O RT deve revisar o conteúdo; a SDBPF exige também aprovação e assinatura do responsável legal, conforme a RDC 1.002/2025, art. 111. A assinatura exibida aqui é apenas um espaço de referência, não uma assinatura eletrônica.</p></div><div class="odx-approval-line"><small>Responsável técnico / CRO</small><span>Assinatura e data após validação</span></div></div>';
     echo '<div class="odx-paper-foot"><span>ODONTO EM DIA · DOCUMENTAÇÃO INTERNA</span><span>Modelo de referência · sem certificação automática</span></div></div></article>';
     echo '<div class="odx-outline" hidden id="odx-outline"><h3>Seções do documento</h3><ol data-odx-outline></ol></div>';
-    echo '<div class="odx-bottom-hint"><strong>Este material é uma minuta de referência.</strong> Não substitui a avaliação da aplicabilidade, a revisão e a aprovação profissional.</div></section></form>';
+    echo '<div class="odx-bottom-hint"><strong>Este material é uma minuta de referência.</strong> Não substitui a avaliação da aplicabilidade, a revisão e a aprovação profissional.</div></section><div class="odx-dirty-save" id="odx-dirty-save" role="status" hidden><div><strong>Alterações ainda não salvas</strong><small>Guarde a nova versão antes de sair.</small></div><button type="submit">Salvar versão</button></div></form>';
     foot();exit;
 }
 function odx_library():never {
