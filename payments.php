@@ -116,7 +116,7 @@ function od_mp_order_page():never{
     echo '<div class="card" style="max-width:670px;margin:25px auto;padding:26px"><p>Pedido <b>'.esc($order['id']).'</b> • '.esc($order['buyer_email']).'</p>';
     if($order['status']==='paid'){
         if($order['activated_user_id'])echo '<h2>Pagamento confirmado</h2><p>Seu acesso já foi ativado. Entre com seu e-mail e senha.</p><a class="btn" href="?page=entrar">Entrar na plataforma</a>';
-        else echo '<h2>Pagamento confirmado!</h2><p>Enviamos as instruções para o e-mail informado na compra. Use o link para criar sua senha e começar.</p><p>Se não receber, confira o spam ou solicite outro link.</p><a class="btn" href="?page=recuperar-acesso">Receber link de acesso</a>';
+        else echo '<h2>Pagamento confirmado!</h2><p>Enviamos as instruções para o e-mail informado na compra. Use o link para entrar diretamente na plataforma, sem digitar senha.</p><p>Se não receber, confira o spam ou solicite outro link.</p><a class="btn" href="?page=recuperar-acesso">Receber link de acesso</a>';
     } elseif($order['status']==='canceled')echo '<h2>Pagamento não concluído</h2><p>Este pedido foi cancelado ou estornado. Se necessário, inicie uma nova compra.</p><a class="btn" href="?page=checkout">Voltar ao checkout</a>';
     else echo '<h2>Aguardando confirmação do pagamento</h2><p>No Pix, a confirmação pode ocorrer depois do retorno ao site. Atualize esta página para verificar novamente.</p><a class="btn" href="?page=pedido&amp;code='.esc($order['public_code']).'">Verificar novamente</a>';
     echo '</div>';foot();exit;
