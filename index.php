@@ -32,7 +32,7 @@ function h(string $page,bool $showHeading=true):void {
   'ROTINAS'=>['registros-limpeza'=>'Limpeza','registros-esterilizacao'=>'Esterilização','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
   'ACOMPANHAMENTO'=>['acompanhamento'=>'Temas e pendências','inspecao'=>'Autoavaliação','auto360'=>'Autoinspeção 360'],
   'MINHA CLÍNICA'=>['clinica'=>'Visão geral','dados-compartilhados'=>'Cadastro da clínica','perfil-operacional'=>'Atividades da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
-  'CONTA'=>['suporte'=>'Suporte','sair'=>'Sair']
+  'CONTA'=>['minha-senha'=>'Minha senha','suporte'=>'Suporte','sair'=>'Sair']
  ];
  if((int)(user()??0)===1 && od_is_pilot((int)user()))$menu['GESTÃO']=['auditoria-comercial'=>'Auditoria comercial'];
  echo '<!doctype html><html lang="pt-BR"><head><link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=9"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'.esc($page).' | Odonto em Dia</title><link rel="stylesheet" href="style.css?v=doc1"><link rel="stylesheet" href="document-engine.css?v=10"><link rel="stylesheet" href="member-shell.css?v=2"><link rel="stylesheet" href="clinic-branding.css?v=2"><link rel="stylesheet" href="guided-ux.css?v=3"><link rel="stylesheet" href="legal-review.css?v=1"><link rel="stylesheet" href="steril-inline.css?v=5"><link rel="stylesheet" href="pasta-documental.css?v=1"><link rel="stylesheet" href="reference-gallery.css?v=1"><link rel="stylesheet" href="assets/auto360-premium.css?v=1"><link rel="stylesheet" href="assets/app-tour.css?v=1"><meta name="od-tour-user-id" content="'.(int)(user() ?? 0).'"></head><body>';
@@ -81,7 +81,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  if($act==='checkout_start')od_mp_start();
   if($act==='order_activate')od_mp_activate();
   if($act==='access_activate')od_access_activate();
+  if($act==='access_login')od_access_login();
   if($act==='access_resend')od_access_resend();
+  if($act==='access_change_password')od_access_change_password();
   if($act==='register'){
   $invite=$_POST['invite']??null;
   if(!is_string($invite)||!hash_equals('c3a6589f57181a1c5f74395272b1a7eb150cddbd20f8cff4d254baef4084003a',hash('sha256',trim($invite)))){
@@ -121,7 +123,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     redirect('?page=entrar');
   }
  }
- if($act==='login'){$q=db()->prepare('SELECT * FROM users WHERE email=?');$q->execute([strtolower(trim((string)($_POST['email']??'')))]);$u=$q->fetch();if($u && password_verify((string)($_POST['password']??''),$u['password'])){session_regenerate_id(true);$_SESSION['uid']=(int)$u['id'];redirect('?page=painel');}flash('E-mail ou senha incorretos.');redirect('?page=entrar');}
+ if($act==='login'){$q=db()->prepare('SELECT * FROM users WHERE email=?');$q->execute([strtolower(trim((string)($_POST['email']??'')))]);$u=$q->fetch();if($u && password_verify((string)($_POST['password']??''),$u['password'])){session_regenerate_id(true);$_SESSION['uid']=(int)$u['id'];if(od_access_has_temp_password((int)$u['id']))flash('Você está usando a senha provisória. Pode alterá-la em Minha senha.');redirect('?page=painel');}flash('E-mail ou senha incorretos.');redirect('?page=entrar');}
  if(!user()){http_response_code(401);exit('Faça login.');}
  if(!od_is_pilot((int)user()) && !od_mp_entitlement((int)user())){http_response_code(403);exit('Seu acesso está inativo ou expirado. Verifique a situação da compra.');}
   if($act==='support_create')od_support_post();
@@ -155,6 +157,7 @@ if($page==='sair'){$_SESSION=[];session_destroy();redirect('?page=entrar');}
 if(!user()){$page='entrar';h('Sua clínica mais organizada');echo '<p class="lead">Acompanhe documentos, responsabilidades e pendências sanitárias em um único lugar.</p><div class="two" style="max-width:540px;display:block;margin:20px auto"><section class="card"><h2>Entrar</h2><form method="post">'.token().'<input type="hidden" name="act" value="login"><label>E-mail<input name="email" type="email" required autocomplete="email"></label><label>Senha<input name="password" type="password" required autocomplete="current-password"></label><button>Entrar no painel</button></form><p style="margin-top:14px"><a href="?page=recuperar-acesso">Esqueci minha senha ou não recebi meu acesso</a></p></section></div>';foot();exit;}
 if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não ativo');echo '<p class="lead">Este acesso está inativo ou expirado. Se concluiu uma compra, use o link de confirmação do pedido.</p><a class="btn" href="?page=checkout">Conhecer as opções</a>';foot();exit;}
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
+if($page==='minha-senha')od_access_password_page();
 if($page==='suporte')od_support_page();
 if($page==='dados-compartilhados')od_profile_page();
 if($page==='perfil-operacional')od_profile_operational_page();
