@@ -3,6 +3,13 @@
 h('Vamos configurar seu consultório');
 ?>
 <p class="lead">São três etapas rápidas para preparar seu painel. Você poderá corrigir essas informações depois.</p>
+<div class="od-training-onboard">
+  <div>
+    <strong>Quer conhecer a plataforma antes de preencher?</strong>
+    <span>Assista à aula principal e veja como cadastrar, editar e salvar seus documentos.</span>
+  </div>
+  <a href="?page=treinamento">Assistir à aula →</a>
+</div>
 <div class="onboard" aria-label="Progresso do cadastro"><span class="active"></span><span></span><span></span></div>
 <section class="card" style="max-width:810px; margin:0 auto">
 <form id="onboarding" method="post" novalidate>
