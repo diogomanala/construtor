@@ -235,7 +235,7 @@ function odx_page():never {
     [$done,$total]=odx_count($data,$fields);
     $suggestedPending=0;
     if(!$historical)foreach($suggestions as $key=>$value){
-        if(!odx_suggestion_reviewed($data,$key) && array_key_exists($key,array_column($fields,null,'key')))$suggestedPending++;
+        if(!odx_suggestion_reviewed($data,$key))$suggestedPending++;
     }
     h('Documento da clínica',false);
     echo '<div class="odx-topline"><a href="?page=documentos">← Biblioteca</a><span> / </span><span>'.esc($doc['category']).'</span><span> / </span><strong>'.esc($meta['number']).'</strong></div>';
@@ -244,10 +244,9 @@ function odx_page():never {
     if(!$historical)echo '<div class="odx-shared-banner"><div><span>DADOS REUTILIZADOS</span><strong>'.(int)$profileDone.' de '.(int)$profileTotal.' dados cadastrais informados</strong><p>As informações salvas são inseridas nos campos correspondentes. Dados editados manualmente não são substituídos.</p></div><div class="odx-shared-actions"><a href="?page=dados-compartilhados&amp;return_id='.(int)$id.'">Completar cadastro ↗</a><a href="?page=identidade&amp;return_id='.(int)$id.'">Logo e cores ↗</a></div></div>';
     if($historical)echo '<div class="odx-history-banner"><strong>Visualizando versão '.(int)$historical['version'].'.</strong> Arquivo histórico somente para leitura. <a href="?page=editar&id='.(int)$id.'">Voltar à versão atual</a></div>';
     echo '<form method="post" class="odx-workspace" id="odx-form"'.($historical?' data-odx-readonly="true"':'').'>'.token().'<input type="hidden" name="act" value="premium_save"><input type="hidden" name="id" value="'.(int)$id.'"><textarea hidden name="body_html" id="odx-body-html"></textarea>';
-    echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO DO DOCUMENTO</span><h3>Confira só o necessário</h3><p>Os campos sugeridos já vêm com uma base editável. Confirme apenas o que representa a rotina real da clínica.</p></div><div class="odx-completion"><div><span>Informações fornecidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
+    echo '<aside class="odx-guided" aria-label="Personalização guiada"><div class="odx-side-intro"><span class="odx-side-kicker">PREENCHIMENTO DO DOCUMENTO</span><h3>Confira só o necessário</h3><p>Os campos sugeridos já vêm com uma base editável. Confirme apenas o que representa a rotina real da clínica.</p></div><div class="odx-completion"><div><span>Informações conferidas</span><strong data-odx-progress-label>'.(int)$done.' de '.(int)$total.'</strong></div><div class="odx-track"><i data-odx-progress style="width:'.($total?round($done/$total*100):0).'%"></i></div></div>';
     foreach($fields as $i=>$f){$key=$f['key'];$value=(string)($displayData[$key]??'');$tag=$f['type']??'text';$idAttr='odx-f-'.$key;
-        $isSuggestion=!$historical && isset($suggestions[$key]) &&
-            (trim((string)($data[$key]??''))==='' || trim((string)($data[$key]??''))===$suggestions[$key] || odx_suggestion_reviewed($data,$key));
+        $isSuggestion=!$historical && isset($suggestions[$key]);
         $reviewed=odx_suggestion_reviewed($data,$key);
         echo '<label class="odx-field'.($isSuggestion?' odx-field-suggested':'').'" for="'.esc($idAttr).'"><span><em>'.str_pad((string)($i+1),2,'0',STR_PAD_LEFT).'</em>'.esc($f['label']).'</span>'.($isSuggestion?'<small class="odx-field-source" data-odx-status="'.esc($key).'">'.($reviewed?'Conferido':'Sugestão. Confira e ajuste').'</small>':'');
         if($tag==='textarea')echo '<textarea id="'.esc($idAttr).'" name="g['.esc($key).']" data-odx-field="'.esc($key).'" maxlength="1500" rows="3" placeholder="'.esc($f['hint']).'">'.esc($value).'</textarea>';
