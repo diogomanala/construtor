@@ -138,8 +138,8 @@ function od_guided_clinic_page(): never {
   echo '<div class="od-ui-page"><header class="od-ui-simple-head"><span class="od-ui-kicker">CONFIGURAÇÕES DA UNIDADE</span><h1>Sua clínica, seus documentos.</h1><p>Os dados e a identidade visual são reaproveitados nas minutas. Configure uma vez e edite quando necessário.</p></header><div class="od-ui-shortcuts od-ui-settings">';
   foreach([
     ['dados-compartilhados','building','Dados para todos os documentos','Razão social, CNPJ, endereço, licença e responsáveis. Preencha uma vez e reaproveite.'],
-    ['diagnostico','building','Perfil operacional','Consultórios, radiologia, sedação e processamento da unidade.'],
-    ['identidade','palette','Logo e identidade visual','Nome exibido, logotipo, cores e prévia dos documentos.'],
+    ['diagnostico','building','Atividades da unidade','Consultórios, radiologia, sedação e processamento dos materiais.'],
+    ['identidade','palette','Identidade visual','Envie o logo e escolha a cor usada nas minutas.'],
     ['boas-vindas','list','Mapa da unidade','Pontos de atenção com base nos serviços informados.']
   ] as [$route,$ico,$title,$desc])echo '<a href="?page='.$route.'" class="od-ui-shortcut"><span class="od-ui-shortcut-icon">'.od_ui_icon($ico).'</span><strong>'.esc($title).'</strong><small>'.esc($desc).'</small><span class="od-ui-shortcut-go">'.od_ui_icon('arrow').'</span></a>';
   echo '</div><a class="od-ui-textlink" href="?page=trilha">Voltar à trilha de uso '.od_ui_icon('arrow').'</a></div>';foot();exit;
