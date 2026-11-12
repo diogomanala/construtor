@@ -166,7 +166,8 @@ function od_brand_save(): never {
         error_log('[Odonto] Falha ao salvar identidade visual');
         flash('Não foi possível salvar a identidade. Tente novamente.');
     }
-    redirect('?page=identidade');
+    $return=filter_var($_GET['return_id']??null,FILTER_VALIDATE_INT);
+    redirect($return&&template_by_id((int)$return)?'?page=identidade&return_id='.(int)$return:'?page=identidade');
 }
 function od_brand_snapshot(PDO $db,array $c,int $templateId,int $version): void {
     $brand=od_brand_current($c);
@@ -216,9 +217,11 @@ function od_brand_page(): never {
     $c=clinic();
     if(!$c||!user()){http_response_code(403);exit('Sem acesso');}
     $brand=od_brand_current($c);
-    h('Identidade da clínica');
+    $return=filter_var($_GET['return_id']??null,FILTER_VALIDATE_INT);
+    if(!$return||!template_by_id((int)$return))$return=0;
+    h('Identidade da clínica',false);
     echo '<div class="od-brand-top"><span>PERSONALIZAÇÃO DA DOCUMENTAÇÃO</span><h2>A identidade da sua clínica, em cada documento.</h2><p>Escolha a cor e o logo dos documentos. Nome, CNPJ e responsáveis vêm automaticamente de Dados da clínica.</p></div>';
-    echo '<div class="od-brand-grid"><section class="od-brand-card"><form method="post" enctype="multipart/form-data" id="od-brand-form">'.token().'<input type="hidden" name="act" value="brand_save">';
+    echo '<div class="od-brand-grid"><section class="od-brand-card"><form method="post" action="?page=identidade'.($return?'&amp;return_id='.$return:'').'" enctype="multipart/form-data" id="od-brand-form">'.token().'<input type="hidden" name="act" value="brand_save">';
     echo '<div class="od-brand-clinic-ref"><span>CLÍNICA CADASTRADA</span><strong>'.esc($c['name']).'</strong><a href="?page=dados-compartilhados">Editar dados da clínica</a></div>';
     echo '<h3>Paleta de cores</h3><p class="od-brand-help">Cores selecionadas para manter boa leitura em fundo claro e escuro.</p><div class="od-brand-palettes">';
     foreach(od_brand_palettes() as $key=>$p){
@@ -236,6 +239,6 @@ function od_brand_page(): never {
     echo '<div><strong id="od-brand-preview-name">'.esc($c['name']).'</strong><small>DOCUMENTO DA UNIDADE</small></div></div>';
     echo '<div class="od-brand-preview-cover"><span>DOCUMENTAÇÃO INTERNA</span><h3>Procedimentos e rotinas da clínica.</h3><p>Modelo de referência, sujeito à revisão do responsável técnico.</p><div class="od-brand-preview-rule"></div></div>';
     echo '<div class="od-brand-preview-body"><span>01 / IDENTIFICAÇÃO</span><div class="od-brand-preview-line"></div><div class="od-brand-preview-line short"></div><p>As informações e cores aparecem no editor. Ao salvar um documento, a identidade utilizada é registrada junto da versão.</p></div></div>';
-    echo '<p class="od-brand-note">As versões já registradas permanecem no histórico. Na visualização atual, o logo e a cor são atualizados ao salvar; versões antigas preservam a identidade de cada data.</p><a class="od-brand-back" href="?page=documentos">Abrir biblioteca de documentos →</a></aside></div>';
+    echo '<p class="od-brand-note">As versões já registradas permanecem no histórico. A identidade atual aparece nas próximas prévias; as versões anteriores ficam preservadas.</p>'.($return?'<a class="od-brand-back" href="?page=editar&id='.$return.'">Voltar ao documento →</a>':'<a class="od-brand-back" href="?page=documentos">Abrir biblioteca de documentos →</a>').'</aside></div>';
     foot();exit;
 }
