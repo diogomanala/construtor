@@ -108,6 +108,17 @@ function od_guided_dashboard_page(): never {
   $c=clinic();if(!$c){http_response_code(403);exit('Acesso necessário');}
   h('Início',false);
   echo '<div class="od-ui-page"><header class="od-ui-welcome"><div><span class="od-ui-kicker">ÁREA DA CLÍNICA</span><h1>Bom ter você por aqui.</h1><p>'.esc($c['name']).' · Continue a organização da clínica a partir do próximo passo.</p></div><a href="?page=clinica" class="od-ui-textlink">'.od_ui_icon('building').' Dados da clínica</a></header>';
+  echo '<section class="od-training-feature" aria-label="Treinamento para usar a plataforma">'
+    .'<div class="od-training-feature-copy">'
+    .'<span class="od-training-feature-label">COMECE AQUI · TREINAMENTO</span>'
+    .'<h2>Seu primeiro documento começa aqui.</h2>'
+    .'<p>Veja em uma única aula como cadastrar a clínica, editar os modelos, salvar versões e preparar a pasta para impressão.</p>'
+    .'<a class="od-training-feature-action" href="?page=treinamento">Assistir ao treinamento '.od_ui_icon('arrow').'</a>'
+    .'</div>'
+    .'<a class="od-training-feature-thumb" href="?page=treinamento" aria-label="Abrir a aula principal do Odonto em Dia">'
+    .'<img src="/uploads/odonto-pasta-hero.webp" alt="Pasta digital Odonto em Dia preparada para impressão" loading="lazy" decoding="async">'
+    .'<span aria-hidden="true"></span></a>'
+    .'</section>';
   echo od_guided_steps($c);
   echo '<section class="od-ui-section"><div class="od-ui-section-head"><div><span class="od-ui-kicker">ACESSO RÁPIDO</span><h2>O que você precisa fazer?</h2></div></div><div class="od-ui-shortcuts">';
   foreach([
