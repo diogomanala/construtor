@@ -114,17 +114,20 @@ function od_profile_apply_document(string $html,array $ctx,array $fields=[]):str
         'setor'=>'Setor/local',
         'executor'=>'Responsável por executar',
         'frequencia'=>'Frequência',
+        'equipamentos_insumos'=>'Equipamentos e insumos',
     ];
     foreach($bound as $key=>$label) {
         $value=trim((string)($fields[$key]??''));
-        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*(\[(?:PREENCHER|DEFINIR)\]|[^<]*?)(\s*</td>)~iu';
-        $html=preg_replace_callback($pattern,static function($m)use($key,$value){
+        $reviewed=!empty($fields['_reviewed'][$key]);
+        $pattern='~(<td>\s*'.preg_quote($label,'~').'\s*</td>\s*<td>)\s*(\[(?:PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]|[^<]*?)(\s*</td>)~iu';
+        $html=preg_replace_callback($pattern,static function($m)use($key,$value,$reviewed){
             $old=trim(html_entity_decode($m[2],ENT_QUOTES,'UTF-8'));
-            $placeholder=(bool)preg_match('/^\[(?:PREENCHER|DEFINIR)\]$/iu',$old);
-            // Não sobrescreva valores que foram alterados manualmente na minuta.
+            $placeholder=(bool)preg_match('/^\[(?:PREENCHER|DEFINIR|INFORMAR MARCAS,\s*MODELOS,\s*PRODUTOS)\]$/iu',$old);
+            // Nunca substitui uma descrição já editada diretamente no texto técnico.
             if(!$placeholder && ($value==='' || $old!==$value))return $m[0];
             $text=$value!==''?esc($value):$m[2];
-            return $m[1].'<span class="odx-auto-value" data-odx-bind="'.$key.'">'.$text.'</span>'.$m[3];
+            $class=$value!==''?($reviewed?'odx-auto-value odx-reviewed-value':'odx-auto-value odx-review-pending'):'odx-auto-value odx-review-pending';
+            return $m[1].'<span class="'.$class.'" data-odx-bind="'.$key.'">'.$text.'</span>'.$m[3];
         },$html)??$html;
     }
     return $html;
