@@ -31,7 +31,7 @@ function h(string $page,bool $showHeading=true):void {
   'DOCUMENTOS'=>['documentos'=>'Biblioteca completa','meus-documentos'=>'Minhas versões','pasta-documental'=>'Pasta para impressão','acervo-visual'=>'Materiais ilustrados'],
   'ROTINAS'=>['registros-limpeza'=>'Limpeza','registros-esterilizacao'=>'Esterilização','registros-manutencao'=>'Manutenção','registros-epi'=>'EPIs'],
   'ACOMPANHAMENTO'=>['acompanhamento'=>'Temas e pendências','inspecao'=>'Autoavaliação','auto360'=>'Autoinspeção 360'],
-  'MINHA CLÍNICA'=>['clinica'=>'Visão geral','dados-compartilhados'=>'Cadastro da clínica','diagnostico'=>'Perfil operacional','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
+  'MINHA CLÍNICA'=>['clinica'=>'Visão geral','dados-compartilhados'=>'Cadastro da clínica','perfil-operacional'=>'Atividades da clínica','identidade'=>'Identidade visual','boas-vindas'=>'Mapa da unidade'],
   'CONTA'=>['suporte'=>'Suporte','sair'=>'Sair']
  ];
  if((int)(user()??0)===1 && od_is_pilot((int)user()))$menu['GESTÃO']=['auditoria-comercial'=>'Auditoria comercial'];
@@ -123,6 +123,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
  if(!od_is_pilot((int)user()) && !od_mp_entitlement((int)user())){http_response_code(403);exit('Seu acesso está inativo ou expirado. Verifique a situação da compra.');}
   if($act==='support_create')od_support_post();
   if($act==='profile_shared_save')od_profile_post();
+  if($act==='profile_operational_save')od_profile_operational_post();
   if($act==='brand_save')od_brand_save();
   if($act==='material_selection_save'){flash('As imagens estão em revisão de qualidade e não podem ser aplicadas agora.');redirect('?page=documentos');}
   if($act==='kit_visual_save'){flash('As bancadas ilustradas estão temporariamente indisponíveis.');redirect('?page=documentos');}
@@ -151,6 +152,7 @@ if(!od_is_pilot((int)user())&&!od_mp_entitlement((int)user())){h('Acesso não at
 $c=clinic();if(!$c&&$page!=='diagnostico')redirect('?page=diagnostico');
 if($page==='suporte')od_support_page();
 if($page==='dados-compartilhados')od_profile_page();
+if($page==='perfil-operacional')od_profile_operational_page();
 if($page==='logo-clinica')od_brand_logo();
  if($page==='identidade')od_brand_page();
  if($page==='painel')od_guided_dashboard_page();
@@ -178,7 +180,7 @@ if($page==='auto360')od360_premium_page();
 if($page==='auto360-relatorio')od360_premium_report();
 if($page==='baixar-kit')redirect('?page=documentos');
 if($page==='baixar-auto360')redirect('?page=auto360');
-if($page==='diagnostico'){require __DIR__.'/onboarding.php';exit;}
+if($page==='diagnostico'){if($c)redirect('?page=perfil-operacional');require __DIR__.'/onboarding.php';exit;}
 if($page==='boas-vindas'){
  h('Seu mapa inicial está pronto');echo '<p class="lead">'.esc($c['name']).' · Estas indicações são pontos para discussão com o responsável técnico, não um diagnóstico sanitário automatizado.</p><div class="onboarding-done"><div class="onboard-done-mark">✓</div><div><span class="eyebrow">PERFIL CADASTRADO</span><h2>Agora você já tem um ponto de partida.</h2><p>Registre primeiro o que sua clínica já possui. Para cada item pendente, defina quem vai cuidar e quando revisar.</p></div></div>';
  $alerts=[];
