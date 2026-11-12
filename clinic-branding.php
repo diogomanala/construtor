@@ -52,11 +52,69 @@ function od_brand_current(array $c): array {
     if(!in_array($b['logo_mime'],['image/png','image/jpeg','image/webp'],true)){$b['logo_mime']=null;$b['logo_blob']=null;}
     return $b;
 }
+
+/**
+ * Recebe logo original com até 6 MB e reduz para uso documental.
+ * WebP conserva transparência e evita armazenar imagens enormes no SQLite.
+ */
+function od_brand_prepare_logo(array $upload):array {
+    $error=(int)($upload['error']??UPLOAD_ERR_NO_FILE);
+    if($error===UPLOAD_ERR_NO_FILE)return [null,null,false];
+    if($error!==UPLOAD_ERR_OK || !is_string($upload['tmp_name']??null) ||
+       !is_uploaded_file($upload['tmp_name'])){
+        throw new RuntimeException('Não foi possível receber o logo. Selecione outra imagem e tente novamente.');
+    }
+    $size=(int)($upload['size']??0);
+    if($size<1 || $size>6*1024*1024){
+        throw new RuntimeException('O logo deve ter até 6 MB. PNG, JPG ou WebP são aceitos.');
+    }
+    $bytes=file_get_contents($upload['tmp_name']);
+    if(!is_string($bytes)||$bytes==='')throw new RuntimeException('Não foi possível ler a imagem selecionada.');
+    $info=@getimagesizefromstring($bytes);
+    $mime=(new finfo(FILEINFO_MIME_TYPE))->buffer($bytes);
+    if(!is_array($info) || !in_array($mime,['image/png','image/jpeg','image/webp'],true) ||
+       ($info['mime']??'')!==$mime)throw new RuntimeException('Formato inválido. Use PNG, JPG ou WebP.');
+    $w=(int)$info[0];$h=(int)$info[1];
+    if($w<1||$h<1||$w>7000||$h>7000||$w*$h>30000000){
+        throw new RuntimeException('Imagem muito grande. Use dimensões de até 7.000 px e 30 megapixels.');
+    }
+    if(strlen($bytes)<=650*1024 && $w<=1800 && $h<=1800)return [$mime,$bytes,false];
+    if(!function_exists('imagecreatefromstring')||!function_exists('imagewebp')){
+        throw new RuntimeException('Não foi possível otimizar o logo no servidor. Envie uma versão de até 650 KB.');
+    }
+    $original=@imagecreatefromstring($bytes);
+    if(!$original)throw new RuntimeException('Não foi possível processar a imagem. Exporte novamente em PNG ou JPG.');
+    try {
+        foreach([1600,1200,960,720] as $maxDimension){
+            $factor=min(1,$maxDimension/max($w,$h));
+            $newW=max(1,(int)round($w*$factor));$newH=max(1,(int)round($h*$factor));
+            $canvas=imagecreatetruecolor($newW,$newH);
+            if(!$canvas)continue;
+            imagealphablending($canvas,false);
+            imagesavealpha($canvas,true);
+            $clear=imagecolorallocatealpha($canvas,0,0,0,127);
+            imagefill($canvas,0,0,$clear);
+            imagecopyresampled($canvas,$original,0,0,0,0,$newW,$newH,$w,$h);
+            foreach([84,76,68,60,52] as $quality){
+                ob_start();
+                $success=@imagewebp($canvas,null,$quality);
+                $converted=ob_get_clean();
+                if($success && is_string($converted) && strlen($converted)>0 && strlen($converted)<=650*1024){
+                    imagedestroy($canvas);
+                    return ['image/webp',$converted,true];
+                }
+            }
+            imagedestroy($canvas);
+        }
+    } finally {
+        imagedestroy($original);
+    }
+    throw new RuntimeException('Não foi possível reduzir o logo. Tente um arquivo menor ou mais simples.');
+}
+
 function od_brand_save(): never {
     $c=clinic();
     if(!$c || !user()){http_response_code(403);exit('Acesso necessário');}
-    $name=trim((string)($_POST['clinic_name']??''));
-    if($name==='' || mb_strlen($name)>180){flash('Informe um nome de clínica com até 180 caracteres.');redirect('?page=identidade');}
     $palette=(string)($_POST['palette']??'jade');
     $presets=od_brand_palettes();
     if($palette==='custom'){
@@ -69,29 +127,18 @@ function od_brand_save(): never {
     else {flash('Escolha uma paleta válida.');redirect('?page=identidade');}
     $b=od_brand_current($c);
     $logoMime=$b['logo_mime'];$logoBlob=$b['logo_blob'];
+    $logoOptimized=false;
     if(isset($_POST['remove_logo'])){$logoMime=null;$logoBlob=null;}
     $upload=$_FILES['clinic_logo']??null;
     if(is_array($upload)){
-        $error=(int)($upload['error']??UPLOAD_ERR_NO_FILE);
-        if($error!==UPLOAD_ERR_NO_FILE){
-            if($error!==UPLOAD_ERR_OK || !is_string($upload['tmp_name']??null) || !is_uploaded_file($upload['tmp_name'])){
-                flash('Não foi possível receber a imagem. Tente PNG, JPG ou WebP com até 350 KB.');
-                redirect('?page=identidade');
-            }
-            $size=(int)($upload['size']??0);
-            if($size<1 || $size>350*1024){
-                flash('O logo deve ter até 350 KB.');redirect('?page=identidade');
-            }
-            $bytes=file_get_contents($upload['tmp_name']);
-            $info=is_string($bytes)?@getimagesizefromstring($bytes):false;
-            $mime=is_string($bytes)?(new finfo(FILEINFO_MIME_TYPE))->buffer($bytes):'';
-            if(!is_array($info) || !in_array($mime,['image/png','image/jpeg','image/webp'],true) ||
-               ($info['mime']??'')!==$mime || (int)$info[0]<1 || (int)$info[1]<1 ||
-               (int)$info[0]>3000 || (int)$info[1]>3000){
-                flash('Imagem inválida. Envie PNG, JPG ou WebP de até 3000 × 3000 px.');
-                redirect('?page=identidade');
-            }
-            $logoMime=$mime;$logoBlob=$bytes;
+        try {
+            [$incomingMime,$incomingBlob,$logoOptimized]=od_brand_prepare_logo($upload);
+            if($incomingMime!==null){$logoMime=$incomingMime;$logoBlob=$incomingBlob;}
+        }catch(RuntimeException $e){
+            flash($e->getMessage());redirect('?page=identidade');
+        }catch(Throwable $e){
+            error_log('[Odonto] Falha técnica ao otimizar logo');
+            flash('Não foi possível processar o logo. Tente um arquivo PNG ou JPG.');redirect('?page=identidade');
         }
     }
     $db=od_brand_schema();
@@ -102,8 +149,6 @@ function od_brand_save(): never {
         $past=$db->prepare('SELECT h.template_id,h.version FROM od_document_history h WHERE h.clinic_id=? AND NOT EXISTS (SELECT 1 FROM od_document_brand_history b WHERE b.clinic_id=h.clinic_id AND b.template_id=h.template_id AND b.version=h.version)');
         $past->execute([(int)$c['id']]);
         foreach($past->fetchAll() as $v)od_brand_snapshot($db,$c,(int)$v['template_id'],(int)$v['version']);
-        $q=$db->prepare('UPDATE clinics SET name=? WHERE id=? AND user_id=?');
-        $q->execute([$name,(int)$c['id'],(int)user()]);
         $q=$db->prepare("INSERT INTO od_clinic_branding(clinic_id,palette,accent,logo_mime,logo_blob,updated_at)
             VALUES(?,?,?,?,?,CURRENT_TIMESTAMP) ON CONFLICT(clinic_id) DO UPDATE SET
             palette=excluded.palette,accent=excluded.accent,logo_mime=excluded.logo_mime,
@@ -115,7 +160,7 @@ function od_brand_save(): never {
         $q->bindValue(5,$logoBlob,$logoBlob===null?PDO::PARAM_NULL:PDO::PARAM_LOB);
         $q->execute();
         $db->commit();
-        flash('Identidade visual salva. Ela aparece na prévia e nas próximas versões dos documentos.');
+        flash('Logo e cor salvos com sucesso.'.($logoOptimized?' O logo foi otimizado automaticamente.':'').' A nova identidade aparece nos documentos atuais e nas próximas versões.');
     } catch(Throwable $e) {
         if($db->inTransaction())$db->rollBack();
         error_log('[Odonto] Falha ao salvar identidade visual');
@@ -172,9 +217,9 @@ function od_brand_page(): never {
     if(!$c||!user()){http_response_code(403);exit('Sem acesso');}
     $brand=od_brand_current($c);
     h('Identidade da clínica');
-    echo '<div class="od-brand-top"><span>PERSONALIZAÇÃO DA DOCUMENTAÇÃO</span><h2>A identidade da sua clínica, em cada documento.</h2><p>Escolha as cores, o nome e o logo utilizados nas minutas. A navegação Odonto em Dia continua igual para todos.</p></div>';
+    echo '<div class="od-brand-top"><span>PERSONALIZAÇÃO DA DOCUMENTAÇÃO</span><h2>A identidade da sua clínica, em cada documento.</h2><p>Escolha a cor e o logo dos documentos. Nome, CNPJ e responsáveis vêm automaticamente de Dados da clínica.</p></div>';
     echo '<div class="od-brand-grid"><section class="od-brand-card"><form method="post" enctype="multipart/form-data" id="od-brand-form">'.token().'<input type="hidden" name="act" value="brand_save">';
-    echo '<h3>Informações da clínica</h3><label class="od-brand-label">Nome exibido nos documentos<input type="text" name="clinic_name" maxlength="180" required value="'.esc($c['name']).'"></label>';
+    echo '<div class="od-brand-clinic-ref"><span>CLÍNICA CADASTRADA</span><strong>'.esc($c['name']).'</strong><a href="?page=dados-compartilhados">Editar dados da clínica</a></div>';
     echo '<h3>Paleta de cores</h3><p class="od-brand-help">Cores selecionadas para manter boa leitura em fundo claro e escuro.</p><div class="od-brand-palettes">';
     foreach(od_brand_palettes() as $key=>$p){
         echo '<label class="od-brand-choice"><input type="radio" name="palette" value="'.esc($key).'" '.($brand['palette']===$key?'checked':'').'><span class="od-brand-color" style="background:'.esc($p['accent']).'"></span><span>'.esc($p['name']).'</span></label>';
@@ -182,15 +227,15 @@ function od_brand_page(): never {
     echo '<label class="od-brand-choice"><input type="radio" name="palette" value="custom" '.($brand['palette']==='custom'?'checked':'').'><span class="od-brand-color od-brand-color-custom"></span><span>Minha cor</span></label></div>';
     echo '<label class="od-brand-label">Cor personalizada<input type="color" name="accent" id="od-brand-accent" value="'.esc($brand['accent']).'"><small>Para usar esta cor, selecione “Minha cor”. Tons claros não são aceitos quando prejudicam a leitura.</small></label>';
     echo '<h3>Logotipo da clínica</h3>';
-    echo '<label class="od-brand-label">Enviar logo<input type="file" name="clinic_logo" id="od-brand-file" accept="image/png,image/jpeg,image/webp"><small>PNG, JPG ou WebP, até 350 KB. Prefira imagem horizontal com fundo transparente.</small></label>';
+    echo '<label class="od-brand-label">Enviar logo<input type="file" name="clinic_logo" id="od-brand-file" accept="image/png,image/jpeg,image/webp"><small>PNG, JPG ou WebP, até 6 MB. A imagem é otimizada automaticamente. Prefira arquivo com fundo transparente.</small></label><p id="od-brand-file-error" class="od-brand-file-error" role="alert" hidden></p>';
     if($brand['logo_mime'])echo '<label class="od-brand-remove"><input type="checkbox" name="remove_logo" value="1"> Remover o logo atual</label>';
-    echo '<button type="submit" class="od-brand-submit">Salvar identidade visual</button></form></section>';
+    echo '<p class="od-brand-saved-state">Salvo atualmente: '.esc($brand['palette']==='custom'?'Cor personalizada':(od_brand_palettes()[$brand['palette']]['name']??'Verde clínico')).' · '.($brand['logo_mime']?'Logo cadastrado':'Sem logo cadastrado').'</p><p class="od-brand-save-feedback" role="status" hidden></p><button type="submit" class="od-brand-submit">Salvar logo e cores</button></form></section>';
     echo '<aside class="od-brand-preview"><div class="od-brand-preview-cap">PRÉVIA DA IDENTIDADE</div><div class="od-brand-preview-paper" id="od-brand-preview" style="--od-brand-color:'.esc($brand['accent']).'"><div class="od-brand-preview-head">';
     if($brand['logo_mime'])echo '<img id="od-brand-preview-logo" src="?page=logo-clinica" alt="Logo atual da clínica">';
     else echo '<div class="od-brand-preview-monogram" id="od-brand-preview-monogram">C</div>';
     echo '<div><strong id="od-brand-preview-name">'.esc($c['name']).'</strong><small>DOCUMENTO DA UNIDADE</small></div></div>';
     echo '<div class="od-brand-preview-cover"><span>DOCUMENTAÇÃO INTERNA</span><h3>Procedimentos e rotinas da clínica.</h3><p>Modelo de referência, sujeito à revisão do responsável técnico.</p><div class="od-brand-preview-rule"></div></div>';
     echo '<div class="od-brand-preview-body"><span>01 / IDENTIFICAÇÃO</span><div class="od-brand-preview-line"></div><div class="od-brand-preview-line short"></div><p>As informações e cores aparecem no editor. Ao salvar um documento, a identidade utilizada é registrada junto da versão.</p></div></div>';
-    echo '<p class="od-brand-note">As versões já registradas permanecem no histórico. Novos ajustes de marca serão aplicados às versões futuras.</p><a class="od-brand-back" href="?page=documentos">Abrir biblioteca de documentos →</a></aside></div>';
+    echo '<p class="od-brand-note">As versões já registradas permanecem no histórico. Na visualização atual, o logo e a cor são atualizados ao salvar; versões antigas preservam a identidade de cada data.</p><a class="od-brand-back" href="?page=documentos">Abrir biblioteca de documentos →</a></aside></div>';
     foot();exit;
 }
