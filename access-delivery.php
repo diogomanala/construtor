@@ -33,7 +33,7 @@ function od_access_config():array{
     od_mp_config();
     return [
       'resend_key'=>defined('OD_RESEND_API_KEY')?(string)OD_RESEND_API_KEY:(string)(getenv('OD_RESEND_API_KEY')?:''),
-      'from'=>defined('OD_ACCESS_FROM')?(string)OD_ACCESS_FROM:(string)(getenv('OD_ACCESS_FROM')?:'acesso@odontonegocios.com'),
+      'from'=>defined('OD_ACCESS_FROM')?(string)OD_ACCESS_FROM:(string)(getenv('OD_ACCESS_FROM')?:'contato@odontonegocios.com'),
       'mail_fallback'=>defined('OD_ACCESS_MAIL_FALLBACK')?(bool)OD_ACCESS_MAIL_FALLBACK:true
     ];
 }
@@ -52,10 +52,10 @@ function od_access_send(string $recipient,string $subject,string $body):bool{
         error_log('[Odonto] Resend delivery rejected (HTTP '.$status.')');
     }
     if(!$cfg['mail_fallback'])return false;
-    $safeFrom=filter_var($cfg['from'],FILTER_VALIDATE_EMAIL)?$cfg['from']:'acesso@odontonegocios.com';
+    $safeFrom=filter_var($cfg['from'],FILTER_VALIDATE_EMAIL)?$cfg['from']:'contato@odontonegocios.com';
     $headers=['MIME-Version'=>'1.0','Content-Type'=>'text/plain; charset=UTF-8',
         'From'=>'Odonto em Dia <'.$safeFrom.'>'];
-    try{return @mail($recipient,mb_encode_mimeheader($subject,'UTF-8','B',"\r\n"),$body,$headers);}
+    try{return @mail($recipient,mb_encode_mimeheader($subject,'UTF-8','B',"\r\n"),$body,$headers,'-f'.$safeFrom);}
     catch(Throwable $e){error_log('[Odonto] PHP mail unavailable');return false;}
 }
 /**
