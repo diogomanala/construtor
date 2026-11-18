@@ -1,4 +1,4 @@
-<?php declare(strict_types=1); ?>
+<?php declare(strict_types=1); if(!function_exists('od_mp_ready')){header('Location: /rdc/',true,302);exit;} ?>
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/hero-motion-v1.css?v=20261109-ray1">
 <link rel="stylesheet" href="assets/hero-mobile-v2.css?v=20261108b">
+<?=od_meta_pixel_head('inicio')?>
 </head>
 <body class="sales">
 <svg style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
