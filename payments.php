@@ -116,7 +116,7 @@ function od_mp_order_page():never{
             redirect(clinic()?'?page=painel':'?page=diagnostico');
         }
     }
-    if($order['status']==='paid')$GLOBALS['od_meta_verified_order']=$order;
+    if($order['status']==='paid' && $proof!=='' && hash_equals((string)$order['public_code'],$proof))$GLOBALS['od_meta_verified_order']=$order;
     h('Acompanhar meu pedido');
     echo '<div class="card" style="max-width:670px;margin:25px auto;padding:26px"><p>Pedido <b>'.esc($order['id']).'</b> • '.esc($order['buyer_email']).'</p>';
     if($order['status']==='paid'){
