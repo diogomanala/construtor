@@ -10,7 +10,7 @@ function od_meta_purchase_id(string $id): string {
 /** Insere o pixel apenas nas páginas comerciais e no retorno de uma compra confirmada. */
 function od_meta_pixel_head(string $page): string {
     $event = '';
-    $value = 67.0;
+    $amount = 67.00;
     $eventId = '';
     $purchase = $GLOBALS['od_meta_verified_order'] ?? null;
     if (!is_array($purchase)) {
@@ -18,7 +18,7 @@ function od_meta_pixel_head(string $page): string {
     }
     if (is_array($purchase) && !empty($purchase['id']) && !empty($purchase['amount_cents'])) {
         $event = 'Purchase';
-        $value = ((int)$purchase['amount_cents']) / 100;
+        $amount = (int)$purchase['amount_cents'] / 100;
         $eventId = od_meta_purchase_id((string)$purchase['id']);
         unset($_SESSION['od_meta_pending_purchase']);
     } elseif ($page === 'inicio') {
@@ -28,19 +28,40 @@ function od_meta_pixel_head(string $page): string {
     } elseif ($page !== 'pedido') {
         return '';
     }
-    $json = json_encode([
-        'eventName' => $event,
-        'value' => $value,
-        'eventId' => $eventId,
-        'pixelId' => OD_META_PIXEL_ID
-    ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES);
-    if (!is_string($json)) return '';
-    return '<script>window.odMetaPixelContext='.$json.';</script><script src="assets/od-meta-pixel.js?v=20261118b" defer></script>';
+    $extra = '';
+    if ($event !== '') {
+        $data = json_encode([
+            'value' => $amount,
+            'currency' => 'BRL',
+            'content_type' => 'product',
+            'content_ids' => ['kit-rdc']
+        ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+        if (!is_string($data)) return '';
+        $extra = "fbq('track', '".$event."', ".$data;
+        if ($event === 'Purchase') {
+            $id = json_encode($eventId, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+            $extra .= ", {eventID: ".$id."}";
+        }
+        $extra .= ");";
+    }
+    // Trecho padrão da Meta, executado diretamente no HEAD. Sem script de controle de cookies.
+    return '<!-- Meta Pixel Code -->'
+        .'<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?'
+        .'n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;'
+        .'n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);'
+        .'t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)'
+        .'}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");'
+        ."fbq('init', '".OD_META_PIXEL_ID."');"
+        ."fbq('track', 'PageView');"
+        .$extra
+        .'</script>'
+        .'<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id='
+        .OD_META_PIXEL_ID.'&amp;ev=PageView&amp;noscript=1"></noscript>'
+        .'<!-- End Meta Pixel Code -->';
 }
 
-/** Memoriza somente consentimento e parâmetros de correspondência de quem iniciou o pedido. */
+/** Guarda somente informações necessárias à atribuição da compra na API de Conversões. */
 function od_meta_capture_checkout(string $orderId): void {
-    if ((string)($_COOKIE['od_meta_ads_consent'] ?? '') !== '1') return;
     try {
         $db = od_orders_db();
         $db->exec('CREATE TABLE IF NOT EXISTS od_meta_checkout_tracking (
