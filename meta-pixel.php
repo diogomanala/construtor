@@ -35,7 +35,7 @@ function od_meta_pixel_head(string $page): string {
         'pixelId' => OD_META_PIXEL_ID
     ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES);
     if (!is_string($json)) return '';
-    return '<script>window.odMetaPixelContext='.$json.';</script><script src="assets/od-meta-pixel.js?v=20261118" defer></script>';
+    return '<script>window.odMetaPixelContext='.$json.';</script><script src="assets/od-meta-pixel.js?v=20261118b" defer></script>';
 }
 
 /** Memoriza somente consentimento e parâmetros de correspondência de quem iniciou o pedido. */
