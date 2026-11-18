@@ -37,6 +37,7 @@
         s.parentNode.insertBefore(t, s);
       })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     }
+    window.fbq('consent', 'grant');
     window.fbq('init', ctx.pixelId);
     window.fbq('track', 'PageView');
     if (!ctx.eventName) return;
@@ -55,32 +56,32 @@
     }
   }
 
-  function closeBanner() {
-    if (banner) { banner.remove(); banner = null; }
-  }
-
-  function showBanner() {
-    closeBanner();
-    banner = document.createElement('aside');
-    banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Preferências de cookies');
-    banner.style.cssText = 'position:fixed;z-index:2147483000;bottom:86px;left:14px;right:14px;max-width:540px;margin:auto;padding:16px 18px;background:#10383c;color:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.35);font:14px/1.5 system-ui,sans-serif;text-align:left';
-    banner.innerHTML = '<div style="font-weight:700;margin-bottom:5px">Privacidade e anúncios</div>' +
-      '<div>Usamos cookies opcionais da Meta para medir visitas e compras. Você pode aceitar ou manter somente os necessários. <a href="?page=politica-privacidade" style="color:#bcf0e5;text-decoration:underline">Saiba mais</a>.</div>' +
-      '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px">' +
-      '<button type="button" data-od-ads="0" style="background:#fff;color:#173c40;border:1px solid #d4e8e4;border-radius:8px;padding:9px 13px;cursor:pointer;font:600 13px system-ui">Somente necessários</button>' +
-      '<button type="button" data-od-ads="1" style="background:#28b190;color:#061d21;border:0;border-radius:8px;padding:9px 13px;cursor:pointer;font:700 13px system-ui">Aceitar medição</button></div>';
-    document.body.appendChild(banner);
-    banner.querySelectorAll('[data-od-ads]').forEach(function (button) {
+  function showPreferences(footer) {
+    if (!footer || banner) return;
+    banner = document.createElement('div');
+    banner.setAttribute('role', 'group');
+    banner.setAttribute('aria-label', 'Preferências de medição');
+    banner.style.cssText = 'display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%;margin-top:12px;padding:12px;border:1px solid currentColor;border-radius:8px;font:13px/1.5 system-ui,sans-serif';
+    var intro = document.createElement('span');
+    intro.textContent = 'Permitir medição de visitas e compras pela Meta?';
+    intro.style.cssText = 'flex:1 1 210px';
+    banner.appendChild(intro);
+    [['0', 'Não permitir'], ['1', 'Permitir medição']].forEach(function (entry) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = entry[1];
+      button.style.cssText = 'padding:8px 12px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:7px;cursor:pointer;font:600 13px system-ui';
       button.addEventListener('click', function () {
-        var value = button.getAttribute('data-od-ads');
         var prior = consent();
-        setConsent(value);
-        closeBanner();
-        if (value === '1') startPixel();
+        setConsent(entry[0]);
+        banner.remove();
+        banner = null;
+        if (entry[0] === '1') startPixel();
         else if (prior === '1') window.location.reload();
       });
+      banner.appendChild(button);
     });
+    footer.appendChild(banner);
   }
 
   function init() {
@@ -88,13 +89,19 @@
     if (footer) {
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.textContent = 'Preferências de cookies';
+      btn.textContent = consent() === null ? 'Configurar cookies opcionais' : 'Preferências de cookies';
       btn.style.cssText = 'font:inherit;color:inherit;background:none;border:0;text-decoration:underline;cursor:pointer;padding:0 4px';
-      btn.addEventListener('click', showBanner);
+      btn.addEventListener('click', function () {
+        if (banner) {
+          banner.remove();
+          banner = null;
+        } else {
+          showPreferences(footer);
+        }
+      });
       footer.appendChild(btn);
     }
     if (consent() === '1') startPixel();
-    else if (consent() === null) showBanner();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
