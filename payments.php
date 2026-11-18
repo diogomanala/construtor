@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__.'/meta-pixel.php';
 /** Checkout Pro Orders API | Mercado Pago. Segredos fora do document root. */
 function od_mp_config():array{
     $private=dirname(__DIR__,2).'/odonto-env.php'; // ..../domains/odontonegocios.com/odonto-env.php
@@ -50,6 +51,7 @@ function od_order_sync(array $order):array{
     if($status==='paid' && function_exists('od_access_deliver')){
         od_access_deliver($order);
     }
+    if($status==='paid')od_meta_capi_purchase($order);
     return $order;
 }
 function od_mp_start():never{
@@ -61,6 +63,7 @@ function od_mp_start():never{
     $addon=isset($_POST['addon'])?1:0;$amount=6700+($addon?3700:0);
     $id=od_order_code();$code=bin2hex(random_bytes(24));$uuid=sprintf('%s-%s-%s-%s-%s',bin2hex(random_bytes(4)),bin2hex(random_bytes(2)),bin2hex(random_bytes(2)),bin2hex(random_bytes(2)),bin2hex(random_bytes(6)));
     $p=od_orders_db();$p->prepare('INSERT INTO od_orders(id,public_code,buyer_email,addon,amount_cents) VALUES(?,?,?,?,?)')->execute([$id,$code,$email,$addon,$amount]);
+    od_meta_capture_checkout($id);
     $return='https://odontonegocios.com/rdc/?page=pedido&code='.$code;
     $items=[['title'=>'Odonto em Dia - kit documental e plataforma','unit_price'=>'67.00','quantity'=>1]];
     if($addon)$items[]=['title'=>'Autoinspecao 360 - modulo complementar','unit_price'=>'37.00','quantity'=>1];
@@ -105,6 +108,7 @@ function od_mp_order_page():never{
         $fresh=od_order_by_code((string)$order['public_code']);
         $uid=(int)($fresh['activated_user_id']??0);
         if($uid>0 && od_mp_entitlement($uid)){
+            $_SESSION['od_meta_pending_purchase']=['id'=>(string)$order['id'],'amount_cents'=>(int)$order['amount_cents']];
             unset($_SESSION['od_checkout_proof']);
             session_regenerate_id(true);
             $_SESSION['uid']=$uid;
@@ -112,6 +116,7 @@ function od_mp_order_page():never{
             redirect(clinic()?'?page=painel':'?page=diagnostico');
         }
     }
+    if($order['status']==='paid')$GLOBALS['od_meta_verified_order']=$order;
     h('Acompanhar meu pedido');
     echo '<div class="card" style="max-width:670px;margin:25px auto;padding:26px"><p>Pedido <b>'.esc($order['id']).'</b> • '.esc($order['buyer_email']).'</p>';
     if($order['status']==='paid'){
