@@ -58,4 +58,4 @@ if(!$ok){$_SESSION['ptoken']=bin2hex(random_bytes(20));$_SESSION['pstart']=time(
 <label for="subject">Assunto *</label><select id="subject" name="subject" required><option value="">Selecione</option><?php foreach(['Publicidade','Parceria','Outro'] as $option):?><option value="<?=e($option)?>" <?=$subject===$option?'selected':''?>><?=e($option)?></option><?php endforeach;?></select>
 <label for="message">Sua proposta *</label><textarea id="message" name="message" required minlength="30" maxlength="2500" placeholder="Explique o que você gostaria de divulgar ou propor."><?=e($message)?></textarea>
 <label for="challenge">Verificação: quanto é <?=$a?> + <?=$b?>? *</label><input id="challenge" name="challenge" type="number" min="0" max="30" inputmode="numeric" required><p class="small">Os dados informados serão utilizados apenas para responder à proposta.</p><button type="submit">Enviar proposta</button></form>
-<?php endif;?></main><footer>© <?=date('Y')?> Cortar Imagens Carrossel Online</footer></body></html>
+<?php endif;?></main><footer>© <?=date('Y')?> Cortar Imagens Carrossel Online</footer></body></html><!-- deploy-verification-20261121 -->
