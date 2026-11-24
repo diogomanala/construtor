@@ -151,8 +151,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 $page=(string)($_GET['page']??'inicio');
 if(in_array($page,['termos','privacidade','politica-privacidade'],true))od_public_legal_page($page);
 if($page==='checkout' && isset($_GET['odtc_status']))od_transparent_status();
-if($page==='checkout' && ($_GET['transparente']??'')==='1')od_transparent_page();
-if($page==='checkout')od_mp_checkout_page();
+if($page==='checkout' && ($_GET['legacy']??'')==='1')od_mp_checkout_page();
+if($page==='checkout')od_transparent_page();
 if($page==='pedido')od_mp_order_page();
 if($page==='ativar-acesso')od_access_page();
 if($page==='recuperar-acesso')od_access_recovery_page();
