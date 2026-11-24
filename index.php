@@ -54,6 +54,7 @@ function h(string $page,bool $showHeading=true):void {
 }
 function foot():void {echo '<footer>Odonto em Dia · Modelos auxiliares. A avaliação de aplicabilidade, elaboração, revisão e implementação cabem ao responsável técnico. A plataforma não emite certificados da Anvisa nem garante aprovação em inspeções.<div style="margin-top:10px"><a href="?page=termos" style="color:inherit;margin-right:14px">Termos de uso</a><a href="?page=politica-privacidade" style="color:inherit">Privacidade</a></div></footer></main><script src="document-engine.js?v=6" defer></script><script src="clinic-branding.js?v=2" defer></script><script src="guided-ux.js?v=1" defer></script><script src="legal-review.js?v=1" defer></script><script src="steril-inline.js?v=3" defer></script><script src="illustrated-guides.js?v=1" defer></script><script src="pasta-documental.js?v=1" defer></script><script src="assets/auto360-premium.js?v=1" defer></script><script src="assets/app-tour.js?v=1" defer></script><script src="assets/member-training.js?v=1" defer></script></body></html>';}
 require_once __DIR__.'/payments.php';
+require_once __DIR__.'/checkout-transparent.php';
 require_once __DIR__.'/access-delivery.php';
 require_once __DIR__.'/support.php';
 require_once __DIR__.'/clinic-profile.php';
@@ -80,6 +81,7 @@ require_once __DIR__.'/downloads.php';
 if($_SERVER['REQUEST_METHOD']==='POST'){
  if(!hash_equals(csrf(),(string)($_POST['csrf']??''))){http_response_code(403);exit('Sessão expirada. Recarregue a página.');}
  $act=(string)($_POST['act']??'');
+ if($act==='transparent_submit')od_transparent_submit();
  if($act==='checkout_start')od_mp_start();
   if($act==='order_activate')od_mp_activate();
   if($act==='access_activate')od_access_activate();
@@ -148,6 +150,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 $page=(string)($_GET['page']??'inicio');
 if(in_array($page,['termos','privacidade','politica-privacidade'],true))od_public_legal_page($page);
+if($page==='checkout' && isset($_GET['odtc_status']))od_transparent_status();
+if($page==='checkout' && ($_GET['transparente']??'')==='1')od_transparent_page();
 if($page==='checkout')od_mp_checkout_page();
 if($page==='pedido')od_mp_order_page();
 if($page==='ativar-acesso')od_access_page();
