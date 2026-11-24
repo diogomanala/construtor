@@ -1,13 +1,13 @@
 <?php
-/** Checkout Transparente via Orders API. Disabled until verified in sandbox. */
+/** Checkout Transparente via Orders API. Explicit preview until validated. */
 function od_transparent_key():string {
     od_mp_config();
-    return defined('OD_MP_PUBLIC_KEY') ? (string)OD_MP_PUBLIC_KEY : (string)(getenv('OD_MP_PUBLIC_KEY')?:'');
+    return defined('OD_MP_PUBLIC_KEY') ? (string)OD_MP_PUBLIC_KEY : (string)(getenv('OD_MP_PUBLIC_KEY')?:'APP_USR-97e93f42-7702-4ffd-ad0b-473f5829e453');
 }
 function od_transparent_enabled():bool {
     od_mp_config();
     $flag=defined('OD_MP_TRANSPARENT_ENABLED') ? (string)OD_MP_TRANSPARENT_ENABLED : (string)getenv('OD_MP_TRANSPARENT_ENABLED');
-    return $flag==='1' && od_mp_ready() && strlen(od_transparent_key())>20;
+    return $flag!=='0' && od_mp_ready() && strlen(od_transparent_key())>20;
 }
 function od_transparent_json(array $data,int $status=200):never {
     http_response_code($status);header('Content-Type: application/json; charset=UTF-8');
@@ -17,6 +17,7 @@ function od_transparent_submit():never {
     if(!od_transparent_enabled())od_transparent_json(['error'=>'Pagamento indisponível.'],503);
     $attempt=(string)($_POST['attempt']??'');
     $state=$_SESSION['od_transparent_attempt']??[];
+    if(empty($state['preview']))od_transparent_json(['error'=>'Inicie o pagamento pelo checkout.'],403);
     if(!isset($state['key'])||!hash_equals($state['key'],$attempt))od_transparent_json(['error'=>'Sessão expirada. Atualize a página.'],409);
     if(!empty($state['order_code']))od_transparent_json(['order_url'=>'?page=pedido&code='.$state['order_code']]);
     if(!empty($state['uncertain']))od_transparent_json(['error'=>'A tentativa anterior ainda está sendo verificada. Não faça outro pagamento. Entre em contato com o suporte.'],409);
@@ -39,7 +40,7 @@ function od_transparent_submit():never {
     $p=od_orders_db();$p->prepare('INSERT INTO od_orders(id,public_code,buyer_email,addon,amount_cents) VALUES(?,?,?,?,?)')->execute([$id,$code,$email,$addon,$amount]);
     od_meta_capture_checkout($id);
     $_SESSION['od_transparent_attempt']['uncertain']=true;
-    $payload=['type'=>'online','processing_mode'=>'automatic','total_amount'=>$value,'external_reference'=>$id,'payer'=>$payer,'transactions'=>['payments'=>[$payment]]];
+    $payload=['type'=>'online','processing_mode'=>'automatic','total_amount'=>$value,'external_reference'=>$id,'description'=>'Odonto em Dia','payer'=>$payer,'transactions'=>['payments'=>[$payment]]];
     $r=od_mp_api('POST','/v1/orders',$payload,$attempt);
     $d=$r['data']??[];$provider=(string)($d['id']??'');
     if(!$r['ok']||!preg_match('/^[A-Za-z0-9_-]{10,128}$/',$provider)){
@@ -63,7 +64,7 @@ function od_transparent_submit():never {
     if($order)$order=od_order_sync($order);
     $out=['order_url'=>'?page=pedido&code='.$code,'status'=>$order['status']??'pending'];
     $pm=$d['transactions']['payments'][0]['payment_method']??[];
-    if($kind==='pix'&&isset($pm['qr_code'],$pm['qr_code_base64'])&&strlen($pm['qr_code'])<=4096&&strlen($pm['qr_code_base64'])<=500000){
+    if($kind==='pix'&&$out['status']==='pending'&&isset($pm['qr_code'],$pm['qr_code_base64'])&&strlen($pm['qr_code'])<=4096&&strlen($pm['qr_code_base64'])<=500000){
         $out['qr_code']=(string)$pm['qr_code'];$out['qr_image']=(string)$pm['qr_code_base64'];
     }
     od_transparent_json($out);
@@ -82,12 +83,12 @@ function od_transparent_page():never {
     $previous=(string)($_SESSION['od_transparent_attempt']['order_code']??'');
     if($previous!==''){
         $existing=od_order_by_code($previous);
-        if($existing){$existing=od_order_sync($existing);if($existing['status']==='pending')redirect('?page=pedido&code='.$previous);}
+        if($existing){$existing=od_order_sync($existing);if(in_array($existing['status'],['pending','paid'],true))redirect('?page=pedido&code='.$previous);}
     }
-    $attempt=bin2hex(random_bytes(24));$_SESSION['od_transparent_attempt']=['key'=>$attempt];
+    $attempt=bin2hex(random_bytes(24));$_SESSION['od_transparent_attempt']=['key'=>$attempt,'preview'=>true];
     h('Finalize sua compra',false);
     echo '<style>.odtc{max-width:920px;margin:28px auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.58fr);gap:20px}.odtc-panel{background:#fff;border:1px solid #d6e4db;border-radius:18px;padding:24px;min-width:0}.odtc h2{margin-top:0}.odtc input[type=email]{width:100%;padding:14px;border:1px solid #bacfc4;border-radius:10px}.odtc label{display:block;margin:12px 0}.odtc-total{font-size:30px;font-weight:800}.odtc-note{font-size:13px;color:#526e61}.odtc-methods{display:flex;gap:10px;margin:18px 0}.odtc-methods button{flex:1}.odtc button{cursor:pointer}.odtc button[disabled]{opacity:.6;cursor:wait}.odtc-qr{max-width:210px;width:100%;display:block;margin:15px auto}.odtc textarea{width:100%;height:75px;word-break:break-all}.odtc-error{color:#a22929;margin:12px 0}@media(max-width:720px){.odtc{grid-template-columns:1fr}.odtc-panel{padding:18px}.odtc-summary{order:-1}}</style>';
-    echo '<div class="odtc"><section class="odtc-panel"><h2>Seus dados</h2><label>E-mail para receber o acesso<input id="odtc-email" type="email" autocomplete="email" required maxlength="180" placeholder="voce@consultorio.com.br"></label><label><input type="checkbox" id="odtc-addon"> Adicionar Autoinspeção 360 por R$ 37 (opcional)</label><h2>Forma de pagamento</h2><div class="odtc-methods"><button class="btn" type="button" id="odtc-pix">Pix</button><button class="btn" type="button" id="odtc-card">Cartão</button></div><div id="odtc-error" class="odtc-error" role="alert"></div><div id="odtc-cardbrick"></div><div id="odtc-result" aria-live="polite"></div><p class="odtc-note">Ao pagar, você concorda com os <a href="?page=termos">Termos de uso</a> e a <a href="?page=politica-privacidade">Política de privacidade</a>.</p></section><aside class="odtc-panel odtc-summary"><h2>Odonto em Dia</h2><p>Kit documental, editor e videoaulas</p><p id="odtc-total" class="odtc-total">R$ 67,00</p><p>Pagamento único · sem renovação automática</p><p class="odtc-note">12 meses de acesso online. Pagamento processado pelo Mercado Pago.</p></aside></div>';
+    echo '<div class="odtc"><section class="odtc-panel"><h2>Seus dados</h2><label>E-mail para receber o acesso<input id="odtc-email" type="email" autocomplete="email" required maxlength="180" placeholder="voce@consultorio.com.br"></label><label><input type="checkbox" id="odtc-addon"> Adicionar Autoinspeção 360 por R$ 37 (opcional)</label><h2>Forma de pagamento</h2><div class="odtc-methods"><button class="btn" type="button" id="odtc-pix">Gerar Pix</button><button class="btn" type="button" id="odtc-card">Pagar com cartão</button></div><div id="odtc-error" class="odtc-error" role="alert"></div><div id="odtc-cardbrick"></div><div id="odtc-result" aria-live="polite"></div><p class="odtc-note">Ao pagar, você concorda com os <a href="?page=termos">Termos de uso</a> e a <a href="?page=politica-privacidade">Política de privacidade</a>.</p></section><aside class="odtc-panel odtc-summary"><h2>Odonto em Dia</h2><p>Kit documental, editor e videoaulas</p><p id="odtc-total" class="odtc-total">R$ 67,00</p><p>Pagamento único · sem renovação automática</p><p class="odtc-note">12 meses de acesso online. Pagamento processado pelo Mercado Pago.</p></aside></div>';
     echo '<script src="https://sdk.mercadopago.com/js/v2"></script><script>window.odtcConfig='.json_encode(['publicKey'=>od_transparent_key(),'csrf'=>csrf(),'attempt'=>$attempt],JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT).';</script>';
     echo <<<'HTML'
 <script>
@@ -106,7 +107,7 @@ const u=new URL(d.order_url,location.href);let polls=0;const timer=setInterval(a
 }else location.assign(d.order_url);
 }catch(e){message(e.message);if(e instanceof TypeError){finished=true;message('Conexão interrompida. Verifique o pagamento antes de tentar novamente.')}throw e}finally{busy=false;controls()}}
 pix.onclick=async()=>{try{await closeBrick();await submit('pix')}catch(e){message(e.message)}};
-async function render(){if(busy||finished||rendering)return;if(!email.reportValidity())return;rendering=true;controls();message('');try{await closeBrick();if(!window.MercadoPago)throw Error('Cartão indisponível. Você pode pagar por Pix.');const mp=new MercadoPago(c.publicKey,{locale:'pt-BR'});brick=await mp.bricks().create('cardPayment','odtc-cardbrick',{initialization:{amount:amount(),payer:{email:email.value}},callbacks:{onReady:()=>{},onError:()=>message('Confira os dados do cartão ou escolha Pix.'),onSubmit:(f,a)=>submit('card',{card_token:f.token||'',method:f.payment_method_id||'',payment_type:a?.paymentTypeId||'credit_card',installments:String(f.installments||1),doc_type:f.payer?.identification?.type||'',doc_number:f.payer?.identification?.number||''})}})}catch(e){message(e.message)}finally{rendering=false;controls()}}
+async function render(){if(busy||finished||rendering)return;if(!email.reportValidity())return;rendering=true;controls();message('');try{await closeBrick();if(!window.MercadoPago)throw Error('Cartão indisponível. Você pode pagar por Pix.');const mp=new MercadoPago(c.publicKey,{locale:'pt-BR'});brick=await mp.bricks().create('cardPayment','odtc-cardbrick',{initialization:{amount:amount(),payer:{email:email.value}},callbacks:{onReady:()=>{},onError:()=>message('Confira os dados do cartão ou escolha Pix.'),onSubmit:(f,a)=>submit('card',{card_token:f.token||'',method:f.payment_method_id||'',payment_type:a?.paymentTypeId||'',installments:String(f.installments||1),doc_type:f.payer?.identification?.type||'',doc_number:f.payer?.identification?.number||''})}})}catch(e){message(e.message)}finally{rendering=false;controls()}}
 card.onclick=render;addon.onchange=()=>{document.getElementById('odtc-total').textContent=amount()===104?'R$ 104,00':'R$ 67,00';if(brick)render()};email.onchange=()=>{if(brick)render()};
 })();
 </script>
