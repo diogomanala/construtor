@@ -38,9 +38,9 @@ function od_order_sync(array $order):array{
     if(!$order['provider_order_id'])return $order;
     $result=od_mp_api('GET','/v1/orders/'.rawurlencode($order['provider_order_id']));if(!$result['ok'])return $order;
     $d=$result['data'];
-    if((string)($d['id']??'')!==$order['provider_order_id']||(string)($d['external_reference']??'')!==$order['id']||(string)($d['currency']??'')!=='BRL'||od_decimal_cents((string)($d['total_amount']??''))!==(int)$order['amount_cents'])return $order;
+    if((string)($d['id']??'')!==$order['provider_order_id']||(string)($d['external_reference']??'')!==$order['id']||!((isset($d['currency'])&&(string)$d['currency']==='BRL')||(!isset($d['currency'])&&(string)($d['country_code']??'')==='BRA'))||od_decimal_cents((string)($d['total_amount']??''))!==(int)$order['amount_cents'])return $order;
     $state=(string)($d['status']??'');$paid=od_decimal_cents((string)($d['total_paid_amount']??'0'));
-    $status=($state==='processed' && $paid>=(int)$order['amount_cents'])?'paid':(in_array($state,['cancelled','canceled','refunded','charged_back'],true)?'canceled':'pending');
+    $status=($state==='processed' && $paid>=(int)$order['amount_cents'])?'paid':(in_array($state,['cancelled','canceled','refunded','charged_back','failed','expired'],true)?'canceled':'pending');
     $db=od_orders_db();
     if($status!==$order['status']){
        $db->prepare('UPDATE od_orders SET status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')->execute([$status,$order['id']]);
