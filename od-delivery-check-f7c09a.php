@@ -7,8 +7,8 @@ function db():PDO{static $p=null;if($p)return $p;$p=new PDO('sqlite:'.__DIR__.'/
 $p=db();
 if(($_GET['recover']??'')==='1'){
  require_once __DIR__.'/payments.php';require_once __DIR__.'/access-delivery.php';
- $q=$p->prepare("SELECT o.* FROM od_orders o JOIN od_order_contacts c ON c.order_id=o.id WHERE o.created_at=? AND o.amount_cents=10400 AND o.status='paid' AND lower(c.buyer_name) LIKE ? LIMIT 2");
- $q->execute(['2026-11-24 16:57:51','%valeria%']);$matches=$q->fetchAll();
+ $q=$p->prepare("SELECT o.* FROM od_orders o JOIN od_order_contacts c ON c.order_id=o.id WHERE o.created_at=? AND o.amount_cents=10400 AND o.status='paid' AND (lower(c.buyer_name) LIKE ? OR lower(c.buyer_name) LIKE ? OR lower(o.buyer_email) LIKE ?) LIMIT 2");
+ $q->execute(['2026-11-24 16:57:51','%valeria%','%valéria%','%valeria%']);$matches=$q->fetchAll();
  if(count($matches)!==1){echo json_encode(['recovery'=>'match_not_unique']);exit;}
  $order=$matches[0];$r=od_mp_api('GET','/v1/orders/'.rawurlencode($order['provider_order_id']));$d=$r['data']??[];
  if(!$r['ok']||($d['status']??'')!=='processed'||($d['id']??'')!==$order['provider_order_id']||($d['external_reference']??'')!==$order['id']||od_decimal_cents((string)($d['total_paid_amount']??''))!==10400){echo json_encode(['recovery'=>'payment_not_verified']);exit;}
