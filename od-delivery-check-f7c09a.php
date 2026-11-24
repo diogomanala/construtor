@@ -3,7 +3,19 @@ ini_set('display_errors','0');
 header('Cache-Control: no-store');header('Content-Type: application/json');
 if(!hash_equals('b49e2d1c6f7340f0916c8c55deab3295', (string)($_GET['k']??''))){http_response_code(404);exit;}
 try{
-$p=new PDO('sqlite:'.__DIR__.'/data/odonto_em_dia.sqlite',null,null,[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);$p->exec('PRAGMA query_only=ON');
+function db():PDO{static $p=null;if($p)return $p;$p=new PDO('sqlite:'.__DIR__.'/data/odonto_em_dia.sqlite',null,null,[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);$p->exec('PRAGMA busy_timeout=5000');return $p;}
+$p=db();
+if(($_GET['recover']??'')==='1'){
+ require_once __DIR__.'/payments.php';require_once __DIR__.'/access-delivery.php';
+ $q=$p->prepare("SELECT o.* FROM od_orders o JOIN od_order_contacts c ON c.order_id=o.id WHERE o.created_at=? AND o.amount_cents=10400 AND o.status='paid' AND lower(c.buyer_name) LIKE ? LIMIT 2");
+ $q->execute(['2026-11-24 16:57:51','%valeria%']);$matches=$q->fetchAll();
+ if(count($matches)!==1){echo json_encode(['recovery'=>'match_not_unique']);exit;}
+ $order=$matches[0];$r=od_mp_api('GET','/v1/orders/'.rawurlencode($order['provider_order_id']));$d=$r['data']??[];
+ if(!$r['ok']||($d['status']??'')!=='processed'||($d['id']??'')!==$order['provider_order_id']||($d['external_reference']??'')!==$order['id']||od_decimal_cents((string)($d['total_paid_amount']??''))!==10400){echo json_encode(['recovery'=>'payment_not_verified']);exit;}
+ od_access_deliver($order);
+ $q=$p->prepare("SELECT o.activated_user_id IS NOT NULL AS account_created,e.status AS entitlement,e.addon,d.status AS mail_status,d.attempts FROM od_orders o LEFT JOIN od_entitlements e ON e.order_id=o.id LEFT JOIN od_access_delivery d ON d.order_id=o.id WHERE o.id=?");$q->execute([$order['id']]);echo json_encode(['recovery'=>$q->fetch()]);exit;
+}
+$p->exec('PRAGMA query_only=ON');
 function has_table(PDO $p,string $t):bool{$q=$p->prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?");$q->execute([$t]);return (bool)$q->fetchColumn();}
 require_once __DIR__.'/payments.php';
 $contacts=has_table($p,'od_order_contacts');$deliver=has_table($p,'od_access_delivery');
