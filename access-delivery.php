@@ -75,7 +75,7 @@ function od_access_deliver(array $order,bool $manual=false):bool{
         $cooldown=$manual?300:900;
         if((($delivery['status']==='sent')&&!$manual)||($last && time()-$last<$cooldown)||
             (int)$delivery['attempts']>=($manual?8:5)){
-            $db->commit();return $delivery['status']==='sent';
+            $db->exec('COMMIT');return $delivery['status']==='sent';
         }
         $db->prepare("UPDATE od_access_delivery SET attempts=attempts+1,status='processing',last_attempt_at=CURRENT_TIMESTAMP WHERE order_id=?")->execute([$id]);
         // Para compras novas, cria um acesso imediato com senha individual aleatoria.
@@ -103,7 +103,7 @@ function od_access_deliver(array $order,bool $manual=false):bool{
         $raw=bin2hex(random_bytes(32));$hash=hash('sha256',$raw);
         $db->prepare('DELETE FROM od_access_tokens WHERE order_id=? AND consumed_at IS NULL')->execute([$id]);
         $db->prepare("INSERT INTO od_access_tokens(order_id,token_hash,expires_at) VALUES(?,?,datetime('now','+48 hours'))")->execute([$id,$hash]);
-        $db->commit();
+        $db->exec('COMMIT');
         $link=OD_ACCESS_URL.'?page=ativar-acesso&token='.$raw;
         $email=(string)$order['buyer_email'];
         $subject='Seu acesso ao Odonto em Dia';
@@ -125,7 +125,7 @@ function od_access_deliver(array $order,bool $manual=false):bool{
             ->execute([$ok?'sent':'failed',$ok?1:0,$ok?'':'send_failed',$id]);
         return $ok;
     }catch(Throwable $e){
-        if($db->inTransaction())$db->rollBack();
+        try{$db->exec('ROLLBACK');}catch(Throwable $ignored){}
         error_log('[Odonto] Falha ao preparar entrega do acesso: '.get_class($e));
         return false;
     }
@@ -152,7 +152,7 @@ function od_access_activate():never{
     try{
         $s=$db->prepare("SELECT id FROM od_access_tokens WHERE token_hash=? AND order_id=? AND consumed_at IS NULL AND expires_at>CURRENT_TIMESTAMP");
         $s->execute([hash('sha256',$token),$order['id']]);
-        if(!$s->fetchColumn()){ $db->rollBack();flash('Este link já foi usado.');redirect('?page=entrar');}
+        if(!$s->fetchColumn()){ $db->exec('ROLLBACK');flash('Este link já foi usado.');redirect('?page=entrar');}
         $q=$db->prepare('SELECT id FROM users WHERE email=?');$q->execute([$order['buyer_email']]);$existing=$q->fetchColumn();
         if($existing){
             $uid=(int)$existing;
@@ -169,12 +169,12 @@ function od_access_activate():never{
         $db->prepare("INSERT INTO od_access_preferences(user_id,temp_password) VALUES(?,0)
             ON CONFLICT(user_id) DO UPDATE SET temp_password=0,updated_at=CURRENT_TIMESTAMP")->execute([$uid]);
         $db->prepare('UPDATE od_access_tokens SET consumed_at=CURRENT_TIMESTAMP WHERE order_id=? AND consumed_at IS NULL')->execute([$order['id']]);
-        $db->commit();
+        $db->exec('COMMIT');
         session_regenerate_id(true);$_SESSION['uid']=$uid;
         flash('Acesso ativado. Bem-vindo ao Odonto em Dia!');
         $c=clinic();redirect($c?'?page=painel':'?page=diagnostico');
     }catch(Throwable $e){
-        if($db->inTransaction())$db->rollBack();error_log('[Odonto] Falha na ativacao com token');
+        try{$db->exec('ROLLBACK');}catch(Throwable $ignored){}error_log('[Odonto] Falha na ativacao com token');
         flash('Não foi possível ativar seu acesso. Tente novamente.');redirect('?page=ativar-acesso&token='.$token);
     }
 }
@@ -205,19 +205,19 @@ function od_access_login():never{
         $q=$db->prepare("SELECT id FROM od_access_tokens WHERE order_id=? AND token_hash=?
           AND consumed_at IS NULL AND expires_at>CURRENT_TIMESTAMP");
         $q->execute([$order['id'],hash('sha256',$token)]);
-        if(!$q->fetchColumn()){ $db->rollBack();redirect('?page=recuperar-acesso');}
+        if(!$q->fetchColumn()){ $db->exec('ROLLBACK');redirect('?page=recuperar-acesso');}
         $uid=(int)($order['activated_user_id']??0);
-        if(!$uid){$db->rollBack();redirect('?page=recuperar-acesso');}
+        if(!$uid){$db->exec('ROLLBACK');redirect('?page=recuperar-acesso');}
         $q=$db->prepare('SELECT 1 FROM od_entitlements WHERE user_id=? AND status=? AND expires_at>=CURRENT_TIMESTAMP');
         $q->execute([$uid,'active']);
-        if(!$q->fetchColumn()){ $db->rollBack();redirect('?page=recuperar-acesso');}
+        if(!$q->fetchColumn()){ $db->exec('ROLLBACK');redirect('?page=recuperar-acesso');}
         $db->prepare('UPDATE od_access_tokens SET consumed_at=CURRENT_TIMESTAMP WHERE id=?')->execute([(int)$order['access_token_id']]);
-        $db->commit();
+        $db->exec('COMMIT');
         session_regenerate_id(true);$_SESSION['uid']=$uid;
         flash('Bem-vindo! Seu acesso está ativo.'.(od_access_has_temp_password($uid)?' Você pode trocar a senha provisória em Minha senha.':''));
         redirect(clinic()?'?page=painel':'?page=diagnostico');
     }catch(Throwable $e){
-        if($db->inTransaction())$db->rollBack();
+        try{$db->exec('ROLLBACK');}catch(Throwable $ignored){}
         error_log('[Odonto] Login por link falhou');
         flash('Não foi possível acessar pelo link. Solicite um novo.');redirect('?page=recuperar-acesso');
     }
