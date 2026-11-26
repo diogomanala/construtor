@@ -49,10 +49,10 @@
  <p class="tiny">Modelos de referência para adaptar e revisar com o responsável técnico. A plataforma não certifica conformidade sanitária.</p>
 </div>
 <div class="hero-media">
-<?php if (is_file(__DIR__ . '/assets/rdc-hero.mp4')): ?>
+<?php if (is_file(dirname(__DIR__) . '/assets/rdc-hero.mp4')): ?>
 <div class="rdc-hero-video" style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#eef3ef">
 <video id="rdcHeroVideo" autoplay muted loop playsinline preload="metadata" width="960" height="540" style="display:block;width:100%;height:100%;object-fit:contain" aria-label="Demonstração do Odonto em Dia" <?php if (is_file(__DIR__ . '/assets/rdc-hero-poster.webp')): ?>poster="assets/rdc-hero-poster.webp"<?php endif; ?>>
-<source src="assets/rdc-hero.mp4" type="video/mp4">
+<source src="/assets/rdc-hero.mp4" type="video/mp4">
 </video>
 <button type="button" aria-label="Pausar vídeo" aria-pressed="false" style="position:absolute;right:10px;bottom:10px;display:grid;place-items:center;width:34px;height:34px;border:0;border-radius:50%;background:#fff;color:#164434;box-shadow:0 2px 8px #0002;cursor:pointer" onclick="var v=document.getElementById('rdcHeroVideo');if(v.paused){v.play().catch(function(){});this.textContent='❚❚';this.setAttribute('aria-label','Pausar vídeo');this.setAttribute('aria-pressed','false')}else{v.pause();this.textContent='▶';this.setAttribute('aria-label','Reproduzir vídeo');this.setAttribute('aria-pressed','true')}">❚❚</button>
 </div>
